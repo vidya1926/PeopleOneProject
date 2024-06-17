@@ -11,6 +11,7 @@ export class CoursePage extends AdminHomePage {
         uploadInput: "//div[@id='upload-div']//input[@id='content_upload_file']",
         attachedContent: "//label[text()='Attached Content']/following::div[text()='samplevideo']",
         showInCatalogBtn: "//span[text()='Show in Catalog']",
+        modifyTheAccessBtn:"//footer/following::button[text()='No, modify the access']",
         saveBtn: "//button[@id='course-btn-save' and text()='Save']",
         proceedBtn: "//footer//following::button[contains(text(),'Yes, Proceed')]",
         successMessage: "//div[@id='lms-overall-container']//h3",
@@ -136,6 +137,11 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.okBtn, "Tick", "image");
     }
 
+
+    async modifyTheAccess(){
+        await this.mouseHover(this.selectors.modifyTheAccessBtn,"No, Modify The Access");
+        await this.click(this.selectors.modifyTheAccessBtn,"No, Modify The Access","Button");
+    }
     async clickCancel() {
         await this.click(this.selectors.cancelBtn, "Cancel", "image");
     }

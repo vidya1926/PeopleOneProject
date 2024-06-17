@@ -22,7 +22,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.typeAdditionalInfo("Happy Learning!");
     await createCourse.clickCatalog();
     await createCourse.clickSave();
-    //await createCourse.clickNo();
+    await createCourse.modifyTheAccess();
     await editCourse.clickClose();
     await editCourse.clickCourseMenu("Tags");
     await editCourse.selectTags("Empower");
