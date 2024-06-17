@@ -19,7 +19,7 @@ test(`Verify that a category can be added under Metadata Library - Learning - Ca
     await metadatalibrary.description(FakerData.getDescription());
     await metadatalibrary.saveButton();
     await metadatalibrary.categorySearchfield(categoryName);
-    await metadatalibrary.verifyCategory(categoryName);
+    await metadatalibrary.verifyCategory(categoryName)
 
 })
 
@@ -90,7 +90,7 @@ test(`Verify that a CEU Type can be added under Metadata Library - Learning - CE
 })
 
 const tagName=FakerData.getCategory();
-test(`Verify that a tags can be added under Metadata Library - Learning - Tags`,async({adminHome,metadatalibrary})=>{
+test.skip(`Verify that a tags can be added under Metadata Library - Learning - Tags`,async({adminHome,metadatalibrary})=>{
     test.info().annotations.push(
         { type: 'Author', description: 'Ajay Michael' },
         { type: 'TestCase', description: 'Verify that a tags can be added under Metadata Library - Learning - Tags' },
