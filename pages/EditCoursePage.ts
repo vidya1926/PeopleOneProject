@@ -10,7 +10,7 @@ export class EditCoursePage extends AdminHomePage {
         tagsSearchField: "//input[@id='tags-search-field']",
         tagListItem: (tagName: string) => `//li[text()='${tagName}']`,
         okBtn: "//button[text()='OK']",
-        certificateSearchField: "exp-search-certificate-field",
+        certificateSearchField: "#exp-search-field",
         certificateRadioBtn: (certificateName: string) => `(//div[text()='${certificateName}']/following::i)[1]`,
         addBtn: "//button[text()='Add']"
     };
