@@ -41,7 +41,8 @@ export class AdminHomePage extends PlaywrightWrapper {
     }
 
     public async clickMenu(menu: string) {
-        await this.page.waitForLoadState('domcontentloaded');
+        await this.page.waitForLoadState('load');
+        await this.spinnerDisappear();
         await this.mouseHover("//div[@class='item-content processed']", "Menu");
         await this.click(this.selectors.dragableMenu(menu), "Create", "Button");
     }

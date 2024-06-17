@@ -14,6 +14,8 @@ export class UserPage extends AdminHomePage {
         saveButton: "//button[text()='Save']",
         proceedButton: (name: string) => `//footer//following::button[contains(text(),'${name}')]`,
         searchField: "//input[@id='exp-search-field']",
+        rolesBtn:"//input[@id='user-roles-filter-field']",
+        rolesList: (roles:string)=>`//li[text()='${roles}']`,
         editIcon: "//span[contains(@class,'justify-content-start') and @aria-label='Edit User']",
         userProfileUploadInput: "//input[@id='upload-usr-pic-file']",
         updateButton: "//button[text()='Update']",
@@ -64,10 +66,17 @@ export class UserPage extends AdminHomePage {
         await this.spinnerDisappear();
     }
 
+    async clickRolesButton(roles:string){
+        await this.click(this.selectors.rolesBtn,"Roles","Button");
+        await this.click(this.selectors.rolesList(roles),roles,"Button")
+    }
+
     async editIcon() {
         await this.click(this.selectors.editIcon, "Edit Icon", "Button");
         await this.spinnerDisappear();
     }
+
+
 
     async userProfileUpload() {
         const filePath = "../data/Profilepic.jpg";
