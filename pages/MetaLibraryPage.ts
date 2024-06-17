@@ -165,6 +165,8 @@ export class MetaLibraryPage extends AdminHomePage {
 
     async tagsSearchField(data: string) {
         await this.type(this.selectors.tagsSearchField, "Search Field", data);
+        await this.keyboardAction(this.selectors.tagsSearchField,"Enter","Search Field",data);
+        await this.spinnerDisappear();
     }
 
     async verify_Tags(data: string) {
@@ -173,6 +175,8 @@ export class MetaLibraryPage extends AdminHomePage {
 
     async department_SearchField(data: string) {
         await this.type(this.selectors.departmentSearchField, "Search Field", data);
+        await this.keyboardAction(this.selectors.departmentSearchField,"Enter","Search Field",data);
+        await this.spinnerDisappear();
     }
 
     async verify_Department(data: string) {
@@ -192,6 +196,8 @@ export class MetaLibraryPage extends AdminHomePage {
 
     async addEmploymentType_SearchButton(data: string) {
         await this.type(this.selectors.employmentTypeSearchField, "Search Field", data);
+        await this.keyboardAction(this.selectors.employmentTypeSearchField,"Enter","Search Field",data);
+        await this.spinnerDisappear();
     }
 
     async verify_addEmploymentType(data: string) {
@@ -210,6 +216,8 @@ export class MetaLibraryPage extends AdminHomePage {
 
     async userType_SearchButton(data: string) {
         await this.type(this.selectors.userTypeSearchField, "Search Field", data);
+        await this.keyboardAction(this.selectors.userTypeSearchField,"Enter","Search Field",data);
+        await this.spinnerDisappear();
     }
 
     async verify_UserType(data: string) {
@@ -228,6 +236,8 @@ export class MetaLibraryPage extends AdminHomePage {
 
     async addJobRole_SearchField(data: string) {
         await this.type(this.selectors.jobRoleSearchField, "Search Field", data);
+        await this.keyboardAction(this.selectors.jobRoleSearchField,"Enter","Search Field",data);
+        await this.spinnerDisappear();
     }
 
     async verify_JobRole(data: string) {
@@ -245,6 +255,8 @@ export class MetaLibraryPage extends AdminHomePage {
 
     async jobtitle_SearchField(data: string) {
         await this.type(this.selectors.jobTitleSearchField, "Search Field", data);
+        await this.keyboardAction(this.selectors.jobTitleSearchField,"Enter","Search Field",data);
+        await this.spinnerDisappear();
     }
 
     async verify_JobTitile(data: string) {
