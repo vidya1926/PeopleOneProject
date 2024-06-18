@@ -4,7 +4,7 @@ import path from 'path';
 interface Data {
   managerName?: string;
   adminName?: string;
-  learnerAdmin?: string;
+  courseAdmin?: string;
 }
 
 const fileName = '../data/adminGroupsData.json';
