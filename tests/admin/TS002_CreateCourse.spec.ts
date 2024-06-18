@@ -9,7 +9,7 @@ test(` creating learners for the application`,async({adminHome,createCourse})=>{
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title",courseName);
-    await createCourse.typeDescription("Description","This is a new course by name :"+courseName);
+    await createCourse.typeDescription("This is a new course by name :" + courseName);
     await createCourse.upload();
     await createCourse.clickCatalog();
     await createCourse.clickSave();

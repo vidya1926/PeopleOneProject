@@ -1,7 +1,7 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
 
-export class organization extends AdminHomePage{
+export class OrganizationPage extends AdminHomePage{
     public selectors = {
         ...this.selectors,
         menu: "//div[text()='Menu']",

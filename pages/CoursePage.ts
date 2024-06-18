@@ -9,7 +9,7 @@ export class CoursePage extends AdminHomePage {
         courseDescriptionInput: "//div[@id='course-description']//p",
         uploadDiv: "//div[@id='upload-div']",
         uploadInput: "//div[@id='upload-div']//input[@id='content_upload_file']",
-        attachedContent: "//label[text()='Attached Content']/following::div[text()='samplevideo']",
+        attachedContent: (fileName: string) => `//label[text()='Attached Content']/following::div[text()='${fileName}']`,
         showInCatalogBtn: "//span[text()='Show in Catalog']",
         modifyTheAccessBtn: "//footer/following::button[text()='No, modify the access']",
         saveBtn: "//button[@id='course-btn-save' and text()='Save']",
@@ -69,30 +69,33 @@ export class CoursePage extends AdminHomePage {
         chooseTimeOption: (chooseTime: string) => `//li[text()='${chooseTime}']`,
         waitlistInput: "//label[text()='Waitlist']/following-sibling::input",
         updateBtn: "//button[text()='Update']",
-        detailsbtn:"//button[text()='Details']",
-        courseUpdateBtn:"//button[@id='course-btn-save']",
-        surveyAndAssessmentLink:"//button[text()='Survey/Assessment']",
-        surveyCheckBox:"//div[@id='sur_ass-lms-scroll-survey-list']//i[contains(@class,'fa-duotone fa-square icon')]",
-        editCourseBtn:"//a[text()='Edit Course']",
+        detailsbtn: "//button[text()='Details']",
+        courseUpdateBtn: "//button[@id='course-btn-save']",
+        surveyAndAssessmentLink: "//button[text()='Survey/Assessment']",
+        surveyCheckBox: "//div[@id='sur_ass-lms-scroll-survey-list']//i[contains(@class,'fa-duotone fa-square icon')]",
+        editCourseBtn: "//a[text()='Edit Course']",
+        assessmentCheckbox: "//div[@id='sur_ass-lms-scroll-assessment-list']//i[contains(@class,'fa-duotone fa-square icon')]",
+        addAssessmentBtn: "//button[text()='Add As Assessment']",
     };
 
     constructor(page: Page, context: BrowserContext) {
-        super(page, context);
+        super(page, context,);
     }
 
     async verifyCreateUserLabel(expectedLabel: string) {
         await this.verification(this.selectors.createUserLabel, expectedLabel);
     }
 
-    async typeDescription( data: string) {
+    async typeDescription(data: string) {
         await this.type(this.selectors.courseDescriptionInput, "Description", data);
     }
 
     async upload() {
-        const path = "../data/samplevideo.mp4";
+        const fileName = "samplevideo"
+        const path = `../data/${fileName}.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
-        await this.validateElementVisibility(this.selectors.attachedContent, "samplevideo");
+        await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName);
     }
 
     async clickCatalog() {
@@ -111,6 +114,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async verifyCourseCreationSuccessMessage() {
+        await this.spinnerDisappear();
         await this.verification(this.selectors.successMessage, "successfully");
     }
 
@@ -312,7 +316,7 @@ export class CoursePage extends AdminHomePage {
     async addsurvey_course() {
         await this.wait('minWait')
         await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
-        await this.click(this.selectors.surveyAndAssessmentLink,"Survey/Assessment","Link")
+        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
         try {
             await this.page.waitForSelector("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']", { state: 'visible', timeout: 20000 });
             await this.click("//button[text()='YES']", "yes", "button")
@@ -326,7 +330,8 @@ export class CoursePage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() * checkboxCount);
         await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
         //await this.click(this.selectors.surveyAndAssessmentLink.nth(randomIndex), "survey", "radiobutton");
-        await this.click("//button[text()='Add As Survey']", "Addsurvey", "button")
+        await this.click("//button[text()='Add As Survey']", "Addsurvey", "button");
+        await this.wait('mediumWait')
 
     }
 
@@ -335,15 +340,27 @@ export class CoursePage extends AdminHomePage {
     }
 
     async uploadPDF() {
-        const path = "../data/sample.pdf"
-        await this.mouseHover("//div[@id='upload-div']", "upload")
-        await this.uploadFile("//div[@id='upload-div']//input[@id='content_upload_file']", path)
-        await this.validateElementVisibility("//label[text()='Attached Content']/following::div[text()='sample']", "sample")
+        const fileName = "sample"
+        const path = `../data/${fileName}.pdf`
+        await this.mouseHover(this.selectors.uploadDiv, "upload")
+        await this.uploadFile(this.selectors.uploadInput, path)
+        await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
-    async addAssesment(){
-        await this .click("(//label[@for='sur_ass-item-checked-assessment-2']//i)[2]","Postassesment","radiobutton")
-        await this.click("(//label[@for='sur_ass-item-checked-assessment-1']//i)[2]","Preassesment","radiobutton")
-        await this.click(" //button[text()='Add As Assessment']","Addassesment","button")
+    async addAssesment() {
+        const selector = this.page.locator(this.selectors.assessmentCheckbox);
+        const checkboxCount = await selector.count();
+        if (checkboxCount < 2) {
+            throw new Error("Not enough checkboxes to select two distinct ones");
+        }
+        const selectedIndices = new Set<number>();
+        while (selectedIndices.size < 2) {
+            const randomIndex = Math.floor(Math.random() * checkboxCount);
+            selectedIndices.add(randomIndex);
+        }
+        for (const index of selectedIndices) {
+            await selector.nth(index).click();
+        }
+        await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
         await this.wait('maxWait')
     }
 }
