@@ -10,7 +10,7 @@ import { CoursePage } from '../pages/CoursePage'
 import { UserPage } from '../pages/UserPage'
 import { MetaLibraryPage } from '../pages/MetaLibraryPage'
 import { EditCoursePage } from '../pages/editCoursePage'
-
+import {AdminGroupPage} from '../pages/AdminGroupPage'
 
 
 type expertusFixture = {
@@ -25,7 +25,7 @@ type expertusFixture = {
     catalog: CatalogPage
     
     metadatalibrary:MetaLibraryPage
-
+    admingroup:AdminGroupPage
    
 }
 
@@ -77,6 +77,11 @@ export const test = baseTest.extend<expertusFixture>({
     metadatalibrary: async ({ page, context }, use) => {
         const metadatalibrary = new MetaLibraryPage(page, context);
         await use(metadatalibrary);
+    },
+
+    admingroup:async({ page, context }, use) => {
+        const admingroup = new AdminGroupPage(page, context);
+        await use(admingroup);
     }
     
    

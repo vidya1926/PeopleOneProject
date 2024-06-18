@@ -15,7 +15,10 @@ export class AdminHomePage extends PlaywrightWrapper {
         userMenu: "//a[text()='User']",
         metadataLibraryMenu: "//span[text()='metadata library']",
         metaPeopleLink: "//a[text()='People']",
-        metaLearningLink: "//a[text()='Learning']"
+        metaLearningLink: "//a[text()='Learning']",
+        searchCustomerAdmin:`//button[text()='CREATE GROUP']/following::input[1]`,
+        selectPopup:`//li[text()='Super admin - Customer']`,
+        adminGroupLink:"//a[text()='Admin Group']",
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -84,4 +87,13 @@ export class AdminHomePage extends PlaywrightWrapper {
     async enter(name: string, data: string) {
         await this.type(`//input[@id="${name}"]`, name, data);
     }
+
+    public async searchCustomeradmin(admin:string){
+        await this.type(this.selectors.searchCustomerAdmin,"Search Admin", admin)
+        await this.mouseHoverandClick(this.selectors.selectPopup,this.selectors.selectPopup,"POP up ","option")
+    }
+
+    public async adminGroup(){
+        await this.click(this.selectors.adminGroupLink,"AdminGroup","Link");
+    } 
 }
