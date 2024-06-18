@@ -25,7 +25,7 @@ type expertusFixture = {
     catalog: CatalogPage
     
     metadatalibrary:MetaLibraryPage
-    admingroup:AdminGroupPage
+    adminGroup:AdminGroupPage
    
 }
 
@@ -79,9 +79,9 @@ export const test = baseTest.extend<expertusFixture>({
         await use(metadatalibrary);
     },
 
-    admingroup:async({ page, context }, use) => {
-        const admingroup = new AdminGroupPage(page, context);
-        await use(admingroup);
+    adminGroup:async({ page, context }, use) => {
+        const adminGroup = new AdminGroupPage(page, context);
+        await use(adminGroup);
     }
     
    
