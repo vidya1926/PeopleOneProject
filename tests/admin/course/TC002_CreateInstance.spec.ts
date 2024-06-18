@@ -1,6 +1,6 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
-
+ 
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
@@ -9,8 +9,9 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
         { type:`Test Description`, description: `Verify that course should be created as multiple instance when ILT or VC delivery type is chosen` }
         
     );
+    const login = "customerAdmin"
     var courseName = FakerData.getCourseName();
-
+   
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);

@@ -68,7 +68,12 @@ export class CoursePage extends AdminHomePage {
         timeInput: (time: string) => `//label[text()='${time}']/following-sibling::input`,
         chooseTimeOption: (chooseTime: string) => `//li[text()='${chooseTime}']`,
         waitlistInput: "//label[text()='Waitlist']/following-sibling::input",
-        updateBtn: "//button[text()='Update']"
+        updateBtn: "//button[text()='Update']",
+        detailsbtn:"//button[text()='Details']",
+        courseUpdateBtn:"//button[@id='course-btn-save']",
+        surveyAndAssessmentLink:"//button[text()='Survey/Assessment']",
+        surveyCheckBox:"//div[@id='sur_ass-lms-scroll-survey-list']//i[contains(@class,'fa-duotone fa-square icon')]",
+        editCourseBtn:"//a[text()='Edit Course']",
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -106,7 +111,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async verifyCourseCreationSuccessMessage() {
-        await this.verification(this.selectors.successMessage, "Published successfully");
+        await this.verification(this.selectors.successMessage, "successfully");
     }
 
     async selectDomain(domain_name: string) {
@@ -297,32 +302,36 @@ export class CoursePage extends AdminHomePage {
 
     async save_editedcoursedetails() {
 
-        await this.click("//button[text()='Details']", "details", "button")
+        await this.click(this.selectors.detailsbtn, "details", "button")
         await this.clickCatalog()
-        await this.validateElementVisibility("//button[@id='course-btn-save' and text()='Update']", "button")
-        await this.click("//button[@id='course-btn-save' and text()='Update']", "update", "button")
+        await this.validateElementVisibility(this.selectors.courseUpdateBtn, "button")
+        await this.click(this.selectors.courseUpdateBtn, "Update", "button")
 
     }
 
     async addsurvey_course() {
         await this.wait('minWait')
-        await this.validateElementVisibility("//button[text()='Survey/Assessment']", "Survey/Assessment")
+        await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
+        await this.click(this.selectors.surveyAndAssessmentLink,"Survey/Assessment","Link")
         try {
             await this.page.waitForSelector("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']", { state: 'visible', timeout: 20000 });
             await this.click("//button[text()='YES']", "yes", "button")
-
         } catch (error) {
             console.log("no unsaved dialog")
-
         }
-        await this.click("//button[text()='Survey/Assessment']", "Survey/Assessment", "button")
-        await this.click("(//label[@for='sur_ass-item-checked-survey-2']//i)[2]", "survey", "radiobutton")
-        await this.click(" //button[text()='Add As Survey']", "Addsurvey", "button")
+        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
+        await this.wait('mediumWait')
+        const selector = this.page.locator(this.selectors.surveyCheckBox);
+        const checkboxCount = await selector.count()
+        const randomIndex = Math.floor(Math.random() * checkboxCount);
+        await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
+        //await this.click(this.selectors.surveyAndAssessmentLink.nth(randomIndex), "survey", "radiobutton");
+        await this.click("//button[text()='Add As Survey']", "Addsurvey", "button")
 
     }
 
     async editcourse() {
-        await this.click(" ", "editcourse", "button")
+        await this.click(this.selectors.editCourseBtn, "editcourse", "button")
     }
 
     async uploadPDF() {

@@ -24,15 +24,20 @@ export class AdminHomePage extends PlaywrightWrapper {
         this.common(page, context).catch(err => console.error("Error in common setup:", err));
     }
 
-    private async common(page: Page, context: BrowserContext) {
+    private async common(page: Page, context: BrowserContext,login?: string) {
         await this.loadApp(AdminHomePage.pageUrl);
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
-
+        
         if (pageTitle.startsWith("signin")) {
             const adLogin = new AdminLogin(page, context);
             await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
-
+            // if(login=="Admin"){
+            // await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
+            // // Example: await adLogin.storeState("../logins/expertusAdminLog.json");
+            // }else if(login =="customerAdmin"){
+            // await adLogin.adminLogin(credentialConstants.managerUSERNAME, credentialConstants.PASSWORD);
+            // }
         }
     }
 

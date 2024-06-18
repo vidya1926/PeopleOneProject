@@ -6,7 +6,7 @@ import { FakerData } from "../../../utils/fakerUtils"
 test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Single_Instance E-Learning with multiple contents`, async ({ adminHome, createCourse }) => {
     test.info().annotations.push(
-        { type: 'Author', description: 'Vidya' },
+        { type: 'Author', description: 'Ajay Michael' },
         { type: 'TestCase', description: 'Creating multiple contents for single instance e-learning' },
         { type:'Test Description', description:"Verify learning admin able to create a Single instance E-learning course with Multiple content ,Survey and Assesment"}
     );
