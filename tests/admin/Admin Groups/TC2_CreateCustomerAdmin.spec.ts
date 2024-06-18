@@ -14,7 +14,7 @@ test(`TC004_CreateCustomerAdmin`, async ({ adminHome, adminGroup }) => {
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminHome.searchCustomeradmin("Custom");
+    await adminGroup.searchCustomeradmin("Custom");
     await adminGroup.clickSuperadminCustomer();
     await adminGroup.searchUser("customadmin")
     await adminGroup.clickuserCheckbox("customadmin")

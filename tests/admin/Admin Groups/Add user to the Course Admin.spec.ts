@@ -60,6 +60,8 @@ test(`Add user to the Course Admin`, async ({ adminHome, adminGroup }) => {
     await adminHome.people();
     await adminHome.adminGroup();
     await adminGroup.searchUser("LEARNING ADMIN");
-    
+    await adminGroup.clickLearningAdmin();
+    await adminGroup.searchUser(courseAdmin)
+
 
 })
