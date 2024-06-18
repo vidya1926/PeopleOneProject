@@ -55,4 +55,9 @@ test(`Add user to the Course Admin`, async ({ adminHome, createUser }) => {
         { type:`Test Description`, description: `Adding User as Course Admin` }
         
     );
+
+    await adminHome.menuButton();
+    await adminHome.people();
+    await adminHome.adminGroup();
+    
 })
