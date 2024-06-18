@@ -9,7 +9,7 @@ test(`TC004_CreateCustomerAdmin`, async ({ adminHome, adminGroup }) => {
         { type: `Test Description`, description: `Verify that user is added to SuperAdmin-Customer role` }
 
     );
-
+    const login = "manager"; 
 
     await adminHome.menuButton();
     await adminHome.people();

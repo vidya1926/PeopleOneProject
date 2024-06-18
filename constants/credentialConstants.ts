@@ -1,4 +1,4 @@
 export enum credentialConstants {
-    USERNAME = 'admin',
-    PASSWORD = 'Welcome1@',
+   USERNAME = "admin",
+   PASSWORD = "Welcome1@"
 }

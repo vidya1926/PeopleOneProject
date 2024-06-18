@@ -4,14 +4,14 @@ import { AdminHomePage } from '../pages/AdminHomePage'
 import { LearnerLogin } from '../pages/LearnerLogin'
 import { LearnerHomePage } from '../pages/LearnerHomePage'
 import { CatalogPage } from '../pages/CatalogPage'
-import { credentialConstants } from "../constants/CredentialConstants";
+import { credentialConstants } from "../constants/credentialConstants";
 import { reg_createUser, user } from "../api_Integration/reg_createUser"
 import { CoursePage } from '../pages/CoursePage'
 import { UserPage } from '../pages/UserPage'
 import { MetaLibraryPage } from '../pages/MetaLibraryPage'
 import { EditCoursePage } from '../pages/editCoursePage'
 import {AdminGroupPage} from '../pages/AdminGroupPage'
-
+import {OrganizationPage} from '../pages/OrganizationPage'
 
 type expertusFixture = {
     adminLogin: AdminLogin
@@ -23,7 +23,7 @@ type expertusFixture = {
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
     catalog: CatalogPage
-    
+    organization:OrganizationPage
     metadatalibrary:MetaLibraryPage
     adminGroup:AdminGroupPage
    
@@ -82,6 +82,10 @@ export const test = baseTest.extend<expertusFixture>({
     adminGroup:async({ page, context }, use) => {
         const adminGroup = new AdminGroupPage(page, context);
         await use(adminGroup);
+    },
+    organization: async ({ page, context }, use) => {
+        const organization = new OrganizationPage(page, context);
+        await use(organization);
     }
     
    

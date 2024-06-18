@@ -1,7 +1,7 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { PlaywrightWrapper } from "../utils/playwright";
 import { URLConstants } from "../constants/urlConstants";
-import { credentialConstants } from "../constants/CredentialConstants";
+import { credentialConstants } from "../constants/credentialConstants";
 import { AdminLogin } from "./AdminLogin";
 
 export class AdminHomePage extends PlaywrightWrapper {
@@ -32,7 +32,7 @@ export class AdminHomePage extends PlaywrightWrapper {
         if (pageTitle.startsWith("signin")) {
             const adLogin = new AdminLogin(page, context);
             await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
-            // Example: await adLogin.storeState("../logins/expertusAdminLog.json");
+
         }
     }
 

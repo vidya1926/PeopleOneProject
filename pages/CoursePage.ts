@@ -11,7 +11,7 @@ export class CoursePage extends AdminHomePage {
         uploadInput: "//div[@id='upload-div']//input[@id='content_upload_file']",
         attachedContent: "//label[text()='Attached Content']/following::div[text()='samplevideo']",
         showInCatalogBtn: "//span[text()='Show in Catalog']",
-        modifyTheAccessBtn:"//footer/following::button[text()='No, modify the access']",
+        modifyTheAccessBtn: "//footer/following::button[text()='No, modify the access']",
         saveBtn: "//button[@id='course-btn-save' and text()='Save']",
         proceedBtn: "//footer//following::button[contains(text(),'Yes, Proceed')]",
         successMessage: "//div[@id='lms-overall-container']//h3",
@@ -79,8 +79,8 @@ export class CoursePage extends AdminHomePage {
         await this.verification(this.selectors.createUserLabel, expectedLabel);
     }
 
-    async typeDescription(name: string, data: string) {
-        await this.type(this.selectors.courseDescriptionInput, name, data);
+    async typeDescription( data: string) {
+        await this.type(this.selectors.courseDescriptionInput, "Description", data);
     }
 
     async upload() {
@@ -118,9 +118,9 @@ export class CoursePage extends AdminHomePage {
     async selectLanguage(language: string) {
         await this.click(this.selectors.courseLanguagesWrapper, "Language", "Field");
         await this.type(this.selectors.courseLanguageInput, "Input Field", language);
-        await this.mouseHover(this.selectors.courseLanguageLink(language),language);
-        await this.click(this.selectors.courseLanguageLink(language),language,"Button");
-        
+        await this.mouseHover(this.selectors.courseLanguageLink(language), language);
+        await this.click(this.selectors.courseLanguageLink(language), language, "Button");
+
     }
 
     async clickSelect(category: string) {
@@ -138,9 +138,9 @@ export class CoursePage extends AdminHomePage {
     }
 
 
-    async modifyTheAccess(){
-        await this.mouseHover(this.selectors.modifyTheAccessBtn,"No, Modify The Access");
-        await this.click(this.selectors.modifyTheAccessBtn,"No, Modify The Access","Button");
+    async modifyTheAccess() {
+        await this.mouseHover(this.selectors.modifyTheAccessBtn, "No, Modify The Access");
+        await this.click(this.selectors.modifyTheAccessBtn, "No, Modify The Access", "Button");
     }
     async clickCancel() {
         await this.click(this.selectors.cancelBtn, "Cancel", "image");
@@ -293,5 +293,48 @@ export class CoursePage extends AdminHomePage {
 
     async clickUpdate() {
         await this.click(this.selectors.updateBtn, "update", "field");
+    }
+
+    async save_editedcoursedetails() {
+
+        await this.click("//button[text()='Details']", "details", "button")
+        await this.clickCatalog()
+        await this.validateElementVisibility("//button[@id='course-btn-save' and text()='Update']", "button")
+        await this.click("//button[@id='course-btn-save' and text()='Update']", "update", "button")
+
+    }
+
+    async addsurvey_course() {
+        await this.wait('minWait')
+        await this.validateElementVisibility("//button[text()='Survey/Assessment']", "Survey/Assessment")
+        try {
+            await this.page.waitForSelector("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']", { state: 'visible', timeout: 20000 });
+            await this.click("//button[text()='YES']", "yes", "button")
+
+        } catch (error) {
+            console.log("no unsaved dialog")
+
+        }
+        await this.click("//button[text()='Survey/Assessment']", "Survey/Assessment", "button")
+        await this.click("(//label[@for='sur_ass-item-checked-survey-2']//i)[2]", "survey", "radiobutton")
+        await this.click(" //button[text()='Add As Survey']", "Addsurvey", "button")
+
+    }
+
+    async editcourse() {
+        await this.click(" ", "editcourse", "button")
+    }
+
+    async uploadPDF() {
+        const path = "../data/sample.pdf"
+        await this.mouseHover("//div[@id='upload-div']", "upload")
+        await this.uploadFile("//div[@id='upload-div']//input[@id='content_upload_file']", path)
+        await this.validateElementVisibility("//label[text()='Attached Content']/following::div[text()='sample']", "sample")
+    }
+    async addAssesment(){
+        await this .click("(//label[@for='sur_ass-item-checked-assessment-2']//i)[2]","Postassesment","radiobutton")
+        await this.click("(//label[@for='sur_ass-item-checked-assessment-1']//i)[2]","Preassesment","radiobutton")
+        await this.click(" //button[text()='Add As Assessment']","Addassesment","button")
+        await this.wait('maxWait')
     }
 }

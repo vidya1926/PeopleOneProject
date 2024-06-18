@@ -1,7 +1,7 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
 
-test.use({ storageState: "logins/expertusAdminLog.json" })
+//test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ranjini` },
@@ -15,7 +15,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");  
-    await createCourse.typeDescription("Description", "This is a new course by name :" + courseName); 
+    await createCourse.typeDescription("This is a new course by name :" + courseName); 
     await createCourse.clickSelect("A1 category10");   
     await createCourse.selectProvider("Reintermediate");
     await createCourse.selectTotalDuration("48");
@@ -24,10 +24,10 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.clickSave();
     await createCourse.modifyTheAccess();
     await editCourse.clickClose();
-    await editCourse.clickCourseMenu("Tags");
+    await editCourse.clickTagMenu();
     await editCourse.selectTags("Empower");
     await editCourse.clickClose();
-    await editCourse.clickCourseMenu("Completion Certificate");
+    await editCourse.clickCompletionCertificate();
     await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();

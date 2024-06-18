@@ -7,6 +7,8 @@ export class EditCoursePage extends AdminHomePage {
         ...this.selectors,
         closeBtn: "//button[text()='Close']",
         courseMenu: (menuName: string) => `//span//span[text()='${menuName}']`,
+        tagMenu:"//span//span[text()='Tags']",
+        completionCertificateMenu:"//span//span[text()='Completion Certificate']",
         tagsSearchField: "//input[@id='tags-search-field']",
         tagListItem: (tagName: string) => `//li[text()='${tagName}']`,
         okBtn: "//button[text()='OK']",
@@ -23,9 +25,14 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.closeBtn, "Close", "Button");
     }
 
-    async clickCourseMenu(menuName: string) {
-        const selector = this.selectors.courseMenu(menuName);
-        await this.click(selector, menuName, "Link");
+    async clickTagMenu() {
+        const selector = this.selectors.tagMenu;
+        await this.click(selector, "Tags", "Link");
+    }
+
+    async clickCompletionCertificate() {
+        const selector = this.selectors.completionCertificateMenu;
+        await this.click(selector, "completion Certificate", "Link");
     }
 
     async selectTags(tagName: string) {
