@@ -48,7 +48,7 @@ test(`Add user to the Course Admin`, async ({ adminHome, createUser }) => {
     }
 });
 
-test(`Add user to the Course Admin`, async ({ adminHome, createUser }) => {
+test(`Add user to the Course Admin`, async ({ adminHome, adminGroup }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -59,5 +59,7 @@ test(`Add user to the Course Admin`, async ({ adminHome, createUser }) => {
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
+    await adminGroup.searchUser("LEARNING ADMIN");
     
+
 })

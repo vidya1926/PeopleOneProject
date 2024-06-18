@@ -8,7 +8,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
 
     public selectors = {
         superAdminCustomer: "//div[text()='Super admin - Customer']",
-        searchUser: "//div[text()='UserName']/following::input[@placeholder='Search']",      
+        searchUser: "#exp-search-field",      
         chooseUser:(user:string)=>`//li[text()=${user}]`,
         //(username:string)=>`//span[text()=${username}]/following::i[contains(@class,'fa-square icon')][1]
         selectUser:`//div[contains(@class,'custom-control custom-chkbox')][2]`,
@@ -24,10 +24,8 @@ export class AdminGroupPage extends PlaywrightWrapper {
     }
 
     public async searchUser(data: string) {
-     
-
         await this.typeAndEnter(this.selectors.searchUser, "Search User", data)
-     //   await this.mouseHoverandClick(this.selectors.chooseUser(data),this.selectors.chooseUser(data),"Username","Selected")    }
+    
     }
     public async clickuserCheckbox(username:string) {
         await this.validateElementVisibility(this.selectors.selectUser,"Username")
@@ -40,8 +38,6 @@ export class AdminGroupPage extends PlaywrightWrapper {
 
     public async clickUpdate(){
         await this.click(this.selectors.selectUpdate,"Update", "Button")
-       
-
     }
 
 }

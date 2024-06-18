@@ -278,4 +278,11 @@ export abstract class PlaywrightWrapper {
         await expect(spinner).toHaveCount(0);
         console.log("expected element is disabled");
     }
+
+    async clickCheckbox(locator: string,name:string){
+        await test.step(`Checkbox ${name} is selected`, async () => {
+            await this.page.focus(locator)
+        await this.page.check(locator,{force:true});
+    })
+    }
 }
