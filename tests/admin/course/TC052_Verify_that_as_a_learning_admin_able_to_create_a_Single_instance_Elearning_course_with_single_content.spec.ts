@@ -2,7 +2,7 @@ import {test} from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
 
 
-let courseName:string;
+const courseName  =FakerData.getCourseName();
 //test.use({ storageState: "logins/expertusAdminLog.json"})
 test.skip(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
 
@@ -12,7 +12,7 @@ test.skip(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse}
         { type:`Test Description`, description: `Verify that course should be created for Single instance` }
         
     );
-    courseName  =FakerData.getCourseName();
+   
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -37,10 +37,10 @@ test.skip(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse}
             { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
             { type:`Test Description`, description: `Verify that course should be created for Single instance` }
         ); 
-                       
+        await learnerHome.isSignOutVisible();
         await learnerHome.clickMenu("Catalog");
         await catalog.mostRecent("Most Recent")
-        await catalog.searchCatalog("exp-searchcatalog-search-field",courseName);  
+        await catalog.searchCatalog(courseName);  
         await catalog.clickMoreonCourse(courseName)
         await catalog.clickSelectcourse(courseName)
         await catalog.clickEnroll()

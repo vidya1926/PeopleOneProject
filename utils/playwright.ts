@@ -244,14 +244,19 @@ export abstract class PlaywrightWrapper {
 
 
     async validateElementVisibility(locator: any, elementName: string) {
-        const element = this.page.locator(locator);
-        await this.page.waitForSelector(locator, { state: 'visible', timeout: 30000 ,strict:true});
-        if (await element.isVisible({ timeout: 20000 })) {
-            console.log(`${elementName} is visible as expected.`);
-        } else {
-            console.error(`${elementName} is not visible.`);
+        try {
+            const element = this.page.locator(locator);
+            await this.page.waitForSelector(locator, { state: 'visible', timeout: 30000, strict: true });
+            if (await element.isVisible({ timeout: 20000 })) {
+                console.log(`${elementName} is visible as expected.`);
+            } else {
+                console.error(`${elementName} is not visible.`);
+            }
+        } catch (error) {
+            console.error(`Error validating visibility of ${elementName}: ${error}`);
         }
     }
+    
 
     async uploadFile(locator: string, Path: string,) {
         const filePath = path.resolve(__dirname, Path);

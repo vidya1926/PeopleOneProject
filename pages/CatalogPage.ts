@@ -4,7 +4,7 @@ import { LearnerHomePage } from "./LearnerHomePage";
 export class CatalogPage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
-        searchInput: (name: string) => `//input[@id="${name}"]`,
+        searchInput:`//input[@id="exp-searchcatalog-search-field"]`,
         mostRecentMenuItem: (menu: string) => `//div[text()="${menu}"]`,
         createdCourse: ` //div[text()='Most Recent']/following::li[1]`,
         moreButton: (course: string) => `(//div[text()="${course}"]/following::a/i)[1]`,
@@ -20,10 +20,10 @@ export class CatalogPage extends LearnerHomePage {
         super(page, context);
     }
 
-    async searchCatalog(name: string, data: string) {
-        const searchSelector = this.selectors.searchInput(name);
-        await this.type(searchSelector, name, data);
-        await this.keyboardAction(searchSelector, "Enter", "Input", name);
+    async searchCatalog( data: string) {
+        const searchSelector = this.selectors.searchInput;
+        await this.type(searchSelector,"Search Field", data);
+        await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
         await this.page.waitForTimeout(10000);
     }
 

@@ -14,15 +14,15 @@ export class LearnerHomePage extends LearnerLogin {
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        this.common(page, context);
+        this.common(page, context).catch(err => console.error("Error in common setup:", err));
     }
 
-    public async common(page: Page, context: BrowserContext) {
+    private async common(page: Page, context: BrowserContext) {
         await this.loadApp(LearnerHomePage.pageUrl);
         // let pageTitle = await this.getTitle();
-        // console.log(pageTitle);
-        const lnsiginIn= new LearnerLogin(page,context)
-        lnsiginIn.learnerLogin(credentialConstants.LEARNERUSERNAME,credentialConstants.PASSWORD);
+        // console.log("Page Title:", pageTitle);
+        const inLogin = new LearnerLogin(page, context);
+        await inLogin.learnerLogin(credentialConstants.LEARNERUSERNAME, credentialConstants.PASSWORD);
     }
 
     public async isSignOutVisible() {
