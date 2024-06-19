@@ -12,6 +12,9 @@ export class AdminHomePage extends PlaywrightWrapper {
         dragableMenu:(menu:string)=>`//div[text()='${menu}']/following::div[text()="Create"][1]`,
         menu: "//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
+        learningMenu:"//span[text()='Learning']",
+        courseLink:"//a[text()='Course']",
+        createCourseBtn:"//button[text()='CREATE COURSE']",
         userMenu: "//a[text()='User']",
         metadataLibraryMenu: "//span[text()='metadata library']",
         metaPeopleLink: "//a[text()='People']",
@@ -63,6 +66,19 @@ export class AdminHomePage extends PlaywrightWrapper {
     public async people() {
         await this.validateElementVisibility(this.selectors.peopleMenu, "People");
         await this.click(this.selectors.peopleMenu, "People", "Button");
+    }
+
+    public async clickLearningMenu() {
+        await this.validateElementVisibility(this.selectors.learningMenu, "Learning");
+        await this.click(this.selectors.learningMenu, "Learning", "Button");
+    }
+    public async clickCourseLink() {
+        await this.validateElementVisibility(this.selectors.courseLink, "Course");
+        await this.click(this.selectors.courseLink, "Course", "Button");
+    }
+    public async clickCreateCourse() {
+        await this.validateElementVisibility(this.selectors.createCourseBtn, "Course");
+        await this.click(this.selectors.createCourseBtn, "Course", "Button");
     }
     
     public async user() {

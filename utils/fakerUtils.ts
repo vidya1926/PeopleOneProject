@@ -27,6 +27,12 @@ export class FakerData {
         return faker.person.jobTitle();
     }
 
+    static getTagNames() {
+        const techTerm = faker.hacker.noun();
+        return techTerm;
+    }
+ 
+
     static getCourseName():string{
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();

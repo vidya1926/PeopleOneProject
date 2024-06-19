@@ -42,8 +42,8 @@ export const test = baseTest.extend<expertusFixture>({
         const lnLogin = new LearnerLogin(page, context);
         //const userName = await getUserRecord();
         //console.log(`A user named ${userName} has been created`);
-        await reg_createUser()
-        await lnLogin.learnerLogin(user, "Welcome1@");
+        //await reg_createUser()
+        await lnLogin.learnerLogin(credentialConstants.LEARNERUSERNAME, credentialConstants.PASSWORD);
         await use(lnLogin);
         console.log("Login is verified");
         

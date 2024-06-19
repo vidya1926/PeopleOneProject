@@ -10,7 +10,7 @@ constructor(page: Page,context:BrowserContext) {
 }
 
 public async learnerLogin(username:string,password:string){
-    await this.click("//a[@id='signin']","Sign In","Button")
+    await this.click("//span[text()='Sign In']","Sign In","Button")
     await this.type("#username","Username",username);
     await this.type("#password","password",password);
     await this.click("//button[text()='Sign In']","Sign In","Button")

@@ -1,6 +1,7 @@
 import { LearnerLogin } from "./LearnerLogin";
 import { BrowserContext, Page } from "@playwright/test";
 import { URLConstants } from "../constants/urlConstants";
+import { credentialConstants } from "../constants/credentialConstants";
 
 export class LearnerHomePage extends LearnerLogin {
     static pageUrl = URLConstants.leanerURL;
@@ -18,12 +19,10 @@ export class LearnerHomePage extends LearnerLogin {
 
     public async common(page: Page, context: BrowserContext) {
         await this.loadApp(LearnerHomePage.pageUrl);
-        let pageTitle = await this.getTitle();
-        console.log(pageTitle);
-        if (pageTitle.startsWith("Sign In")) {
-            // Handle login if necessary
-            const learnLog = new LearnerLogin(page, context);
-        }
+        // let pageTitle = await this.getTitle();
+        // console.log(pageTitle);
+        const lnsiginIn= new LearnerLogin(page,context)
+        lnsiginIn.learnerLogin(credentialConstants.LEARNERUSERNAME,credentialConstants.PASSWORD);
     }
 
     public async isSignOutVisible() {

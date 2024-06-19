@@ -25,7 +25,7 @@ export class CoursePage extends AdminHomePage {
         categoryOption: (category: string) => `//span[text()='${category}']`,
         addCategoryBtn: "//div[text()='Add Category']",
         categoryInput: "//label[text()='Category']/following::input[@id='course-categorys']",
-        okBtn: "//label[text()='Category']/following::span[@class='lms-cat-ok']",
+        okBtn: "//button[text()='OK']",
         cancelBtn: "//label[text()='Category']/following::span[contains(@class,'lms-cat-cancel')]",
         providerDropdown: "(//label[text()='Provider']/following::button)[1]",
         providerOption: (provider: string) => `//span[text()='${provider}']`,
@@ -52,7 +52,7 @@ export class CoursePage extends AdminHomePage {
         saveInDraftCheckbox: "//span[contains(text(),'Save as Draft')]",
         deliveryTypeDropdown: "//div[@id='wrapper-course-delivery-type']",
         deliveryTypeOption: (deliveryType: string) => `//span[text()='${deliveryType}']`,
-        editCourseTabLink: (tabName: string) => `//a[text()='${tabName}']`,
+        editCourseTabLink: "//a[text()='Edit Course']",
         addInstancesBtn: "//button[@id='course-btn-add-instances']",
         instanceDeliveryTypeField: "//div[@id='wrapper-instanceDeliveryType']",
         instanceDeliveryTypeOption: (delivery: string) => `//footer/following::a/span[text()='${delivery}']`,
@@ -76,6 +76,13 @@ export class CoursePage extends AdminHomePage {
         editCourseBtn: "//a[text()='Edit Course']",
         assessmentCheckbox: "//div[@id='sur_ass-lms-scroll-assessment-list']//i[contains(@class,'fa-duotone fa-square icon')]",
         addAssessmentBtn: "//button[text()='Add As Assessment']",
+        categoryDropdown: "//div[@class='dropdown-menu show']//input[@type='search']",
+        allCategoryOptions:"//select[@id='course-categorys-exp-select']/option",
+        providerOptions:"//select[@id='course-providers']/option",
+        provider:(Options:string) =>`(//span[text()='${Options}'])[1]`,
+        
+        
+       // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -246,8 +253,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.deliveryTypeOption(deliveryType), "Delivery Type", "Selected");
     }
 
-    async clickEditCourseTabs(data: string) {
-        await this.click(this.selectors.editCourseTabLink(data), "Edit Course", "Button");
+    async clickEditCourseTabs() {
+        await this.click(this.selectors.editCourseTabLink, "Edit Course", "Button");
     }
 
     async addInstances() {
@@ -363,4 +370,27 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
         await this.wait('maxWait')
     }
+
+    async handleCategoryADropdown(){
+      
+        await this.click(this.selectors.selectCategoryBtn,"dropdown","button") 
+        const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
+        
+        const randomIndex = Math.floor(Math.random() * categoryElements.length);
+        const randomElement=  categoryElements[randomIndex].textContent();
+        const randomtext = await randomElement;
+        await this.typeText(this.selectors.categoryDropdown,"input",randomElement)
+       
+        await this.click(this.selectors.categoryOption(randomtext),"options","button")
+      }
+
+      async providerDropdown(){
+    
+        const providerElements = await this.page.$$(this.selectors.providerOptions);
+        const randomIndex = Math.floor(Math.random() * providerElements.length);
+        const randomElement=  providerElements[randomIndex].textContent();
+        const randomOptions=await randomElement
+        await this.click(this.selectors.providerDropdown,"dropdown","button")
+        await this.click(this.selectors.provider(randomOptions),"option","button")
+      }
 }

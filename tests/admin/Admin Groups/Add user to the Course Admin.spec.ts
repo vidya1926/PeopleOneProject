@@ -10,7 +10,7 @@ const newData = {
     courseAdmin: courseAdmin
 }
 updateFieldsInJSON(newData)
-test(`Add user to the Course Admin`, async ({ adminHome, createUser }) => {
+test(`Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },

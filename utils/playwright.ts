@@ -1,5 +1,6 @@
 
 import { Page, test, expect, BrowserContext } from "@playwright/test";
+import { promises } from "dns";
 import * as path from 'path';
 
 
@@ -281,6 +282,17 @@ export abstract class PlaywrightWrapper {
         const spinner = this.page.locator("div[class='container-fluid mb-5'] svg");
         await expect(spinner).toHaveCount(0);
         console.log("expected element is disabled");
+    }
+
+    async typeText(locator: string, name: string, data: Promise<string | null>) {
+        const resolvedData = await data;
+        await test.step(`Textbox ${name} filled with data: ${resolvedData}`, async () => {
+            if (resolvedData !== null) {
+                await this.page.locator(locator).fill(resolvedData);
+            } else {
+                throw new Error(`Cannot fill textbox ${name} with null data`);
+            }
+        });
     }
 
     async clickCheckbox(locator: string,name:string){

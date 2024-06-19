@@ -1,24 +1,31 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
  
+
+    var courseName = FakerData.getCourseName();
+    var tagName=FakerData.getTagNames();
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
-        { type: `Author`, description: `Ranjini` },
+        { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Create the course as multiple instance` },
         { type:`Test Description`, description: `Verify that course should be created as multiple instance when ILT or VC delivery type is chosen` }
         
     );
+
+
+    //Fake data:
     const login = "customerAdmin"
-    var courseName = FakerData.getCourseName();
+    
+    
    
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");  
     await createCourse.typeDescription("This is a new course by name :" + courseName); 
-    await createCourse.clickSelect("A1 category10");   
-    await createCourse.selectProvider("Reintermediate");
+    await createCourse.handleCategoryADropdown();
+    await createCourse.providerDropdown()
     await createCourse.selectTotalDuration("48");
     await createCourse.typeAdditionalInfo("Happy Learning!");
     await createCourse.clickCatalog();
@@ -26,14 +33,14 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.modifyTheAccess();
     await editCourse.clickClose();
     await editCourse.clickTagMenu();
-    await editCourse.selectTags("Empower");
+    await editCourse.selectTags(tagName);
     await editCourse.clickClose();
     await editCourse.clickCompletionCertificate();
     await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifyCourseCreationSuccessMessage();
-    await createCourse.clickEditCourseTabs("Edit Course");
+    await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
     await createCourse.selectInstanceDeliveryType("Classroom");
     await createCourse.clickCreateInstance();
@@ -45,3 +52,5 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.selectLocation("Qeagle");   
 
 })
+
+

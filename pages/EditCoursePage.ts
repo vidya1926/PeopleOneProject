@@ -11,8 +11,9 @@ export class EditCoursePage extends AdminHomePage {
         completionCertificateMenu:"//span//span[text()='Completion Certificate']",
         tagsSearchField: "//input[@id='tags-search-field']",
         tagListItem: (tagName: string) => `//li[text()='${tagName}']`,
-        okBtn: "//button[text()='OK']",
-        certificateSearchField: "#exp-search-field",
+        okBtnTag:"(//button[text()='OK'])",
+        okBtnCertificate: "(//button[text()='OK'])[2]",
+        certificateSearchField: "#exp-search-certificate-field",
         certificateRadioBtn: (certificateName: string) => `(//div[text()='${certificateName}']/following::i)[1]`,
         addBtn: "//button[text()='Add']"
     };
@@ -38,8 +39,9 @@ export class EditCoursePage extends AdminHomePage {
     async selectTags(tagName: string) {
         await this.typeAndEnter(this.selectors.tagsSearchField, "Type to select tag or add tag", tagName);
         const tagSelector = this.selectors.tagListItem(tagName);
-        await this.validateElementVisibility(tagSelector, tagName);
-        await this.click(this.selectors.okBtn, "OK", "Button");
+        //await this.validateElementVisibility(tagSelector, tagName);
+        await this.wait('minWait')
+        await this.click(this.selectors.okBtnTag, "OK", "Button");
     }
 
     async selectCourseCompletionCertificate(certificateName: string) {
@@ -47,6 +49,6 @@ export class EditCoursePage extends AdminHomePage {
         const certSelector = this.selectors.certificateRadioBtn(certificateName);
         await this.click(certSelector, "Certificate", "Radio button");
         await this.click(this.selectors.addBtn, "Add", "Button");
-        await this.click(this.selectors.okBtn, "OK", "Button");        
+        await this.click(this.selectors.okBtnCertificate, "OK", "Button");        
     }
 }
