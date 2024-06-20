@@ -5,14 +5,14 @@ export class CatalogPage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
         searchInput:`//input[@id="exp-searchcatalog-search-field"]`,
-        mostRecentMenuItem: (menu: string) => `//div[text()="${menu}"]`,
+        mostRecentMenuItem:`//div[text()="Most Recent"]`,
         createdCourse: ` //div[text()='Most Recent']/following::li[1]`,
         moreButton: (course: string) => `(//div[text()="${course}"]/following::a/i)[1]`,
         enrollIcon: `//div[text()='Most Recent']//following::i[contains(@class,'tooltipIcon fa-duotone')][1]`,
-        selectCourse: (course: string) => `(//span[text()="${course}"])[2]/following::i[5]`,
+        selectCourse: (course: string) => `//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')][1]`,
         enrollButton:`//span[text()='Enroll']`,
-        launchButton: (name: string) => `//button[text()="${name}"]`,
-        completedButton: (name: string) => `//a[contains(text(),"${name}")]`,
+        launchButton:`//button[text()="Launch Content"]`,
+        completedButton:`//a[contains(text(),"Completed")]`,
         completedCourse: (name: string) => `(//h5[text()="${name}"])[1]`
     };
 
@@ -27,8 +27,8 @@ export class CatalogPage extends LearnerHomePage {
         await this.page.waitForTimeout(10000);
     }
 
-    async mostRecent(menu: string) {
-        await this.mouseHover(this.selectors.mostRecentMenuItem(menu), menu);
+    async mostRecent() {
+        await this.mouseHover(this.selectors.mostRecentMenuItem, "Most Recent");
     }
 
     async clickMoreonCourse(courseName: string) {
@@ -53,14 +53,15 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.enrollButton,"Enroll","Button")
     }
 
-    async clickLaunchButton(name: string) {
-        const launchButtonSelector = this.selectors.launchButton(name);
-        await this.click(launchButtonSelector, name, "Button");
+    async clickLaunchButton() {
+        const launchButtonSelector = this.selectors.launchButton;
+        await this.click(launchButtonSelector,"Launch Button", "Button");
         await this.waitForElementHidden("//div[@class='mb-5 router-view']", "Loading");
     }
-    async clickCompletedButton(name: string) {
+    async clickCompletedButton() {
         await this.page.waitForTimeout(10000);
-        const completedButtonSelector = this.selectors.completedButton(name);
+        const name ="Completed Button";
+        const completedButtonSelector = this.selectors.completedButton;
         await this.mouseHover(completedButtonSelector, name);
         await this.validateElementVisibility(completedButtonSelector, name);
         await this.click(completedButtonSelector, name, "Button");

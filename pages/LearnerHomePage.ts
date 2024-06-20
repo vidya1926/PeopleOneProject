@@ -7,9 +7,11 @@ export class LearnerHomePage extends LearnerLogin {
     static pageUrl = URLConstants.leanerURL;
 
     public selectors = {
+      
         signOutLink: "//div[@class='logout']/a",
-        menuLink: (menu: string) => `//a//span[text()='${menu}']`
-        // Add more selectors as needed
+        catalogLink: `//a//span[text()='Catalog']`,
+        myLearningLink:"//a//span[text()='My Learning']"
+                // Add more selectors as needed
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -30,9 +32,16 @@ export class LearnerHomePage extends LearnerLogin {
         await this.validateElementVisibility(this.selectors.signOutLink, "Sign Out");
     }
 
-    public async clickMenu(menu: string) {
-        await this.validateElementVisibility(this.selectors.menuLink(menu), menu);
-        await this.click(this.selectors.menuLink(menu), menu, "Button");
+    public async clickCatalog() {
+        await this.validateElementVisibility(this.selectors.catalogLink, "Catalog");
+        await this.click(this.selectors.catalogLink, "Catalog", "Link");
+        await this.page.waitForLoadState('load');
+    }
+
+    
+    public async clickMyLearning() {
+        await this.validateElementVisibility(this.selectors.myLearningLink, "Link");
+        await this.click(this.selectors.myLearningLink, "My Learning", "Link");
         await this.page.waitForLoadState('load');
     }
 }

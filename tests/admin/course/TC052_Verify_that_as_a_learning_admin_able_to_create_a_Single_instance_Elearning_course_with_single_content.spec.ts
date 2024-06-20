@@ -4,7 +4,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 const courseName  =FakerData.getCourseName();
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test.skip(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
+test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -38,15 +38,15 @@ test.skip(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse}
             { type:`Test Description`, description: `Verify that course should be created for Single instance` }
         ); 
         await learnerHome.isSignOutVisible();
-        await learnerHome.clickMenu("Catalog");
-        await catalog.mostRecent("Most Recent")
+        await learnerHome.clickCatalog();
+        await catalog.mostRecent();
         await catalog.searchCatalog(courseName);  
         await catalog.clickMoreonCourse(courseName)
         await catalog.clickSelectcourse(courseName)
         await catalog.clickEnroll()
-        await catalog.clickLaunchButton("Launch Content");
-        await learnerHome.clickMenu("My Learning");
-        await catalog.clickCompletedButton("Completed");
+        await catalog.clickLaunchButton();
+        await learnerHome.clickMyLearning();
+        await catalog.clickCompletedButton();
         await catalog.verifyCompletedCourse(courseName);
         })
     
