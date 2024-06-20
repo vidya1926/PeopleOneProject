@@ -17,9 +17,10 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English")    
     await createCourse.typeDescription("This is a new course by name :" + courseName);    
-    await createCourse.uploadPDF()
-    await createCourse.uploadvideo()
-    await createCourse.clickCatalog()
+    // await createCourse.uploadPDF()
+    // await createCourse.uploadvideo()
+    await createCourse.MultipleContent();
+    await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage()

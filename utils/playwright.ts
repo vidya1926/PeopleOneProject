@@ -260,6 +260,17 @@ export abstract class PlaywrightWrapper {
     }
     
 
+    async uploadMultipleContent(fileName1:string,fileName2:string,locator:any){
+        const inputElementHandle= this.page.locator(locator)
+        if(inputElementHandle){
+            await inputElementHandle.setInputFiles([path.resolve(__dirname, fileName1),
+                path.resolve(__dirname, fileName2)])
+             }else{
+                console.error('Input element not found');
+             }
+        }
+       
+
     async uploadFile(locator: string, Path: string,) {
         const filePath = path.resolve(__dirname, Path);
         const inputElementHandle = this.page.locator(locator);

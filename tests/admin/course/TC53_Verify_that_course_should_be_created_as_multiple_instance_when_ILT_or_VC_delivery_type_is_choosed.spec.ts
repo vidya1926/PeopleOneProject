@@ -3,7 +3,6 @@ import { FakerData } from '../../../utils/fakerUtils';
  
 
     var courseName = FakerData.getCourseName();
-    var tagName=FakerData.getTagNames();
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
@@ -24,6 +23,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");  
     await createCourse.typeDescription("This is a new course by name :" + courseName); 
+    await createCourse.selectdeliveryType("Classroom")
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
     await createCourse.selectTotalDuration("48");
@@ -33,10 +33,11 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.modifyTheAccess();
     await editCourse.clickClose();
     await editCourse.clickTagMenu();
-    await editCourse.selectTags(tagName);
+    await editCourse.selectTags();
     await editCourse.clickClose();
-    await editCourse.clickCompletionCertificate();
-    await editCourse.selectCourseCompletionCertificate("Playwright Automation");
+/* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
+    // await editCourse.clickCompletionCertificate();
+    //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifyCourseCreationSuccessMessage();

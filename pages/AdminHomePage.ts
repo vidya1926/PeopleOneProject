@@ -34,7 +34,7 @@ export class AdminHomePage extends PlaywrightWrapper {
         
         if (pageTitle.startsWith("signin")) {
             const adLogin = new AdminLogin(page, context);
-            await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+            await adLogin.adminLogin(credentialConstants.LEARNERADMIN, credentialConstants.PASSWORD);
         }
     }
 

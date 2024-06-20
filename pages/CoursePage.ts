@@ -29,7 +29,7 @@ export class CoursePage extends AdminHomePage {
         okBtn: "//button[text()='OK']",
         cancelBtn: "//label[text()='Category']/following::span[contains(@class,'lms-cat-cancel')]",
         providerDropdown: "(//label[text()='Provider']/following::button)[1]",
-        providerOption: (provider: string) => `//span[text()='${provider}']`,
+        providerOption: (provider: string) => `//a[@class='dropdown-item active']//span[text()='${provider}']`,
         totalDurationInput: "(//label[text()='Total Duration']/following::input)[1]",
         additionalInfoInput: "//div[@id='additional_information_description_id']//p",
         priceInput: "//label[text()='Price']/following::input[1]",
@@ -253,6 +253,7 @@ export class CoursePage extends AdminHomePage {
 
     async selectdeliveryType(deliveryType: string) {
         await this.click(this.selectors.deliveryTypeDropdown, "Course Delivery", "dropdown");
+        await this.mouseHover(this.selectors.deliveryTypeOption(deliveryType), "Delivery Type");
         await this.click(this.selectors.deliveryTypeOption(deliveryType), "Delivery Type", "Selected");
     }
 
@@ -275,9 +276,12 @@ export class CoursePage extends AdminHomePage {
 
     async clickCreateInstance() {
         await this.click(this.selectors.createInstanceBtn, "Create Instances", "Button");
+        await this.waitForElementHidden("div[class='p-3'] svg","Spinner Disappear");
     }
 
     async enterSessionName(sessionName: string) {
+        await this.wait('mediumWait');
+        await this.validateElementVisibility(this.selectors.sessionNameInput, "Seesion Name");
         await this.type(this.selectors.sessionNameInput, "Seesion Name", sessionName);
     }
 
@@ -351,10 +355,22 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.editCourseBtn, "editcourse", "button")
     }
 
+   async MultipleContent(){
+    const fileName = "sample"
+    const pdf= `../data/${fileName}.pdf`
+    const video="../data/video1.mp4"
+    const locator=this.selectors.uploadInput
+    await this.mouseHover(this.selectors.uploadDiv, "upload");
+    await this.uploadMultipleContent(pdf,video,locator);
+    await this.validateElementVisibility(this.selectors.progress, "Loading");
+    await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+   }
+   
+
     async uploadPDF() {
         const fileName = "sample"
         const path = `../data/${fileName}.pdf`
-        await this.mouseHover(this.selectors.uploadDiv, "upload")
+        await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)

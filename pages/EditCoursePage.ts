@@ -15,7 +15,8 @@ export class EditCoursePage extends AdminHomePage {
         okBtnCertificate: "(//button[text()='OK'])[2]",
         certificateSearchField: "#exp-search-certificate-field",
         certificateRadioBtn: (certificateName: string) => `(//div[text()='${certificateName}']/following::i)[1]`,
-        addBtn: "//button[text()='Add']"
+        addBtn: "//button[text()='Add']",
+        tagsSuccesfully:"//div[@id='staticBackdrop' and contains(@class,'show')]//following::span[contains(text(),'successfully.')]"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -36,11 +37,15 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(selector, "completion Certificate", "Link");
     }
 
-    async selectTags(tagName: string) {
-        await this.typeAndEnter(this.selectors.tagsSearchField, "Type to select tag or add tag", tagName);
-        const tagSelector = this.selectors.tagListItem(tagName);
-        //await this.validateElementVisibility(tagSelector, tagName);
-        await this.wait('minWait')
+    async selectTags() {
+        const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
+        const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
+        const randomTag = tags[randomIndex]; 
+        await this.type(this.selectors.tagsSearchField, "Type to select tag or add tag", randomTag);
+        await this.keyboardAction(this.selectors.tagsSearchField,"Backspace","Search Field",randomTag)
+        await this.click(`//li[text()='${randomTag}']`,randomTag,"Button")
+        await this.validateElementVisibility(this.selectors.tagsSuccesfully,"Tags")
+        await this.verification(this.selectors.tagsSuccesfully,"Tag has been added successfully.")
         await this.click(this.selectors.okBtnTag, "OK", "Button");
     }
 
