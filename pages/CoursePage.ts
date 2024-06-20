@@ -1,6 +1,7 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
 import { th } from "@faker-js/faker";
+import strict from "assert/strict";
 
 export class CoursePage extends AdminHomePage {
     public selectors = {
@@ -77,12 +78,14 @@ export class CoursePage extends AdminHomePage {
         assessmentCheckbox: "//div[@id='sur_ass-lms-scroll-assessment-list']//i[contains(@class,'fa-duotone fa-square icon')]",
         addAssessmentBtn: "//button[text()='Add As Assessment']",
         categoryDropdown: "//div[@class='dropdown-menu show']//input[@type='search']",
-        allCategoryOptions:"//select[@id='course-categorys-exp-select']/option",
-        providerOptions:"//select[@id='course-providers']/option",
-        provider:(Options:string) =>`(//span[text()='${Options}'])[1]`,
-        
-        
-       // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
+        allCategoryOptions: "//select[@id='course-categorys-exp-select']/option",
+        providerOptions: "//select[@id='course-providers']/option",
+        provider: (Options: string) => `(//span[text()='${Options}'])[1]`,
+        progress: "//progress[@id='progress-bar'and@value='0']",
+        addSurveyBtn: "//button[text()='Add As Survey']"
+
+
+        // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -97,12 +100,12 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.courseDescriptionInput, "Description", data);
     }
 
-    async upload() {
-        const fileName = "samplevideo"
-        const path = `../data/${fileName}.mp4`
+    async uploadvideo() {
+        const path = `../data/video1.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
-        await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName);
+        await this.validateElementVisibility(this.selectors.progress, "Loading")
+        await this.validateElementVisibility(this.selectors.attachedContent("video1"), "video1");
     }
 
     async clickCatalog() {
@@ -128,7 +131,7 @@ export class CoursePage extends AdminHomePage {
     async selectDomain(domain_name: string) {
         await this.click(this.selectors.domainBtn, "Domain", "Button");
         await this.click(this.selectors.domainOption(domain_name), "Domain Name", "Button");
-        await this.click(this.selectors.domainBtn, "Domain", "Button"); // Close domain dropdown if needed
+        await this.click(this.selectors.domainBtn, "Domain", "Button");
     }
 
     async selectLanguage(language: string) {
@@ -324,21 +327,23 @@ export class CoursePage extends AdminHomePage {
         await this.wait('minWait')
         await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
         await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
-        try {
-            await this.page.waitForSelector("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']", { state: 'visible', timeout: 20000 });
+        await this.wait('mediumWait')
+        const popup = this.page.locator("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']")
+        if (await popup.isVisible({ timeout: 5000 })) {
             await this.click("//button[text()='YES']", "yes", "button")
-        } catch (error) {
-            console.log("no unsaved dialog")
         }
         await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
         await this.wait('mediumWait')
         const selector = this.page.locator(this.selectors.surveyCheckBox);
-        const checkboxCount = await selector.count()
+        const checkboxCount = await selector.count();
         const randomIndex = Math.floor(Math.random() * checkboxCount);
         await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
-        //await this.click(this.selectors.surveyAndAssessmentLink.nth(randomIndex), "survey", "radiobutton");
-        await this.click("//button[text()='Add As Survey']", "Addsurvey", "button");
-        await this.wait('mediumWait')
+        await (await this.page.waitForSelector(this.selectors.addSurveyBtn)).isEnabled()
+        await this.click(this.selectors.addSurveyBtn, "Addsurvey", "button");
+        await this.waitForElementHidden("div[class='text-center p-5']", "Spiner")
+
+
+
 
     }
 
@@ -350,7 +355,8 @@ export class CoursePage extends AdminHomePage {
         const fileName = "sample"
         const path = `../data/${fileName}.pdf`
         await this.mouseHover(this.selectors.uploadDiv, "upload")
-        await this.uploadFile(this.selectors.uploadInput, path)
+        await this.uploadFile(this.selectors.uploadInput, path);
+        await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
     async addAssesment() {
@@ -371,26 +377,26 @@ export class CoursePage extends AdminHomePage {
         await this.wait('maxWait')
     }
 
-    async handleCategoryADropdown(){
-      
-        await this.click(this.selectors.selectCategoryBtn,"dropdown","button") 
-        const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
-        
-        const randomIndex = Math.floor(Math.random() * categoryElements.length);
-        const randomElement=  categoryElements[randomIndex].textContent();
-        const randomtext = await randomElement;
-        await this.typeText(this.selectors.categoryDropdown,"input",randomElement)
-       
-        await this.click(this.selectors.categoryOption(randomtext),"options","button")
-      }
+    async handleCategoryADropdown() {
 
-      async providerDropdown(){
-    
+        await this.click(this.selectors.selectCategoryBtn, "dropdown", "button")
+        const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
+
+        const randomIndex = Math.floor(Math.random() * categoryElements.length);
+        const randomElement = categoryElements[randomIndex].textContent();
+        const randomtext = await randomElement;
+        await this.typeText(this.selectors.categoryDropdown, "input", randomElement)
+
+        await this.click(this.selectors.categoryOption(randomtext), "options", "button")
+    }
+
+    async providerDropdown() {
+
         const providerElements = await this.page.$$(this.selectors.providerOptions);
         const randomIndex = Math.floor(Math.random() * providerElements.length);
-        const randomElement=  providerElements[randomIndex].textContent();
-        const randomOptions=await randomElement
-        await this.click(this.selectors.providerDropdown,"dropdown","button")
-        await this.click(this.selectors.provider(randomOptions),"option","button")
-      }
+        const randomElement = providerElements[randomIndex].textContent();
+        const randomOptions = await randomElement
+        await this.click(this.selectors.providerDropdown, "dropdown", "button")
+        await this.click(this.selectors.provider(randomOptions), "option", "button")
+    }
 }

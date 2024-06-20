@@ -235,6 +235,7 @@ export abstract class PlaywrightWrapper {
 
     async waitForElementHidden(locator: string, type: string) {
         try {
+            await this.wait('minWait')
             await this.page.waitForSelector(locator, { state: 'hidden', timeout: 20000 });
             console.log(`Element with XPath "${type}" is hidden as expected.`);
         } catch (error) {
@@ -245,7 +246,8 @@ export abstract class PlaywrightWrapper {
 
     async validateElementVisibility(locator: any, elementName: string) {
         try {
-            const element = this.page.locator(locator);
+            const element = this.page.locator(locator).nth(0);
+            await this.wait('mediumWait');
             await this.page.waitForSelector(locator, { state: 'visible', timeout: 30000, strict: true });
             if (await element.isVisible({ timeout: 20000 })) {
                 console.log(`${elementName} is visible as expected.`);
