@@ -1,7 +1,5 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import { th } from "@faker-js/faker";
-import strict from "assert/strict";
 
 export class CoursePage extends AdminHomePage {
     public selectors = {
@@ -64,10 +62,11 @@ export class CoursePage extends AdminHomePage {
         instructorOption: (instructorName: string) => `//li[contains(text(),'${instructorName}')]`,
         locationDropdown: "//label[text()='Select Location']/following-sibling::div//input",
         locationOption: (locationName: string) => `//li[contains(text(),'${locationName}')]`,
-        startDateInput: "input[@name='startdate_0']",
+        calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
+        todayDate: "td[class='today day']",
         seatMaxInput: "//input[@id='course-seats-max']",
-        timeInput: (time: string) => `//label[text()='${time}']/following-sibling::input`,
-        chooseTimeOption: (chooseTime: string) => `//li[text()='${chooseTime}']`,
+        timeInput: `//label[text()='Start Time']/following-sibling::input`,
+        chooseTimeOption: (randomIndex: string) => `(//div[contains(@class,'timepicker')]//li)[${randomIndex}]`,
         waitlistInput: "//label[text()='Waitlist']/following-sibling::input",
         updateBtn: "//button[text()='Update']",
         detailsbtn: "//button[text()='Details']",
@@ -82,7 +81,9 @@ export class CoursePage extends AdminHomePage {
         providerOptions: "//select[@id='course-providers']/option",
         provider: (Options: string) => `(//span[text()='${Options}'])[1]`,
         progress: "//progress[@id='progress-bar'and@value='0']",
-        addSurveyBtn: "//button[text()='Add As Survey']"
+        addSurveyBtn: "//button[text()='Add As Survey']",
+        deliveryLabel: "//label[text()='Delivery Type']",
+        instructorInput:"//input[contains(@id,'instructors') and (@placeholder='Search')]"
 
 
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
@@ -91,6 +92,7 @@ export class CoursePage extends AdminHomePage {
     constructor(page: Page, context: BrowserContext) {
         super(page, context,);
     }
+    
 
     async verifyCreateUserLabel(expectedLabel: string) {
         await this.verification(this.selectors.createUserLabel, expectedLabel);
@@ -266,6 +268,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async selectInstanceDeliveryType(delivery: string) {
+        await this.validateElementVisibility(this.selectors.deliveryLabel, "Delivery Label")
         await this.click(this.selectors.instanceDeliveryTypeField, "Select Instance Type", "Option");
         await this.click(this.selectors.instanceDeliveryTypeOption(delivery), "Instance DeliveryType", "Option");
     }
@@ -276,19 +279,21 @@ export class CoursePage extends AdminHomePage {
 
     async clickCreateInstance() {
         await this.click(this.selectors.createInstanceBtn, "Create Instances", "Button");
-        await this.waitForElementHidden("div[class='p-3'] svg","Spinner Disappear");
+        await this.waitForElementHidden("//footer/following::i[contains(@class,'duotone fa-times pointer')]", "X Button")
+        await this.waitForElementHidden("div[class='p-3'] svg", "Spinner Disappear");
     }
 
     async enterSessionName(sessionName: string) {
-        await this.wait('mediumWait');
-        await this.validateElementVisibility(this.selectors.sessionNameInput, "Seesion Name");
-        await this.type(this.selectors.sessionNameInput, "Seesion Name", sessionName);
+        await this.validateElementVisibility(this.selectors.sessionNameInput, "Session Name");
+        await this.mouseHover(this.selectors.sessionNameInput, "Session Name")
+        await this.type(this.selectors.sessionNameInput, "Session Name", sessionName);
     }
 
     async selectInstructor(instructorName: string) {
         await this.click(this.selectors.instructorDropdown, "Select Instructor", "DropDown");
-        await this.type(this.selectors.instructorDropdown, "Instructor Name", instructorName);
-        await this.mouseHoverandClick(this.selectors.instructorOption(instructorName), this.selectors.instructorOption(instructorName), "Instructor Option", "Selected");
+        await this.type(this.selectors.instructorInput, "Instructor Name", instructorName);
+        await this.mouseHover(this.selectors.instructorOption(instructorName),"Instructor Name");
+        await this.click(this.selectors.instructorOption(instructorName),"Instructor Name","Button")
     }
 
     async selectLocation(locationName: string) {
@@ -297,122 +302,132 @@ export class CoursePage extends AdminHomePage {
         await this.mouseHoverandClick(this.selectors.locationOption(locationName), this.selectors.locationOption(locationName), "Location Option", "Selected");
     }
 
-    async setDate(date: string) {
-        await this.type(this.selectors.startDateInput, "Date", date);
+    async setCurrentDate() {
+        await this.mouseHover(this.selectors.calanderIcon, "Calander Icon");
+        await this.click(this.selectors.calanderIcon, "Calander Icon", "Button");
+        await this.click(this.selectors.todayDate, "Date", "Today's Date");
     }
 
     async setMaxSeat(seatNum: string) {
         await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", seatNum);
     }
 
-    async setTime(time: string, chooseTime: string) {
-        await this.click(this.selectors.timeInput(time), "Time", time);
-        await this.click(this.selectors.chooseTimeOption(chooseTime), "Choose Time", chooseTime);
+    public async startandEndTime() {
+        const pickRandomTime = async () => {
+            const timeElements = await this.page.locator("//div[contains(@class,'timepicker')]//li").count();
+            const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
+            return randomIndex;
+        };
+        const randomIndex = await pickRandomTime();
+        console.log("Random Index:", randomIndex);
+        await this.click(this.selectors.timeInput, "Start Time", "Button");
+        await this.click(this.selectors.chooseTimeOption(randomIndex), "Option", "Button");
     }
+    
 
     async waitList() {
-        await this.type(this.selectors.waitlistInput, "WaitList", "4");
-    }
+            await this.type(this.selectors.waitlistInput, "WaitList", "4");
+        }
 
     async clickUpdate() {
-        await this.click(this.selectors.updateBtn, "update", "field");
-    }
+            await this.click(this.selectors.updateBtn, "update", "field");
+        }
 
     async save_editedcoursedetails() {
 
-        await this.click(this.selectors.detailsbtn, "details", "button")
-        await this.clickCatalog()
-        await this.validateElementVisibility(this.selectors.courseUpdateBtn, "button")
-        await this.click(this.selectors.courseUpdateBtn, "Update", "button")
+            await this.click(this.selectors.detailsbtn, "details", "button");
+            await this.clickCatalog();
+            await this.validateElementVisibility(this.selectors.courseUpdateBtn, "button");
+            await this.click(this.selectors.courseUpdateBtn, "Update", "button");
 
-    }
+        }
 
     async addsurvey_course() {
-        await this.wait('minWait')
-        await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
-        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
-        await this.wait('mediumWait')
-        const popup = this.page.locator("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']")
-        if (await popup.isVisible({ timeout: 5000 })) {
-            await this.click("//button[text()='YES']", "yes", "button")
+            await this.wait('minWait')
+            await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
+            await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
+            await this.wait('mediumWait')
+            const popup = this.page.locator("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']")
+            if (await popup.isVisible({ timeout: 5000 })) {
+                await this.click("//button[text()='YES']", "yes", "button")
+            }
+            await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
+            await this.wait('mediumWait')
+            const selector = this.page.locator(this.selectors.surveyCheckBox);
+            const checkboxCount = await selector.count();
+            const randomIndex = Math.floor(Math.random() * checkboxCount);
+            await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
+            await (await this.page.waitForSelector(this.selectors.addSurveyBtn)).isEnabled()
+            await this.click(this.selectors.addSurveyBtn, "Addsurvey", "button");
+            await this.waitForElementHidden("div[class='text-center p-5']", "Spiner")
+
+
+
+
         }
-        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
-        await this.wait('mediumWait')
-        const selector = this.page.locator(this.selectors.surveyCheckBox);
-        const checkboxCount = await selector.count();
-        const randomIndex = Math.floor(Math.random() * checkboxCount);
-        await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
-        await (await this.page.waitForSelector(this.selectors.addSurveyBtn)).isEnabled()
-        await this.click(this.selectors.addSurveyBtn, "Addsurvey", "button");
-        await this.waitForElementHidden("div[class='text-center p-5']", "Spiner")
-
-
-
-
-    }
 
     async editcourse() {
-        await this.click(this.selectors.editCourseBtn, "editcourse", "button")
-    }
+            await this.click(this.selectors.editCourseBtn, "editcourse", "button")
+        }
 
    async MultipleContent(){
-    const fileName = "sample"
-    const pdf= `../data/${fileName}.pdf`
-    const video="../data/video1.mp4"
-    const locator=this.selectors.uploadInput
-    await this.mouseHover(this.selectors.uploadDiv, "upload");
-    await this.uploadMultipleContent(pdf,video,locator);
-    await this.validateElementVisibility(this.selectors.progress, "Loading");
-    await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
-   }
+            const fileName = "sample"
+            const pdf = `../data/${fileName}.pdf`
+            const video = "../data/video1.mp4"
+            const locator = this.selectors.uploadInput
+            await this.mouseHover(this.selectors.uploadDiv, "upload");
+            await this.uploadMultipleContent(pdf, video, locator);
+            await this.validateElementVisibility(this.selectors.progress, "Loading");
+            await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+        }
    
 
     async uploadPDF() {
-        const fileName = "sample"
-        const path = `../data/${fileName}.pdf`
-        await this.mouseHover(this.selectors.uploadDiv, "upload");
-        await this.uploadFile(this.selectors.uploadInput, path);
-        await this.validateElementVisibility(this.selectors.progress, "Loading");
-        await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
-    }
+            const fileName = "sample"
+            const path = `../data/${fileName}.pdf`
+            await this.mouseHover(this.selectors.uploadDiv, "upload");
+            await this.uploadFile(this.selectors.uploadInput, path);
+            await this.validateElementVisibility(this.selectors.progress, "Loading");
+            await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+        }
     async addAssesment() {
-        const selector = this.page.locator(this.selectors.assessmentCheckbox);
-        const checkboxCount = await selector.count();
-        if (checkboxCount < 2) {
-            throw new Error("Not enough checkboxes to select two distinct ones");
+            const selector = this.page.locator(this.selectors.assessmentCheckbox);
+            const checkboxCount = await selector.count();
+            if (checkboxCount < 2) {
+                throw new Error("Not enough checkboxes to select two distinct ones");
+            }
+            const selectedIndices = new Set<number>();
+            while (selectedIndices.size < 2) {
+                const randomIndex = Math.floor(Math.random() * checkboxCount);
+                selectedIndices.add(randomIndex);
+            }
+            for (const index of selectedIndices) {
+                await selector.nth(index).click();
+            }
+            await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
+            await this.wait('maxWait')
         }
-        const selectedIndices = new Set<number>();
-        while (selectedIndices.size < 2) {
-            const randomIndex = Math.floor(Math.random() * checkboxCount);
-            selectedIndices.add(randomIndex);
-        }
-        for (const index of selectedIndices) {
-            await selector.nth(index).click();
-        }
-        await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
-        await this.wait('maxWait')
-    }
 
     async handleCategoryADropdown() {
 
-        await this.click(this.selectors.selectCategoryBtn, "dropdown", "button")
-        const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
+            await this.click(this.selectors.selectCategoryBtn, "dropdown", "button")
+            const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
 
-        const randomIndex = Math.floor(Math.random() * categoryElements.length);
-        const randomElement = categoryElements[randomIndex].textContent();
-        const randomtext = await randomElement;
-        await this.typeText(this.selectors.categoryDropdown, "input", randomElement)
+            const randomIndex = Math.floor(Math.random() * categoryElements.length);
+            const randomElement = categoryElements[randomIndex].textContent();
+            const randomtext = await randomElement;
+            await this.typeText(this.selectors.categoryDropdown, "input", randomElement)
 
-        await this.click(this.selectors.categoryOption(randomtext), "options", "button")
-    }
+            await this.click(this.selectors.categoryOption(randomtext), "options", "button")
+        }
 
     async providerDropdown() {
 
-        const providerElements = await this.page.$$(this.selectors.providerOptions);
-        const randomIndex = Math.floor(Math.random() * providerElements.length);
-        const randomElement = providerElements[randomIndex].textContent();
-        const randomOptions = await randomElement
-        await this.click(this.selectors.providerDropdown, "dropdown", "button")
-        await this.click(this.selectors.provider(randomOptions), "option", "button")
+            const providerElements = await this.page.$$(this.selectors.providerOptions);
+            const randomIndex = Math.floor(Math.random() * providerElements.length);
+            const randomElement = providerElements[randomIndex].textContent();
+            const randomOptions = await randomElement
+            await this.click(this.selectors.providerDropdown, "dropdown", "button")
+            await this.click(this.selectors.provider(randomOptions), "option", "button")
+        }
     }
-}

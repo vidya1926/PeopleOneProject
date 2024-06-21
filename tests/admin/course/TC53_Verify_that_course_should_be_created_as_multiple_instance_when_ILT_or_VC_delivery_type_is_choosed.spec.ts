@@ -1,8 +1,11 @@
+import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
  
 
-    var courseName = FakerData.getCourseName();
+    const courseName = FakerData.getCourseName();
+    const sessionName = FakerData.getSession();
+    const instructorName=credentialConstants.INSTRUCTORNAME
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
@@ -45,11 +48,11 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.addInstances();
     await createCourse.selectInstanceDeliveryType("Classroom");
     await createCourse.clickCreateInstance();
-    await createCourse.enterSessionName("June");
-    await createCourse.setDate("06/15/2024");
-    await createCourse.setTime("Start Time", "09:00 AM");
-    await createCourse.setTime("End Time", "01:00 PM");
-    await createCourse.selectInstructor("arivazhaganp");
+    await createCourse.enterSessionName(sessionName);
+    await createCourse.setCurrentDate();
+    await createCourse.startandEndTime();
+   //await createCourse.setTime("End Time", "01:00 PM");
+    await createCourse.selectInstructor(instructorName);
     await createCourse.selectLocation("Qeagle");   
 
 })

@@ -47,6 +47,10 @@ export class FakerData {
         return user;
     }
 
+    static getSession():string{
+        const session=faker.person.jobDescriptor()
+        return session
+    }
     static getDescription():string{
         const description=faker.lorem.paragraph();
         return description;

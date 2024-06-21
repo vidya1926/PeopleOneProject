@@ -246,8 +246,7 @@ export abstract class PlaywrightWrapper {
 
     async validateElementVisibility(locator: any, elementName: string) {
         try {
-            const element = this.page.locator(locator).nth(0);
-            await this.wait('mediumWait');
+            const element = this.page.locator(locator);
             await this.page.waitForSelector(locator, { state: 'visible', timeout: 30000, strict: true });
             if (await element.isVisible({ timeout: 20000 })) {
                 console.log(`${elementName} is visible as expected.`);
@@ -281,19 +280,30 @@ export abstract class PlaywrightWrapper {
         }
     }
 
-    async wait(wait: any) {
-        switch (wait) {
-            case 'minWait':
-                await this.page.waitForTimeout(2000)
-                break;
-            case 'mediumWait':
-                await this.page.waitForTimeout(5000)
-                break;
-            case 'maxWait':
-                await this.page.waitForTimeout(10000)
-                break;
+    async wait(waitType: 'minWait' | 'mediumWait' | 'maxWait') {
+        try {
+            switch (waitType) {
+                case 'minWait':
+                    console.log("Waiting for 2 seconds...");
+                    await this.page.waitForTimeout(2000);
+                    break;
+                case 'mediumWait':
+                    console.log("Waiting for 5 seconds...");
+                    await this.page.waitForTimeout(5000);
+                    break;
+                case 'maxWait':
+                    console.log("Waiting for 10 seconds...");
+                    await this.page.waitForTimeout(10000);
+                    break;
+                default:
+                    console.log("Invalid wait type provided.");
+                    throw new Error(`Invalid wait type: ${waitType}`);
+            }
+        } catch (error) {
+            console.error("Error during wait:", error);
         }
     }
+    
 
     async spinnerDisappear() {
         await this.wait('minWait');

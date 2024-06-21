@@ -25,16 +25,49 @@ export class AdminHomePage extends PlaywrightWrapper {
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
         this.common(page, context).catch(err => console.error("Error in common setup:", err));
+        this. setupPageListeners();
     }
 
     private async common(page: Page, context: BrowserContext) {
-        await this.loadApp(AdminHomePage.pageUrl);
-        let pageTitle = await this.getTitle();
-        console.log("Page Title:", pageTitle);
-        
-        if (pageTitle.startsWith("signin")) {
+      //  try {
+            console.log("Loading admin home page...");
             const adLogin = new AdminLogin(page, context);
-            await adLogin.adminLogin(credentialConstants.LEARNERADMIN, credentialConstants.PASSWORD);
+                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+            //await this.loadApp(AdminHomePage.pageUrl);
+            await this.wait('mediumWait');
+            let pageTitle = await this.getTitle();
+            console.log("Page Title:", pageTitle);
+            if (pageTitle.toLowerCase().includes("signin")) {
+                console.log("Sign-in page detected. Performing login...");
+                const adLogin = new AdminLogin(page, context);
+                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+                await this.wait('mediumWait'); 
+                pageTitle = await this.getTitle(); 
+                console.log("Page Title after login:", pageTitle);
+            }
+        } catch (err) {
+            console.error("Error during common setup:", err);
+            throw err;
+         
+    }
+    private  setupPageListeners() {
+        this.page.on('load', async () => {
+            try {
+                console.log("Page loaded. Executing common method...");
+                await this.executeAfterLoad(); 
+            } catch (err) {
+                console.error("Error executing common method after load:", err);
+                throw err;
+            }
+        });
+    }
+    private async executeAfterLoad() {
+        try {
+            console.log("Executing common method after page load...");
+            await this.isSignOut(); // Example: Check if sign-out link is visible after page load
+        } catch (err) {
+            console.error("Error executing common method after load:", err);
+            throw err;
         }
     }
 
