@@ -4,11 +4,11 @@ import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from '../../../utils/fakerUtils';
 
 
-test(`Course Creation for Classroom`, async ({ adminHome, location }) => {
+test.skip(`Verify that Admin can create location and check its getting displayed in listing page`, async ({ adminHome, location }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Create the course as multiple instance` },
-        { type: `Test Description`, description: `Verify that course should be created as multiple instance when ILT or VC delivery type is chosen` }
+        { type: `TestCase`, description: `Verify that Admin can create location and check its getting displayed in listing page` },
+        { type: `Test Description`, description: `Creating Location and checking its getting displayed` }
     );
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);
@@ -34,4 +34,18 @@ test(`Course Creation for Classroom`, async ({ adminHome, location }) => {
     }
 
 
+})
+
+test(`Read Location Data`, async ({ adminHome, location }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `Ajay Michael` },
+        { type: `TestCase`, description: `Read Locaton data` },
+        { type: `Test Description`, description: `Reading data and storing in json file` }
+    );
+
+    await adminHome.menuButton();
+    await adminHome.clickLearningMenu();
+    await adminHome.locationLink();
+    await location.verifyLocationLabel();
+    await location.getLocation();
 })

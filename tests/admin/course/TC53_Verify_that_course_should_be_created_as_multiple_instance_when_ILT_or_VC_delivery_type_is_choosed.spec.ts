@@ -53,7 +53,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.startandEndTime();
    //await createCourse.setTime("End Time", "01:00 PM");
     await createCourse.selectInstructor(instructorName);
-    await createCourse.selectLocation("Qeagle");   
+    await createCourse.selectLocation();   
 
 })
 

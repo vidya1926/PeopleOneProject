@@ -1,4 +1,6 @@
 import {faker} from "@faker-js/faker";
+import path from "path";
+import fs from 'fs'
 
 
 export class FakerData {
@@ -76,5 +78,23 @@ function getPhoneNumber(): string {
     return `${startDigit}${restDigits}`;
 }
 
+type DataItem = string; 
+
+export function getRandomLocation(): DataItem | any {
+    try {
+        const filePath = path.join(__dirname, '../data/location.json'); 
+        const jsonData = fs.readFileSync(filePath, 'utf8');
+        const dataArray: DataItem[] = JSON.parse(jsonData);
+        if (!Array.isArray(dataArray) || dataArray.length === 0) {
+            throw new Error('Data array is empty or not an array');
+        }
+        const randomIndex = Math.floor(Math.random() * dataArray.length);
+        const randomValue = dataArray[randomIndex];
+        return randomValue;
+    } catch (error) {
+        console.error('Error in getRandomDataItem:', error.message);
+        return null; 
+    }
+}
 
 

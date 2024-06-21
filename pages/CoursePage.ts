@@ -1,6 +1,10 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
+import path from "path";
+import fs from "fs";
+import { FakerData, getRandomLocation } from "../utils/fakerUtils";
 
+    
 export class CoursePage extends AdminHomePage {
     public selectors = {
         ...this.selectors,
@@ -60,8 +64,9 @@ export class CoursePage extends AdminHomePage {
         sessionNameInput: "//label[text()='Session Name']/following-sibling::input",
         instructorDropdown: "//label[text()='Instructor']/following-sibling::div//input",
         instructorOption: (instructorName: string) => `//li[contains(text(),'${instructorName}')]`,
-        locationDropdown: "//label[text()='Select Location']/following-sibling::div//input",
-        locationOption: (locationName: string) => `//li[contains(text(),'${locationName}')]`,
+        locationSelection:"//label[text()='Select Location']/following-sibling::div//input[1]",
+        locationDropdown: "//label[text()='Select Location']/following-sibling::div//input[@placeholder='Search']",
+        locationOption: (locationName: string) => `//li[text()='${locationName}']`,
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
         todayDate: "td[class='today day']",
         seatMaxInput: "//input[@id='course-seats-max']",
@@ -295,12 +300,21 @@ export class CoursePage extends AdminHomePage {
         await this.mouseHover(this.selectors.instructorOption(instructorName),"Instructor Name");
         await this.click(this.selectors.instructorOption(instructorName),"Instructor Name","Button")
     }
+    
 
-    async selectLocation(locationName: string) {
+
+
+     
+    async selectLocation() {
+        await this.click(this.selectors.locationSelection, "Select Location", "DropDown");
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
-        await this.type(this.selectors.locationDropdown, "Location", locationName);
-        await this.mouseHoverandClick(this.selectors.locationOption(locationName), this.selectors.locationOption(locationName), "Location Option", "Selected");
+    
+        await this.type(this.selectors.locationDropdown, "Select Location",  getRandomLocation());
+        await this.mouseHover(this.selectors.locationDropdown, "Location");
+        await this.click(this.selectors.locationOption(getRandomLocation()), "Location",getRandomLocation()  );
+       
     }
+    
 
     async setCurrentDate() {
         await this.mouseHover(this.selectors.calanderIcon, "Calander Icon");
@@ -430,4 +444,7 @@ export class CoursePage extends AdminHomePage {
             await this.click(this.selectors.providerDropdown, "dropdown", "button")
             await this.click(this.selectors.provider(randomOptions), "option", "button")
         }
+    
+
+
     }
