@@ -20,6 +20,7 @@ export class AdminHomePage extends PlaywrightWrapper {
         metaPeopleLink: "//a[text()='People']",
         metaLearningLink: "//a[text()='Learning']",
         adminGroupLink:"//a[text()='Admin Group']",
+        locationLink:"//a[text()='Location']"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -137,4 +138,8 @@ export class AdminHomePage extends PlaywrightWrapper {
     public async adminGroup(){
         await this.click(this.selectors.adminGroupLink,"AdminGroup","Link");
     } 
+
+    public async locationLink(){
+        await this.click(this.selectors.locationLink,"Location","Link");
+    }
 }

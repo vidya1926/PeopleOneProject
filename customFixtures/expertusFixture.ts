@@ -12,6 +12,7 @@ import { MetaLibraryPage } from '../pages/MetaLibraryPage'
 import { EditCoursePage } from '../pages/editCoursePage'
 import {AdminGroupPage} from '../pages/AdminGroupPage'
 import {OrganizationPage} from '../pages/OrganizationPage'
+import{LocationPage} from '../pages/LocationPage'
 
 type expertusFixture = {
     adminLogin: AdminLogin
@@ -19,7 +20,7 @@ type expertusFixture = {
     createUser: UserPage
     createCourse: CoursePage
     editCourse: EditCoursePage
-
+    location:LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
     catalog: CatalogPage
@@ -61,6 +62,12 @@ export const test = baseTest.extend<expertusFixture>({
         const editCourse = new EditCoursePage(page, context);
         await use(editCourse);
     },
+    location: async ({ page, context }, use) => {
+        const location = new LocationPage(page, context);
+        await use(location);
+    },
+    
+
 
     learnerHome: async ({ page, context }, use) => {
         const learnerHome = new LearnerHomePage(page, context);

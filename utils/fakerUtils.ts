@@ -31,7 +31,11 @@ export class FakerData {
         const techTerm = faker.hacker.noun();
         return techTerm;
     }
- 
+   
+    static getLocationName(){
+        const location =faker.location.street();
+        return location;
+    }
 
     static getCourseName():string{
         const adjective = faker.hacker.adjective();

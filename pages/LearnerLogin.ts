@@ -30,7 +30,7 @@ export class LearnerLogin extends PlaywrightWrapper {
         await this.page.waitForLoadState('domcontentloaded')
         const logoutButton = this.page.locator("//div[@class='logout']/a")
         await expect(logoutButton).toBeVisible({ timeout: 20000 })
-        await this.storeState("./logins/expertuslearnerLog.json");
+       // await this.storeState("./logins/expertuslearnerLog.json");
 
     }
 
