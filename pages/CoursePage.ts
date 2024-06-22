@@ -69,7 +69,7 @@ export class CoursePage extends AdminHomePage {
         locationOption: (locationName: string) => `//li[text()='${locationName}']`,
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
         todayDate: "td[class='today day']",
-        seatMaxInput: "//input[@id='course-seats-max']",
+        seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
         timeInput: `//label[text()='Start Time']/following-sibling::input`,
         chooseTimeOption: (randomIndex: string) => `(//div[contains(@class,'timepicker')]//li)[${randomIndex}]`,
         waitlistInput: "//label[text()='Waitlist']/following-sibling::input",
@@ -88,7 +88,8 @@ export class CoursePage extends AdminHomePage {
         progress: "//progress[@id='progress-bar'and@value='0']",
         addSurveyBtn: "//button[text()='Add As Survey']",
         deliveryLabel: "//label[text()='Delivery Type']",
-        instructorInput:"//input[contains(@id,'instructors') and (@placeholder='Search')]"
+        instructorInput:"//input[contains(@id,'instructors') and (@placeholder='Search')]",
+        instance_Class:"//a[contains(@title,'Instance/Class')]"
 
 
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
@@ -194,6 +195,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.currencyOption, "Currency", "Selected");
     }
 
+    
     async selectSeats(seatCount: string) {
         await this.type(this.selectors.maxSeatsInput, "Max-Seats", seatCount);
     }
@@ -383,6 +385,11 @@ export class CoursePage extends AdminHomePage {
     async editcourse() {
             await this.click(this.selectors.editCourseBtn, "editcourse", "button")
         }
+
+    async clickinstanceClass(){
+        await this.validateElementVisibility(this.selectors.instance_Class,"Instance Class")
+        await this.click(this.selectors.instance_Class,"Edit Instance Class","Button")
+    }
 
    async MultipleContent(){
             const fileName = "sample"

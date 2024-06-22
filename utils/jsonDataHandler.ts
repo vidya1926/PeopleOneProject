@@ -14,13 +14,13 @@ export function updateFieldsInJSON(newData: Data): void {
 
   let existingData: Data = {};
 
- 
+
   try {
     const data = fs.readFileSync(filepath, 'utf8');
     existingData = JSON.parse(data);
   } catch (err) {
     console.error('Error reading file:', err);
-  
+
     return;
   }
 
@@ -37,4 +37,10 @@ export function updateFieldsInJSON(newData: Data): void {
       console.log('JSON file has been updated.');
     }
   });
+
+
+
+
+
+
 }

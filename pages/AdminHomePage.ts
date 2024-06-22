@@ -33,7 +33,7 @@ export class AdminHomePage extends PlaywrightWrapper {
       //  try {
             console.log("Loading admin home page...");
             const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+                await adLogin.adminLogin(credentialConstants.LEARNERADMIN, credentialConstants.PASSWORD);
             //await this.loadApp(AdminHomePage.pageUrl);
             await this.wait('mediumWait');
             let pageTitle = await this.getTitle();
@@ -41,7 +41,7 @@ export class AdminHomePage extends PlaywrightWrapper {
             if (pageTitle.toLowerCase().includes("signin")) {
                 console.log("Sign-in page detected. Performing login...");
                 const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+                await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
                 await this.wait('mediumWait'); 
                 pageTitle = await this.getTitle(); 
                 console.log("Page Title after login:", pageTitle);

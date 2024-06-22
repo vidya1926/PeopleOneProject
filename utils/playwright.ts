@@ -229,6 +229,7 @@ export abstract class PlaywrightWrapper {
         const lowerCaseText = text.toLowerCase();
         const lowerCaseExpected = expectedTextSubstring.toLowerCase();
         expect(lowerCaseText).toContain(lowerCaseExpected);
+        await this.wait('mediumWait');
         console.log(`Field value verified successfully`);
     }
     

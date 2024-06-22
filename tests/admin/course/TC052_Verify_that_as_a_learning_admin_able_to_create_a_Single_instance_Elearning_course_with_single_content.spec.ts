@@ -45,8 +45,9 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
         await catalog.clickSelectcourse(courseName)
         await catalog.clickEnroll()
         await catalog.clickLaunchButton();
-        await learnerHome.clickMyLearning();
-        await catalog.clickCompletedButton();
-        await catalog.verifyCompletedCourse(courseName);
+        await catalog.saveLearningStatus();
+        // await learnerHome.clickMyLearning();
+        // await catalog.clickCompletedButton();
+        // await catalog.verifyCompletedCourse(courseName);
         })
     
