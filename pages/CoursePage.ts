@@ -4,7 +4,7 @@ import path from "path";
 import fs from "fs";
 import { FakerData, getRandomLocation } from "../utils/fakerUtils";
 
-    
+
 export class CoursePage extends AdminHomePage {
     public selectors = {
         ...this.selectors,
@@ -19,7 +19,7 @@ export class CoursePage extends AdminHomePage {
         proceedBtn: "//footer//following::button[contains(text(),'Yes, Proceed')]",
         successMessage: "//div[@id='lms-overall-container']//h3",
         domainBtn: "//label[text()='Domain']/following::button[1]",
-        domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
+      //  domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         closeBtn: "//button[text()='Close']",
         courseLanguagesWrapper: "//label[contains(text(),'Language')]/following::div[@id='wrapper-course-languages']",
         courseLanguageInput: "//label[text()='Language']/following::input[1]",
@@ -64,9 +64,11 @@ export class CoursePage extends AdminHomePage {
         sessionNameInput: "//label[text()='Session Name']/following-sibling::input",
         instructorDropdown: "//label[text()='Instructor']/following-sibling::div//input",
         instructorOption: (instructorName: string) => `//li[contains(text(),'${instructorName}')]`,
-        locationSelection:"//label[text()='Select Location']/following-sibling::div//input[1]",
+        locationSelection: "//label[text()='Select Location']/following-sibling::div//input[1]",
         locationDropdown: "//label[text()='Select Location']/following-sibling::div//input[@placeholder='Search']",
         locationOption: (locationName: string) => `//li[text()='${locationName}']`,
+        CourseCalendaricon: "//label[text()='Complete by']/following::button[contains(@class,'calendaricon')]//i[1]",
+        tomorrowdate: "td[class='day']",
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
         todayDate: "td[class='today day']",
         seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
@@ -88,17 +90,27 @@ export class CoursePage extends AdminHomePage {
         progress: "//progress[@id='progress-bar'and@value='0']",
         addSurveyBtn: "//button[text()='Add As Survey']",
         deliveryLabel: "//label[text()='Delivery Type']",
-        instructorInput:"//input[contains(@id,'instructors') and (@placeholder='Search')]",
-        instance_Class:"//a[contains(@title,'Instance/Class')]"
-
-
+        instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
+        instance_Class: "//a[contains(@title,'Instance/Class')]",
+        clickContentLibrary: "(//span[text()='Click here'])[1]",
+        allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
+        contentIndex: (index: number) => `(//i[@class='fa-duotone fa-square icon_16_1'])[${index}]`,
+        addContentButton: "//button[text()='Add Content']",
+        verifyContent: "//a[@aria-label='Download']",
+        getCourse: "//input[@id='course-title']",
+        domainDropdown: "//a[@class='dropdown-item selected']",
+        domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
+        domainSelectedText: "//div[contains(text(),'selected')]",
+        domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
+        image:"(//div[@class='img-wrapper']/img)[1]",
+        clickHere: "//div[@class='form-label']/span",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context,);
     }
-    
+
 
     async verifyCreateUserLabel(expectedLabel: string) {
         await this.verification(this.selectors.createUserLabel, expectedLabel);
@@ -195,7 +207,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.currencyOption, "Currency", "Selected");
     }
 
-    
+
     async selectSeats(seatCount: string) {
         await this.type(this.selectors.maxSeatsInput, "Max-Seats", seatCount);
     }
@@ -270,6 +282,21 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.editCourseTabLink, "Edit Course", "Button");
     }
 
+
+    async selectCompleteByDate() {
+        await this.click(this.selectors.CourseCalendaricon, "Date", "Field");
+        await this.click(this.selectors.tomorrowdate, "Tomorrow", "Field")
+    }
+
+
+    // async selectLocation(locationName: string) {
+    //     await this.click(this.selectors.locationSelection,"Select location","Field")
+    //     await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
+    //     await this.type(this.selectors.locationDropdown, "Location", locationName);
+    //     await this.mouseHover(this.selectors.locationOption(locationName), "Location Option");
+    //     await this.click(this.selectors.locationOption(locationName), "Location Option","Selected");
+
+    // }
     async addInstances() {
         await this.click(this.selectors.addInstancesBtn, "Add Instances", "Button");
     }
@@ -299,24 +326,20 @@ export class CoursePage extends AdminHomePage {
     async selectInstructor(instructorName: string) {
         await this.click(this.selectors.instructorDropdown, "Select Instructor", "DropDown");
         await this.type(this.selectors.instructorInput, "Instructor Name", instructorName);
-        await this.mouseHover(this.selectors.instructorOption(instructorName),"Instructor Name");
-        await this.click(this.selectors.instructorOption(instructorName),"Instructor Name","Button")
+        await this.mouseHover(this.selectors.instructorOption(instructorName), "Instructor Name");
+        await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button")
     }
-    
 
-
-
-     
-    async selectLocation() {
+    async selectLocation(p0: string) {
         await this.click(this.selectors.locationSelection, "Select Location", "DropDown");
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
-    
-        await this.type(this.selectors.locationDropdown, "Select Location",  getRandomLocation());
+
+        await this.type(this.selectors.locationDropdown, "Select Location", getRandomLocation());
         await this.mouseHover(this.selectors.locationDropdown, "Location");
-        await this.click(this.selectors.locationOption(getRandomLocation()), "Location",getRandomLocation()  );
-       
+        await this.click(this.selectors.locationOption(getRandomLocation()), "Location", getRandomLocation());
+
     }
-    
+
 
     async setCurrentDate() {
         await this.mouseHover(this.selectors.calanderIcon, "Calander Icon");
@@ -339,119 +362,157 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.timeInput, "Start Time", "Button");
         await this.click(this.selectors.chooseTimeOption(randomIndex), "Option", "Button");
     }
-    
+
 
     async waitList() {
-            await this.type(this.selectors.waitlistInput, "WaitList", "4");
-        }
+        await this.type(this.selectors.waitlistInput, "WaitList", "4");
+    }
 
     async clickUpdate() {
-            await this.click(this.selectors.updateBtn, "update", "field");
-        }
+        await this.click(this.selectors.updateBtn, "update", "field");
+    }
 
     async save_editedcoursedetails() {
 
-            await this.click(this.selectors.detailsbtn, "details", "button");
-            await this.clickCatalog();
-            await this.validateElementVisibility(this.selectors.courseUpdateBtn, "button");
-            await this.click(this.selectors.courseUpdateBtn, "Update", "button");
+        await this.click(this.selectors.detailsbtn, "details", "button");
+        await this.clickCatalog();
+        await this.validateElementVisibility(this.selectors.courseUpdateBtn, "button");
+        await this.click(this.selectors.courseUpdateBtn, "Update", "button");
 
-        }
-
-    async addsurvey_course() {
-            await this.wait('minWait')
-            await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
-            await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
-            await this.wait('mediumWait')
-            const popup = this.page.locator("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']")
-            if (await popup.isVisible({ timeout: 5000 })) {
-                await this.click("//button[text()='YES']", "yes", "button")
-            }
-            await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
-            await this.wait('mediumWait')
-            const selector = this.page.locator(this.selectors.surveyCheckBox);
-            const checkboxCount = await selector.count();
-            const randomIndex = Math.floor(Math.random() * checkboxCount);
-            await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
-            await (await this.page.waitForSelector(this.selectors.addSurveyBtn)).isEnabled()
-            await this.click(this.selectors.addSurveyBtn, "Addsurvey", "button");
-            await this.waitForElementHidden("div[class='text-center p-5']", "Spiner")
-
-
-
-
-        }
-
-    async editcourse() {
-            await this.click(this.selectors.editCourseBtn, "editcourse", "button")
-        }
-
-    async clickinstanceClass(){
-        await this.validateElementVisibility(this.selectors.instance_Class,"Instance Class")
-        await this.click(this.selectors.instance_Class,"Edit Instance Class","Button")
     }
 
-   async MultipleContent(){
-            const fileName = "sample"
-            const pdf = `../data/${fileName}.pdf`
-            const video = "../data/video1.mp4"
-            const locator = this.selectors.uploadInput
-            await this.mouseHover(this.selectors.uploadDiv, "upload");
-            await this.uploadMultipleContent(pdf, video, locator);
-            await this.validateElementVisibility(this.selectors.progress, "Loading");
-            await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+    async addsurvey_course() {
+        await this.wait('minWait')
+        await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
+        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
+        await this.wait('mediumWait')
+        const popup = this.page.locator("//span[text()='You have unsaved changes that will be lost if you wish to continue. Are you sure you want to continue?']")
+        if (await popup.isVisible({ timeout: 5000 })) {
+            await this.click("//button[text()='YES']", "yes", "button")
         }
-   
+        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
+        await this.wait('mediumWait')
+        const selector = this.page.locator(this.selectors.surveyCheckBox);
+        const checkboxCount = await selector.count();
+        const randomIndex = Math.floor(Math.random() * checkboxCount);
+        await this.page.locator(this.selectors.surveyCheckBox).nth(randomIndex).click();
+        await (await this.page.waitForSelector(this.selectors.addSurveyBtn)).isEnabled()
+        await this.click(this.selectors.addSurveyBtn, "Addsurvey", "button");
+        await this.waitForElementHidden("div[class='text-center p-5']", "Spiner")
+    }
+
+
+    async editcourse() {
+        await this.click(this.selectors.editCourseBtn, "editcourse", "button")
+    }
+
+    async clickinstanceClass() {
+        await this.validateElementVisibility(this.selectors.instance_Class, "Instance Class")
+        await this.click(this.selectors.instance_Class, "Edit Instance Class", "Button")
+    }
+
+    async contentLibrary() {
+        await this.click(this.selectors.clickContentLibrary, "Content", "button")
+        await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string")
+        const randomIndex = Math.floor(Math.random() * 5) + 1;
+        await this.click(this.selectors.contentIndex(1), "Contents", "checkbox")
+        await this.click(this.selectors.addContentButton, "addcontent", "button")
+        await this.wait('maxWait')
+        await this.validateElementVisibility(this.selectors.verifyContent, "button")
+
+
+    }
+
+    async MultipleContent() {
+        const fileName = "sample"
+        const pdf = `../data/${fileName}.pdf`
+        const video = "../data/video1.mp4"
+        const locator = this.selectors.uploadInput
+        await this.mouseHover(this.selectors.uploadDiv, "upload");
+        await this.uploadMultipleContent(pdf, video, locator);
+        await this.validateElementVisibility(this.selectors.progress, "Loading");
+        await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+    }
+
 
     async uploadPDF() {
-            const fileName = "sample"
-            const path = `../data/${fileName}.pdf`
-            await this.mouseHover(this.selectors.uploadDiv, "upload");
-            await this.uploadFile(this.selectors.uploadInput, path);
-            await this.validateElementVisibility(this.selectors.progress, "Loading");
-            await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
-        }
+        const fileName = "sample"
+        const path = `../data/${fileName}.pdf`
+        await this.mouseHover(this.selectors.uploadDiv, "upload");
+        await this.uploadFile(this.selectors.uploadInput, path);
+        await this.validateElementVisibility(this.selectors.progress, "Loading");
+        await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+    }
     async addAssesment() {
-            const selector = this.page.locator(this.selectors.assessmentCheckbox);
-            const checkboxCount = await selector.count();
-            if (checkboxCount < 2) {
-                throw new Error("Not enough checkboxes to select two distinct ones");
-            }
-            const selectedIndices = new Set<number>();
-            while (selectedIndices.size < 2) {
-                const randomIndex = Math.floor(Math.random() * checkboxCount);
-                selectedIndices.add(randomIndex);
-            }
-            for (const index of selectedIndices) {
-                await selector.nth(index).click();
-            }
-            await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
-            await this.wait('maxWait')
+        const selector = this.page.locator(this.selectors.assessmentCheckbox);
+        const checkboxCount = await selector.count();
+        if (checkboxCount < 2) {
+            throw new Error("Not enough checkboxes to select two distinct ones");
         }
+        const selectedIndices = new Set<number>();
+        while (selectedIndices.size < 2) {
+            const randomIndex = Math.floor(Math.random() * checkboxCount);
+            selectedIndices.add(randomIndex);
+        }
+        for (const index of selectedIndices) {
+            await selector.nth(index).click();
+        }
+        await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
+        await this.wait('maxWait')
+    }
 
     async handleCategoryADropdown() {
 
-            await this.click(this.selectors.selectCategoryBtn, "dropdown", "button")
-            const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
+        await this.click(this.selectors.selectCategoryBtn, "dropdown", "button")
+        const categoryElements = await this.page.$$(this.selectors.allCategoryOptions);
 
-            const randomIndex = Math.floor(Math.random() * categoryElements.length);
-            const randomElement = categoryElements[randomIndex].textContent();
-            const randomtext = await randomElement;
-            await this.typeText(this.selectors.categoryDropdown, "input", randomElement)
+        const randomIndex = Math.floor(Math.random() * categoryElements.length);
+        const randomElement = categoryElements[randomIndex].textContent();
+        const randomtext = await randomElement;
+        await this.typeText(this.selectors.categoryDropdown, "input", randomElement)
 
-            await this.click(this.selectors.categoryOption(randomtext), "options", "button")
-        }
+        await this.click(this.selectors.categoryOption(randomtext), "options", "button")
+    }
 
     async providerDropdown() {
 
-            const providerElements = await this.page.$$(this.selectors.providerOptions);
-            const randomIndex = Math.floor(Math.random() * providerElements.length);
-            const randomElement = providerElements[randomIndex].textContent();
-            const randomOptions = await randomElement
-            await this.click(this.selectors.providerDropdown, "dropdown", "button")
-            await this.click(this.selectors.provider(randomOptions), "option", "button")
-        }
-    
+        const providerElements = await this.page.$$(this.selectors.providerOptions);
+        const randomIndex = Math.floor(Math.random() * providerElements.length);
+        const randomElement = providerElements[randomIndex].textContent();
+        const randomOptions = await randomElement
+        await this.click(this.selectors.providerDropdown, "dropdown", "button")
+        await this.click(this.selectors.provider(randomOptions), "option", "button")
+    }
 
+    async getCourse() {
+        const course = await this.getText(this.selectors.getCourse);
+        console.log(course);
 
     }
+    async selectPortal() {
+
+        const text = await this.page.innerText(this.selectors.domainSelectedText);
+        console.log(text);
+        if (text.includes('selected')) {
+            const dropdownItems = await this.page.$$(this.selectors.domainDropdown);
+            for (let index = 2; index <= dropdownItems.length; index++) {
+                await this.click(this.selectors.domainSelectedText, "dropdown", "button")
+                await this.click(this.selectors.domainDropdownIndex(index), "Domain", "Dropdown");
+            }
+
+        }
+    }
+
+   
+ async clickHere(){
+        await this.click(this.selectors.clickHere, "Click Here", "button");
+    }
+
+ async selectImage(){
+        await this.validateElementVisibility(this.selectors.image, "Loading")
+        await this.click(this.selectors.image, "Gallery", "image");
+    }
+
+
+
+}

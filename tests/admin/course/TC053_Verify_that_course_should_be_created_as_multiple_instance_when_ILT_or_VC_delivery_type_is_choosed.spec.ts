@@ -38,6 +38,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await editCourse.clickTagMenu();
     await editCourse.selectTags();
     await editCourse.clickClose();
+    
     /* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
     // await editCourse.clickCompletionCertificate();
     //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
@@ -55,11 +56,11 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
         await createCourse.setCurrentDate();
         await createCourse.startandEndTime();
         await createCourse.selectInstructor(instructorName);
-        await createCourse.selectLocation();
+        await createCourse.selectLocation("PeopeleOne");
         await createCourse.clickCatalog();
         await createCourse.clickUpdate();
         await createCourse.verifyCourseCreationSuccessMessage();
-    }
+      }
     addinstance("Classroom");
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
