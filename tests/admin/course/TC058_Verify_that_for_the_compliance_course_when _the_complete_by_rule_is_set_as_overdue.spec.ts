@@ -49,6 +49,6 @@ test(`TC058_Verify_that_for_the_compliance_course_set_as_overdue`,async({adminHo
         await catalog.clickMoreonCourse(courseName)
         await catalog.clickSelectcourse(courseName)
         await catalog.clickEnroll();
-       //cron date to be changed and  the status to be cked
-       
+       //cron date to be changed and  the status to be checked -pending tc
+
         })

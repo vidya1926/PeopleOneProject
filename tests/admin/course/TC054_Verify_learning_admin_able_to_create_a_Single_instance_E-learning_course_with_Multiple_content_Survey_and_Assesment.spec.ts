@@ -23,7 +23,7 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
        
     //video content uplod is not working 
 //    await createCourse.multipleContent();
-     await createCourse.contentLibrary();
+    await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();

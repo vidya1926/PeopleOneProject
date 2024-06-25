@@ -108,19 +108,12 @@ export class CoursePage extends AdminHomePage {
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         image: "(//div[@class='img-wrapper']/img)[1]",
-        clickHere: "//div[@class='form-label']/span",
-        accessTab: `//span//span[text()='Access']`,
-        learnerGroup: `(//div[@id='wrapper-course-group-access-learner-group-list']//button)[1]`,
-        learnerGroupOption: `//footer/following::a[1]`,
-        accessSetting:`//span[@id='crs-accset-attr']//span[text()='Access Setting']`,   
+        clickHere: "//div[@class='form-label']/span",       
         httpsInput:"input[id=content_url]",
         addURLBtn:"button:text-is('Add URL')",
         clickSaveasDraft:"//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]",
         willResolveLaterBtn:"//footer//following::button[text()='No, will resolve later']",
-        optionalGroup:`(//div[@id='lms-scroll-learner-list']//following::div[@class='filter-option-inner'])[1]`,
-        setMandatory:`//footer/following::span[text()='Mandatory']`,
-        registrationEnd:`//input[@id='registration-ends-input']`,
-        learnerGropSearch:`//div[@class='dropdown-menu show']//input`,
+    
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -189,11 +182,12 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.categoryOption(category), "Category", "Dropdown");
     }
 
-    async uploadVideoThroughLink() {
-        await this.mouseHover(this.selectors.httpsInput, "https input");
-        await this.type(this.selectors.httpsInput, "https input", "https://www.youtube.com/watch?v=a3ICNMQW7Ok");
-        await this.click(this.selectors.addURLBtn, "Add URL", "Button");
-
+    async uploadVideoThroughLink(){
+        await this.mouseHover(this.selectors.httpsInput,"https input");
+        await this.keyboardType(this.selectors.httpsInput,"https://www.youtube.com/watch?v=EngW7tLk6R8");
+        await this.wait('minWait');
+        await this.click(this.selectors.addURLBtn,"Add URL","Button");
+        await this.wait('maxWait');
     }
 
     async addCategory(CategoryName: string) {
@@ -227,8 +221,8 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.additionalInfoInput, "Additional Information", additionalInfo);
     }
 
-    async enterPrice(priceValue: string) {
-        await this.type(this.selectors.priceInput, "Price", priceValue);
+    async enterPrice(price:string) {
+        await this.type(this.selectors.priceInput, "Price", price);
     }
 
     async selectCurrency() {
@@ -468,8 +462,8 @@ export class CoursePage extends AdminHomePage {
         await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string");
         await this.spinnerDisappear();
         const randomIndex = Math.floor(Math.random() * 5) + 1;
-        await this.click(this.selectors.contentIndex(1), "Contents", "checkbox");
-        await this.mouseHover(this.selectors.addContentButton, "addcontent");
+        await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
+        await this.mouseHover(this.selectors.addContentButton,"addcontent");
         await this.click(this.selectors.addContentButton, "addcontent", "button");
         await this.wait('maxWait')
         await this.validateElementVisibility(this.selectors.verifyContent, "button");
@@ -574,6 +568,7 @@ export class CoursePage extends AdminHomePage {
     }
 
 
+
     async clickHere() {
         await this.click(this.selectors.clickHere, "Click Here", "button");
     }
@@ -583,25 +578,6 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.image, "Gallery", "image");
     }
 
-    async clickAccesstab() {
-        await this.wait("minWait")
-      
-        await this.click(this.selectors.accessTab, "Access", "Button")
-    }
-
-    async addLearnerGroup() {
-        await this.click(this.selectors.learnerGroup, "LearnerGroup", "Dropdown")
-        await this.type(this.selectors.learnerGropSearch,"LG","Option")
-        await this.click(this.selectors.learnerGroupOption,"LG","Option")             
-         await this.click(this.selectors.closeBtn, "Close", "Button")
-    }
-
-    async clickAccessSetting(){
-        await this.click(this.selectors.accessSetting,"Access Setting","Button")
-            }
-
-    async setCourseMandatory(){
-        await this.click(this.selectors.optionalGroup,"Group Access","dropdown")
-        await this.click(this.selectors.setMandatory,"Mandatory","Option")
-    }
 }
+
+

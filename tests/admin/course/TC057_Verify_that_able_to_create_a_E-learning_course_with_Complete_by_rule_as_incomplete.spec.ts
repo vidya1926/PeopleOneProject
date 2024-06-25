@@ -4,7 +4,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 const courseName  =FakerData.getCourseName();
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCourse})=>{
+test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCourse,editCourse})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -32,12 +32,11 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
     await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.editcourse();
-    await createCourse.clickAccesstab();
-    await createCourse.addLearnerGroup();
-    await createCourse.clickAccessSetting();
-    await createCourse.setCourseMandatory();
+    await editCourse.clickAccesstab();
+    await editCourse.addLearnerGroup();
+    await editCourse.clickAccessSetting();
+    await editCourse.setCourseMandatory();
     
-
 })
     
 

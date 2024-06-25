@@ -17,14 +17,14 @@ export abstract class PlaywrightWrapper {
 
     readonly page: Page;
     readonly context: BrowserContext
-    
+
 
     index: number
     constructor(page: Page, context: BrowserContext,) {
         this.page = page;
         this.context = context;
-       
-        
+
+
     }
     /*
     This function types on the given element textbox after clearing the existing text
@@ -76,6 +76,13 @@ export abstract class PlaywrightWrapper {
     }
     async storeState(path: string) {
         await this.page.context().storageState({ path: path })
+    }
+
+    async keyboardType(locator: string, data: string) {
+        await test.step(`Typing the ${data}`, async () => {
+            await this.page.focus(locator);
+            await this.page.keyboard.type(data,{ delay: 500 });
+        })
     }
     async loadApp(url: string) {
         try {
@@ -233,7 +240,7 @@ export abstract class PlaywrightWrapper {
         await this.wait('mediumWait');
         console.log(`Field value verified successfully`);
     }
-    
+
 
     async waitForElementHidden(locator: string, type: string) {
         try {
@@ -259,18 +266,18 @@ export abstract class PlaywrightWrapper {
             console.error(`Error validating visibility of ${elementName}: ${error}`);
         }
     }
-    
 
-    async uploadMultipleContent(fileName1:string,fileName2:string,locator:any){
-        const inputElementHandle= this.page.locator(locator)
-        if(inputElementHandle){
+
+    async uploadMultipleContent(fileName1: string, fileName2: string, locator: any) {
+        const inputElementHandle = this.page.locator(locator)
+        if (inputElementHandle) {
             await inputElementHandle.setInputFiles([path.resolve(__dirname, fileName1),
-                path.resolve(__dirname, fileName2)])
-             }else{
-                console.error('Input element not found');
-             }
+            path.resolve(__dirname, fileName2)])
+        } else {
+            console.error('Input element not found');
         }
-       
+    }
+
 
     async uploadFile(locator: string, Path: string,) {
         const filePath = path.resolve(__dirname, Path);
@@ -302,7 +309,7 @@ export abstract class PlaywrightWrapper {
             console.error("Error during wait:", error);
         }
     }
-    
+
 
     async spinnerDisappear() {
         await this.wait('minWait');
@@ -312,11 +319,11 @@ export abstract class PlaywrightWrapper {
             console.log("Expected element is disabled");
         } catch (error) {
             console.log("Spinner is still present or assertion failed. Skipping further execution.");
-            return; 
+            return;
         }
-        
+
     }
-    
+
     async typeText(locator: string, name: string, data: Promise<string | null>) {
         const resolvedData = await data;
         await test.step(`Textbox ${name} filled with data: ${resolvedData}`, async () => {
@@ -328,10 +335,10 @@ export abstract class PlaywrightWrapper {
         });
     }
 
-    async clickCheckbox(locator: string,name:string){
+    async clickCheckbox(locator: string, name: string) {
         await test.step(`Checkbox ${name} is selected`, async () => {
             await this.page.focus(locator)
-        await this.page.check(locator,{force:true});
-    })
+            await this.page.check(locator, { force: true });
+        })
     }
 }
