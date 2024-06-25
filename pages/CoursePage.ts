@@ -3,6 +3,7 @@ import { AdminHomePage } from "./AdminHomePage";
 import path from "path";
 import fs from "fs";
 import { FakerData, getRandomLocation } from "../utils/fakerUtils";
+import { TIMEOUT } from "dns";
 
 
 export class CoursePage extends AdminHomePage {
@@ -92,9 +93,9 @@ export class CoursePage extends AdminHomePage {
         deliveryLabel: "//label[text()='Delivery Type']",
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
         instance_Class: "//a[contains(@title,'Instance/Class')]",
-        clickContentLibrary: "(//span[text()='Click here'])[1]",
+        clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
-        contentIndex: (index: number) => `(//i[@class='fa-duotone fa-square icon_16_1'])[${index}]`,
+        contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
         addContentButton: "//button[text()='Add Content']",
         verifyContent: "//a[@aria-label='Download']",
         getCourse: "//input[@id='course-title']",
@@ -106,7 +107,8 @@ export class CoursePage extends AdminHomePage {
         clickHere: "//div[@class='form-label']/span",
         httpsInput:"input[id=content_url]",
         addURLBtn:"button:text-is('Add URL')",
-        clickSaveasDraft:"//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]"
+        clickSaveasDraft:"//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]",
+        willResolveLaterBtn:"//footer//following::button[text()='No, will resolve later']"
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -386,6 +388,12 @@ export class CoursePage extends AdminHomePage {
 
     async clickUpdate() {
         await this.click(this.selectors.updateBtn, "update", "field");
+        const locator = this.page.locator(this.selectors.willResolveLaterBtn);
+        await this.wait('minWait');
+        await this.validateElementVisibility(this.selectors.willResolveLaterBtn,"Resolve Later");
+        if(await locator.isVisible({timeout:5000})){
+            await this.click(this.selectors.willResolveLaterBtn,"Resolve Later","Button");
+        }
     }
 
     async save_editedcoursedetails() {
@@ -419,22 +427,28 @@ export class CoursePage extends AdminHomePage {
 
 
     async editcourse() {
-        await this.click(this.selectors.editCourseBtn, "editcourse", "button")
+        await this.mouseHover(this.selectors.editCourseBtn, "editcourse");
+        await this.click(this.selectors.editCourseBtn, "editcourse", "button");
     }
 
     async clickinstanceClass() {
-        await this.validateElementVisibility(this.selectors.instance_Class, "Instance Class")
-        await this.click(this.selectors.instance_Class, "Edit Instance Class", "Button")
+        await this.validateElementVisibility(this.selectors.instance_Class, "Instance Class");
+        await this.click(this.selectors.instance_Class, "Edit Instance Class", "Button");
     }
 
     async contentLibrary() {
-        await this.click(this.selectors.clickContentLibrary, "Content", "button")
-        await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string")
+        await this.spinnerDisappear();
+        await this.validateElementVisibility(this.selectors.clickContentLibrary, "Content");
+        await this.mouseHover(this.selectors.clickContentLibrary, "Content");
+        await this.click(this.selectors.clickContentLibrary, "Content", "button");
+        await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string");
+        await this.spinnerDisappear();
         const randomIndex = Math.floor(Math.random() * 5) + 1;
-        await this.click(this.selectors.contentIndex(1), "Contents", "checkbox")
-        await this.click(this.selectors.addContentButton, "addcontent", "button")
+        await this.click(this.selectors.contentIndex(1), "Contents", "checkbox");
+        await this.mouseHover(this.selectors.addContentButton,"addcontent");
+        await this.click(this.selectors.addContentButton, "addcontent", "button");
         await this.wait('maxWait')
-        await this.validateElementVisibility(this.selectors.verifyContent, "button")
+        await this.validateElementVisibility(this.selectors.verifyContent, "button");
 
 
     }

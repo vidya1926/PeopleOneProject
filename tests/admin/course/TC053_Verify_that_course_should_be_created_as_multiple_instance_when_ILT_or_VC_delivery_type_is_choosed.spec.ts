@@ -51,21 +51,26 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
-        await createCourse.enterSessionName(sessionName);
-        await createCourse.setMaxSeat("20");
-        await createCourse.setCurrentDate();
-        await createCourse.startandEndTime();
-        await createCourse.selectInstructor(instructorName);
-        await createCourse.selectLocation();
-        await createCourse.clickCatalog();
-        await createCourse.clickUpdate();
-        await createCourse.verifyCourseCreationSuccessMessage();
     }
     await addinstance("Classroom");
+    await createCourse.enterSessionName(sessionName);
+    await createCourse.setMaxSeat("20");
+    await createCourse.setCurrentDate();
+    await createCourse.startandEndTime();
+    await createCourse.selectInstructor(instructorName);
+    await createCourse.selectLocation();
+    await createCourse.clickCatalog();
+    await createCourse.clickUpdate();
+    await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
+    
     await addinstance("E-Learning");
+    await createCourse.contentLibrary();   
+    await createCourse.clickCatalog();
+    await createCourse.clickUpdate();
+    await createCourse.verifyCourseCreationSuccessMessage();
 
 })
 
