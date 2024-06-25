@@ -41,7 +41,7 @@ export const test = baseTest.extend<expertusFixture>({
     },
     learnerLogin: async ({ page, context }, use) => {
         const lnLogin = new LearnerLogin(page, context);
-        await lnLogin.learnerLogin(credentialConstants.LEARNERUSERNAME,credentialConstants.PASSWORD);
+        //await lnLogin.learnerLogin(credentialConstants.LEARNERUSERNAME,credentialConstants.PASSWORD);
         await use(lnLogin);
         console.log("Login is verified");
         

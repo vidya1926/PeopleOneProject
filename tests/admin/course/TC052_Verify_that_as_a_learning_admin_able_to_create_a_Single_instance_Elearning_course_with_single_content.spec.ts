@@ -4,7 +4,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 const courseName  =FakerData.getCourseName();
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
+test(`CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -29,8 +29,7 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
 })
     
 
-
-    test(`TC001_Learner Verification For Single Instance`,async({learnerHome,catalog})=>{
+    test(`Verification from learner site`,async({learnerHome,catalog})=>{
 
         test.info().annotations.push(
             { type: `Author`, description: `Vidya` },

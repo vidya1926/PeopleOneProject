@@ -46,7 +46,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
-    
+
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
@@ -60,7 +60,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
         await createCourse.clickUpdate();
         await createCourse.verifyCourseCreationSuccessMessage();
     }
-    addinstance("Classroom");
+    await addinstance("Classroom");
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
