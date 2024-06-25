@@ -179,8 +179,10 @@ export class CoursePage extends AdminHomePage {
 
     async uploadVideoThroughLink(){
         await this.mouseHover(this.selectors.httpsInput,"https input");
-        await this.type(this.selectors.httpsInput,"https input","https://www.youtube.com/watch?v=a3ICNMQW7Ok");
+        await this.keyboardType(this.selectors.httpsInput,"https://www.youtube.com/watch?v=EngW7tLk6R8");
+        await this.wait('minWait');
         await this.click(this.selectors.addURLBtn,"Add URL","Button");
+        await this.wait('maxWait');
 
     }
 
@@ -444,7 +446,7 @@ export class CoursePage extends AdminHomePage {
         await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string");
         await this.spinnerDisappear();
         const randomIndex = Math.floor(Math.random() * 5) + 1;
-        await this.click(this.selectors.contentIndex(1), "Contents", "checkbox");
+        await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
         await this.mouseHover(this.selectors.addContentButton,"addcontent");
         await this.click(this.selectors.addContentButton, "addcontent", "button");
         await this.wait('maxWait')
