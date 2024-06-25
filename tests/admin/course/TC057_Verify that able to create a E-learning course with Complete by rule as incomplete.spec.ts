@@ -4,12 +4,12 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 const courseName  =FakerData.getCourseName();
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
+test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCourse})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create the course as Single instance` },
-        { type:`Test Description`, description: `Verify that course should be created for Single instance` }
+        { type: `TestCase`, description: `E-learning course with Complete by rule` },
+        { type:`Test Description`, description: `Verify that E-learning course with Complete by rule` }
         
     );
    
@@ -21,11 +21,14 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
     await createCourse.enter("course-title",courseName);
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :"+courseName);  
-    await createCourse.contentLibrary();  
+    await createCourse.contentLibrary(); 
+    await createCourse.selectCompleteByRule();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.editcourse();
+    await createCourse.
 })
     
 

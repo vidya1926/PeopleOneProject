@@ -56,7 +56,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
         await createCourse.setCurrentDate();
         await createCourse.startandEndTime();
         await createCourse.selectInstructor(instructorName);
-        await createCourse.selectLocation("PeopeleOne");
+        await createCourse.selectLocation();
         await createCourse.clickCatalog();
         await createCourse.clickUpdate();
         await createCourse.verifyCourseCreationSuccessMessage();
@@ -68,5 +68,28 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     addinstance("E-Learning");
 
 })
+
+
+
+// test(`TC053_Learner Verification For Single Instance`,async({learnerHome,catalog})=>{
+
+//     test.info().annotations.push(
+//         { type: `Author`, description: `Vidya` },
+//         { type: `TestCase`, description: `TC053_Learner Side Course verification` },
+//         { type:`Test Description`, description: `Verify that course should be created for Multiple instance` }
+//     ); 
+//     await learnerHome.isSignOutVisible();
+//     await learnerHome.clickCatalog();
+//     await catalog.clickFilter();
+//     await catalog.enterSearchFilter(tagName)
+//     await catalog.selectresultantTags(tagName);
+//     await catalog.clickApply()
+//     await catalog.clickEnroll();
+//     await catalog.viewCoursedetails();
+//     await catalog.clickSelectcourse(courseName)
+//     await catalog.clickEnroll()
+//     await catalog.verifyCompletedCourse(courseName);
+//     })
+
 
 

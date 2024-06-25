@@ -19,7 +19,7 @@ export class CoursePage extends AdminHomePage {
         proceedBtn: "//footer//following::button[contains(text(),'Yes, Proceed')]",
         successMessage: "//div[@id='lms-overall-container']//h3",
         domainBtn: "//label[text()='Domain']/following::button[1]",
-      //  domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
+        //  domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         closeBtn: "//button[text()='Close']",
         courseLanguagesWrapper: "//label[contains(text(),'Language')]/following::div[@id='wrapper-course-languages']",
         courseLanguageInput: "//label[text()='Language']/following::input[1]",
@@ -47,6 +47,8 @@ export class CoursePage extends AdminHomePage {
         validityDaysInput: "//input[@id='validity_days']",
         completeByField: "//div[@id='wrapper-course-complete-by']",
         completeByDaysInput: "//input[@id='complete_days']",
+        completeByRule: `//div[@id='wrapper-course-complete-by-rule']//button`,
+        completeByRuleOption: `//footer/following-sibling::div//span[text()='Yes']`,
         postCompleteByStatusField: "//div[@id='wrapper-course-post-complete-by-status']",
         postCompleteByOption: "//footer/following::a/span[text()='Overdue']",
         courseInstancesField: "//div[@id='wrapper-course-instances']",
@@ -102,8 +104,11 @@ export class CoursePage extends AdminHomePage {
         domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
-        image:"(//div[@class='img-wrapper']/img)[1]",
+        image: "(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
+        accessTab:`//button[@id='crs-access-attr-btn']/span[text()='Access']`,
+        learnerGroup:`//div[@id='wrapper-course-group-access-learner-group-list']//button`,
+        learnerGroupOption:`//footer/following::a[@aria-selected='false']`,
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -220,6 +225,10 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.complianceField, "Compaliance", "Field");
         await this.click(this.selectors.complianceOption, "Compaliance", "Field");
     }
+    async selectCompleteByRule() {
+        await this.click(this.selectors.completeByRule, "CompleteByRule", "Field");
+        await this.click(this.selectors.completeByRuleOption, "CompleteByRule Option", "Field");
+    }
 
     async selectValidity() {
         await this.click(this.selectors.validityField, "Valitdity", "field");
@@ -282,7 +291,6 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.editCourseTabLink, "Edit Course", "Button");
     }
 
-
     async selectCompleteByDate() {
         await this.click(this.selectors.CourseCalendaricon, "Date", "Field");
         await this.click(this.selectors.tomorrowdate, "Tomorrow", "Field")
@@ -330,7 +338,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button")
     }
 
-    async selectLocation(p0: string) {
+    async selectLocation() {
         await this.click(this.selectors.locationSelection, "Select Location", "DropDown");
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
 
@@ -401,7 +409,6 @@ export class CoursePage extends AdminHomePage {
         await this.waitForElementHidden("div[class='text-center p-5']", "Spiner")
     }
 
-
     async editcourse() {
         await this.click(this.selectors.editCourseBtn, "editcourse", "button")
     }
@@ -419,8 +426,6 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.addContentButton, "addcontent", "button")
         await this.wait('maxWait')
         await this.validateElementVisibility(this.selectors.verifyContent, "button")
-
-
     }
 
     async MultipleContent() {
@@ -433,6 +438,8 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
+
+
 
 
     async uploadPDF() {
@@ -460,6 +467,27 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.addAssessmentBtn, "Addassesment", "button")
         await this.wait('maxWait')
     }
+
+
+    async addmultipleContentfromLib() {
+
+        const content = this.page.locator(this.selectors.allContents);
+        const checkboxCount = await content.count();
+        if (checkboxCount < 2) {
+            throw new Error("Not enough checkboxes to select two distinct ones");
+        }
+        const selectedIndices = new Set<number>();
+        while (selectedIndices.size < 2) {
+            const randomIndex = Math.floor(Math.random() * checkboxCount);
+            selectedIndices.add(randomIndex);
+        }
+        for (const index of selectedIndices) {
+            await content.nth(index).click();
+        }
+        await this.click(this.selectors.addContentButton, "addcontent", "button")
+        await this.wait("maxWait");
+    }
+
 
     async handleCategoryADropdown() {
 
@@ -490,7 +518,6 @@ export class CoursePage extends AdminHomePage {
 
     }
     async selectPortal() {
-
         const text = await this.page.innerText(this.selectors.domainSelectedText);
         console.log(text);
         if (text.includes('selected')) {
@@ -499,19 +526,43 @@ export class CoursePage extends AdminHomePage {
                 await this.click(this.selectors.domainSelectedText, "dropdown", "button")
                 await this.click(this.selectors.domainDropdownIndex(index), "Domain", "Dropdown");
             }
-
         }
     }
 
-   
- async clickHere(){
+
+    async clickHere() {
         await this.click(this.selectors.clickHere, "Click Here", "button");
     }
 
- async selectImage(){
+    async selectImage() {
         await this.validateElementVisibility(this.selectors.image, "Loading")
         await this.click(this.selectors.image, "Gallery", "image");
     }
+
+
+    async clickAccesstab(){
+        await this.click(this.selectors.clickAccesstab,"Access","Button")
+    }
+
+async addLearnerGroup(){
+    await this.click(this.selectors.learnerGroup,"LearnerGroup","Dropdown")
+     const learnerGroup= await this.selectors.learnerGroupOption;
+     const learnGroupCount=await learnerGroup.count();
+     if (learnGroupCount < 2) {
+        throw new Error("Not enough checkboxes to select two distinct ones");
+    }
+    const selectedIndices = new Set<number>();
+    while (selectedIndices.size < 2) {
+        const randomIndex = Math.floor(Math.random() * learnGroupCount);
+        selectedIndices.add(randomIndex);
+    }
+    for (const index of selectedIndices) {
+        await learnerGroup.nth(index).click();
+    }
+    await this.wait("minWait");
+    await this.click(this.selectors.closeBtn,"Close","Button")
+}
+
 
 
 

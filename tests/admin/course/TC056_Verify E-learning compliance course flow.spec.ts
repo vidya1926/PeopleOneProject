@@ -25,8 +25,6 @@ test(`Course Creation for  E-Learning work flow`, async ({ adminHome, createCour
     await createCourse.daysOfValidity("1");
     await createCourse.selectCompleteBy();
     await createCourse.selectCompleteByDate();
-    // await createCourse.uploadFromLib();
-    // await createCourse.selectContentToUpload();
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickSave();

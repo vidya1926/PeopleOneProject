@@ -63,6 +63,7 @@ export class FakerData {
     }
 
     static getCategory(): string {
+        
         const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
     }
@@ -82,10 +83,13 @@ type DataItem = string;
 
 export function getRandomLocation(): DataItem | any {
     try {
+
+    
         const filePath = path.join(__dirname, '../data/location.json');
         const jsonData = fs.readFileSync(filePath, 'utf8');
         const dataArray: DataItem[] = JSON.parse(jsonData);
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
+
             throw new Error('Data array is empty or not an array');
         }
         const randomIndex = Math.floor(Math.random() * dataArray.length);
