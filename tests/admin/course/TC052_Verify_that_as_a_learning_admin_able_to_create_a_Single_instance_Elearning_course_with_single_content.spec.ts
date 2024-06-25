@@ -20,8 +20,8 @@ test(`CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title",courseName);
     await createCourse.selectLanguage("English");
-    await createCourse.typeDescription("This is a new course by name :"+courseName);
-    await createCourse.uploadvideo();
+    await createCourse.typeDescription("This is a new course by name :"+courseName);  
+    await createCourse.contentLibrary();  
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
@@ -45,8 +45,6 @@ test(`CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
         await catalog.clickEnroll()
         await catalog.clickLaunchButton();
         await catalog.saveLearningStatus();
-        // await learnerHome.clickMyLearning();
-        // await catalog.clickCompletedButton();
-        // await catalog.verifyCompletedCourse(courseName);
+       
         })
     

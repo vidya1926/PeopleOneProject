@@ -1,31 +1,31 @@
-import {faker} from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 import path from "path";
 import fs from 'fs'
 
 
 export class FakerData {
 
-    static getFirstName():string{
+    static getFirstName(): string {
         return faker.person.firstName();
     }
 
-    static getLastName():string{
+    static getLastName(): string {
         return faker.person.lastName();
     }
 
-    static getMobileNumber():string{
+    static getMobileNumber(): string {
         return getPhoneNumber();
     }
 
-    static getEmail():string{
+    static getEmail(): string {
         return faker.internet.email();
     }
 
-    static getAddress():string{
+    static getAddress(): string {
         return faker.location.streetAddress();
     }
 
-    static jobRole():string{
+    static jobRole(): string {
         return faker.person.jobTitle();
     }
 
@@ -33,37 +33,37 @@ export class FakerData {
         const techTerm = faker.hacker.noun();
         return techTerm;
     }
-   
-    static getLocationName(){
-        const location =faker.location.street();
+
+    static getLocationName() {
+        const location = faker.location.street();
         return location;
     }
 
-    static getCourseName():string{
+    static getCourseName(): string {
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();
         const verb = faker.hacker.verb();
         return `${capitalizeFirstLetter(adjective)} ${capitalizeFirstLetter(noun)} ${capitalizeFirstLetter(verb)}`;
     }
 
-    static getUserId():string {
+    static getUserId(): string {
         const currentDate = new Date();
         const milliseconds = currentDate.getTime().toString();
-        const user=  faker.person.firstName()+milliseconds
+        const user = faker.person.firstName() + milliseconds
         return user;
     }
 
-    static getSession():string{
-        const session=faker.person.jobDescriptor()
+    static getSession(): string {
+        const session = faker.person.jobDescriptor()
         return session
     }
-    static getDescription():string{
-        const description=faker.lorem.paragraph();
+    static getDescription(): string {
+        const description = faker.lorem.paragraph();
         return description;
     }
-    
-    static getCategory():string{
-        const category=faker.company.buzzVerb()+" "+faker.company.buzzNoun()
+
+    static getCategory(): string {
+        const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
     }
 }
@@ -78,11 +78,11 @@ function getPhoneNumber(): string {
     return `${startDigit}${restDigits}`;
 }
 
-type DataItem = string; 
+type DataItem = string;
 
 export function getRandomLocation(): DataItem | any {
     try {
-        const filePath = path.join(__dirname, '../data/location.json'); 
+        const filePath = path.join(__dirname, '../data/location.json');
         const jsonData = fs.readFileSync(filePath, 'utf8');
         const dataArray: DataItem[] = JSON.parse(jsonData);
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
@@ -93,7 +93,7 @@ export function getRandomLocation(): DataItem | any {
         return randomValue;
     } catch (error) {
         console.error('Error in getRandomDataItem:', error.message);
-        return null; 
+        return null;
     }
 }
 
