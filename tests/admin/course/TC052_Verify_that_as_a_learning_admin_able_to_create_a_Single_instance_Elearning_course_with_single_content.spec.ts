@@ -21,7 +21,8 @@ test(`CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
     await createCourse.enter("course-title",courseName);
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :"+courseName);  
-    await createCourse.contentLibrary();  
+   // await createCourse.contentLibrary();  
+   await createCourse.uploadVideoThroughLink();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();

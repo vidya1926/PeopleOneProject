@@ -56,16 +56,16 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
         await createCourse.setCurrentDate();
         await createCourse.startandEndTime();
         await createCourse.selectInstructor(instructorName);
-        await createCourse.selectLocation("PeopeleOne");
+        await createCourse.selectLocation();
         await createCourse.clickCatalog();
         await createCourse.clickUpdate();
         await createCourse.verifyCourseCreationSuccessMessage();
     }
-    addinstance("Classroom");
+    await addinstance("Classroom");
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
-    addinstance("E-Learning");
+    await addinstance("E-Learning");
 
 })
 

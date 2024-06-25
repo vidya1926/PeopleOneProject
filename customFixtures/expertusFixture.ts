@@ -13,7 +13,7 @@ import { EditCoursePage } from '../pages/editCoursePage'
 import {AdminGroupPage} from '../pages/AdminGroupPage'
 import {OrganizationPage} from '../pages/OrganizationPage'
 import{LocationPage} from '../pages/LocationPage'
-import { LearnerCoursePage } from '../pages/LearnerCoursePage'
+// import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
     adminLogin: AdminLogin
@@ -21,7 +21,7 @@ type expertusFixture = {
     createUser: UserPage
     createCourse: CoursePage
     editCourse: EditCoursePage
-    learnercourse:LearnerCoursePage
+    //learnercourse:LearnerCoursePage
     location:LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
@@ -79,10 +79,10 @@ export const test = baseTest.extend<expertusFixture>({
         const catalog = new CatalogPage(page, context);
         await use(catalog);
     },
-    learnercourse: async ({ page, context }, use) => {
-        const learnerCourse = new LearnerCoursePage(page, context);
-        await use(learnerCourse);
-    },
+    // learnercourse: async ({ page, context }, use) => {
+    //     const learnerCourse = new LearnerCoursePage(page, context);
+    //     await use(learnerCourse);
+    // },
     metadatalibrary: async ({ page, context }, use) => {
         const metadatalibrary = new MetaLibraryPage(page, context);
         await use(metadatalibrary);

@@ -68,7 +68,7 @@ export class CoursePage extends AdminHomePage {
         locationDropdown: "//label[text()='Select Location']/following-sibling::div//input[@placeholder='Search']",
         locationOption: (locationName: string) => `//li[text()='${locationName}']`,
         CourseCalendaricon: "//label[text()='Complete by']/following::button[contains(@class,'calendaricon')]//i[1]",
-        tomorrowdate: "td[class='day']",
+        tomorrowdate: "//td[@class='today day']/following-sibling::td[1]",
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
         todayDate: "td[class='today day']",
         seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
@@ -104,6 +104,9 @@ export class CoursePage extends AdminHomePage {
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         image:"(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
+        httpsInput:"input[id=content_url]",
+        addURLBtn:"button:text-is('Add URL')",
+        clickSaveasDraft:"//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]"
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -131,6 +134,11 @@ export class CoursePage extends AdminHomePage {
     async clickCatalog() {
         await this.validateElementVisibility(this.selectors.showInCatalogBtn, "Show in Catalog");
         await this.click(this.selectors.showInCatalogBtn, "Catalog", "Button");
+    }
+
+    async clickSaveasDraft(){
+        await this.validateElementVisibility(this.selectors.clickSaveasDraft,"Draft");
+        await this.click(this.selectors.clickSaveasDraft,"Draft","CheckBox");
     }
 
     async clickSave() {
@@ -165,6 +173,13 @@ export class CoursePage extends AdminHomePage {
     async clickSelect(category: string) {
         await this.click(this.selectors.selectCategoryBtn, "Category", "Dropdown");
         await this.click(this.selectors.categoryOption(category), "Category", "Dropdown");
+    }
+
+    async uploadVideoThroughLink(){
+        await this.mouseHover(this.selectors.httpsInput,"https input");
+        await this.type(this.selectors.httpsInput,"https input","https://www.youtube.com/watch?v=a3ICNMQW7Ok");
+        await this.click(this.selectors.addURLBtn,"Add URL","Button");
+
     }
 
     async addCategory(CategoryName: string) {
@@ -330,7 +345,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button")
     }
 
-    async selectLocation(p0: string) {
+    async selectLocation() {
         await this.click(this.selectors.locationSelection, "Select Location", "DropDown");
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
 
@@ -344,7 +359,8 @@ export class CoursePage extends AdminHomePage {
     async setCurrentDate() {
         await this.mouseHover(this.selectors.calanderIcon, "Calander Icon");
         await this.click(this.selectors.calanderIcon, "Calander Icon", "Button");
-        await this.click(this.selectors.todayDate, "Date", "Today's Date");
+        //await this.click(this.selectors.todayDate, "Date", "Today's Date");
+        await this.click(this.selectors.tomorrowdate, "Date", "Today's Date");
     }
 
     async setMaxSeat(seatNum: string) {
