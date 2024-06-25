@@ -1,6 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
-import { playAndForwardVideo } from "../utils/videoplayerUtils";
+//import { playAndForwardVideo } from "../utils/videoplayerUtils";
 
 export class CatalogPage extends LearnerHomePage {
     public selectors = {

@@ -13,6 +13,8 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
         
     );
    
+    
+
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -20,15 +22,22 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title",courseName);
     await createCourse.selectLanguage("English");
-    await createCourse.typeDescription("This is a new course by name :"+courseName);  
+    await createCourse.typeDescription("This is a new course by name :"+courseName);
+    await createCourse.clickregistrationEnds();
+    await createCourse.selectCompleteByRule();    
+    await createCourse.selectCompleteByDate();    
     await createCourse.contentLibrary(); 
-    await createCourse.selectCompleteByRule();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.editcourse();
-    await createCourse.
+    await createCourse.clickAccesstab();
+    await createCourse.addLearnerGroup();
+    await createCourse.clickAccessSetting();
+    await createCourse.setCourseMandatory();
+    
+
 })
     
 
@@ -51,4 +60,4 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
     //     await catalog.saveLearningStatus();
        
     //     })
-    
+

@@ -38,7 +38,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await editCourse.clickTagMenu();
     await editCourse.selectTags();
     await editCourse.clickClose();
-    
+
     /* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
     // await editCourse.clickCompletionCertificate();
     //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
@@ -47,25 +47,29 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
-    
+
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
-        await createCourse.enterSessionName(sessionName);
-        await createCourse.setMaxSeat("20");
-        await createCourse.setCurrentDate();
-        await createCourse.startandEndTime();
-        await createCourse.selectInstructor(instructorName);
-        await createCourse.selectLocation();
-        await createCourse.clickCatalog();
-        await createCourse.clickUpdate();
-        await createCourse.verifyCourseCreationSuccessMessage();
-      }
-    addinstance("Classroom");
+    }
+    await addinstance("Classroom");
+    await createCourse.enterSessionName(sessionName);
+    await createCourse.setMaxSeat("20");
+    await createCourse.setCurrentDate();
+    await createCourse.startandEndTime();
+    await createCourse.selectInstructor(instructorName);
+    await createCourse.selectLocation();
+    await createCourse.clickCatalog();
+    await createCourse.clickUpdate();
+    await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
-    await createCourse.addInstances();
-    addinstance("E-Learning");
+    await createCourse.addInstances();    
+    await addinstance("E-Learning");
+    await createCourse.contentLibrary();   
+    await createCourse.clickCatalog();
+    await createCourse.clickUpdate();
+    await createCourse.verifyCourseCreationSuccessMessage();
 
 })
 

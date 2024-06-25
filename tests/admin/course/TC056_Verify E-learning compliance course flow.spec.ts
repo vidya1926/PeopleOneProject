@@ -30,6 +30,7 @@ test(`Course Creation for  E-Learning work flow`, async ({ adminHome, createCour
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage()    
+    //incomplete-->cron job is scheduled here to progress
 
 })
 

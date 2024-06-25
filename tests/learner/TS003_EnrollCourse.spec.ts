@@ -10,7 +10,7 @@ test('Registering a learner on the platform',async({catalog,learnerHome})=>{
     
     await learnerHome.isSignOutVisible();
     await learnerHome.clickMenu("Catalog");
-    await catalog.mostRecent("Most Recent");
+    await catalog.mostRecent(" Recent");
     await catalog.searchCatalog(courseName);
     await catalog.clickEnrollButton(courseName,"ENROLL");
     await catalog.clickLaunchButton("Launch Content");
