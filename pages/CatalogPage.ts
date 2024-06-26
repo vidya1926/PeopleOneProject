@@ -22,10 +22,6 @@ export class CatalogPage extends LearnerHomePage {
         applyButton: `//button[text()='Apply']`,
         viewCourseDetails: `//button[text()='View Course Details']`,
         launchButton: `(//div//i[@aria-label='Click to play'])[1]`,
-<<<<<<< HEAD
-        clickPlay: `//span[text()='Play']/preceding-sibling::span`,
-=======
->>>>>>> c8d9fe0a5111bd9bd97c641e45117df1b996a621
         saveLearningStatus: "//button[text()='Save Learning Status']",
         verificationEnrollment: "//span[text()='View Certificate']",
         unsupportMedia: "//div[contains(text(), 'The media could not be loaded')]"
@@ -92,30 +88,6 @@ export class CatalogPage extends LearnerHomePage {
 
     async clickLaunchButton() {
         const launchButtonSelector = this.selectors.launchButton;
-<<<<<<< HEAD
-        await this.click(launchButtonSelector, "Launch Button", "Button");
-        try {
-            await this.validateElementVisibility(this.selectors.unsupportMedia, "errorMessage")
-            console.error("Unsupported content error")
-            process.exit()
-        } catch (error) {
-            console.log("Loading")
-        }
-        try {
-            await this.wait('maxWait')
-            await this.validateElementVisibility("//span[text()='0:00']", "time")
-        } catch (error) {
-            console.log("Its not a video content")
-        }
-    }
-
-    // async clickPlaybuttton(){
-    //     this.page.locator(this.selectors.clickPlay)
-    // }  
-
-
-    async saveLearningStatus() {
-=======
         const playButton = "//button[@title='Play Video']"
         await this.wait('maxWait');
         await this.page.focus(playButton);
@@ -125,7 +97,6 @@ export class CatalogPage extends LearnerHomePage {
 
     async saveLearningStatus() {
 
->>>>>>> c8d9fe0a5111bd9bd97c641e45117df1b996a621
         await this.click(this.selectors.saveLearningStatus, "save", "button")
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button")
     }
@@ -142,25 +113,7 @@ export class CatalogPage extends LearnerHomePage {
         const completedCourseSelector = this.selectors.completedCourse(name);
         await this.mouseHover(completedCourseSelector, "Text");
     }
-    async clickFilter() {
-        await this.click(this.selectors.filterField, "Filter Search", "clicked")
-    }
-
-    async enterSearchFilter(tagname: string) {
-        await this.click(this.selectors.searchButton, "Tagname", "Field")
-        await this.type(this.selectors.selectTagnames, "Tagname", tagname)
-
-<<<<<<< HEAD
-    }
-    async selectresultantTags(tagname: string) {
-        await this.mouseHover(this.selectors.reultantTagname(tagname), "Tags")
-        await this.click(this.selectors.reultantTagname(tagname), "Tags", "selected")
-    }
-
-    async clickApply() {
-        await this.click(this.selectors.applyButton, "Apply", "Button")
-    }
-=======
+    
     async clickFilter() {
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
@@ -180,7 +133,7 @@ export class CatalogPage extends LearnerHomePage {
     async clickApply() {
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
->>>>>>> c8d9fe0a5111bd9bd97c641e45117df1b996a621
+    
     async viewCoursedetails() {
         await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button")
     }

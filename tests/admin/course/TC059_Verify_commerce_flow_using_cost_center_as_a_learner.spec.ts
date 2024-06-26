@@ -22,7 +22,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :" + courseName);
-    await createCourse.selectdeliveryType("Virtual Class")
+    await createCourse.selectdeliveryType("Virtual Class");
     await createCourse.enterPrice(price)
     await createCourse.selectCurrency();
     await createCourse.handleCategoryADropdown();
