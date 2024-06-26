@@ -39,6 +39,8 @@ export class FakerData {
         return location;
     }
 
+
+
     static getCourseName(): string {
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();
@@ -70,6 +72,13 @@ export class FakerData {
     static getPrice():string{
         return faker.commerce.price()
     }
+
+    static getMeetingUrl():string{
+             return  faker.internet.url();    
+
+    }
+
+
 }
     
 function capitalizeFirstLetter(string) {
@@ -103,9 +112,6 @@ export function getRandomLocation(): DataItem | any {
         return null;
     }
 }
-
-
-
 export function getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
