@@ -13,6 +13,7 @@ import { EditCoursePage } from '../pages/editCoursePage'
 import {AdminGroupPage} from '../pages/AdminGroupPage'
 import {OrganizationPage} from '../pages/OrganizationPage'
 import{LocationPage} from '../pages/LocationPage'
+import { LearningPathPage } from '../pages/LearningPathPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -21,6 +22,7 @@ type expertusFixture = {
     createUser: UserPage
     createCourse: CoursePage
     editCourse: EditCoursePage
+    learningPath:LearningPathPage
     //learnercourse:LearnerCoursePage
     location:LocationPage
     learnerLogin: LearnerLogin
@@ -60,6 +62,11 @@ export const test = baseTest.extend<expertusFixture>({
         const createCourse = new CoursePage(page, context);
         await use(createCourse);
     },
+    learningPath: async ({ page, context }, use) => {
+        const learningPath = new LearningPathPage(page, context);
+        await use(learningPath);
+    },
+
     editCourse: async ({ page, context }, use) => {
         const editCourse = new EditCoursePage(page, context);
         await use(editCourse);

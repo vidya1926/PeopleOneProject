@@ -20,7 +20,8 @@ export class AdminHomePage extends PlaywrightWrapper {
         metaPeopleLink: "//a[text()='People']",
         metaLearningLink: "//a[text()='Learning']",
         adminGroupLink:"//a[text()='Admin Group']",
-        locationLink:"//a[text()='Location']"
+        locationLink:"//a[text()='Location']",
+        learningPathLink:"//a[text()='Learning Path']"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -82,6 +83,11 @@ export class AdminHomePage extends PlaywrightWrapper {
         await this.spinnerDisappear();
         await this.mouseHover("//div[@class='item-content processed']", "Menu");
         await this.click(this.selectors.dragableMenu(menu), "Create", "Button");
+    }
+
+    public async clickLearningPath(){
+        await this.mouseHover(this.selectors.learningPathLink,"Learning Path");
+        await this.click(this.selectors.learningPathLink,"Learning Path","Button");
     }
     
     public async menuButton() {

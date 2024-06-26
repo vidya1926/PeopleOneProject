@@ -1,5 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
+//import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
 
 export class CatalogPage extends LearnerHomePage {
@@ -40,6 +41,7 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async mostRecent() {
+        await this.validateElementVisibility(this.selectors.mostRecentMenuItem, "Most Recent");
         await this.mouseHover(this.selectors.mostRecentMenuItem, "Most Recent");
     }
 
@@ -64,6 +66,7 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
         const cancelEnrollmentBtn =this.page.locator("//span[text()='Cancel Enrollment']");
         await this.validateElementVisibility(cancelEnrollmentBtn,"Cancel Enrollement");
+        
     }
 
     // async clickLaunchButton() {
@@ -87,16 +90,21 @@ export class CatalogPage extends LearnerHomePage {
     // }
 
     async clickLaunchButton() {
+        await this.page.waitForLoadState('networkidle');
+        await this.wait('maxWait');
+        await this.wait('mediumWait');
         const launchButtonSelector = this.selectors.launchButton;
         const playButton = "//button[@title='Play Video']"
         await this.wait('maxWait');
         await this.page.focus(playButton);
-        await this.page.keyboard.press('Enter');
+        await this.page.locator(playButton).click();
+        await this.wait('maxWait');
+        await this.wait('mediumWait');     
 
     }
 
     async saveLearningStatus() {
-
+        
         await this.click(this.selectors.saveLearningStatus, "save", "button")
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button")
     }
