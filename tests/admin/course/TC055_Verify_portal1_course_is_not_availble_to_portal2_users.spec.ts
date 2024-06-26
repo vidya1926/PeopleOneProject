@@ -7,12 +7,11 @@ const courseName  =FakerData.getCourseName();
 test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
 
     test.info().annotations.push(
-        { type: `Author`, description: `Ranjini` },
+        { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Create the course as Single instance` },
         { type:`Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
         
-    );
-   
+    );   
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

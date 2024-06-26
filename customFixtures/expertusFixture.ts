@@ -14,6 +14,7 @@ import {AdminGroupPage} from '../pages/AdminGroupPage'
 import {OrganizationPage} from '../pages/OrganizationPage'
 import{LocationPage} from '../pages/LocationPage'
 import { CommerceHomePage } from '../pages/CommerceHomePage'
+import { LearningPathPage } from '../pages/LearningPathPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -23,6 +24,8 @@ type expertusFixture = {
     createCourse: CoursePage
     editCourse: EditCoursePage
   // learnercourse:LearnerCoursePage
+    learningPath:LearningPathPage
+    //learnercourse:LearnerCoursePage
     location:LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
@@ -62,6 +65,11 @@ export const test = baseTest.extend<expertusFixture>({
         const createCourse = new CoursePage(page, context);
         await use(createCourse);
     },
+    learningPath: async ({ page, context }, use) => {
+        const learningPath = new LearningPathPage(page, context);
+        await use(learningPath);
+    },
+
     editCourse: async ({ page, context }, use) => {
         const editCourse = new EditCoursePage(page, context);
         await use(editCourse);
@@ -70,9 +78,6 @@ export const test = baseTest.extend<expertusFixture>({
         const location = new LocationPage(page, context);
         await use(location);
     },
-    
-
-
     learnerHome: async ({ page, context }, use) => {
         const learnerHome = new LearnerHomePage(page, context);
         await use(learnerHome);
@@ -98,7 +103,6 @@ export const test = baseTest.extend<expertusFixture>({
         const organization = new OrganizationPage(page, context);
         await use(organization);
     },
-
     commercehome: async ({ page, context }, use) => {
         const commercehome = new CommerceHomePage(page, context);
         await use(commercehome);

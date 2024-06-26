@@ -2,6 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
 
 
+
 const courseName = FakerData.getCourseName();
 //test.use({ storageState: "logins/expertusAdminLog.json"})
 test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
@@ -20,7 +21,6 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :" + courseName);
-    // await createCourse.contentLibrary();  
     await createCourse.uploadVideoThroughLink();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
@@ -39,9 +39,9 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(courseName);
-    await catalog.clickMoreonCourse(courseName)
-    await catalog.clickSelectcourse(courseName)
-    await catalog.clickEnroll()
+    await catalog.clickMoreonCourse(courseName);
+    await catalog.clickSelectcourse(courseName);
+    await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     
     await catalog.saveLearningStatus();
