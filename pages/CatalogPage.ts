@@ -50,7 +50,6 @@ export class CatalogPage extends LearnerHomePage {
 
 
     async clickEnrollButton(course: string, name: string) {
-
         await this.mouseHover(this.selectors.createdCourse, "CreatedCourse")
         const enrollButtonSelector = this.selectors.enrollIcon;
         await this.validateElementVisibility(enrollButtonSelector, course);
@@ -114,7 +113,7 @@ export class CatalogPage extends LearnerHomePage {
         const completedCourseSelector = this.selectors.completedCourse(name);
         await this.mouseHover(completedCourseSelector, "Text");
     }
-
+    
     async clickFilter() {
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
@@ -134,6 +133,7 @@ export class CatalogPage extends LearnerHomePage {
     async clickApply() {
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
+    
     async viewCoursedetails() {
         await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button")
     }

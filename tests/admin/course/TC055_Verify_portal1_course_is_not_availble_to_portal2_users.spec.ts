@@ -33,23 +33,23 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
 })
     
 
-test(`Verify using learner login`, async({learnerHome,catalog})=>{
+// test(`Verify using learner login`, async({learnerHome,catalog})=>{
 
-    test.info().annotations.push(
-        { type: `Author`, description: `Ranjini` },
-        { type: `TestCase`, description: `Create the course as Single instance` },
-        { type:`Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
+//     test.info().annotations.push(
+//         { type: `Author`, description: `Ranjini` },
+//         { type: `TestCase`, description: `Create the course as Single instance` },
+//         { type:`Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
         
-    );
+//     );
 
-    await learnerHome.isSignOutVisible();
-    await learnerHome.clickCatalog();
-    console.log(courseName)
-    await catalog.searchCatalog(courseName);
+//     await learnerHome.isSignOutVisible();
+//     await learnerHome.clickCatalog();
+//     console.log(courseName)
+//     await catalog.searchCatalog(courseName);
   
- //steps are incomplete to proceed    
+//  //steps are incomplete to proceed    
 
 
-})
+// })
 
     

@@ -19,10 +19,11 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English")    
-    await createCourse.typeDescription("This is a new course by name :" + courseName);   
+    await createCourse.typeDescription("This is a new course by name :" + courseName);
+       
     //video content uplod is not working 
 //    await createCourse.multipleContent();
-     await createCourse.contentLibrary();
+    await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();

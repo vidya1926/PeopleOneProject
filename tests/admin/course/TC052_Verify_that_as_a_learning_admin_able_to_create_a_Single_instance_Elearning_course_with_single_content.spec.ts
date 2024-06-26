@@ -48,3 +48,4 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.saveLearningStatus();
 
 })
+

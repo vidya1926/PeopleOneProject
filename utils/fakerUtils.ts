@@ -62,12 +62,16 @@ export class FakerData {
         return description;
     }
 
-    static getCategory(): string {
+    static getCategory(): string {        
         const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
     }
-}
 
+    static getPrice():string{
+        return faker.commerce.price()
+    }
+}
+    
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -82,10 +86,13 @@ type DataItem = string;
 
 export function getRandomLocation(): DataItem | any {
     try {
+
+    
         const filePath = path.join(__dirname, '../data/location.json');
         const jsonData = fs.readFileSync(filePath, 'utf8');
         const dataArray: DataItem[] = JSON.parse(jsonData);
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
+
             throw new Error('Data array is empty or not an array');
         }
         const randomIndex = Math.floor(Math.random() * dataArray.length);
@@ -96,5 +103,18 @@ export function getRandomLocation(): DataItem | any {
         return null;
     }
 }
+
+
+
+export function getCurrentDateFormatted(): string {
+    const date = new Date();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+}
+
+
+
 
 
