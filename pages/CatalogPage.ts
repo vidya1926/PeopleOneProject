@@ -62,9 +62,9 @@ export class CatalogPage extends LearnerHomePage {
     }
     async clickEnroll() {
 
-        await this.click(this.selectors.enrollButton, "Enroll", "Button")
-        const cancelEnrollmentBtn =this.page.locator("//span[text()='Cancel Enrollment']")
-        await this.validateElementVisibility(cancelEnrollmentBtn,"Cancel Enrollement")
+        await this.click(this.selectors.enrollButton, "Enroll", "Button");
+        const cancelEnrollmentBtn =this.page.locator("//span[text()='Cancel Enrollment']");
+        await this.validateElementVisibility(cancelEnrollmentBtn,"Cancel Enrollement");
     }
 
     // async clickLaunchButton() {
