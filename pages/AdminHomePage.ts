@@ -22,7 +22,10 @@ export class AdminHomePage extends PlaywrightWrapper {
         adminGroupLink:"//a[text()='Admin Group']",
         locationLink:"//a[text()='Location']",
         commerceMenu:`//span[text()='Commerce']`,
-        learningPathLink:"//a[text()='Learning Path']"
+        learningPathLink:"//a[text()='Learning Path']",
+     //   learningPathLink:"//a[text()='Learning Path']",
+        certificationLink:"//a[text()='Certification']",
+        completionCertificationLink:"//a[text()='Completion Certificate']"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -35,7 +38,7 @@ export class AdminHomePage extends PlaywrightWrapper {
       //  try {
             console.log("Loading admin home page...");
             const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.LEARNERADMIN, credentialConstants.PASSWORD);
+                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
             //await this.loadApp(AdminHomePage.pageUrl);
             await this.wait('mediumWait');
             let pageTitle = await this.getTitle();
@@ -154,5 +157,14 @@ export class AdminHomePage extends PlaywrightWrapper {
         this.click(this.selectors.commerceMenu,"Commerce Menu","Button")
     }
 
+    public async clickCompletionCertification(){
+        await this.mouseHover(this.selectors.completionCertificationLink,"Completion Certification");
+        await this.click(this.selectors.completionCertificationLink,"CompletiionCertification","Link");
+    }
+
+    public async clickCertification(){
+        await this.mouseHover(this.selectors.certificationLink,"Certification");
+        await this.click(this.selectors.certificationLink,"Certification","Link");
+    }
 }
 

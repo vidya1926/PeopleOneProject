@@ -1,21 +1,19 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
-import { test } from "../../../customFixtures/expertusFixture"
-import { FakerData } from '../../../utils/fakerUtils';
-
+import { test } from "../../../customFixtures/expertusFixture";
+import { FakerData } from "../../../utils/fakerUtils";
 
 const courseName = FakerData.getCourseName();
-const sessionName = FakerData.getSession();
 const description= FakerData.getDescription();
+const sessionName = FakerData.getSession();
 const instructorName = credentialConstants.INSTRUCTORNAME
 //test.use({ storageState: "logins/expertusAdminLog.json" })
-test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
+test(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome, createCourse,editCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Create the course as multiple instance` },
-        { type: `Test Description`, description: `Verify that course should be created as multiple instance when ILT or VC delivery type is chosen` }
-
+        { type: `TestCase`, description: `TP Prerequisite Course2- MultiClass-ILT and Elearning` },
+        { type: `Test Description`, description: `Verify that course should be created in  MultiClass-ILT and Elearning` }
     );
-    //Fake data:
+
     const login = "customerAdmin"
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
@@ -67,28 +65,3 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.verifyCourseCreationSuccessMessage();
 
 })
-
-
-
-// test(`TC053_Learner Verification For Single Instance`,async({learnerHome,catalog})=>{
-
-//     test.info().annotations.push(
-//         { type: `Author`, description: `Vidya` },
-//         { type: `TestCase`, description: `TC053_Learner Side Course verification` },
-//         { type:`Test Description`, description: `Verify that course should be created for Multiple instance` }
-//     );
-//     await learnerHome.isSignOutVisible();
-//     await learnerHome.clickCatalog();
-//     await catalog.clickFilter();
-//     await catalog.enterSearchFilter(tagName)
-//     await catalog.selectresultantTags(tagName);
-//     await catalog.clickApply()
-//     await catalog.clickEnroll();
-//     await catalog.viewCoursedetails();
-//     await catalog.clickSelectcourse(courseName)
-//     await catalog.clickEnroll()
-//     await catalog.verifyCompletedCourse(courseName);
-//     })
-
-
-

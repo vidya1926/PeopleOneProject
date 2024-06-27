@@ -39,7 +39,14 @@ export class FakerData {
         return location;
     }
 
+<<<<<<< HEAD
 
+=======
+    static getcertificationTitle(){
+        const title = faker.word.sample()+" "+faker.word.noun()
+        return title;
+    }
+>>>>>>> 5edb1e3ddc8212e0cd81691f44c71aa2cc1a04d8
 
     static getCourseName(): string {
         const adjective = faker.hacker.adjective();

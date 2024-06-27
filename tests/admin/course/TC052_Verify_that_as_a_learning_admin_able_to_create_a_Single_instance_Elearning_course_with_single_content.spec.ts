@@ -4,6 +4,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 
 const courseName = FakerData.getCourseName();
+const description= FakerData.getDescription()
 //test.use({ storageState: "logins/expertusAdminLog.json"})
 test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 
@@ -20,7 +21,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
-    await createCourse.typeDescription("This is a new course by name :" + courseName);
+    await createCourse.typeDescription("This is a new course by name :" + description);
     await createCourse.uploadVideoThroughLink();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
@@ -29,7 +30,12 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 })
 
 
+<<<<<<< HEAD
 test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
+=======
+test.skip(`Verification from learner site`, async ({ learnerHome, catalog }) => {
+
+>>>>>>> 5edb1e3ddc8212e0cd81691f44c71aa2cc1a04d8
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
