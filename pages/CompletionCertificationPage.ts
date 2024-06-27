@@ -67,11 +67,12 @@ export class CompletionCertificationPage extends AdminHomePage {
     }
 
     async clickUpdate(){
+        await this.mouseHover(this.selectors.updateBtn,"Update");
         await this.validateElementVisibility(this.selectors.updateBtn,"Update");
         await this.click(this.selectors.updateBtn,"Update","Button");
     }
 
-    async verifyCourseCreationSuccessMessage() {
+    async verifyCeritificateSuccessMessage() {
         await this.spinnerDisappear();
         await this.verification(this.selectors.successMessage, "successfully");
     }

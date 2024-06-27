@@ -18,6 +18,10 @@ test(`Verify that able to create a new certificate and also able to edit the new
     await CompletionCertification.verify_CompletionCertificateLabel();
     await CompletionCertification.title(title);
     await CompletionCertification.designCertificate(FakerData.getDescription());
-    
+    await CompletionCertification.clickPublish();
+    await CompletionCertification.clickProceed();
+    await CompletionCertification.title(title+" "+"test");
+    await CompletionCertification.clickUpdate();
+    await CompletionCertification.verifyCeritificateSuccessMessage();
     
 })
