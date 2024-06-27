@@ -81,7 +81,7 @@ export abstract class PlaywrightWrapper {
     async keyboardType(locator: string, data: string) {
         await test.step(`Typing the ${data}`, async () => {
             await this.page.focus(locator);
-            await this.page.keyboard.type(data,{ delay: 500 });
+            await this.page.keyboard.type(data,{ delay: 300 });
         })
     }
     async loadApp(url: string) {
