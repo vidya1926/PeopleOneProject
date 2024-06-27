@@ -25,12 +25,18 @@ export class LearningPathPage extends AdminHomePage {
         catalogBtn: "//label[@for='publishedcatalog']/i[contains(@class,'fa-circle icon')]",
         updateBtn: "//button[text()='Update']",
         addCourseSearchInput:"input[id^='program-structure-title-search']",
-        successMessage: "//div[@id='lms-overall-container']//h3"
+        successMessage: "//div[@id='lms-overall-container']//h3",
+        createCertification:"//button[text()='CREATE CERTIFICATION']"
 
     };
     async clickCreateLearningPath() {
         await this.validateElementVisibility(this.selectors.createLearningPathBtn, "Learning Path");
         await this.click(this.selectors.createLearningPathBtn, "Learning Path", "Button");
+    }
+
+    async clickCreateCertification(){
+        await this.validateElementVisibility(this.selectors.createCertification,"Create Certification");
+        await this.click(this.selectors.createCertification,"Create Certification","Link")
     }
 
     async title(data: string) {

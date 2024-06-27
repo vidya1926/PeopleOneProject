@@ -14,7 +14,7 @@ export class LearnerCoursePage extends CatalogPage {
         super(page, context);
     }
 
-    async clickContents() {
+    public async clickContents() {
        const videoSeq= this.selectors.contentPlaySeq
         const length= this.selectors.contentPlaySeq.count();
         try{

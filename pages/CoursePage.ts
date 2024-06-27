@@ -13,7 +13,7 @@ export class CoursePage extends AdminHomePage {
         courseDescriptionInput: "//div[@id='course-description']//p",
         uploadDiv: "//div[@id='upload-div']",
         uploadInput: "//div[@id='upload-div']//input[@id='content_upload_file']",
-        attachedContent: (fileName: string) => `//label[text()='Attached Content']/following::div[text()='${fileName}']`,
+        attachedContent: (fileName: string) => `//label[text()='Attached Content']/following::span/following-sibling::div[text()='${fileName}']`,
         showInCatalogBtn: "//span[text()='Show in Catalog']",
         modifyTheAccessBtn: "//footer/following::button[text()='No, modify the access']",
         saveBtn: "//button[@id='course-btn-save' and text()='Save']",
@@ -101,7 +101,7 @@ export class CoursePage extends AdminHomePage {
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
         contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
         addContentButton: "//button[text()='Add Content']",
-        verifyContent: "//a[@aria-label='Download']",
+        attachedContentLabel: "//label[text()='Attached Content']",
         getCourse: "//input[@id='course-title']",
         domainDropdown: "//a[@class='dropdown-item selected']",
         domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
@@ -113,6 +113,7 @@ export class CoursePage extends AdminHomePage {
         addURLBtn:"button:text-is('Add URL')",
         clickSaveasDraft:"//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]",
         willResolveLaterBtn:"//footer//following::button[text()='No, will resolve later']",
+        domainInnerValue:"//label[text()='Domain']/parent::div//div[@class='filter-option-inner']/div"
     
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
@@ -465,8 +466,9 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
         await this.mouseHover(this.selectors.addContentButton,"addcontent");
         await this.click(this.selectors.addContentButton, "addcontent", "button");
-        await this.wait('maxWait')
-        await this.validateElementVisibility(this.selectors.verifyContent, "button");
+        await this.wait('maxWait');
+        await this.mouseHover(this.selectors.attachedContentLabel, "button");
+        await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
    }
 
     async MultipleContent() {
@@ -565,11 +567,14 @@ export class CoursePage extends AdminHomePage {
                 await this.click(this.selectors.domainDropdownIndex(index), "Domain", "Dropdown");
             }
         }
+        const domainText=await this.page.innerText(this.selectors.domainInnerValue);
+        return domainText;
     }
 
 
 
     async clickHere() {
+        await this.mouseHover(this.selectors.clickHere, "Click Here");
         await this.click(this.selectors.clickHere, "Click Here", "button");
     }
 

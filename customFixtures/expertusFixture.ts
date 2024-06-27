@@ -14,6 +14,7 @@ import {AdminGroupPage} from '../pages/AdminGroupPage'
 import {OrganizationPage} from '../pages/OrganizationPage'
 import{LocationPage} from '../pages/LocationPage'
 import { LearningPathPage } from '../pages/LearningPathPage'
+import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -23,6 +24,7 @@ type expertusFixture = {
     createCourse: CoursePage
     editCourse: EditCoursePage
     learningPath:LearningPathPage
+    CompletionCertification:CompletionCertificationPage
     //learnercourse:LearnerCoursePage
     location:LocationPage
     learnerLogin: LearnerLogin
@@ -49,6 +51,10 @@ export const test = baseTest.extend<expertusFixture>({
         await use(lnLogin);
         console.log("Login is verified");
         
+    },
+    CompletionCertification:async ({ page, context }, use) => {
+        const CompletionCertification = new CompletionCertificationPage(page, context);
+        await use(CompletionCertification);
     },
     adminHome: async ({ page, context }, use) => {
         const adHome = new AdminHomePage(page, context);

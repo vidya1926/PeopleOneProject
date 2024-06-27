@@ -46,7 +46,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.setCurrentDate();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor(instructorName);
-   //Need to add host
+   
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifyCourseCreationSuccessMessage();

@@ -9,7 +9,7 @@ export default defineConfig({
   fullyParallel: false,
   retries: 0,
   workers: 1,
-  repeatEach:10,
+  repeatEach:0,
   reporter: [['html',{open:'always'}],],
   use: {   
     trace: 'on',
