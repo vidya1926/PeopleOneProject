@@ -65,12 +65,17 @@ export class CoursePage extends AdminHomePage {
         instanceCountInput: "//div[@id='exp-course-instances-options']//input",
         createInstanceBtn: "//button[@id='instance-add']",
         sessionNameInput: "//label[text()='Session Name']/following-sibling::input",
+        sessionNameIndex:(index:number)=> `(//label[text()='Session Name']/following-sibling::input)[${index}]`,
+
         instructorDropdown: "//label[text()='Instructor']/following-sibling::div//input",
+        instructorDropdownIndex:(index:number)=>`(//label[text()='Instructor']/following-sibling::div//input)[${index}]`,
         instructorOption: (instructorName: string) => `//li[contains(text(),'${instructorName}')]`,
+        instructorOptionIndex: (instructorName: string,index:number) => `(//li[contains(text(),'${instructorName}')])[${index}]`,
+
         locationSelection: "//label[text()='Select Location']/following-sibling::div//input[1]",
         locationDropdown: "//label[text()='Select Location']/following-sibling::div//input[@placeholder='Search']",
         locationOption: (locationName: string) => `//li[text()='${locationName}']`,
-       CourseCalendaricon: "(//label[text()='Complete by']/following::button[contains(@class,'calendaricon')]//i)[1]",
+        CourseCalendaricon: "(//label[text()='Complete by']/following::button[contains(@class,'calendaricon')]//i)[1]",
         tomorrowdate: "//td[@class='today day']/following-sibling::td[1]",
         nextMonth:`//div[@class='datepicker-days']//th[@class='next']`,
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
@@ -78,7 +83,8 @@ export class CoursePage extends AdminHomePage {
         randomDate:`(//td[@class='day']/following-sibling::td)[1]`,
         seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
         timeInput: `//label[text()='Start Time']/following-sibling::input`,
-        chooseTimeOption: (randomIndex: string) => `(//div[contains(@class,'timepicker')]//li)[${randomIndex}]`,
+         chooseTimeOption: (randomIndex: string) => `(//div[contains(@class,'timepicker')]//li)[${randomIndex}]`,
+        chooseStartTimeIndex:(index:string,randomIndex:number)=>`((//ul[@class='ui-timepicker-list'])[${index}]/li)[${randomIndex}]`,
         waitlistInput: "//label[text()='Waitlist']/following-sibling::input",
         updateBtn: "//button[text()='Update']",
         detailsbtn: "//button[text()='Details']",
@@ -96,6 +102,7 @@ export class CoursePage extends AdminHomePage {
         addSurveyBtn: "//button[text()='Add As Survey']",
         deliveryLabel: "//label[text()='Delivery Type']",
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
+        instructorInputIndex:(index: number) =>`(//input[contains(@id,'instructors') and (@placeholder='Search')])[${index}]`,
         instance_Class: "//a[contains(@title,'Instance/Class')]",
         clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
@@ -113,7 +120,19 @@ export class CoursePage extends AdminHomePage {
         addURLBtn:"button:text-is('Add URL')",
         clickSaveasDraft:"//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]",
         willResolveLaterBtn:"//footer//following::button[text()='No, will resolve later']",
-    
+        selectType:`//label[text()='Session Type']/following-sibling::div`,        
+        sessionTypeIndex:(index:number)=>`(//label[text()='Session Type']/following-sibling::div)[${index}]`,
+        attendeeUrlIndex:(index:number)=>`(//label[text()='Attendee URL']/following-sibling::input)[${index}]`,
+        presenterUrlIndex:(index:number)=>`(//label[text()='Presenter URL']/following-sibling::input)[${index}]`,
+        timeZoneIndex:(timeZone:number)=> `(//label[text()='Time Zone']/following-sibling::div//input)[${timeZone}]`,
+        otherMeetingIndex:(othermeeting:number)=>`(//label[text()='Session Type']/following::div//span[text()='other Meetings'])[${othermeeting}]`,
+         timeZoneOption: `(//label[text()='Time Zone']/following::div//input[@placeholder='Search'])[1]`,
+        //  timeZoneOptionIndex:(timeOption:number) =>`(//label[text()='Time Zone']/following::div//input[@placeholder='Search'])[${timeOption}]`,
+       // indianTimezoneIndex:(timezoneIndia:number)=> `(//li[contains(text(),'Indian Standard Time/Kolkata')])[${timezoneIndia}]`,
+       indianTimezone: `//li[contains(text(),'Indian Standard Time/Kolkata')]`, 
+       startDateInstanceIndex:(index:number)=>`(//label[text()='Start Date']/following-sibling::div/input)[${index}]`,
+       timeInputIndex:(index:number)=> `(//label[text()='Start Time']/following-sibling::input)[${index}]`,
+        addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -334,6 +353,7 @@ export class CoursePage extends AdminHomePage {
 
     // }
     async addInstances() {
+        await this.validateElementVisibility(this.selectors.addInstancesBtn,"Add Instances")
         await this.click(this.selectors.addInstancesBtn, "Add Instances", "Button");
     }
 
@@ -384,8 +404,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.tomorrowdate, "Date", "Today's Date");
     }
 
-    async setMaxSeat(seatNum: string) {
-        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", seatNum);
+    async setMaxSeat() {
+        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", `${FakerData.getMaxseats()}`);
     }
 
     public async startandEndTime() {
@@ -548,6 +568,7 @@ export class CoursePage extends AdminHomePage {
         const randomOptions = await randomElement
         await this.click(this.selectors.providerDropdown, "dropdown", "button")
         await this.click(this.selectors.provider(randomOptions), "option", "button")
+        
     }
 
     async getCourse() {
@@ -578,6 +599,57 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.image, "Gallery", "image");
     }
 
+
+    async selectMeetingType(instructorName:string,sessionName:string,index:number){       
+                  //  const sessiontype = this.page.locator(this.selectors.selectType);
+          const pickRandomTime = async () => {
+            const timeElements = await this.page.locator(`(//ul[@class='ui-timepicker-list'])[${index}]/li`).count();
+            const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
+            return randomIndex;
+        };
+        const randomIndex = await pickRandomTime();
+        console.log("Random Index:", randomIndex);
+            const country ="kolkata"
+            const meetingUrl= FakerData.getMeetingUrl() 
+            await this.click(this.selectors.sessionTypeIndex(index), "Session Type", "dropdown")
+            await this.click(this.selectors.otherMeetingIndex(index), "other Meeting", "Option")  
+            await this.validateElementVisibility(this.selectors.sessionNameIndex(index), "Session Name");
+            await this.mouseHover(this.selectors.sessionNameIndex(index), "Session Name")
+            await this.type(this.selectors.sessionNameIndex(index), "Session Name", sessionName);
+            await this.click(this.selectors.timeZoneIndex(index), "TimeZone", "Text Field")
+            await this.type(this.selectors.timeZoneOption, "Time Zone", country)
+            await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
+            await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
+            await this.type(this.selectors.startDateInstanceIndex(index),"Start Date",getCurrentDateFormatted())
+            await this.click(this.selectors.timeInputIndex(index), "Start Time", "Selected")             
+            await this.click(this.selectors.chooseStartTimeIndex(index,randomIndex), "StartTime", "Selected")
+            await this.type(this.selectors.attendeeUrlIndex(index),"Attendee url",meetingUrl)
+            await this.type(this.selectors.presenterUrlIndex(index),"Presenter url",meetingUrl)
+            await this.click(this.selectors.instructorDropdownIndex(index), "Select Instructor", "DropDown");
+            await this.type(this.selectors.instructorInput, "Instructor Name", instructorName);
+            await this.mouseHover(this.selectors.instructorOption(instructorName), "Instructor Name");
+            await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button")
+        } 
+    
+        async clickaddIcon(){
+            await this.click(this.selectors.addDeleteIcon,"Add Icon","Button")
+        }
+
+
+        async startDateVC(){
+            await this.type(this.selectors.startDateInstance,"Start Date",getCurrentDateFormatted())
+        }
+    
+        async addAttendeeUrl(attendeeUrl:string){
+            await this.type(this.selectors.attendeeUrl,"Attendee url",attendeeUrl )
+        }
+    
+        async addPresenterUrl(presenterUrl:string){
+            await this.type(this.selectors.presenterUrl,"Presenter url",presenterUrl)
+        }
+    
+       
+    
 }
 
 

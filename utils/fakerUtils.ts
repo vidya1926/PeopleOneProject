@@ -68,6 +68,9 @@ export class FakerData {
         const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
     }
+    static getMaxseats(){
+      return  faker.number.int({min:20})
+    }
 
     static getPrice():string{
         return faker.commerce.price()

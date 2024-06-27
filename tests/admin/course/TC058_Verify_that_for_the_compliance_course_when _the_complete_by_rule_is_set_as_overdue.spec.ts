@@ -29,9 +29,7 @@ test(`TC058_Verify_that_for_the_compliance_course_set_as_overdue`,async({adminHo
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifyCourseCreationSuccessMessage();
-
-  
+    await createCourse.verifyCourseCreationSuccessMessage();  
 })
 
 

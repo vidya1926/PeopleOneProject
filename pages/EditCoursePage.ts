@@ -31,12 +31,13 @@ export class EditCoursePage extends AdminHomePage {
         indianTimezone: `//li[contains(text(),'Indian Standard Time/Kolkata')]`,
         startDateInstance:`//label[text()='Start Date']/following-sibling::div/input`,
         host:`//label[text()='Host']/following-sibling::div`,
-    //    searchHost -->dd is not working in UI -->bug
-        selectType:`//label[text()='Session Type']/following-sibling::div`,
+    //    searchHost -->dd is not working in UI -->bug      
         otherMeeting:`//label[text()='Session Type']/following::div//span[text()='other Meetings']`,
         attendeeUrl:`//label[text()='Attendee URL']/following-sibling::input`,
         presenterUrl:`//label[text()='Presenter URL']/following-sibling::input`,
- 
+        addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`
+        
+        //`(//label[text()='session add/delete']/following::div//i)[2]`
  
     };
 
@@ -102,11 +103,6 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.setMandatory, "Mandatory", "Option")
     }
 
-async selectMeetingType(){
-    await this.click(this.selectors.selectType, "Session Type", "dropdown")
-        await this.click(this.selectors.otherMeeting, "oother Meeting", "Option")
-}
-    
 
     async selectTimeZone(country: string) {
         await this.click(this.selectors.timeZone, "TimeZone", "Text Field")
@@ -115,18 +111,7 @@ async selectMeetingType(){
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
     
-    async startDateVC(){
-        await this.type(this.selectors.startDateInstance,"Start Date",getCurrentDateFormatted())
-    }
-
-    async addAttendeeUrl(attendeeUrl:string){
-        await this.type(this.selectors.attendeeUrl,"Attendee url",attendeeUrl )
-    }
-
-    async addPresenterUrl(presenterUrl:string){
-        await this.type(this.selectors.presenterUrl,"Presenter url",presenterUrl)
-    }
-
+    
 
    
 }

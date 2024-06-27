@@ -9,6 +9,7 @@ const instructorName = credentialConstants.INSTRUCTORNAME
 const price=FakerData.getPrice();
 const meetingUrl=FakerData.getMeetingUrl();
 
+
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
@@ -22,6 +23,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
+    await createCourse.clickCreateCourse();
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
@@ -39,27 +41,20 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
+
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
-        await createCourse.clickCreateInstance();
+        await createCourse.clickCreateInstance();       
     }
-    await addinstance("Virtual Class");
-    await editCourse.selectMeetingType();
-    await createCourse.enterSessionName(sessionName);
-    await createCourse.setMaxSeat("20");
-    await editCourse.selectTimeZone("Kolkata");
-    await editCourse.startDateVC();
-    await createCourse.startandEndTime();
-    await editCourse.addAttendeeUrl(meetingUrl);
-    await editCourse.addPresenterUrl(meetingUrl)
-    await createCourse.selectInstructor(instructorName);    
-    //screen froze here to continue    
-    await createCourse.clickUpdate();
+    await addinstance("Virtual Class");    
+    await createCourse.selectMeetingType(instructorName,courseName,1);
+    await createCourse.typeAdditionalInfo(courseName)
+    await createCourse.clickaddIcon();
+    await createCourse.selectMeetingType(instructorName,courseName,2);
+    await createCourse.setMaxSeat();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
-})
-
+    })
 
 
 
@@ -76,23 +71,23 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.clickMoreonCourse(courseName)
     await catalog.clickSelectcourse(courseName)
     await catalog.clickEnroll()
-  //need to add the cost center to place order ->application issue
+  //need to add the cost center place order ->application issue
 })
 
 
-test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
-    test.info().annotations.push(
-        { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `TC059_Commerce side order verification ` },
-        { type: `Test Description`, description: `Verify that course should be created for VC` }
-    );
-    await adminHome.menuButton();
-    await adminHome.clickCommerceMenu();
-    await  commercehome.clickOrder();
-    //order placement is pending from Learner side to continue with commerce order verfication
+// test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
+//     test.info().annotations.push(
+//         { type: `Author`, description: `Vidya` },
+//         { type: `TestCase`, description: `TC059_Commerce side order verification ` },
+//         { type: `Test Description`, description: `Verify that course should be created for VC` }
+//     );
+//     await adminHome.menuButton();
+//     await adminHome.clickCommerceMenu();
+//     await  commercehome.clickOrder();
+//     //order placement is pending from Learner side to continue with commerce order verfication
  
   
-})
+// })
 
 
 

@@ -112,14 +112,7 @@ export class CatalogPage extends LearnerHomePage {
            
         // await this.click(this.selectors.posterElement,"Video" ,"Element")
     }
-        
-
-    async playVideo(){
-     //   await this.click()
-    }
-
-    async saveLearningStatus() {
-        
+    async saveLearningStatus() {        
         await this.click(this.selectors.saveLearningStatus, "save", "button")
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button")
     }
