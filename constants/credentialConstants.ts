@@ -5,5 +5,6 @@ export enum credentialConstants {
    LEARNERADMIN="robretcollin@people.co",
    INSTRUCTORNAME="arivazhaganp",
    managerUSERNAME ="ajay",
-   LEARNERUSERNAME="learneruser1"
+   LEARNERUSERNAME="learneruser1",
+   COMMERCEADMIN="commerceadmin"
 }

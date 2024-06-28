@@ -13,6 +13,7 @@ import { EditCoursePage } from '../pages/editCoursePage'
 import {AdminGroupPage} from '../pages/AdminGroupPage'
 import {OrganizationPage} from '../pages/OrganizationPage'
 import{LocationPage} from '../pages/LocationPage'
+import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
@@ -23,6 +24,7 @@ type expertusFixture = {
     createUser: UserPage
     createCourse: CoursePage
     editCourse: EditCoursePage
+  // learnercourse:LearnerCoursePage
     learningPath:LearningPathPage
     CompletionCertification:CompletionCertificationPage
     //learnercourse:LearnerCoursePage
@@ -33,6 +35,7 @@ type expertusFixture = {
     organization:OrganizationPage
     metadatalibrary:MetaLibraryPage
     adminGroup:AdminGroupPage
+    commercehome:CommerceHomePage
    
 }
 
@@ -81,9 +84,6 @@ export const test = baseTest.extend<expertusFixture>({
         const location = new LocationPage(page, context);
         await use(location);
     },
-    
-
-
     learnerHome: async ({ page, context }, use) => {
         const learnerHome = new LearnerHomePage(page, context);
         await use(learnerHome);
@@ -108,6 +108,10 @@ export const test = baseTest.extend<expertusFixture>({
     organization: async ({ page, context }, use) => {
         const organization = new OrganizationPage(page, context);
         await use(organization);
+    },
+    commercehome: async ({ page, context }, use) => {
+        const commercehome = new CommerceHomePage(page, context);
+        await use(commercehome);
     }
     
    

@@ -1,3 +1,4 @@
+import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
 import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, Locator, Page } from "@playwright/test";
 
@@ -26,9 +27,18 @@ export class EditCoursePage extends AdminHomePage {
         registrationEnd: `//input[@id='registration-ends-input']`,
         learnerGropSearch: `//div[@class='dropdown-menu show']//input`,
         timeZone: `//label[text()='Time Zone']/following-sibling::div//input`,
-        timeZoneOption: `//label[text()='Time Zone']/following::div//input[@placeholder='Search']`,
+        timeZoneOption: `(//label[text()='Time Zone']/following::div//input[@placeholder='Search'])[1]`,
         indianTimezone: `//li[contains(text(),'Indian Standard Time/Kolkata')]`,
-
+        startDateInstance:`//label[text()='Start Date']/following-sibling::div/input`,
+        host:`//label[text()='Host']/following-sibling::div`,
+    //    searchHost -->dd is not working in UI -->bug      
+        otherMeeting:`//label[text()='Session Type']/following::div//span[text()='other Meetings']`,
+        attendeeUrl:`//label[text()='Attendee URL']/following-sibling::input`,
+        presenterUrl:`//label[text()='Presenter URL']/following-sibling::input`,
+        addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`
+        
+        //`(//label[text()='session add/delete']/following::div//i)[2]`
+ 
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -93,11 +103,15 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.setMandatory, "Mandatory", "Option")
     }
 
+
     async selectTimeZone(country: string) {
         await this.click(this.selectors.timeZone, "TimeZone", "Text Field")
         await this.type(this.selectors.timeZoneOption, "Time Zone", country)
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
+    
+    
 
+   
 }

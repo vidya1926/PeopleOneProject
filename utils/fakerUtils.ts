@@ -71,10 +71,20 @@ export class FakerData {
         const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
     }
+    static getMaxseats(){
+      return  faker.number.int({min:20})
+    }
 
     static getPrice():string{
         return faker.commerce.price()
     }
+
+    static getMeetingUrl():string{
+             return  faker.internet.url();    
+
+    }
+
+
 }
     
 function capitalizeFirstLetter(string) {
@@ -108,9 +118,6 @@ export function getRandomLocation(): DataItem | any {
         return null;
     }
 }
-
-
-
 export function getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based

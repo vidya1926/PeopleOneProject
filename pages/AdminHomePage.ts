@@ -21,7 +21,9 @@ export class AdminHomePage extends PlaywrightWrapper {
         metaLearningLink: "//a[text()='Learning']",
         adminGroupLink:"//a[text()='Admin Group']",
         locationLink:"//a[text()='Location']",
+        commerceMenu:`//span[text()='Commerce']`,
         learningPathLink:"//a[text()='Learning Path']",
+     //   learningPathLink:"//a[text()='Learning Path']",
         certificationLink:"//a[text()='Certification']",
         completionCertificationLink:"//a[text()='Completion Certificate']"
     };
@@ -151,6 +153,10 @@ export class AdminHomePage extends PlaywrightWrapper {
         await this.click(this.selectors.locationLink,"Location","Link");
     }
 
+    async clickCommerceMenu(){
+        this.click(this.selectors.commerceMenu,"Commerce Menu","Button")
+    }
+
     public async clickCompletionCertification(){
         await this.mouseHover(this.selectors.completionCertificationLink,"Completion Certification");
         await this.click(this.selectors.completionCertificationLink,"CompletiionCertification","Link");
@@ -161,3 +167,4 @@ export class AdminHomePage extends PlaywrightWrapper {
         await this.click(this.selectors.certificationLink,"Certification","Link");
     }
 }
+

@@ -7,17 +7,23 @@ const courseName = FakerData.getCourseName();
 const sessionName = FakerData.getSession();
 const instructorName = credentialConstants.INSTRUCTORNAME
 const price=FakerData.getPrice();
+const meetingUrl=FakerData.getMeetingUrl();
+
+
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
-        { type: `Author`, description: `Ajay Michael` },
+        { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the course as multiple instance` },
         { type: `Test Description`, description: `Verify that course should be created as multiple instance when ILT or VC delivery type is chosen` }
 
     );
     //Fake data:
     const login = "customerAdmin"
-    await adminHome.clickMenu("Course");
+    await adminHome.menuButton();
+    await adminHome.clickLearningMenu();
+    await adminHome.clickCourseLink();
+    await createCourse.clickCreateCourse();
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
@@ -31,26 +37,58 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.typeAdditionalInfo("Happy Learning!");
     await createCourse.clickCatalog();
     await createCourse.clickSave();
+    await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
-    
+
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
-        await createCourse.clickCreateInstance();
+        await createCourse.clickCreateInstance();       
     }
-    await addinstance("Classroom");
-    await createCourse.enterSessionName(sessionName);
-    await createCourse.setMaxSeat("20");
-    await editCourse.selectTimeZone("Kolkata");
-    await createCourse.setCurrentDate();
-    await createCourse.startandEndTime();
-    await createCourse.selectInstructor(instructorName);
-   
+    await addinstance("Virtual Class");    
+    await createCourse.selectMeetingType(instructorName,courseName,1);
+    await createCourse.typeAdditionalInfo(courseName)
+    await createCourse.clickaddIcon();
+    await createCourse.selectMeetingType(instructorName,courseName,2);
+    await createCourse.setMaxSeat();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    })
 
+
+
+test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
+        { type: `Test Description`, description: `Verify that course should be created for Single instance` }
+    );
+    await learnerHome.isSignOutVisible();
+    await learnerHome.clickCatalog();
+    await catalog.mostRecent();
+    await catalog.searchCatalog(courseName);
+    await catalog.clickMoreonCourse(courseName)
+    await catalog.clickSelectcourse(courseName)
+    await catalog.clickEnroll()
+  //need to add the cost center place order ->application issue
 })
+
+
+// test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
+//     test.info().annotations.push(
+//         { type: `Author`, description: `Vidya` },
+//         { type: `TestCase`, description: `TC059_Commerce side order verification ` },
+//         { type: `Test Description`, description: `Verify that course should be created for VC` }
+//     );
+//     await adminHome.menuButton();
+//     await adminHome.clickCommerceMenu();
+//     await  commercehome.clickOrder();
+//     //order placement is pending from Learner side to continue with commerce order verfication
+ 
+  
+// })
+
+
 
 

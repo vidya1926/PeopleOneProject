@@ -46,7 +46,7 @@ export class AdminLogin extends PlaywrightWrapper {
 
         // Clear any existing value
         await element.evaluate((node: HTMLInputElement) => { node.value = ''; });
-       
+
         await element.type(value);
         console.log(`${fieldName} set to ${value}`);
     }

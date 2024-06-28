@@ -25,7 +25,10 @@ export class CatalogPage extends LearnerHomePage {
         launchButton: `(//div//i[@aria-label='Click to play'])[1]`,
         saveLearningStatus: "//button[text()='Save Learning Status']",
         verificationEnrollment: "//span[text()='View Certificate']",
-        unsupportMedia: "//div[contains(text(), 'The media could not be loaded')]"
+        unsupportMedia: "//div[contains(text(), 'The media could not be loaded')]",
+        posterElement:`//button[@class='vjs-big-play-button']//span[1]`
+        //`//button[@title='Play Video']//span[1]`
+
 
     };
 
@@ -97,14 +100,19 @@ export class CatalogPage extends LearnerHomePage {
         const playButton = "//button[@title='Play Video']"
         await this.wait('maxWait');
         await this.page.focus(playButton);
+        await this.page.keyboard.press('Enter');
+        // const playEle=this.selectors.posterElement;
+        // await this.page.click(playEle);
+        // await playEle.evaluate((video) => {
+        //     video.currentTime = 30;
+        // });
         await this.page.locator(playButton).click();
         await this.wait('maxWait');
         await this.wait('mediumWait');     
-
+           
+        // await this.click(this.selectors.posterElement,"Video" ,"Element")
     }
-
-    async saveLearningStatus() {
-        
+    async saveLearningStatus() {        
         await this.click(this.selectors.saveLearningStatus, "save", "button")
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button")
     }
