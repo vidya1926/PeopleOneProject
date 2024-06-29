@@ -122,7 +122,7 @@ export abstract class PlaywrightWrapper {
         await this.page.clickAndDelay(locator);
     }
 
-    async switchToWindow(windowTitle) {
+    async switchToWindow(windowTitle :any ) {
         const [newPage] = await Promise.all([
             this.context.waitForEvent('page')
         ]);

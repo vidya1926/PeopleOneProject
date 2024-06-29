@@ -1,5 +1,5 @@
 import { AdminHomePage } from "./AdminHomePage";
-import { BrowserContext, Locator, Page } from "@playwright/test";
+
 
 export class CompletionCertificationPage extends AdminHomePage {
 
@@ -14,9 +14,9 @@ export class CompletionCertificationPage extends AdminHomePage {
         imgUpload: "input[id^='note-dialog-image-file']",
         publishBtn: "//button[text()='Publish']",
         proceedBtn: "//button[text()='Yes, Proceed']",
-        editCertificateBtn:"//a[text()='Edit Certificate']",
-        updateBtn:"//button[text()='Update']",
-        successfullMessage:"//div[@id='lms-overall-container']//h3"
+        editCertificateBtn: "//a[text()='Edit Certificate']",
+        updateBtn: "//button[text()='Update']",
+        successfullMessage: "//div[@id='lms-overall-container']//h3"
     }
 
     async clickCreateCompletionCertificate() {
@@ -32,12 +32,13 @@ export class CompletionCertificationPage extends AdminHomePage {
 
     async clickTemplateType() {
         const count = await this.page.locator(this.selectors.templateType).count();
-        const randomIndex = Math.floor(Math.random() * count);
+        const randomIndex = Math.floor(Math.random() * (count)) + 1;
         await this.click(this.selectors.randomTemplate(randomIndex), "Template Type", "Checkbox");
 
     }
 
     async title(data: string) {
+        await this.wait('mediumWait');
         await this.type(this.selectors.title, "Title", data);
     }
 
@@ -54,7 +55,7 @@ export class CompletionCertificationPage extends AdminHomePage {
         await this.click(this.selectors.publishBtn, "Publish", "Button");
     }
 
-    
+
     async clickProceed() {
         await this.validateElementVisibility(this.selectors.proceedBtn, "Proceed");
         await this.click(this.selectors.proceedBtn, "Proceed", "Button");
@@ -62,18 +63,19 @@ export class CompletionCertificationPage extends AdminHomePage {
 
     async clickEditCertificate() {
         await this.validateElementVisibility(this.selectors.editCertificateBtn, "Edit Certificate");
-        await this.click(this.selectors.proceedBtn, "Edit Certificate", "Button");
+        await this.click(this.selectors.editCertificateBtn, "Edit Certificate", "Button");
         await this.page.waitForLoadState('networkidle');
     }
 
-    async clickUpdate(){
-        await this.mouseHover(this.selectors.updateBtn,"Update");
-        await this.validateElementVisibility(this.selectors.updateBtn,"Update");
-        await this.click(this.selectors.updateBtn,"Update","Button");
+    async clickUpdate() {
+        await this.mouseHover(this.selectors.updateBtn, "Update");
+        await this.validateElementVisibility(this.selectors.updateBtn, "Update");
+        await this.click(this.selectors.updateBtn, "Update", "Button");
     }
 
     async verifyCeritificateSuccessMessage() {
         await this.spinnerDisappear();
-        await this.verification(this.selectors.successMessage, "successfully");
+        await this.verification(this.selectors.successfullMessage, "successfully");
     }
 }
+

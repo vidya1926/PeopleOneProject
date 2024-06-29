@@ -26,7 +26,8 @@ export class LearningPathPage extends AdminHomePage {
         updateBtn: "//button[text()='Update']",
         addCourseSearchInput:"input[id^='program-structure-title-search']",
         successMessage: "//div[@id='lms-overall-container']//h3",
-        createCertification:"//button[text()='CREATE CERTIFICATION']"
+        createCertification:"//button[text()='CREATE CERTIFICATION']",
+        editCertification:"//a[text()='Edit Certification']",
 
     };
     async clickCreateLearningPath() {
@@ -44,7 +45,8 @@ export class LearningPathPage extends AdminHomePage {
         await this.type(this.selectors.title, "Title", data);
     }
 
-    async language(data: string) {
+    async language() {
+        const data="English"
         await this.click(this.selectors.languageBtn, "Language", "Button");
         await this.click(this.selectors.language(data), "Language", "Button");
     }
@@ -67,7 +69,7 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
     }
 
-    async clickCourseCheckBox(data:string) {
+    async searchAndClickCourseCheckBox(data:string) {
         await this.typeAndEnter(this.selectors.addCourseSearchInput,"Course Serach Input",data)
         await this.wait('minWait');
         await this.click(this.selectors.courseChexbox(data),data,"CheckBox")
@@ -83,8 +85,12 @@ export class LearningPathPage extends AdminHomePage {
     async clickAddSelectCourse() {
         await this.click(this.selectors.addSelectedCourseBtn, "Add Select Course", "Button")
         await this.validateElementVisibility("//span[@class='text-truncate']", "Populated Text");
-        const text = await this.page.innerText("//span[@class='text-truncate']");
-        console.log("Selected Course =" + text);
+        const count =await this.page.locator("//span[@class='text-truncate']").count();
+        for(let index =0;index<count;index++){
+            const text = await this.page.innerText("//span[@class='text-truncate']");
+            console.log("Selected Course =" + text);
+        }
+       
     }
 
     async clickDetailTab() {
@@ -107,4 +113,8 @@ export class LearningPathPage extends AdminHomePage {
         await this.verification(this.selectors.successMessage, "Published successfully.");
     }
 
+    async clickEditCertification(){
+        await this.validateElementVisibility(this.selectors.editCertification,"Edit Certification");
+        await this.click(this.selectors.editCertification,"Edit Certification","Button");
+    }
 }

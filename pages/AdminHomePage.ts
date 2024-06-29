@@ -46,7 +46,7 @@ export class AdminHomePage extends PlaywrightWrapper {
             if (pageTitle.toLowerCase().includes("signin")) {
                 console.log("Sign-in page detected. Performing login...");
                 const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
+                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
                 await this.wait('mediumWait'); 
                 pageTitle = await this.getTitle(); 
                 console.log("Page Title after login:", pageTitle);

@@ -15,6 +15,7 @@ test(`Verify that able to create a new certificate and also able to edit the new
     await adminHome.clickCompletionCertification();
     await CompletionCertification.clickCreateCompletionCertificate();
     await CompletionCertification.verify_CompletionCertificateLabel();
+    await CompletionCertification.clickTemplateType();
     await CompletionCertification.title(title);
     await CompletionCertification.designCertificate(FakerData.getDescription());
     await CompletionCertification.clickPublish();

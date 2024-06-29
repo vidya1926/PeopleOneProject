@@ -1,4 +1,3 @@
-import { verify } from "crypto";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 
@@ -6,12 +5,12 @@ const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let domain: any
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
-test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
+test(`Certification with single instance behavior Enrolled tab`, async ({ adminHome, createCourse }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Create the course as Single instance` },
-        { type: `Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
+        { type: `TestCase`, description: `Certification with single instance behavior (Enrolled tab)` },
+        { type: `Test Description`, description: `Creating the course and assigning certification with single-instance behavior in the 'Enrolled' tab` }
 
     );
 
@@ -33,7 +32,15 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.editcourse();
+    await createCourse.clickCompletionCertificate();
+    await createCourse.clickCertificateCheckBox();
+    await createCourse.clickAdd();
+    await createCourse.clickCatalog();
+    await createCourse.clickUpdate();
+    await createCourse.verifyCourseCreationSuccessMessage()
 })
+
 const title = FakerData.getCourseName();
 test(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
     test.info().annotations.push(
@@ -69,7 +76,7 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
 
 })
 
-test(`Login as a learner`, async ({ learnerHome, catalog }) => {
+test(`Login as a learner`, async ({ learnerHome, catalog,dashboard }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -83,10 +90,14 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
     await catalog.mostRecent();
     await catalog.searchCatalog(title);
     await catalog.clickEnrollButton();
-    await catalog.clickViewCertificationDetails();
-    await catalog.clickLaunchButton();
-    await catalog.saveLearningStatus();
-    await catalog.clickViewCertificate();
+    await catalog.clickOkButton();
+    await learnerHome.clickDashboardLink();
+    await dashboard.clickLearningPath_And_Certification();
+    await dashboard.clickCertificationLink();
+    await dashboard.searchCertification(title);
+    await dashboard.verifyTheEnrolledCertification(title);
+
+    
 
 
 })

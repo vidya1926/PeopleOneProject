@@ -16,6 +16,7 @@ import{LocationPage} from '../pages/LocationPage'
 import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
+import { DashboardPage } from '../pages/DashboardPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -32,6 +33,7 @@ type expertusFixture = {
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
     catalog: CatalogPage
+    dashboard:DashboardPage
     organization:OrganizationPage
     metadatalibrary:MetaLibraryPage
     adminGroup:AdminGroupPage
@@ -91,6 +93,10 @@ export const test = baseTest.extend<expertusFixture>({
     catalog: async ({ page, context }, use) => {
         const catalog = new CatalogPage(page, context);
         await use(catalog);
+    },
+    dashboard: async ({ page, context }, use) => {
+        const dashboard = new DashboardPage(page, context);
+        await use(dashboard);
     },
     // learnercourse: async ({ page, context }, use) => {
     //     const learnerCourse = new LearnerCoursePage(page, context);
