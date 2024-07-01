@@ -26,7 +26,10 @@ export class CatalogPage extends LearnerHomePage {
         saveLearningStatus: "//button[text()='Save Learning Status']",
         verificationEnrollment: "//span[text()='View Certificate']",
         unsupportMedia: "//div[contains(text(), 'The media could not be loaded')]",
-        posterElement:`//button[@class='vjs-big-play-button']//span[1]`
+        posterElement: `//button[@class='vjs-big-play-button']//span[1]`,
+        viewCertificationDetailsBtn: "//button[text()='View Certification Details']",
+        viewCertificateBtn:"//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
+        okBtn:"//button[text()='Ok']"
         //`//button[@title='Play Video']//span[1]`
 
 
@@ -54,11 +57,11 @@ export class CatalogPage extends LearnerHomePage {
     }
 
 
-    async clickEnrollButton(course: string, name: string) {
+    async clickEnrollButton() {
         await this.mouseHover(this.selectors.createdCourse, "CreatedCourse")
         const enrollButtonSelector = this.selectors.enrollIcon;
-        await this.validateElementVisibility(enrollButtonSelector, course);
-        await this.click(enrollButtonSelector, name, "Button");
+        await this.validateElementVisibility(enrollButtonSelector, "Course");
+        await this.click(enrollButtonSelector, "Enrolling Course", "Button");
     }
 
     async clickSelectcourse(course: string) {
@@ -67,9 +70,9 @@ export class CatalogPage extends LearnerHomePage {
     async clickEnroll() {
 
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
-        const cancelEnrollmentBtn =this.page.locator("//span[text()='Cancel Enrollment']");
-        await this.validateElementVisibility(cancelEnrollmentBtn,"Cancel Enrollement");
-        
+        const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
+        await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
+
     }
 
     // async clickLaunchButton() {
@@ -98,9 +101,10 @@ export class CatalogPage extends LearnerHomePage {
         await this.wait('mediumWait');
         const launchButtonSelector = this.selectors.launchButton;
         const playButton = "//button[@title='Play Video']"
-        await this.wait('maxWait');
+        await this.mouseHover(launchButtonSelector,"Play Button")
         await this.page.focus(playButton);
-        await this.page.keyboard.press('Enter');
+        //await this.page.keyboard.press('Enter');
+        
         // const playEle=this.selectors.posterElement;
         // await this.page.click(playEle);
         // await playEle.evaluate((video) => {
@@ -108,13 +112,14 @@ export class CatalogPage extends LearnerHomePage {
         // });
         await this.page.locator(playButton).click();
         await this.wait('maxWait');
-        await this.wait('mediumWait');     
-           
+        await this.wait('mediumWait');
+
         // await this.click(this.selectors.posterElement,"Video" ,"Element")
     }
-    async saveLearningStatus() {        
-        await this.click(this.selectors.saveLearningStatus, "save", "button")
-        await this.validateElementVisibility(this.selectors.verificationEnrollment, "button")
+    async saveLearningStatus() {
+        await this.click(this.selectors.saveLearningStatus, "save", "button");
+        await this.validateElementVisibility(this.selectors.verificationEnrollment, "button");
+        await this.spinnerDisappear();
     }
     async clickCompletedButton() {
         await this.page.waitForTimeout(10000);
@@ -129,7 +134,7 @@ export class CatalogPage extends LearnerHomePage {
         const completedCourseSelector = this.selectors.completedCourse(name);
         await this.mouseHover(completedCourseSelector, "Text");
     }
-    
+
     async clickFilter() {
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
@@ -149,14 +154,36 @@ export class CatalogPage extends LearnerHomePage {
     async clickApply() {
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
-    
+
     async viewCoursedetails() {
-        await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button")
+        await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button");
     }
     // async searchCatalog(courseName:string){
     //     await this.validateElementVisibility(this.selectors.searchCatalog,"Textbox");
     //     await this.type(this.selectors.searchCatalog, "Search", courseName);
     // }
 
+    async clickViewCertificationDetails() {
+        await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn,"View Certification Details");
+        await this.click(this.selectors.viewCertificationDetailsBtn,"View Certification Details","Button");
+        await this.page.waitForLoadState('load');
+
+    }
+
+    async clickOkButton() {
+        await this.validateElementVisibility(this.selectors.okBtn,"View Certification Details");
+        await this.click(this.selectors.okBtn,"View Certification Details","Button");
+        await this.page.waitForLoadState('load');
+
+    }
+
+    async clickViewCertificate(){
+        await this.mouseHover(this.selectors.viewCertificateBtn,"View Certificate");
+        await this.click(this.selectors.viewCertificateBtn,"View Certificate","Button");
+        await this.wait('minWait')
+        
+    }
+
+   
 
 }

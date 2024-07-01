@@ -27,12 +27,12 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifyCourseCreationSuccessMessage()
+    await createCourse.verifySuccessMessage()
     await createCourse.editcourse()
     await createCourse.addsurvey_course()
     await createCourse.addAssesment()
     await createCourse.save_editedcoursedetails()
-    await createCourse.verifyCourseCreationSuccessMessage()
+    await createCourse.verifySuccessMessage()
 
 })
 //

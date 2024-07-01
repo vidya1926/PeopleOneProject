@@ -108,6 +108,9 @@ export abstract class PlaywrightWrapper {
     async waitForSelector(locator: string) {
         await this.page.waitForSelector('input')
     }
+    async fetchattribute(locator:string,attName:string){
+        await this.page.locator(locator).getAttribute(attName)
+    }
 
     async multipleWindowsCount(): Promise<number> {
         const windowslength = this.page.context().pages().length;
@@ -122,7 +125,7 @@ export abstract class PlaywrightWrapper {
         await this.page.clickAndDelay(locator);
     }
 
-    async switchToWindow(windowTitle) {
+    async switchToWindow(windowTitle :any ) {
         const [newPage] = await Promise.all([
             this.context.waitForEvent('page')
         ]);
@@ -341,4 +344,9 @@ export abstract class PlaywrightWrapper {
             await this.page.check(locator, { force: true });
         })
     }
+
+   
+
+
+
 }

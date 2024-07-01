@@ -109,5 +109,4 @@ test(`verify that a job title can be added under Metadata Library - People - Job
   await metadatalibrary.saveButton();
   await metadatalibrary.jobtitle_SearchField(jobTitle);
   await metadatalibrary.verify_JobTitile(jobTitle);
-
 });

@@ -1,5 +1,5 @@
 import { LearnerLogin } from "./LearnerLogin";
-import { BrowserContext, Page } from "@playwright/test";
+import { BrowserContext, expect, Page } from "@playwright/test";
 import { URLConstants } from "../constants/urlConstants";
 import { credentialConstants } from "../constants/credentialConstants";
 
@@ -7,10 +7,12 @@ export class LearnerHomePage extends LearnerLogin {
     static pageUrl = URLConstants.leanerURL;
 
     public selectors = {
-      
+              
         signOutLink: "//div[@class='logout']/a",
         catalogLink: `//a//span[text()='Catalog']`,
-        myLearningLink:"//a//span[text()='My Learning']"
+        myLearningLink:"//a//span[text()='My Learning']",
+        myDashboardLink:"//a//span[text()='My Dashboard']",
+        img:`(//div[@class='w-100 col']//img)[1]`
                 // Add more selectors as needed
     };
 
@@ -33,9 +35,9 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
     public async clickCatalog() {
+        await this.page.waitForLoadState('networkidle');
         await this.validateElementVisibility(this.selectors.catalogLink, "Catalog");
         await this.mouseHover(this.selectors.catalogLink, "Catalog");
-        await this.page.waitForLoadState('networkidle');
         await this.click(this.selectors.catalogLink, "Catalog", "Link");
         await this.page.waitForLoadState('load');
     }
@@ -45,5 +47,18 @@ export class LearnerHomePage extends LearnerLogin {
         await this.validateElementVisibility(this.selectors.myLearningLink, "Link");
         await this.click(this.selectors.myLearningLink, "My Learning", "Link");
         await this.page.waitForLoadState('load');
+    }
+    public async clickDashboardLink() {
+        await this.validateElementVisibility(this.selectors.myDashboardLink, "Link");
+        await this.click(this.selectors.myDashboardLink, "My Learning", "Link");
+        await this.page.waitForLoadState('load');
+    }
+
+
+    public async verifyImage(fileName:string){
+        const imgVisible=this.selectors.img;
+        const imgSrc= this.fetchattribute(imgVisible,"src");
+        await this.page.waitForLoadState('domcontentloaded');
+        expect(imgSrc).toContain(fileName)
     }
 }

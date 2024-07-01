@@ -16,6 +16,8 @@ import{LocationPage} from '../pages/LocationPage'
 import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
+import { DashboardPage } from '../pages/DashboardPage'
+import { BannerPage } from '../pages/bannerPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -32,21 +34,20 @@ type expertusFixture = {
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
     catalog: CatalogPage
+    dashboard:DashboardPage
     organization:OrganizationPage
     metadatalibrary:MetaLibraryPage
     adminGroup:AdminGroupPage
     commercehome:CommerceHomePage
+    bannerHome:BannerPage
    
 }
-
-
 export const test = baseTest.extend<expertusFixture>({
     adminLogin: async ({ page, context }, use) => {
         const adLogin = new AdminLogin(page, context);
         await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD)
         await use(adLogin);
-        //console.log("Login is verified")
-        
+        //console.log("Login is verified"        
     },
     learnerLogin: async ({ page, context }, use) => {
         const lnLogin = new LearnerLogin(page, context);
@@ -92,6 +93,10 @@ export const test = baseTest.extend<expertusFixture>({
         const catalog = new CatalogPage(page, context);
         await use(catalog);
     },
+    dashboard: async ({ page, context }, use) => {
+        const dashboard = new DashboardPage(page, context);
+        await use(dashboard);
+    },
     // learnercourse: async ({ page, context }, use) => {
     //     const learnerCourse = new LearnerCoursePage(page, context);
     //     await use(learnerCourse);
@@ -112,7 +117,10 @@ export const test = baseTest.extend<expertusFixture>({
     commercehome: async ({ page, context }, use) => {
         const commercehome = new CommerceHomePage(page, context);
         await use(commercehome);
-    }
-    
-   
+    },
+    bannerHome:
+    async ({ page, context }, use) => {
+        const bannerHome = new BannerPage(page, context);
+        await use(bannerHome);
+    },
 })

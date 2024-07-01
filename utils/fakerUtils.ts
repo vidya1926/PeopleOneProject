@@ -83,6 +83,9 @@ export class FakerData {
              return  faker.internet.url();    
 
     }
+    static getRandomTitle(){
+        return faker.hacker.noun();
+    }
 
 
 }
@@ -120,12 +123,20 @@ export function getRandomLocation(): DataItem | any {
 }
 export function getCurrentDateFormatted(): string {
     const date = new Date();
-    const month = String(date.getMonth()).padStart(2, '0'); // getMonth() is zero-based
-    const day = String(date.getDate()+1).padStart(2, '0');
+    const month = String(date.getMonth()) // getMonth() is zero-based
+    const day = String(date.getDate())
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
 
+
+export function getCurrentMonthFormatted(): string {
+    const date = new Date();
+    const month = String(date.getMonth()+2) // getMonth() is zero-based
+    const day = String(date.getDate()+2)
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+}
 
 
 

@@ -37,7 +37,7 @@ test(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome,
     //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
     
@@ -47,14 +47,14 @@ test(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome,
     }
     await addinstance("Classroom");
     await createCourse.enterSessionName(sessionName);
-    await createCourse.setMaxSeat("20");
+    await createCourse.setMaxSeat();
     await createCourse.setCurrentDate();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor(instructorName);
     await createCourse.selectLocation();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
@@ -62,6 +62,6 @@ test(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome,
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
 
 })

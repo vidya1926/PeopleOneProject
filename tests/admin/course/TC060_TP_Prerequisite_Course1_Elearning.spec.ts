@@ -25,7 +25,7 @@ test(`TP Prerequisite Course1 Elearning`, async ({ adminHome, createCourse}) => 
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
    
 })
 

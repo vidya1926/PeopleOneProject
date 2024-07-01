@@ -25,7 +25,10 @@ export class AdminHomePage extends PlaywrightWrapper {
         learningPathLink:"//a[text()='Learning Path']",
      //   learningPathLink:"//a[text()='Learning Path']",
         certificationLink:"//a[text()='Certification']",
-        completionCertificationLink:"//a[text()='Completion Certificate']"
+        completionCertificationLink:"//a[text()='Completion Certificate']",
+        communicationLink:"//span[text()='Communication']",
+        bannerMenu:`//a[text()='Banner']`,
+        createBannerbutton:`//button[text()='CREATE BANNER']`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -47,7 +50,7 @@ export class AdminHomePage extends PlaywrightWrapper {
             if (pageTitle.toLowerCase().includes("signin")) {
                 console.log("Sign-in page detected. Performing login...");
                 const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
+                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
                 await this.wait('mediumWait'); 
                 pageTitle = await this.getTitle(); 
                 console.log("Page Title after login:", pageTitle);
@@ -167,5 +170,23 @@ export class AdminHomePage extends PlaywrightWrapper {
         await this.mouseHover(this.selectors.certificationLink,"Certification");
         await this.click(this.selectors.certificationLink,"Certification","Link");
     }
+
+    public async clickCommunicationLink(){
+        await this.mouseHover(this.selectors.communicationLink,"Communication")
+
+        await this.click(this.selectors.communicationLink,"Communication","Link")
+
+    }
+    public async clickBanner(){
+        await this.mouseHover(this.selectors.bannerMenu,"Communication")
+        await this.click(this.selectors.bannerMenu,"Communication","Link")
+    }
+
+    public async clickCreateBanner(){
+        await this.click(this.selectors.createBannerbutton,"Create Banner","Button")
+    }
+
+
 }
+
 

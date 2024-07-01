@@ -38,7 +38,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
 
