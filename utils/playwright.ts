@@ -37,6 +37,7 @@ export abstract class PlaywrightWrapper {
         name: string,
         data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
+            await this.page.locator(locator).clear();
             await this.page.locator(locator).fill(data);
 
         });
@@ -234,13 +235,12 @@ export abstract class PlaywrightWrapper {
     }
 
     async verification(locator: string, expectedTextSubstring: string) {
-        const element = this.page.locator(locator);
+        const element = this.page.locator(locator).nth(0);
         const text = await element.innerText();
         console.log(text);
         const lowerCaseText = text.toLowerCase();
         const lowerCaseExpected = expectedTextSubstring.toLowerCase();
         expect(lowerCaseText).toContain(lowerCaseExpected);
-        await this.wait('mediumWait');
         console.log(`Field value verified successfully`);
     }
 
@@ -315,10 +315,10 @@ export abstract class PlaywrightWrapper {
 
 
     async spinnerDisappear() {
-        await this.wait('minWait');
+        await this.wait('mediumWait');
         try {
             const spinner = this.page.locator("[class='p-3'] svg");
-            await expect(spinner).toHaveCount(0);
+            await expect.soft(spinner).toHaveCount(0);
             console.log("Expected element is disabled");
         } catch (error) {
             console.log("Spinner is still present or assertion failed. Skipping further execution.");

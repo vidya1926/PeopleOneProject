@@ -18,16 +18,23 @@ export class LearningPathPage extends AdminHomePage {
         proceedBtn: "//button[text()='Yes, Proceed']",
         addCourseBtn: "//button[text()=' Add Course']",
         addCourseCheckBox: "//i[contains(@class,'fa-duotone fa-square icon')]",
-        courseChexbox:(course:string)=>`//div[text()='${course}']//following::i[contains(@class,'square icon')][1]`,
+        courseChexbox: (course: string) => `//div[text()='${course}']//following::i[contains(@class,'square icon')][1]`,
         checkBox: (index: string) => `(//i[contains(@class,'fa-duotone fa-square icon')])[${index}]`,
         addSelectedCourseBtn: "//button[text()='Add Selected Course']",
         detailsTab: "//button[text()='Details']",
         catalogBtn: "//label[@for='publishedcatalog']/i[contains(@class,'fa-circle icon')]",
         updateBtn: "//button[text()='Update']",
-        addCourseSearchInput:"input[id^='program-structure-title-search']",
+        addCourseSearchInput: "input[id^='program-structure-title-search']",
         successMessage: "//div[@id='lms-overall-container']//h3",
-        createCertification:"//button[text()='CREATE CERTIFICATION']",
-        editCertification:"//a[text()='Edit Certification']",
+        createCertification: "//button[text()='CREATE CERTIFICATION']",
+        editCertification: "//a[text()='Edit Certification']",
+        hasRecertification: "//span[text()='Has Recertification']/preceding::i[contains(@class,'fad fa-square icon')]",
+        expiresBtn: "//label[text()='Expires']/parent::div//button[contains(@class,'customselectpicker')]",
+        expiresInput:"//label[text()='Expires']/parent::div/input",
+        daysLocator: "//span[text()='Days']",
+        monthsLocator: "//span[text()='Months']",
+        yearsLocator: "//span[text()='Years']",
+        saveAsDraftCheckbox:"//span[text()='Save as Draft']/preceding::i[1]"
 
     };
     async clickCreateLearningPath() {
@@ -35,9 +42,9 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.createLearningPathBtn, "Learning Path", "Button");
     }
 
-    async clickCreateCertification(){
-        await this.validateElementVisibility(this.selectors.createCertification,"Create Certification");
-        await this.click(this.selectors.createCertification,"Create Certification","Link")
+    async clickCreateCertification() {
+        await this.validateElementVisibility(this.selectors.createCertification, "Create Certification");
+        await this.click(this.selectors.createCertification, "Create Certification", "Link")
     }
 
     async title(data: string) {
@@ -46,9 +53,19 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async language() {
-        const data="English"
+        const data = "English"
         await this.click(this.selectors.languageBtn, "Language", "Button");
         await this.click(this.selectors.language(data), "Language", "Button");
+    }
+
+    async hasRecertification() {
+        await this.click(this.selectors.hasRecertification, "Has Recertification", "Check Box");
+    }
+
+    async clickExpiresButton() {
+        await this.click(this.selectors.expiresBtn, "Expires", "Button")
+        await this.click(this.selectors.daysLocator,"Days","Button")
+        await this.type(this.selectors.expiresInput,"Expires Input","1")
     }
 
     async description(data: string) {
@@ -69,10 +86,10 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
     }
 
-    async searchAndClickCourseCheckBox(data:string) {
-        await this.typeAndEnter(this.selectors.addCourseSearchInput,"Course Serach Input",data)
+    async searchAndClickCourseCheckBox(data: string) {
+        await this.typeAndEnter(this.selectors.addCourseSearchInput, "Course Serach Input", data)
         await this.wait('minWait');
-        await this.click(this.selectors.courseChexbox(data),data,"CheckBox")
+        await this.click(this.selectors.courseChexbox(data), data, "CheckBox")
         // const count = await this.page.locator(this.selectors.addCourseCheckBox).count();
         // function getRandomNumber(min: number, max: number): number {
         //     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -85,12 +102,12 @@ export class LearningPathPage extends AdminHomePage {
     async clickAddSelectCourse() {
         await this.click(this.selectors.addSelectedCourseBtn, "Add Select Course", "Button")
         await this.validateElementVisibility("//span[@class='text-truncate']", "Populated Text");
-        const count =await this.page.locator("//span[@class='text-truncate']").count();
-        for(let index =0;index<count;index++){
+        const count = await this.page.locator("//span[@class='text-truncate']").count();
+        for (let index = 0; index < count; index++) {
             const text = await this.page.innerText("//span[@class='text-truncate']");
             console.log("Selected Course =" + text);
         }
-       
+
     }
 
     async clickDetailTab() {
@@ -113,8 +130,14 @@ export class LearningPathPage extends AdminHomePage {
         await this.verification(this.selectors.successMessage, "Published successfully.");
     }
 
-    async clickEditCertification(){
-        await this.validateElementVisibility(this.selectors.editCertification,"Edit Certification");
-        await this.click(this.selectors.editCertification,"Edit Certification","Button");
+    async clickEditCertification() {
+        await this.validateElementVisibility(this.selectors.editCertification, "Edit Certification");
+        await this.click(this.selectors.editCertification, "Edit Certification", "Button");
     }
+
+    async clickSaveAsDraftBtn(){
+        await this.mouseHover(this.selectors.saveAsDraftCheckbox,"Save As Draft");
+        await this.click(this.selectors.saveAsDraftCheckbox,"Save As Draft","CheckBox");
+    }
+
 }
