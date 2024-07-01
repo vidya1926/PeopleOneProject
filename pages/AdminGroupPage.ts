@@ -22,7 +22,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
         super(page, context);
     }
     
-    public async searchCustomeradmin(admin:string){
+    public async searchAdmin(admin:string){
         await this.type(this.selectors.searchCustomerAdmin,"Search Admin", admin)
         await this.mouseHoverandClick(this.selectors.selectPopup,this.selectors.selectPopup,"POP up ","option")
     }

@@ -49,7 +49,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     }
     await addinstance("Classroom");
     await createCourse.enterSessionName(sessionName);
-    await createCourse.setMaxSeat("20");
+    await createCourse.setMaxSeat();
     await createCourse.setCurrentDate();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor(instructorName);

@@ -33,7 +33,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.selectCurrency();
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
-    await createCourse.selectTotalDuration("48");
+    await createCourse.selectTotalDuration("12");
     await createCourse.typeAdditionalInfo("Happy Learning!");
     await createCourse.clickCatalog();
     await createCourse.clickSave();

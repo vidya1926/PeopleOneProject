@@ -30,12 +30,8 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 })
 
 
-<<<<<<< HEAD
-test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
-=======
 test.skip(`Verification from learner site`, async ({ learnerHome, catalog }) => {
 
->>>>>>> 5edb1e3ddc8212e0cd81691f44c71aa2cc1a04d8
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },

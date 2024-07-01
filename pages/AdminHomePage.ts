@@ -34,11 +34,12 @@ export class AdminHomePage extends PlaywrightWrapper {
         this. setupPageListeners();
     }
 
+
     private async common(page: Page, context: BrowserContext) {
       //  try {
             console.log("Loading admin home page...");
             const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+             await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
             //await this.loadApp(AdminHomePage.pageUrl);
             await this.wait('mediumWait');
             let pageTitle = await this.getTitle();
