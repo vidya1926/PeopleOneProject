@@ -378,7 +378,7 @@ export class CoursePage extends AdminHomePage {
     async clickCreateInstance() {
         await this.click(this.selectors.createInstanceBtn, "Create Instances", "Button");
         await this.waitForElementHidden("//footer/following::i[contains(@class,'duotone fa-times pointer')]", "X Button")
-        await this.waitForElementHidden("div[class='p-3'] svg", "Spinner Disappear");
+      
     }
 
     async enterSessionName(sessionName: string) {
@@ -399,7 +399,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
 
         await this.type(this.selectors.locationDropdown, "Select Location", getRandomLocation());
-        await this.mouseHover(this.selectors.locationDropdown, "Location");
+        await this.mouseHover(this.selectors.locationOption(getRandomLocation()),"Location");
         await this.click(this.selectors.locationOption(getRandomLocation()), "Location", getRandomLocation());
 
     }
@@ -412,8 +412,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.tomorrowdate, "Date", "Today's Date");
     }
 
-    async setMaxSeat() {
-        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", `${FakerData.getMaxseats()}`);
+    async setMaxSeat(data:string) {
+        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat",data);
     }
 
     public async startandEndTime() {
@@ -435,17 +435,20 @@ export class CoursePage extends AdminHomePage {
 
     async clickUpdate() {
         await this.click(this.selectors.updateBtn, "update", "field");
-        const locator = this.page.locator(this.selectors.willResolveLaterBtn);
-        await this.wait('minWait');
-        // await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
-        try {
-            if (await locator.isVisible({ timeout: 5000 })) {
-                await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
-            }
-        } catch (error) {
-            console.log("The element is not visible" + error);
+const locator = this.page.locator(this.selectors.willResolveLaterBtn);
+await this.wait('mediumWait');
 
-        }
+try {
+    await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
+    if (await locator.isVisible({ timeout: 5000 })) {
+        await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
+    }
+} catch (error) {
+    console.log("The element is not visible: ");
+}
+
+// Continue with other operations without throwing an error
+
     }
 
     async save_editedcoursedetails() {

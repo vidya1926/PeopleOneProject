@@ -1,11 +1,12 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture"
-import { FakerData } from '../../../utils/fakerUtils';
+import { FakerData, getRandomSeat } from '../../../utils/fakerUtils';
 
 
 const courseName = FakerData.getCourseName();
 const sessionName = FakerData.getSession();
 const description= FakerData.getDescription();
+const maxSeat =await getRandomSeat()
 const instructorName = credentialConstants.INSTRUCTORNAME
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
@@ -49,7 +50,7 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
     }
     await addinstance("Classroom");
     await createCourse.enterSessionName(sessionName);
-    await createCourse.setMaxSeat();
+    await createCourse.setMaxSeat(maxSeat);
     await createCourse.setCurrentDate();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor(instructorName);

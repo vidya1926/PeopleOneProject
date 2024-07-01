@@ -4,6 +4,9 @@ import fs from 'fs'
 
 
 export class FakerData {
+    static getRandomSeat(): string {
+        throw new Error("Method not implemented.");
+    }
 
     static getFirstName(): string {
         return faker.person.firstName();
@@ -97,8 +100,13 @@ function getPhoneNumber(): string {
     return `${startDigit}${restDigits}`;
 }
 
-type DataItem = string;
+export function getRandomSeat():any {
+    const num = 100;
+    const randomNumber = Math.floor(Math.random() * num) + 1; 
+    return randomNumber.toString();
+}
 
+type DataItem = string;
 export function getRandomLocation(): DataItem | any {
     try {
 
