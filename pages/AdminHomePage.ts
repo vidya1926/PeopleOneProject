@@ -38,25 +38,24 @@ export class AdminHomePage extends PlaywrightWrapper {
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
         this.adminLogin=new AdminLogin(page,context)
-       // this.common(page, context,this.role).catch(err => console.error("Error in common setup:", err));
+        this.common(page,context).catch(err => console.error("Error in common setup:", err));
         this. setupPageListeners();
     }
 
 
-    public async common(role:string) {       
-      //  try {
-           
+    public async common(page: Page, context: BrowserContext) {       
+      //  try {           
             console.log("Loading admin home page...");
-        
-             await this.adminLogin.adminLogin(role);
+             const adLogin=new AdminLogin(page,context);
+             await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN,credentialConstants.PASSWORD);
             //await this.loadApp(AdminHomePage.pageUrl);
             await this.wait('mediumWait');
             let pageTitle = await this.getTitle();
             console.log("Page Title:", pageTitle);
             if (pageTitle.toLowerCase().includes("signin")) {
                 console.log("Sign-in page detected. Performing login...");
-                //const adLogin = new AdminLogin(page, context);
-                await this.adminLogin.adminLogin(role);
+                const adLogin = new AdminLogin(page, context);
+                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN,credentialConstants.PASSWORD);
                 await this.wait('mediumWait'); 
                 pageTitle = await this.getTitle(); 
                 console.log("Page Title after login:", pageTitle);

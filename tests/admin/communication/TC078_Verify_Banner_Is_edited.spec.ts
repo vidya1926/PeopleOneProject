@@ -18,10 +18,6 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.clickListing();
      await bannerHome.clickUnpublishtab();
      await bannerHome.clickDelete();
-     
-    // await createCourse.clickUpdate();
-    // await bannerHome.clickListing();
-    // await bannerHome.clickUnplublished();
-    // await bannerHome.clickDelete();
-    // await createCourse.verifySuccessMessage()
+     await bannerHome.verifyDeleteMsg();    
+    
 })

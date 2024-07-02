@@ -7,7 +7,6 @@ import { FakerData, getCurrentDateFormatted, getCurrentMonthFormatted } from "..
 export class BannerPage extends AdminHomePage {
     public selectors = {
         ...this.selectors,
-
         bannerTitle: `//input[@id='banner-title']`,
         bannerDatefield: `//input[@id='banner_from_date-input']`,
         dateFrom: `//td[@class='today day']`,
@@ -25,11 +24,14 @@ export class BannerPage extends AdminHomePage {
         unpublishtab: `//button[text()='Unpublished']`,
         deleteIcon: `(//a[@aria-label="Delete"]/i)[1]`,
         confirmDelete: `//button[text()="Delete"]`,
-        editIcon: `(//a[@aria-label='Edit']/i)[1]`,
+        editIcon:`//i[contains(@class,'fa fa-duotone')]`,
+        editIconIndex:(index:number)=> `(//i[contains(@class,'fa fa-duotone')])[${index}]`,
         updatebtn: `//button[text()='Update']`,
         editSequence:`//span[text()='Sequence']/following::button[@data-id='banner_sequence']`,
         editsequenceindex:`//ul[contains(@class,'dropdown-menu inner')]//a`,
-        selectsequenceIndex:(index: number)=>`(//ul[contains(@class,'dropdown-menu inner')]//a)[${index}]`
+        selectsequenceIndex:(index: number)=>`(//ul[contains(@class,'dropdown-menu inner')]//a)[${index}]`,
+        modalDialog:`//div[contains(@class,'modal-content ')]//span[contains(text(),'deleted')]`,
+        okButton:`//button[text()='OK']`
     };
 
     public async enterBannerTitile(homePage: string) {
@@ -48,8 +50,9 @@ export class BannerPage extends AdminHomePage {
     public async selectSequence(indexNumber: number) {
         await this.click(this.selectors.sequenceSelect, "Sequence", "dropdown")
         const selector = this.page.locator(this.selectors.sequenceOption);
-        const sequenceCount = await selector.count();
-        const randomIndex = Math.floor(Math.random() * sequenceCount);
+        await this.validateElementVisibility(selector,"SequenceOption")
+        // const sequenceCount = await selector.count();
+        // const randomIndex = Math.floor(Math.random() * sequenceCount);
        // await this.mouseHover(this.selectors.sequenceOptionIndex(indexNumber), "SequenceOption");
         await this.click(this.selectors.sequenceOptionIndex(indexNumber), "SequenceOption", "Option");
    
@@ -76,12 +79,17 @@ export class BannerPage extends AdminHomePage {
         await this.type(this.selectors.bannerUrl, "Banner Url ", FakerData.getMeetingUrl())
     }
 
-    public async clickEditIcon() {
-        await this.click(this.selectors.editIcon, "Edit", "Icon")
+    public async clickEditIcon() {     
+        await this.validateElementVisibility(this.selectors.editIcon,"EditIcon")
+         const counter=this.page.locator(this.selectors.editIcon);
+         const index=await counter.count()
+         const randomIndex = Math.floor(Math.random() * index);
+        await this.click(this.selectors.editIconIndex(randomIndex), "Edit", "Icon")
+        await this.wait("minWait")
     }
 
     public async clickUpdatebtn() {
-        await this.click(this.selectors.updatebtn, "Edit", "Icon")
+        await this.click(this.selectors.updatebtn, "Update", "Button")
     }
 
     // public async clickeditBanner(){
@@ -102,7 +110,14 @@ export class BannerPage extends AdminHomePage {
         await this.click(this.selectors.confirmDelete, "Delete", "Button")
     }
 
+   public async verifyDeleteMsg(){
+     await this.verification(this.selectors.modalDialog,"deleted")
+     await this.click(this.selectors.okButton,"OK","Button")
+   }
 
+   public async verifyImage(){
+    
+   }
 
 
 

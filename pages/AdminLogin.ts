@@ -13,9 +13,8 @@ export class AdminLogin extends PlaywrightWrapper {
         // Uncomment the line below if you want to navigate to the page URL during instantiation
         // this.loadApp(AdminLogin.pageUrl);
     }
-    public async adminLogin(role:string) {   
-        const { username, password } = credentials[this.role];
-        console.log("Starting admin login process...");
+    public async adminLogin(username: string, password: string) {           
+         console.log("Starting admin login process...");
         // Ensure that the login page is loaded
         await this.page.goto(AdminLogin.pageUrl);
         // Clear existing value and type username

@@ -21,7 +21,7 @@ import { BannerPage } from '../pages/bannerPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
-   // adminLogin: AdminLogin
+    adminLogin: AdminLogin
     adminHome: AdminHomePage
     createUser: UserPage
     createCourse: CoursePage
@@ -42,7 +42,12 @@ type expertusFixture = {
     bannerHome:BannerPage
 }
 export const test = baseTest.extend<expertusFixture>({
-    // 
+    adminLogin: async ({ page, context }, use) => {
+        const adLogin = new AdminLogin(page, context);
+        await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD)
+        await use(adLogin);
+        //console.log("Login is verified"        
+    },
     
     learnerLogin: async ({ page, context }, use) => {
         const lnLogin = new LearnerLogin(page, context);
@@ -57,7 +62,6 @@ export const test = baseTest.extend<expertusFixture>({
     },
     adminHome: async ({ page, context }, use) => {
         const adHome = new AdminHomePage(page, context);
-        await adHome.common("${role}")
         await use(adHome);
     },
     createUser: async ({ page, context }, use) => {

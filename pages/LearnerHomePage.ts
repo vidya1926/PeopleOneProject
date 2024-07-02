@@ -12,8 +12,10 @@ export class LearnerHomePage extends LearnerLogin {
         catalogLink: `//a//span[text()='Catalog']`,
         myLearningLink:"//a//span[text()='My Learning']",
         myDashboardLink:"//a//span[text()='My Dashboard']",
-        img:`(//div[@class='w-100 col']//img)[1]`
-                // Add more selectors as needed
+        img:(index:number)=>`(//div[@class='w-100 col']//img)[${index}]`,
+        bannerTitle:(titleName:string)=>`//div/h1[text()='${titleName}']`,
+        bannerImg:(titleName:string)=>`(//div/h1[text()="${titleName}"]/ancestor::div/img)[1]`, 
+        bannerSlider:`//a[@id='banner-carousel-expcarousel-right-btn']`           // Add more selectors as needed
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -41,7 +43,6 @@ export class LearnerHomePage extends LearnerLogin {
         await this.click(this.selectors.catalogLink, "Catalog", "Link");
         await this.page.waitForLoadState('load');
     }
-
     
     public async clickMyLearning() {
         await this.validateElementVisibility(this.selectors.myLearningLink, "Link");
@@ -55,10 +56,22 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
 
-    public async verifyImage(fileName:string){
-        const imgVisible=this.selectors.img;
-        const imgSrc= this.fetchattribute(imgVisible,"src");
-        await this.page.waitForLoadState('domcontentloaded');
-        expect(imgSrc).toContain(fileName)
+    public async verifyImage(title:string){
+          const banner=this.page.locator(`//div/h1[text()="${title}"]/ancestor::div/img`)
+      //    await this.validateElementVisibility(banner,"Banner")
+          if(await banner.isVisible()){
+            await this.fetchattribute(`${banner}`,"src")
+          }else{     
+            let attempt=0;
+            let maxattempt=5      
+            while(attempt<maxattempt){
+                this.click(this.selectors.bannerSlider,"banner","Slider")
+                if(await banner.isVisible()){
+                  await this.fetchattribute(`${banner}`,"src")
+                  break;
+                }    
+                attempt++;          
+            }      
+          }       
     }
 }

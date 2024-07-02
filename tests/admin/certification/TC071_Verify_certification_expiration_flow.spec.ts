@@ -1,6 +1,6 @@
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
-const { Client } = require('pg');
+import { Client } from 'pg'
 
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
@@ -31,7 +31,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
 })
 
 const title = FakerData.getCourseName();
@@ -67,7 +67,7 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
     await createCourse.clickAdd();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
 
 
 })
