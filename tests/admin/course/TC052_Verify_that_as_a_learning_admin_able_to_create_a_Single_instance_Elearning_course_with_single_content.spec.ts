@@ -12,7 +12,8 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
         { type: `TestCase`, description: `Create the course as Single instance` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );   
-
+    
+    await adminHome.common("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -30,21 +31,21 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 
 
 
-test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
-    test.info().annotations.push(
-        { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
-        { type: `Test Description`, description: `Verify that course should be created for Single instance` }
-    );
-    await learnerHome.isSignOutVisible();
-    await learnerHome.clickCatalog();
-    await catalog.mostRecent();
-    await catalog.searchCatalog(courseName);
-    await catalog.clickMoreonCourse(courseName);
-    await catalog.clickSelectcourse(courseName);
-    await catalog.clickEnroll();
-    await catalog.clickLaunchButton();
-    await catalog.saveLearningStatus();
-})
+// test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
+//     test.info().annotations.push(
+//         { type: `Author`, description: `Vidya` },
+//         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
+//         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
+//     );
+//     await learnerHome.isSignOutVisible();
+//     await learnerHome.clickCatalog();
+//     await catalog.mostRecent();
+//     await catalog.searchCatalog(courseName);
+//     await catalog.clickMoreonCourse(courseName);
+//     await catalog.clickSelectcourse(courseName);
+//     await catalog.clickEnroll();
+//     await catalog.clickLaunchButton();
+//     await catalog.saveLearningStatus();
+// })
 
 

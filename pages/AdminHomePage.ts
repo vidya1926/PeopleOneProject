@@ -7,6 +7,8 @@ import { AdminLogin } from "./AdminLogin";
 export class AdminHomePage extends PlaywrightWrapper {
     static pageUrl = URLConstants.adminURL;
 
+    adminLogin:AdminLogin;
+
     public selectors = {
         signOutLink: "//div[@class='logout']/a",
         dragableMenu:(menu:string)=>`//div[text()='${menu}']/following::div[text()="Create"][1]`,
@@ -31,26 +33,30 @@ export class AdminHomePage extends PlaywrightWrapper {
         createBannerbutton:`//button[text()='CREATE BANNER']`,
     };
 
+        role:string
+
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        this.common(page, context).catch(err => console.error("Error in common setup:", err));
+        this.adminLogin=new AdminLogin(page,context)
+       // this.common(page, context,this.role).catch(err => console.error("Error in common setup:", err));
         this. setupPageListeners();
     }
 
 
-    private async common(page: Page, context: BrowserContext) {
+    public async common(role:string) {       
       //  try {
+           
             console.log("Loading admin home page...");
-            const adLogin = new AdminLogin(page, context);
-             await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+        
+             await this.adminLogin.adminLogin(role);
             //await this.loadApp(AdminHomePage.pageUrl);
             await this.wait('mediumWait');
             let pageTitle = await this.getTitle();
             console.log("Page Title:", pageTitle);
             if (pageTitle.toLowerCase().includes("signin")) {
                 console.log("Sign-in page detected. Performing login...");
-                const adLogin = new AdminLogin(page, context);
-                await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+                //const adLogin = new AdminLogin(page, context);
+                await this.adminLogin.adminLogin(role);
                 await this.wait('mediumWait'); 
                 pageTitle = await this.getTitle(); 
                 console.log("Page Title after login:", pageTitle);
@@ -58,8 +64,11 @@ export class AdminHomePage extends PlaywrightWrapper {
         } catch (err) {
             console.error("Error during common setup:", err);
             throw err;
-         
     }
+    
+
+    
+   
     private  setupPageListeners() {
         this.page.on('load', async () => {
             try {
