@@ -16,7 +16,7 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
 
     );
     //Fake data:
-    const login = "customerAdmin"
+  
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
