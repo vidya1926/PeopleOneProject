@@ -17,6 +17,7 @@ import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
 import { DashboardPage } from '../pages/DashboardPage'
+import DB from '../utils/dbUtil'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -39,6 +40,7 @@ type expertusFixture = {
     adminGroup:AdminGroupPage
     commercehome:CommerceHomePage
    
+    dataBase: DB
 }
 
 
@@ -118,7 +120,9 @@ export const test = baseTest.extend<expertusFixture>({
     commercehome: async ({ page, context }, use) => {
         const commercehome = new CommerceHomePage(page, context);
         await use(commercehome);
-    }
-    
-   
+    },
+    dataBase: async ({}, use) =>{
+        const dataBase = new DB();
+        await use (dataBase);
+        }
 })

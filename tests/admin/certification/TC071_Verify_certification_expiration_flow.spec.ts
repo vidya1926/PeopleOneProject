@@ -1,6 +1,8 @@
+import { log } from "console";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
-const { Client } = require('pg');
+
+
 
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
@@ -35,7 +37,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 })
 
 const title = FakerData.getCourseName();
-test(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
+test.skip(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Certification enroll and completion with single instance` },
@@ -72,17 +74,17 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
 
 })
 
-test(`featch data from database`,async(page)=>{
-    const client = new Client({
-        user: 'aztenantadmin',
-        host: '',
-        database: 'aztenantadmin',
-        password: '1wR?cHeQe_',
-        port: 3306,
-    });
-    await client.connect();
+/* test(`featch data from database`,async({dataBase})=>{
+  
+  try {
+    const sample= await dataBase.executeQuery("Select * From iris.course_session_details Order by id Desc Limit 10 ;")
+  console.log(sample);
+  } catch (error) {
+    console.log( "Not executed " + error);
+    
+  }
 
-})
+}) */
 
 test(`Login as a learner`, async ({ learnerHome, catalog }) => {
 

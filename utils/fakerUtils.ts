@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import path from "path";
 import fs from 'fs'
+import { promises } from "readline";
 
 
 export class FakerData {
@@ -100,7 +101,7 @@ function getPhoneNumber(): string {
     return `${startDigit}${restDigits}`;
 }
 
-export function getRandomSeat():any {
+export async function getRandomSeat() {
     const num = 100;
     const randomNumber = Math.floor(Math.random() * num) + 1; 
     return randomNumber.toString();
