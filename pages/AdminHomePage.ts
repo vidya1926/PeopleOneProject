@@ -10,7 +10,7 @@ export class AdminHomePage extends PlaywrightWrapper {
     public selectors = {
         signOutLink: "//div[@class='logout']/a",
         dragableMenu: (menu: string) => `//div[text()='${menu}']/following::div[text()="Create"][1]`,
-        menu: "//div[text()='Menu']",
+        menu:"//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
         learningMenu: "//span[text()='Learning']",
         courseLink: "//a[text()='Course']",
@@ -23,7 +23,7 @@ export class AdminHomePage extends PlaywrightWrapper {
         locationLink: "//a[text()='Location']",
         commerceMenu: `//span[text()='Commerce']`,
         learningPathLink: "//a[text()='Learning Path']",
-        //  learningPathLink:"//a[text()='Learning Path']",
+        //learningPathLink:"//a[text()='Learning Path']",
         certificationLink: "//a[text()='Certification']",
         completionCertificationLink: "//a[text()='Completion Certificate']"
     };
@@ -45,7 +45,7 @@ export class AdminHomePage extends PlaywrightWrapper {
         if (pageTitle.toLowerCase().includes("signin")) {
             console.log("Sign-in page detected. Performing login...");
             const adLogin = new AdminLogin(page, context);
-            await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+            await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
             await this.wait('mediumWait');
             pageTitle = await this.getTitle();
             console.log("Page Title after login:", pageTitle);

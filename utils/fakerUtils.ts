@@ -57,8 +57,9 @@ export class FakerData {
 
     static getUserId(): string {
         const currentDate = new Date();
-        const milliseconds = currentDate.getTime().toString();
-        const user = faker.person.firstName() + milliseconds
+        //const milliseconds = currentDate.getTime().toString();
+        const fName =faker.person.firstName()
+        const user =   faker.internet.exampleEmail({firstName:fName})
         return user;
     }
 
