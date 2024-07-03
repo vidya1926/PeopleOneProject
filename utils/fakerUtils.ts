@@ -43,8 +43,8 @@ export class FakerData {
         return location;
     }
 
-    static getcertificationTitle(){
-        const title = faker.word.sample()+" "+faker.word.noun()
+    static getcertificationTitle() {
+        const title = faker.word.sample() + " " + faker.word.noun()
         return title;
     }
 
@@ -56,10 +56,10 @@ export class FakerData {
     }
 
     static getUserId(): string {
-        const currentDate = new Date();
+        //const currentDate = new Date();
         //const milliseconds = currentDate.getTime().toString();
-        const fName =faker.person.firstName()
-        const user =   faker.internet.exampleEmail({firstName:fName})
+        const fName= faker.person.firstName();
+        const user =  faker.internet.email({firstName:fName})
         return user;
     }
 
@@ -72,29 +72,33 @@ export class FakerData {
         return description;
     }
 
-    static getCategory(): string {        
+    static getCategory(): string {
         const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
     }
-    static getMaxseats(){
-      return  faker.number.int({min:20})
+    static getMaxseats() {
+        return faker.number.int({ min: 20 })
     }
 
-    static getPrice():string{
+    static getPrice(): string {
         return faker.commerce.price()
     }
 
-    static getMeetingUrl():string{
-             return  faker.internet.url();    
+    static getMeetingUrl(): string {
+        return faker.internet.url();
 
     }
-    static getRandomTitle(){
+    static getRandomTitle() {
         return faker.hacker.noun();
     }
 
-
 }
-    
+
+export function getCreditCardNumber(): string {
+    const startDigit = Math.floor(Math.random() * 3) + 7;
+    const restDigits = Array.from({ length: 16 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${startDigit}${restDigits}`;
+}
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -104,10 +108,16 @@ function getPhoneNumber(): string {
     const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
     return `${startDigit}${restDigits}`;
 }
+export function getCVV(): string {
+    const startDigit = Math.floor(Math.random() * 1) + 12;
+    const restDigits = Array.from({ length: 1 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${startDigit}${restDigits}`;
+}
+
 
 export async function getRandomSeat() {
     const num = 100;
-    const randomNumber = Math.floor(Math.random() * num) + 1; 
+    const randomNumber = Math.floor(Math.random() * num) + 1;
     return randomNumber.toString();
 }
 
@@ -115,7 +125,7 @@ type DataItem = string;
 export function getRandomLocation(): DataItem | any {
     try {
 
-    
+
         const filePath = path.join(__dirname, '../data/location.json');
         const jsonData = fs.readFileSync(filePath, 'utf8');
         const dataArray: DataItem[] = JSON.parse(jsonData);
@@ -142,12 +152,25 @@ export function getCurrentDateFormatted(): string {
 
 export function getCurrentMonthFormatted(): string {
     const date = new Date();
-    const month = String(date.getMonth()+2) // getMonth() is zero-based
-    const day = String(date.getDate()+2)
+    const month = String(date.getMonth() + 2) // getMonth() is zero-based
+    const day = String(date.getDate() + 2)
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
 
+  export function getcardExpiryDate(): string {
+    const date = new Date();
+    const month = String(date.getMonth() + 1).padStart(2,"0")// getMonth() is zero-based
+    const year = date.getFullYear()
+    const yy = year.toString().slice(2)
+    return `${month}${yy}`
+}
+
+export function getPonumber(): string {
+    const startDigit = Math.floor(Math.random() * 3) + 12;
+    const restDigits = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${startDigit}${restDigits}`;    
+}
 
 
 

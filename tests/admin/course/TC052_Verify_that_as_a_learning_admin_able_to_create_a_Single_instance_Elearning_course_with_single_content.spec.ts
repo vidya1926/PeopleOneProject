@@ -13,7 +13,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );   
     
-    await adminHome.common("CUSTOMERADMIN")
+   
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

@@ -34,4 +34,16 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
     );
     await learnerHome.isSignOutVisible();
       await learnerHome.verifyImage(title);
-    })
+    
+})
+
+test(`Verification from banner URL navigation`, async ({ learnerHome }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
+        { type: `Test Description`, description: `Learner Side Banner verification` }
+    );
+    await learnerHome.isSignOutVisible();
+      await learnerHome.verifyUrl(title);
+    
+})

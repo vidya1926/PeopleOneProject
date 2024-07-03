@@ -10,15 +10,16 @@ import { CoursePage } from '../pages/CoursePage'
 import { UserPage } from '../pages/UserPage'
 import { MetaLibraryPage } from '../pages/MetaLibraryPage'
 import { EditCoursePage } from '../pages/editCoursePage'
-import {AdminGroupPage} from '../pages/AdminGroupPage'
-import {OrganizationPage} from '../pages/OrganizationPage'
-import{LocationPage} from '../pages/LocationPage'
+import { AdminGroupPage } from '../pages/AdminGroupPage'
+import { OrganizationPage } from '../pages/OrganizationPage'
+import { LocationPage } from '../pages/LocationPage'
 import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
 import { DashboardPage } from '../pages/DashboardPage'
 import DB from '../utils/dbUtil'
 import { BannerPage } from '../pages/bannerPage'
+import { CostcenterPage } from '../pages/CostcenterPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -27,21 +28,22 @@ type expertusFixture = {
     createUser: UserPage
     createCourse: CoursePage
     editCourse: EditCoursePage
-  // learnercourse:LearnerCoursePage
-    learningPath:LearningPathPage
-    CompletionCertification:CompletionCertificationPage
+    // learnercourse:LearnerCoursePage
+    learningPath: LearningPathPage
+    CompletionCertification: CompletionCertificationPage
     //learnercourse:LearnerCoursePage
-    location:LocationPage
+    location: LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
     catalog: CatalogPage
-    dashboard:DashboardPage
-    organization:OrganizationPage
-    metadatalibrary:MetaLibraryPage
-    adminGroup:AdminGroupPage
-    commercehome:CommerceHomePage
-    bannerHome:BannerPage
+    dashboard: DashboardPage
+    organization: OrganizationPage
+    metadatalibrary: MetaLibraryPage
+    adminGroup: AdminGroupPage
+    commercehome: CommerceHomePage
+    bannerHome: BannerPage
     dataBase: DB
+    costCenter: CostcenterPage
 }
 export const test = baseTest.extend<expertusFixture>({
     adminLogin: async ({ page, context }, use) => {
@@ -50,15 +52,15 @@ export const test = baseTest.extend<expertusFixture>({
         await use(adLogin);
         //console.log("Login is verified"        
     },
-    
+
     learnerLogin: async ({ page, context }, use) => {
         const lnLogin = new LearnerLogin(page, context);
-        await lnLogin.learnerLogin(credentialConstants.LEARNERUSERNAME,credentialConstants.PASSWORD);
+        await lnLogin.learnerLogin(credentialConstants.LEARNERUSERNAME, credentialConstants.PASSWORD);
         await use(lnLogin);
         console.log("Login is verified");
-        
+
     },
-    CompletionCertification:async ({ page, context }, use) => {
+    CompletionCertification: async ({ page, context }, use) => {
         const CompletionCertification = new CompletionCertificationPage(page, context);
         await use(CompletionCertification);
     },
@@ -107,7 +109,7 @@ export const test = baseTest.extend<expertusFixture>({
         const metadatalibrary = new MetaLibraryPage(page, context);
         await use(metadatalibrary);
     },
-    adminGroup:async({ page, context }, use) => {
+    adminGroup: async ({ page, context }, use) => {
         const adminGroup = new AdminGroupPage(page, context);
         await use(adminGroup);
     },
@@ -124,8 +126,15 @@ export const test = baseTest.extend<expertusFixture>({
         const bannerHome = new BannerPage(page, context);
         await use(bannerHome);
     },
-    dataBase: async ({}, use) =>{
+    dataBase: async ({ }, use) => {
         const dataBase = new DB();
-        await use (dataBase);
-        }
+        await use(dataBase);
+    },
+
+    costCenter: async ({ page, context }, use) => {
+        const costcenter = new CostcenterPage(page, context);
+        await use(costcenter);
+    },
+
+
 })

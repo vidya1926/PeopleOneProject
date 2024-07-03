@@ -7,7 +7,7 @@ export class LearnerCoursePage extends CatalogPage {
         ...this.selectors,
         contentPlaySeq: `//span[contains(text(),'Content')]/following::i[contains(@class,'fa-duotone fa-circle-play pointer')]`,
         //warningMessage:
-     
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -15,19 +15,17 @@ export class LearnerCoursePage extends CatalogPage {
     }
 
     public async clickContents() {
-       const videoSeq= this.selectors.contentPlaySeq
-        const length= this.selectors.contentPlaySeq.count();
-        try{
-        for (let index of length){
-           await  this.click(this.selectors.contentPlaySeq(index),"All contents","Checkbox")
-        } }catch{
+        const videoSeq = this.selectors.contentPlaySeq
+        const length = this.selectors.contentPlaySeq.count();
+        try {
+            for (let index of length) {
+                await this.click(this.selectors.contentPlaySeq(index), "All contents", "Checkbox")
+            }
+        } catch {
             //verify warning message
         }
     }
-
-    
-
-    async clickFirstContent(){
+    async clickFirstContent() {
 
     }
 

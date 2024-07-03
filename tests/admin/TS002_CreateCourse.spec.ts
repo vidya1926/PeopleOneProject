@@ -1,7 +1,7 @@
 import {test} from "../../customFixtures/expertusFixture"
 import { FakerData } from '../../utils/fakerUtils';
 
-test.use({ storageState: "logins/expertusAdminLog.json"})
+//test.use({ storageState: "logins/expertusAdminLog.json"})
 test(` creating learners for the application`,async({adminHome,createCourse})=>{
 
     var courseName = FakerData.getCourseName();

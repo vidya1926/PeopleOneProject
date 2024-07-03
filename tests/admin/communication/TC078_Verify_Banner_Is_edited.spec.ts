@@ -55,12 +55,12 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
     await learnerHome.verifyAllSequence(title)
     })
 
-test(`Verification from learner site`, async ({ learnerHome }) => {
+test(`Verifying the deleted Banner through learner site`, async ({ learnerHome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC78_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
     await learnerHome.isSignOutVisible();
-    await learnerHome.verifyImage("Deleted tile name " +title);
+    await learnerHome.verifyImage(title);
     })

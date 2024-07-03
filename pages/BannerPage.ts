@@ -24,7 +24,7 @@ export class BannerPage extends AdminHomePage {
         unpublishtab: `//button[text()='Unpublished']`,
         deleteIcon: `(//a[@aria-label="Delete"]/i)[1]`,
         confirmDelete: `//button[text()="Delete"]`,
-        editIcon: (title:string)=>`//div[text()='${title}']/following::i[contains(@class,'fa fa-duotone')]`,
+        editIcon: (title:string)=>`(//div[text()='${title}']/following::i[contains(@class,'fa fa-duotone')])`,
         editIconIndex:(index:number)=> `(//i[contains(@class,'fa fa-duotone')])[${index}]`,
         updatebtn: `//button[text()='Update']`,
         editSequence:`//span[text()='Sequence']/following::button[@data-id='banner_sequence']`,
@@ -83,15 +83,12 @@ export class BannerPage extends AdminHomePage {
         const path = `../data/${fileName}.jpg`;
         await this.uploadFile(this.selectors.uploadFile, path);
     }
-
     public async clickPublish() {
         await this.click(this.selectors.publishButton, "Publish", "Button")
     }
-
-    public async enterbannerUrl() {
-        await this.type(this.selectors.bannerUrl, "Banner Url ", FakerData.getMeetingUrl())
+    public async enterbannerUrl() {         
+        await this.type(this.selectors.bannerUrl, "Banner Url ",await this.getTitle())
     }
-
     public async clickEditIcon(title:string) {     
         await this.validateElementVisibility(this.selectors.editIcon(title),"EditIcon")
          const counter=this.page.locator(this.selectors.editIcon(title));
@@ -113,7 +110,6 @@ export class BannerPage extends AdminHomePage {
         await this.click(this.selectors.bannerListing, "Goto Listing", "Button")
     }
 
-
     public async clickUnpublishtab() {
         await this.click(this.selectors.unpublishtab, "unPublish", "Button")
     }
@@ -123,11 +119,12 @@ export class BannerPage extends AdminHomePage {
         await this.click(this.selectors.confirmDelete, "Delete", "Button")
     }
 
-   public async verifyDeleteMsg(){
+    public async verifyDeleteMsg(){
      await this.verification(this.selectors.modalDialog,"deleted")
      await this.click(this.selectors.okButton,"OK","Button")
    }
 
+   
    
 
 

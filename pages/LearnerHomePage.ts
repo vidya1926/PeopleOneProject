@@ -56,11 +56,10 @@ export class LearnerHomePage extends LearnerLogin {
 
     public async verifyImage(title: string) {
         const banner = this.page.locator(`//div/h1[text()="${title}"]/ancestor::div/img`)
-        await this.wait("mediumWait")
+        //    await this.validateElementVisibility(banner,"Banner")
         if (await banner.isVisible()) {
-            await this.wait("mediumWait")
-            const srcValue = await this.fetchattribute(`${banner}`, "src")
-            console.log(srcValue)
+            const name = await this.getInnerText(this.selectors.bannerName)
+            expect(name).toContain(title)
         } else {
             // let attempt=0;
             // let maxattempt=5      
@@ -68,8 +67,8 @@ export class LearnerHomePage extends LearnerLogin {
                 this.validateElementVisibility(this.selectors.bannerSlider, "banner")
                 this.click(this.selectors.bannerSlider, "banner", "Slider")
                 if (await banner.isVisible()) {
-                    const srcValue = await this.fetchattribute(`${banner}`, "src")
-                    console.log(srcValue)
+                    const name = await this.getInnerText(this.selectors.bannerName)
+                    expect(name).toContain(title)
                     break;
                 }
                 // attempt++;          
@@ -78,50 +77,37 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
     public async verifySequence(title: string, seqNumber: number) {
-        await this.validateElementVisibility(this.selectors.sequenceCounter,"banner")
+        await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
 
         const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
         for (let index = 1; index <= availaberBnner; index++) {
-            try{if (index == seqNumber) {
-                const name = await this.getInnerText(this.selectors.bannerName)
-                expect(name).toContain(title)
-            }}
-            catch(error){
+            try {
+                if (index == seqNumber) {
+                    const name = await this.getInnerText(this.selectors.bannerName)
+                    expect(name).toContain(title)
+                }
+            }
+            catch (error) {
                 console.log(error)
             }
         }
     }
     public async verifyAllSequence(title: string) {
-        await this.validateElementVisibility(this.selectors.sequenceCounter,"banner")
+        await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
         const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
-        try{
+        try {
             for (let index = 1; index <= availaberBnner; index++) {
-            const name = await this.getInnerText(this.selectors.bannerName)
-            expect(name).toContain(title)
-        }}catch(error){
-                console.log(error)
+                const name = await this.getInnerText(this.selectors.bannerName)
+                expect(name).toContain(title)
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
 
-
-
+    public async verifyUrl(title:string) {
+            await this.click(this.selectors.bannerImg(title),"Navigate the Url", "Link")        
+            expect(await this.getTitle()).toContain("E1internal")
+    }
 
 }
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-
-
-
-

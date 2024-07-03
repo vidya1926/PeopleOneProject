@@ -16,12 +16,14 @@ export class CommerceHomePage extends AdminHomePage{
     }
 
     
-    async clickOrder(){
+   public async clickOrder(){
         this.click(this.selectors.orderLink,"Order","Link")
     }
 
     
-
+   public async approveOrder(){
+    
+   }
 
 
 

@@ -29,7 +29,10 @@ export class CatalogPage extends LearnerHomePage {
         posterElement: `//button[@class='vjs-big-play-button']//span[1]`,
         viewCertificationDetailsBtn: "//button[text()='View Certification Details']",
         viewCertificateBtn:"//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
-        okBtn:"//button[text()='Ok']"
+        okBtn:"//button[text()='Ok']",
+        addToCart:`//span[text()='Add to cart']`,
+        
+
         //`//button[@title='Play Video']//span[1]`
 
 
@@ -184,6 +187,11 @@ export class CatalogPage extends LearnerHomePage {
         
     }
 
+    public async addToCart(){
+        await this.click(this.selectors.addToCart,"Add to cart","Button")
+    }
+
+    
    
 
 }
