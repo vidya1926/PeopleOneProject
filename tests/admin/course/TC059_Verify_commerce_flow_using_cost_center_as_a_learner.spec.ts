@@ -95,8 +95,7 @@ test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
     await adminHome.clickCommerceMenu();
     await  commercehome.clickOrder();
     await commercehome.approveOrder();
-    //order placement is pending from Learner side to continue with commerce order verfication
- 
+
   
  })
 
