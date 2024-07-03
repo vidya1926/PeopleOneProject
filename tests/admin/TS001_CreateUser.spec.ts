@@ -2,7 +2,7 @@ import { test } from '../../customFixtures/expertusFixture';
 import { FakerData } from '../../utils/fakerUtils';
 import { readDataFromCSV } from '../../utils/csvUtil';
 
-test.use({ storageState: "logins/expertusAdminLog.json" })
+//test.use({ storageState: "logins/expertusAdminLog.json" })
 test(` Creating User for the application`, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: 'Author', description: 'Ajay Michael' },

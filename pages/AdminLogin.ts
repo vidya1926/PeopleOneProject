@@ -33,8 +33,8 @@ export class AdminLogin extends PlaywrightWrapper {
         const logoutButton = this.page.locator("//div[@class='logout']");
         await expect(logoutButton).toBeVisible({ timeout: 10000 });
 
-        console.log("Storing state...");
-        await this.storeState("./logins/expertusAdminLog.json");
+        //console.log("Storing state...");
+        //await this.storeState("./logins/expertusAdminLog.json");
     }
 
     private async clearAndType(selector: string, fieldName: string, value: string) {

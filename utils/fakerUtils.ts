@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import path from "path";
 import fs from 'fs'
+import { promises } from "readline";
 
 
 export class FakerData {
@@ -55,9 +56,10 @@ export class FakerData {
     }
 
     static getUserId(): string {
-        const currentDate = new Date();
-        const milliseconds = currentDate.getTime().toString();
-        const user = faker.person.firstName() + milliseconds
+        //const currentDate = new Date();
+        //const milliseconds = currentDate.getTime().toString();
+        const fName= faker.person.firstName();
+        const user =  faker.internet.email({firstName:fName})
         return user;
     }
 
@@ -103,7 +105,7 @@ function getPhoneNumber(): string {
     return `${startDigit}${restDigits}`;
 }
 
-export function getRandomSeat():any {
+export async function getRandomSeat() {
     const num = 100;
     const randomNumber = Math.floor(Math.random() * num) + 1; 
     return randomNumber.toString();

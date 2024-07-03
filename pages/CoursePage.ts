@@ -2,7 +2,7 @@ import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
 import path from "path";
 import fs from "fs";
-import { FakerData, getCurrentDateFormatted, getRandomLocation } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
 import { TIMEOUT } from "dns";
 import { CompletionCertificationPage } from "./CompletionCertificationPage";
 
@@ -412,8 +412,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.tomorrowdate, "Date", "Today's Date");
     }
 
-    async setMaxSeat(data:string) {
-        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat",data);
+    async setMaxSeat() {
+        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat",await getRandomSeat());
     }
 
     public async startandEndTime() {

@@ -1,11 +1,13 @@
+import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture"
 import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-test.use({ storageState: "logins/expertusAdminLog.json" })
-const managerName:any=FakerData.getUserId()
+const managerName:any=FakerData.getUserId();
+const firstName=FakerData.getFirstName();
+const lastName=FakerData.getLastName();
 const newData = {
     managerName: managerName
 }
@@ -26,9 +28,9 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
 
         await adminHome.clickMenu("User");
         await createUser.verifyCreateUserLabel("CREATE USER");
-        await createUser.enter("first_name", FakerData.getFirstName());
-        await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username", managerName);
+        await createUser.enter("first_name",firstName);
+        await createUser.enter("last_name",lastName);
+        await createUser.enter("username",managerName);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.enter("email", FakerData.getEmail());
         await createUser.enter("user-phone", FakerData.getMobileNumber());

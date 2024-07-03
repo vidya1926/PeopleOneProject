@@ -9,8 +9,6 @@ test(`TC012 _Add userto Commerce Admin `, async ({ adminHome, adminGroup }) => {
         { type: `Test Description`, description: `Verify that user is added to commerce role` }
 
     );
-    const login = "manager"; 
-
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
