@@ -16,7 +16,7 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.enterBannerTitile(title)
     await bannerHome.enterFromDate();
     await bannerHome.enterToDate();
-    await bannerHome.selectSequence(1);
+    await bannerHome.selectSequence(2);
     await createCourse.selectPortal();
     await bannerHome.uploadImage();
     await bannerHome.enterbannerUrl();
@@ -33,8 +33,6 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.isSignOutVisible();
-     
-     // need to verify the sequence order 
-
+    await learnerHome.isSignOutVisible();     
+    await learnerHome.verifySequence(title,2);
     })

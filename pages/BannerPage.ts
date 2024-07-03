@@ -31,7 +31,10 @@ export class BannerPage extends AdminHomePage {
         editsequenceindex:`//ul[contains(@class,'dropdown-menu inner')]//a`,
         selectsequenceIndex:(index: number)=>`(//ul[contains(@class,'dropdown-menu inner')]//a)[${index}]`,
         modalDialog:`//div[contains(@class,'modal-content ')]//span[contains(text(),'deleted')]`,
-        okButton:`//button[text()='OK']`
+        okButton:`//button[text()='OK']`,
+        randomDate: `(//td[@class='day']/following-sibling::td)[1]`,
+        nextMonth: `//div[@class='datepicker-days']//th[@class='next']`,
+
     };
 
     public async enterBannerTitile(homePage: string) {
@@ -42,7 +45,12 @@ export class BannerPage extends AdminHomePage {
         await this.click(this.selectors.bannerDatefield, "From Date","Field")
         await this.click(this.selectors.dateFrom, "From Date","Field")
     }
-    public async enterToDate() {
+    public async enterToDate(){
+        await this.click(this.selectors.dateTo, "To Date", "Field")
+        await this.click(this.selectors.nextMonth,"Next Month","Navigator")
+        await this.click(this.selectors.randomDate,"Random","Date")
+    }
+    public async enterTotodayDate() {
         await this.click(this.selectors.dateTo, "To Date", "Field")
         await this.click(this.selectors.dateFrom, "From Date","Field") //today's date
     }
@@ -120,9 +128,7 @@ export class BannerPage extends AdminHomePage {
      await this.click(this.selectors.okButton,"OK","Button")
    }
 
-   public async verifyImage(){
-    
-   }
+   
 
 
 
