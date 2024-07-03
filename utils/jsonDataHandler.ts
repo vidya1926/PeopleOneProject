@@ -5,6 +5,7 @@ interface Data {
   managerName?: string;
   adminName?: string;
   courseAdmin?: string;
+
 }
 
 const fileName = '../data/adminGroupsData.json';

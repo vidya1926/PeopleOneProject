@@ -17,6 +17,7 @@ import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
 import { DashboardPage } from '../pages/DashboardPage'
+import DB from '../utils/dbUtil'
 import { BannerPage } from '../pages/bannerPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
@@ -40,6 +41,7 @@ type expertusFixture = {
     adminGroup:AdminGroupPage
     commercehome:CommerceHomePage
     bannerHome:BannerPage
+    dataBase: DB
 }
 export const test = baseTest.extend<expertusFixture>({
     adminLogin: async ({ page, context }, use) => {
@@ -105,7 +107,6 @@ export const test = baseTest.extend<expertusFixture>({
         const metadatalibrary = new MetaLibraryPage(page, context);
         await use(metadatalibrary);
     },
-
     adminGroup:async({ page, context }, use) => {
         const adminGroup = new AdminGroupPage(page, context);
         await use(adminGroup);
@@ -118,9 +119,13 @@ export const test = baseTest.extend<expertusFixture>({
         const commercehome = new CommerceHomePage(page, context);
         await use(commercehome);
     },
-    bannerHome:
-    async ({ page, context }, use) => {
+
+    bannerHome: async ({ page, context }, use) => {
         const bannerHome = new BannerPage(page, context);
         await use(bannerHome);
     },
+    dataBase: async ({}, use) =>{
+        const dataBase = new DB();
+        await use (dataBase);
+        }
 })

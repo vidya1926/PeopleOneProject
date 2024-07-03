@@ -13,6 +13,6 @@ test(` creating learners for the application`,async({adminHome,createCourse})=>{
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     
 })

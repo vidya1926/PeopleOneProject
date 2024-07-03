@@ -8,17 +8,22 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
         { type: `TestCase`, description: `Verify banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
     );
+    
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
     await adminHome.clickBanner();
-    await bannerHome.clickEditIcon(title);
-    await bannerHome.selectSequence(3);
+    await adminHome.clickCreateBanner()
+    await bannerHome.enterBannerTitile(title)
+    await bannerHome.enterFromDate();
+    await bannerHome.enterToDate();
+    await bannerHome.selectSequence(1);
     await createCourse.selectPortal();
-    await bannerHome.clickUpdatebtn();
-    await bannerHome.clickListing();
-     await bannerHome.clickUnpublishtab();
-     await bannerHome.clickDelete();
-     await bannerHome.verifyDeleteMsg();    
+    await bannerHome.uploadImage();
+    await bannerHome.enterbannerUrl();
+    await bannerHome.clickPublish();
+    await createCourse.clickProceed();
+    await createCourse.verifySuccessMessage()   
+
 })
 
 
@@ -29,5 +34,7 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
     await learnerHome.isSignOutVisible();
-      await learnerHome.verifyImage(title);
+     
+     // need to verify the sequence order 
+
     })

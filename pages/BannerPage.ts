@@ -24,7 +24,7 @@ export class BannerPage extends AdminHomePage {
         unpublishtab: `//button[text()='Unpublished']`,
         deleteIcon: `(//a[@aria-label="Delete"]/i)[1]`,
         confirmDelete: `//button[text()="Delete"]`,
-        editIcon:`//i[contains(@class,'fa fa-duotone')]`,
+        editIcon: (title:string)=>`//div[text()='${title}']/following::i[contains(@class,'fa fa-duotone')]`,
         editIconIndex:(index:number)=> `(//i[contains(@class,'fa fa-duotone')])[${index}]`,
         updatebtn: `//button[text()='Update']`,
         editSequence:`//span[text()='Sequence']/following::button[@data-id='banner_sequence']`,
@@ -39,12 +39,17 @@ export class BannerPage extends AdminHomePage {
     }
 
     public async enterFromDate() {
-        await this.type(this.selectors.bannerDatefield, "From Date", getCurrentDateFormatted())
+        await this.click(this.selectors.bannerDatefield, "From Date","Field")
+        await this.click(this.selectors.dateFrom, "From Date","Field")
+    }
+    public async enterToDate() {
+        await this.click(this.selectors.dateTo, "To Date", "Field")
+        await this.click(this.selectors.dateFrom, "From Date","Field") //today's date
     }
 
-
-    public async enterToDate() {
-        await this.type(this.selectors.dateTo, "To Date", getCurrentMonthFormatted())
+    public async laterDate() {
+        await this.click(this.selectors.dateTo, "To Date", "Field")
+        await this.click(this.selectors.dateFrom, "From Date","Field") //today's date
     }
 
     public async selectSequence(indexNumber: number) {
@@ -79,9 +84,9 @@ export class BannerPage extends AdminHomePage {
         await this.type(this.selectors.bannerUrl, "Banner Url ", FakerData.getMeetingUrl())
     }
 
-    public async clickEditIcon() {     
-        await this.validateElementVisibility(this.selectors.editIcon,"EditIcon")
-         const counter=this.page.locator(this.selectors.editIcon);
+    public async clickEditIcon(title:string) {     
+        await this.validateElementVisibility(this.selectors.editIcon(title),"EditIcon")
+         const counter=this.page.locator(this.selectors.editIcon(title));
          const index=await counter.count()
          const randomIndex = Math.floor(Math.random() * index);
         await this.click(this.selectors.editIconIndex(randomIndex), "Edit", "Icon")
