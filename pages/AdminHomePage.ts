@@ -32,6 +32,9 @@ export class AdminHomePage extends PlaywrightWrapper {
         communicationLink:"//span[text()='Communication']",
         bannerMenu:`//a[text()='Banner']`,
         createBannerbutton:`//button[text()='CREATE BANNER']`,
+        announcementMenu:`//a[text()='Announcement']`,
+        createAnnouncementbutton:`//button[text()='CREATE ANNOUNCEMENT']`,
+
     };
 
         role:string
@@ -186,13 +189,22 @@ export class AdminHomePage extends PlaywrightWrapper {
 
     }
     public async clickBanner(){
-        await this.mouseHover(this.selectors.bannerMenu,"Communication")
-        await this.click(this.selectors.bannerMenu,"Communication","Link")
+        await this.mouseHover(this.selectors.bannerMenu,"Banner")
+        await this.click(this.selectors.bannerMenu,"Banner","Link")
     }
 
     public async clickCreateBanner(){
         await this.click(this.selectors.createBannerbutton,"Create Banner","Button")
     }
+
+    public async clickAnnouncement(){
+        await this.click(this.selectors.announcementMenu,"Announcement","Link")
+    }
+
+    public async clickCreateAnnouncement(){
+        await this.click(this.selectors.createAnnouncementbutton,"Create Banner","Button")
+    }
+
 
 
 }

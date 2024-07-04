@@ -20,6 +20,7 @@ import { DashboardPage } from '../pages/DashboardPage'
 import DB from '../utils/dbUtil'
 import { BannerPage } from '../pages/bannerPage'
 import { CostcenterPage } from '../pages/CostcenterPage'
+import { AnnouncementPage } from '../pages/AnnouncementPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -44,6 +45,7 @@ type expertusFixture = {
     bannerHome: BannerPage
     dataBase: DB
     costCenter: CostcenterPage
+    announcementHome:AnnouncementPage
 }
 export const test = baseTest.extend<expertusFixture>({
     adminLogin: async ({ page, context }, use) => {
@@ -134,6 +136,12 @@ export const test = baseTest.extend<expertusFixture>({
     costCenter: async ({ page, context }, use) => {
         const costcenter = new CostcenterPage(page, context);
         await use(costcenter);
+    },
+
+    
+    announcementHome: async ({ page, context }, use) => {
+        const announcementHome = new AnnouncementPage(page, context);
+        await use(announcementHome);
     },
 
 

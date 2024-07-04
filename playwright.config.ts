@@ -16,7 +16,10 @@ export default defineConfig({
     headless:false,
     screenshot:"on",
     video:'on',
-    ignoreHTTPSErrors:true
+    ignoreHTTPSErrors:true,
+    launchOptions:{
+      args: ['--start-maximized']
+    }
     
   },
   projects: [

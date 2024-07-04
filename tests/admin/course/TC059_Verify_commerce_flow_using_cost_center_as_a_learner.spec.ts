@@ -72,7 +72,7 @@ test(`Verification from learner site`, async ({ learnerHome,createCourse, catalo
     await catalog.clickMoreonCourse(courseName)
     await catalog.clickSelectcourse(courseName)
     await catalog.addToCart();
-    await createCourse.clickOk();
+    await costCenter.clickOktoorder();
     await costCenter.enterUserdetails()
     await costCenter.selectCountry("United States")
     await costCenter.selectCity("Alaska")
@@ -83,9 +83,7 @@ test(`Verification from learner site`, async ({ learnerHome,createCourse, catalo
     await costCenter.clickCreate();    
     await costCenter.verifySuccessMsg() 
 })
-
-
-test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
+test(`Commerce side Verification`, async ({ adminHome,costCenter,createCourse, commercehome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC059_Commerce side order verification ` },
@@ -95,9 +93,8 @@ test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
     await adminHome.clickCommerceMenu();
     await  commercehome.clickOrder();
     await commercehome.approveOrder();
-    //order placement is pending from Learner side to continue with commerce order verfication
- 
-  
+    await costCenter.clickOktoorder();
+    await createCourse.verifySuccessMessage();
  })
 
 

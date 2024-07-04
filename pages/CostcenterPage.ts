@@ -1,9 +1,10 @@
-import { FakerData, getcardExpiryDate, getCreditCardNumber, getCVV, getPonumber } from "../utils/fakerUtils";
+import { FakerData, getcardExpiryDate, getCreditCardNumber, getCVV, getPonumber, getRandomLocation } from "../utils/fakerUtils";
 import { LearnerHomePage } from "./LearnerHomePage";
 
 export class CostcenterPage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
+        okButton:`//p[text()='Add to cart']/following::button[text()='Ok']`,
         firstName: `//label[text()='First Name']/following-sibling::input`,
         lastName: `//label[text()='Last Name']/following-sibling::input`,
         address: `//label[text()='Address1']/following-sibling::input`,
@@ -22,14 +23,18 @@ export class CostcenterPage extends LearnerHomePage {
         poNumber: `//label[text()='PO number:']/following-sibling::input`,
         termsAndCondition:`//label[text()=' I agree to the ']/i[2]`,
         checkOut:`//button[text()='check out']`,
-         savedAddress: `//label[text()='Address Name']/following::div/input`,
+        savedAddress: `//label[text()='Address Name']/following::div/input`,
         createButton:`//button[text()='create']`,
         successMsg:`//h3[contains(text(),' Thank you for your order')]`
     };
 
 
+    public async clickOktoorder(){
+        await this.click(this.selectors.okButton,"OK ","Button")
+    }
 
     public async enterUserdetails() {
+        
         await this.type(this.selectors.firstName, "FirstName", FakerData.getFirstName())
         await this.type(this.selectors.lastName, "LastName", FakerData.getLastName())
         await this.type(this.selectors.address, "Address", FakerData.getAddress())
@@ -77,12 +82,13 @@ export class CostcenterPage extends LearnerHomePage {
     }
 
     public async clickCreate(){
+        await this.type(this.selectors.savedAddress,"Address Name",getRandomLocation())
         await this.click(this.selectors.createButton,"Create","button")
     }
 
     public async verifySuccessMsg(){
         await this.validateElementVisibility(this.selectors.successMsg,"toastMessage")
-        await this.verification(this.selectors.successMsg,"Successfully")
+        await this.verification(this.selectors.successMsg,"thank you")
     }
 
 }
