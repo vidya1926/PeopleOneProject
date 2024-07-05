@@ -30,7 +30,8 @@ export class CoursePage extends AdminHomePage {
         categoryOption: (category: string) => `//span[text()='${category}']`,
         addCategoryBtn: "//div[text()='Add Category']",
         categoryInput: "//label[text()='Category']/following::input[@id='course-categorys']",
-        okBtn: "//button[text()='OK']",
+        //okBtn: "//button[text()='OK']",
+        okBtn: "//span[contains(text(),'created successfully')]/following::button[text()='OK']",
         cancelBtn: "//label[text()='Category']/following::span[contains(@class,'lms-cat-cancel')]",
         providerDropdown: "(//label[text()='Provider']/following::button)[1]",
         providerOption: (provider: string) => `//a[@class='dropdown-item active']//span[text()='${provider}']`,
@@ -80,6 +81,7 @@ export class CoursePage extends AdminHomePage {
         tomorrowdate: "//td[@class='today day']/following-sibling::td[1]",
         nextMonth: `//div[@class='datepicker-days']//th[@class='next']`,
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
+
         todayDate: "td[class='today day']",
         randomDate: `(//td[@class='day']/following-sibling::td)[1]`,
         seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
@@ -122,6 +124,8 @@ export class CoursePage extends AdminHomePage {
         clickSaveasDraft: "//input[@id='draftcatalog']/parent::div//i[contains(@class,'fa-dot-circle')]",
         willResolveLaterBtn: "//footer//following::button[text()='No, will resolve later']",
         selectType: `//label[text()='Session Type']/following-sibling::div`,
+        sessionType: "(//label[text()='Session Type']/parent::div//button)[1]",
+        otherMeeting: "//span[text()='other Meetings']",
         sessionTypeIndex: (index: number) => `(//label[text()='Session Type']/following-sibling::div)[${index}]`,
         attendeeUrlIndex: (index: number) => `(//label[text()='Attendee URL']/following-sibling::input)[${index}]`,
         presenterUrlIndex: (index: number) => `(//label[text()='Presenter URL']/following-sibling::input)[${index}]`,
@@ -140,7 +144,8 @@ export class CoursePage extends AdminHomePage {
         certificateCheckboxCount: "//div[contains(@id,'scroll-certificat')]//i[contains(@class,'fa-duotone fa-circle icon')]",
         certificateCheckbox: (index: string) => `(//div[contains(@id,'scroll-certificat')]//i[contains(@class,'fa-duotone fa-circle icon')])[${index}]`,
         addBtn: "//button[text()='Add']",
-        certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']"
+        certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']",
+        accessBtn: "//span[text()='Access']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -186,7 +191,6 @@ export class CoursePage extends AdminHomePage {
     }
 
     async verifySuccessMessage() {
-        await this.spinnerDisappear();
         await this.verification(this.selectors.successMessage, "successfully");
     }
 
@@ -359,7 +363,8 @@ export class CoursePage extends AdminHomePage {
 
     // }
     async addInstances() {
-        await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances")
+        await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances");
+        await this.mouseHover(this.selectors.addInstancesBtn, "Add Instances");
         await this.click(this.selectors.addInstancesBtn, "Add Instances", "Button");
     }
 
@@ -376,7 +381,7 @@ export class CoursePage extends AdminHomePage {
     async clickCreateInstance() {
         await this.click(this.selectors.createInstanceBtn, "Create Instances", "Button");
         await this.waitForElementHidden("//footer/following::i[contains(@class,'duotone fa-times pointer')]", "X Button")
-      
+
     }
 
     async enterSessionName(sessionName: string) {
@@ -397,12 +402,21 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
 
         await this.type(this.selectors.locationDropdown, "Select Location", getRandomLocation());
-        await this.mouseHover(this.selectors.locationOption(getRandomLocation()),"Location");
+        await this.mouseHover(this.selectors.locationOption(getRandomLocation()), "Location");
         await this.click(this.selectors.locationOption(getRandomLocation()), "Location", getRandomLocation());
 
     }
+    async enterStartDate() {
+        const date = getCurrentDateFormatted();
+        await this.keyboardType(this.selectors.startDateInstanceIndex(1), date);
+    }
 
-
+    async entertimezone(country: string) {
+        await this.click(this.selectors.timeZoneIndex(1), "TimeZone", "Text Field")
+        await this.type(this.selectors.timeZoneOption, "Time Zone", country)
+        await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
+        await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
+    }
     async setCurrentDate() {
         await this.mouseHover(this.selectors.calanderIcon, "Calander Icon");
         await this.click(this.selectors.calanderIcon, "Calander Icon", "Button");
@@ -411,7 +425,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async setMaxSeat() {
-        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat",await getRandomSeat());
+        await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", await getRandomSeat());
     }
 
     public async startandEndTime() {
@@ -433,19 +447,19 @@ export class CoursePage extends AdminHomePage {
 
     async clickUpdate() {
         await this.click(this.selectors.updateBtn, "update", "field");
-const locator = this.page.locator(this.selectors.willResolveLaterBtn);
-await this.wait('mediumWait');
+        const locator = this.page.locator(this.selectors.willResolveLaterBtn);
+        await this.wait('mediumWait');
 
-try {
-    await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
-    if (await locator.isVisible({ timeout: 5000 })) {
-        await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
-    }
-} catch (error) {
-    console.log("The element is not visible: ");
-}
+        try {
+            await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
+            if (await locator.isVisible({ timeout: 5000 })) {
+                await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
+            }
+        } catch (error) {
+            console.log("The element is not visible: ");
+        }
 
-// Continue with other operations without throwing an error
+        // Continue with other operations without throwing an error
 
     }
 
@@ -513,6 +527,11 @@ try {
         await this.uploadMultipleContent(pdf, video, locator);
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
+    }
+
+    async sessionType() {
+        await this.click(this.selectors.sessionType, "Session Type", "Button");
+        await this.click(this.selectors.otherMeeting, "Other Meeting", "Drop Down");
     }
 
     async uploadPDF() {
@@ -649,6 +668,14 @@ try {
         await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button")
     }
 
+    async attendeeUrl() {
+        await this.type(this.selectors.attendeeUrlIndex(1), "Attendee url", FakerData.getMeetingUrl());
+    }
+
+    async presenterUrl() {
+        await this.type(this.selectors.presenterUrlIndex(1), "Presenter url", FakerData.getMeetingUrl())
+    }
+
     async clickaddIcon() {
         await this.click(this.selectors.addDeleteIcon, "Add Icon", "Button")
     }
@@ -680,7 +707,9 @@ try {
         await this.spinnerDisappear();
         const count = await this.page.locator(this.selectors.certificateCheckboxCount).count();
         console.log(count);
-        const randomIndex = Math.floor(Math.random() * (count)) + 2;
+        const randomIndex = Math.floor(Math.random() * (count)) + 1;
+        await this.wait('minWait');
+        await this.mouseHover(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox");
         await this.click(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox", "Checkbox");
     }
 
@@ -688,6 +717,11 @@ try {
         await this.click(this.selectors.addBtn, "Add", "Button");
         await this.verification(this.selectors.certificationVerifyMessage, "created successfully");
         await this.click(this.selectors.okBtn, "Ok", "Button");
+    }
+
+    async clickAccessButton() {
+        await this.validateElementVisibility(this.selectors.accessBtn, "Access"),
+        await this.click(this.selectors.accessBtn, "Access", "Link")
     }
 
 

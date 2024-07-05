@@ -1,4 +1,4 @@
-// Define your credentials here
+
 export const credentials = {
     CUSTOMERADMIN: {
         username: "customadmin",

@@ -1,12 +1,14 @@
 import { verify } from "crypto";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
+import { credentialConstants } from "../../../constants/credentialConstants";
 
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let domain: any
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
-test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
+test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse,//adminLogin 
+    }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -14,7 +16,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
         { type: `Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
 
     );
-
+    //await adminLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -57,7 +59,7 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
     await learningPath.clickDetailTab();
     await learningPath.clickCatalogBtn();
     await learningPath.clickUpdateBtn();
-    await learningPath.verifyLearningPath();
+    await learningPath.verifySuccessMessage();
     await learningPath.clickEditCertification();
     await createCourse.clickCompletionCertificate();
     await createCourse.clickCertificateCheckBox();

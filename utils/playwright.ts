@@ -82,7 +82,7 @@ export abstract class PlaywrightWrapper {
     async keyboardType(locator: string, data: string) {
         await test.step(`Typing the ${data}`, async () => {
             await this.page.focus(locator);
-            await this.page.keyboard.type(data,{ delay: 300 });
+            await this.page.keyboard.type(data,{ delay: 200 });
         })
     }
     async loadApp(url: string) {
@@ -241,7 +241,6 @@ export abstract class PlaywrightWrapper {
         const lowerCaseText = text.toLowerCase();
         const lowerCaseExpected = expectedTextSubstring.toLowerCase();
         expect(lowerCaseText).toContain(lowerCaseExpected);
-        console.log(`Field value verified successfully`);
     }
 
 

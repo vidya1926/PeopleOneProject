@@ -33,7 +33,11 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 
 test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     test.info().annotations.push(
+<<<<<<< HEAD
         { type: `Author`, description: `Vidya` },
+=======
+        { type: `Author`, description: `Ajay Michael` },
+>>>>>>> 409e567d71360f9a17fa0e5559899a11821a21f8
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );

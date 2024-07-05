@@ -35,7 +35,7 @@ export class AdminHomePage extends AdminLogin {
 
     };
 
-        role:string
+       
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
