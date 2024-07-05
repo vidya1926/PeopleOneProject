@@ -46,8 +46,8 @@ type expertusFixture = {
 export const test = baseTest.extend<expertusFixture>({
     adminLogin: async ({ page, context }, use) => {
         const adLogin = new AdminLogin(page, context);
-        await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD)
-        await use(adLogin);
+        // await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD)
+         await use(adLogin);
         //console.log("Login is verified"        
     },
     

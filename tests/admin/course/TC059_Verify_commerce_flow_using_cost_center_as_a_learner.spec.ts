@@ -4,10 +4,9 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 
 const courseName = FakerData.getCourseName();
-const sessionName = FakerData.getSession();
 const instructorName = credentialConstants.INSTRUCTORNAME
 const price=FakerData.getPrice();
-const meetingUrl=FakerData.getMeetingUrl();
+
 
 
 //test.use({ storageState: "logins/expertusAdminLog.json" })

@@ -4,10 +4,10 @@ import { URLConstants } from "../constants/urlConstants";
 import { credentialConstants } from "../constants/credentialConstants";
 import { AdminLogin } from "./AdminLogin";
 
-export class AdminHomePage extends PlaywrightWrapper {
+export class AdminHomePage extends AdminLogin {
     static pageUrl = URLConstants.adminURL;
 
-    adminLogin:AdminLogin;
+   // adminLogin:AdminLogin;
 
     public selectors = {
         signOutLink: "//div[@class='logout']/a",
@@ -34,15 +34,15 @@ export class AdminHomePage extends PlaywrightWrapper {
         createBannerbutton:`//button[text()='CREATE BANNER']`,
     };
 
-        role:string
+       
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        this.common(page, context).catch(err => console.error("Error in common setup:", err));
-        this.setupPageListeners();
-        this.adminLogin=new AdminLogin(page,context)
-        this.common(page,context).catch(err => console.error("Error in common setup:", err));
-        this. setupPageListeners();
+         this.common(page, context).catch(err => console.error("Error in common setup:", err));
+         this.setupPageListeners();
+        // this.adminLogin=new AdminLogin(page,context)
+        // this.common(page,context).catch(err => console.error("Error in common setup:", err));
+        // this. setupPageListeners();
     }
 
     private async common(page: Page, context: BrowserContext) {

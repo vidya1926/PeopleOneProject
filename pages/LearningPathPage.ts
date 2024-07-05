@@ -4,6 +4,7 @@ import { AdminHomePage } from "./AdminHomePage";
 import fs from "fs"
 import { count, log } from "console";
 import { th } from "@faker-js/faker";
+import { FakerData } from "../utils/fakerUtils";
 
 export class LearningPathPage extends AdminHomePage {
 
@@ -34,7 +35,12 @@ export class LearningPathPage extends AdminHomePage {
         daysLocator: "//span[text()='Days']",
         monthsLocator: "//span[text()='Months']",
         yearsLocator: "//span[text()='Years']",
-        saveAsDraftCheckbox:"//span[text()='Save as Draft']/preceding::i[1]"
+        price:"input#program-price",
+        saveAsDraftCheckbox:"//span[text()='Save as Draft']/preceding::i[1]",
+        currencyButton:"(//label[text()='Currency']/parent::div//button)[1]",
+        currencyCount:"//label[text()='Currency']/parent::div//span[@class='text']",
+        currencyIndex:(index:any)=>`(//label[text()='Currency']/parent::div//span[@class='text'])[${index}]`,
+
 
     };
     async clickCreateLearningPath() {
@@ -98,7 +104,10 @@ export class LearningPathPage extends AdminHomePage {
         // await this.mouseHover(this.selectors.checkBox(randomNumber), "Add Course CheckBox");
         // await this.click(this.selectors.checkBox(randomNumber), "Add Course CheckBox", "ChexkBox");
     }
-
+ 
+    async enterPrice(){
+        await this.type(this.selectors.price,"price",FakerData.getPrice());
+    }
     async clickAddSelectCourse() {
         await this.click(this.selectors.addSelectedCourseBtn, "Add Select Course", "Button")
         await this.validateElementVisibility("//span[@class='text-truncate']", "Populated Text");
@@ -118,6 +127,12 @@ export class LearningPathPage extends AdminHomePage {
     async clickCatalogBtn() {
         await this.mouseHover(this.selectors.catalogBtn, "Show Catalog");
         await this.click(this.selectors.catalogBtn, "Show Catalog", "Button");
+    }
+    async clickCurrency(){
+        await this.click(this.selectors.currencyButton,"Currency","Button");
+        const count = await this.page.locator(this.selectors.currencyCount).count();
+        const randomCount= Math.floor(Math.random() * (count)) +1;
+        await this.click(this.selectors.currencyIndex(randomCount),"Currency","DropDown")
     }
 
     async clickUpdateBtn() {

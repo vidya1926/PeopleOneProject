@@ -1,13 +1,14 @@
 import data from "../data/adminGroupsData.json"
 
-const managerName:any= data.managerName
+const MANAGERNAME:any= data.managerName.toString();
 export enum credentialConstants {
    USERNAME = "admin",
    PASSWORD = "Welcome1@",
    CUSTOMERADMIN="customadmin",
    LEARNERADMIN="robretcollin@people.co",
    INSTRUCTORNAME="arivazhaganp",
-   managerUSERNAME =managerName,
+   MANAGERUSERNAME =MANAGERNAME,
    LEARNERUSERNAME="learneruser1",
    COMMERCEADMIN="commerceadmin"
+   
 }

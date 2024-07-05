@@ -1,6 +1,6 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture"
-import { FakerData, getRandomSeat,  } from '../../../utils/fakerUtils';
+import { FakerData} from '../../../utils/fakerUtils';
 
 
 const courseName = FakerData.getCourseName();
@@ -15,7 +15,6 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
         { type: `Test Description`, description: `Verify that course should be created as multiple instance when ILT or VC delivery type is chosen` }
 
     );
-    //Fake data:
   
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");

@@ -133,14 +133,14 @@ export function getRandomLocation(): DataItem | any {
 }
 export function getCurrentDateFormatted(): string {
     const date = new Date();
-    const month = String(date.getMonth()) // getMonth() is zero-based
-    const day = String(date.getDate())
+    const month = String(date.getMonth() + 1) 
+    const day = String(date.getDate() + 1)
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
 
 
-export function getCurrentMonthFormatted(): string {
+export function getnextMonthFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth()+2) // getMonth() is zero-based
     const day = String(date.getDate()+2)

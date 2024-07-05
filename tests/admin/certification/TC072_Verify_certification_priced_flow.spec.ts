@@ -4,10 +4,10 @@ import { FakerData } from "../../../utils/fakerUtils";
 
 const courseName = FakerData.getCourseName();
 const sessionName = FakerData.getSession();
-const description= FakerData.getDescription();
+const description = FakerData.getDescription();
 const instructorName = credentialConstants.INSTRUCTORNAME;
 
-test(`TC063_TP_Prerequisite_Course4_VC`,async({createCourse,adminHome,editCourse})=>{
+test(`TC063_TP_Prerequisite_Course4_VC`, async ({ createCourse, adminHome, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael S` },
         { type: `TestCase`, description: `TP Prerequisite Course4 VC` },
@@ -23,7 +23,7 @@ test(`TC063_TP_Prerequisite_Course4_VC`,async({createCourse,adminHome,editCourse
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
     await createCourse.selectTotalDuration("48");
-    await createCourse.typeAdditionalInfo("Happy Learning!");
+    await createCourse.typeAdditionalInfo(description);
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.modifyTheAccess();
@@ -39,31 +39,74 @@ test(`TC063_TP_Prerequisite_Course4_VC`,async({createCourse,adminHome,editCourse
     //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
-    
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
     }
+    const country = "kolkata"
     await addinstance("Virtual Class");
     await createCourse.enterSessionName(sessionName);
+    await createCourse.sessionType();
     await createCourse.setMaxSeat();
-    await createCourse.setCurrentDate();
+    await createCourse.entertimezone(country);
+    await createCourse.enterStartDate();
     await createCourse.startandEndTime();
+    await createCourse.attendeeUrl();
+    await createCourse.presenterUrl();
     await createCourse.selectInstructor(instructorName);
-    await createCourse.selectLocation();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
+
+})
+
+const title = FakerData.getCourseName();
+test(`Verify certification priced flow`, async ({ learningPath, adminHome, createCourse }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `Ajay Michael S` },
+        { type: `TestCase`, description: `Verify certification priced flow` },
+        { type: `Test Description`, description: `Verifing Approval on admin side` }
+    );
+
+    await adminHome.menuButton();
+    await adminHome.clickLearningMenu();
+    await adminHome.clickCertification();
+    await learningPath.clickCreateCertification();
+    await learningPath.title(title);
+    await learningPath.language();
+    await learningPath.description(description);
+    await learningPath.enterPrice();
+    await learningPath.clickCurrency();
+    await learningPath.clickSaveAsDraftBtn();
+    await learningPath.clickSave();
+    await learningPath.clickProceedBtn();
+    await learningPath.clickAddCourse();
+    await learningPath.searchAndClickCourseCheckBox(courseName);
+    await learningPath.clickAddSelectCourse();
+    await learningPath.clickDetailTab();
+    await learningPath.clickCatalogBtn();
+    await learningPath.clickUpdateBtn();
+    await learningPath.verifyLearningPath();
     await createCourse.editcourse();
-    await createCourse.clickinstanceClass();
-    await createCourse.addInstances();
-    await addinstance("E-Learning");
-    await createCourse.contentLibrary();
+    await createCourse.clickCompletionCertificate();
+    await createCourse.clickCertificateCheckBox();
+    await createCourse.clickAdd();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
+})
+
+test(`Login as a learner`, async ({ learnerHome, catalog }) => {
+
+    test.info().annotations.push(
+        { type: `Author`, description: `Ajay Michael` },
+        { type: `TestCase`, description: `Login as a learner` },
+        { type: `Test Description`, description: `Verify from learner side` }
+
+    );
+    await learnerHome.isSignOutVisible();
 
 })

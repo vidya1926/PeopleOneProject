@@ -32,7 +32,7 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
         await createUser.enter("last_name",lastName);
         await createUser.enter("username",managerName);
         await createUser.enter("user-password", "Welcome1@");
-        await createUser.enter("email", FakerData.getEmail());
+        await createUser.enter("email", managerName);
         await createUser.enter("user-phone", FakerData.getMobileNumber());
         await createUser.typeAddress("Address 1", FakerData.getAddress());
         await createUser.typeAddress("Address 2", FakerData.getAddress());

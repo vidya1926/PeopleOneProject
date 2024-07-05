@@ -7,17 +7,23 @@ export default class DB {
         user: "qaadmin",
         database: "aztenantadmin",
         password: "1wR?cHeQe_",
-        port: 3306
+        port: 3306,
+        waitForConnections: true,
+        connectionLimit: 10,
+        queueLimit: 0
+
     };
 
     async executeQuery(query: string): Promise<any[]> {
         const connection = await mysql.createConnection(this.DBConfig);
+        console.log(connection);
+
         try {
             const [rows] = await connection.execute<any[]>(query);
-            return rows; 
+            return rows;
         } catch (error) {
             console.error("Error in connection/executing query:", error);
-            throw error; 
+            throw error;
         } finally {
             await connection.end().catch((error) => {
                 console.error("Error ending connection:", error);
@@ -29,7 +35,7 @@ export default class DB {
 test('fetch data from database', async () => {
     const dataBase = new DB();
     try {
-        const sample = await dataBase.executeQuery("SELECT * FROM iris.course_session_details ORDER BY id DESC LIMIT 10;");
+        const sample = await dataBase.executeQuery("");
         console.log(sample);
     } catch (error) {
         console.log("Not executed " + error);

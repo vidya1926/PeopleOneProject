@@ -38,7 +38,7 @@ test(`Certification with single instance behavior Enrolled tab`, async ({ adminH
     await createCourse.clickAdd();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifySuccessMessage()
+    await createCourse.verifySuccessMessage();
 })
 
 const title = FakerData.getCourseName();
