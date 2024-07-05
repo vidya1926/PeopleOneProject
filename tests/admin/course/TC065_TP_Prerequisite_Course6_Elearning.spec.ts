@@ -9,7 +9,8 @@ test(`TP Prerequisite Course6 Elearning`, async ({ adminHome, createCourse,editC
         { type: `TestCase`, description: `TP Prerequisite Course5- Elearning` },
         { type: `Test Description`, description: `Verify that course should be created as Elearning` }
     );
-
+    
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -26,9 +27,5 @@ test(`TP Prerequisite Course6 Elearning`, async ({ adminHome, createCourse,editC
     await createCourse.clickCatalog(); 
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.verifySuccessMessage();
-
-
-
-    
+    await createCourse.verifySuccessMessage();    
 })

@@ -13,6 +13,7 @@ test(`TP Prerequisite Course1 Elearning`, async ({ adminHome, createCourse}) => 
 
     );
 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

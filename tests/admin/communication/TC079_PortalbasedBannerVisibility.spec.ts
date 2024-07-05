@@ -2,14 +2,15 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
 const title=FakerData.getRandomTitle();
-test(`Create banner in sequence
+test(`TC079Create banner in sequence
     `, async ({ adminHome, bannerHome,createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
     );
-
+    
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
     await adminHome.clickBanner();
@@ -19,7 +20,7 @@ test(`Create banner in sequence
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(1);
     await createCourse.selectPortal();
-    await bannerHome.uploadImage();
+    await bannerHome.uploadImage("Qeagle");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
     await createCourse.clickProceed();
@@ -29,7 +30,7 @@ test(`Create banner in sequence
 test(`Verification from learner site`, async ({ learnerHome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
+        { type: `TestCase`, description: `TC79_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
     await learnerHome.isSignOutVisible();

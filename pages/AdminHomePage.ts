@@ -4,12 +4,10 @@ import { URLConstants } from "../constants/urlConstants";
 import { credentialConstants } from "../constants/credentialConstants";
 import { AdminLogin } from "./AdminLogin";
 
-export class AdminHomePage extends PlaywrightWrapper {
+export class AdminHomePage extends AdminLogin {
     static pageUrl = URLConstants.adminURL;
 
-    adminLogin:AdminLogin;
-
-    public selectors = {
+       public selectors = {
         signOutLink: "//div[@class='logout']/a",
         dragableMenu: (menu: string) => `//div[text()='${menu}']/following::div[text()="Create"][1]`,
         menu:"//div[text()='Menu']",
@@ -41,25 +39,26 @@ export class AdminHomePage extends PlaywrightWrapper {
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        this.common(page, context).catch(err => console.error("Error in common setup:", err));
-        this.setupPageListeners();
-        this.adminLogin=new AdminLogin(page,context)
-        this.common(page,context).catch(err => console.error("Error in common setup:", err));
-        this. setupPageListeners();
+        // this.common(page, context).catch(err => console.error("Error in common setup:", err));
+        // this.setupPageListeners();
+        // this.adminLogin=new AdminLogin(page,context)
+        // this.common(page,context).catch(err => console.error("Error in common setup:", err));
+      //  this. setupPageListeners();
+
+    
     }
 
-    private async common(page: Page, context: BrowserContext) {
+    public async loadAndLogin(role:string) {
     
         console.log("Loading admin home page...");
-        const adLogin = new AdminLogin(page, context);
-        await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
+        await this.adminLogin(role);
         await this.wait('mediumWait');
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
         if (pageTitle.toLowerCase().includes("signin")) {
             console.log("Sign-in page detected. Performing login...");
-            const adLogin = new AdminLogin(page, context);
-            await adLogin.adminLogin(credentialConstants.USERNAME, credentialConstants.PASSWORD);
+            await this.adminLogin(role);
+           
             await this.wait('mediumWait');
             pageTitle = await this.getTitle();
             console.log("Page Title after login:", pageTitle);

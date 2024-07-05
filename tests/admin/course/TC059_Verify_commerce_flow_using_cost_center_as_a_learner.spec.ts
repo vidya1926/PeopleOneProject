@@ -20,7 +20,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
 
     );
     //Fake data:
-    const login = "customerAdmin"
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -89,6 +89,7 @@ test(`Commerce side Verification`, async ({ adminHome,costCenter,createCourse, c
         { type: `TestCase`, description: `TC059_Commerce side order verification ` },
         { type: `Test Description`, description: `Verify that course should be created for VC` }
     );
+    await adminHome.loadAndLogin("COMMERCEADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommerceMenu();
     await  commercehome.clickOrder();

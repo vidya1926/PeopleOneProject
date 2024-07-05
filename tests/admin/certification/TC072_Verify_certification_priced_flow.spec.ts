@@ -39,7 +39,7 @@ test(`TC063_TP_Prerequisite_Course4_VC`,async({createCourse,adminHome,editCourse
     //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
     
@@ -56,7 +56,7 @@ test(`TC063_TP_Prerequisite_Course4_VC`,async({createCourse,adminHome,editCourse
     await createCourse.selectLocation();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
@@ -64,6 +64,6 @@ test(`TC063_TP_Prerequisite_Course4_VC`,async({createCourse,adminHome,editCourse
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifyCourseCreationSuccessMessage();
+    await createCourse.verifySuccessMessage();
 
 })

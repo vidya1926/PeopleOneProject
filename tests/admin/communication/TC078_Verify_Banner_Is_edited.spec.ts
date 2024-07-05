@@ -10,6 +10,7 @@ test(`Create banner in sequence
         { type: `Test Description`, description: `Verify that banner is created` }
     );
 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
     await adminHome.clickBanner();
@@ -19,7 +20,7 @@ test(`Create banner in sequence
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(1);
     await createCourse.selectPortal();
-    await bannerHome.uploadImage();
+    await bannerHome.uploadImage("Profilepic");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
     await createCourse.clickProceed();
@@ -33,6 +34,8 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
         { type: `TestCase`, description: `Verify banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
     );
+    
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
     await adminHome.clickBanner();

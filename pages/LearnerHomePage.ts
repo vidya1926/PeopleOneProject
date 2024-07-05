@@ -17,7 +17,9 @@ export class LearnerHomePage extends LearnerLogin {
         bannerImg: (titleName: string) => `(//div/h1[text()="${titleName}"]/ancestor::div/img)[2]`,
         bannerSlider: `//a[@id='banner-carousel-expcarousel-right-btn']`,
         sequenceCounter: `(//div[@class='carousel__viewport']//div[contains(@class,'col pointer')])[1]`,       // Add more selectors as needed
-        bannerName: `//div[contains(@class,'col pointer')]//h1`,
+        bannerName: `(//div[contains(@class,'col pointer')]//h1)[1]`,
+        announcementIcon:`//div[@id='announcementspopover']`,
+        announcementName:(index:number)=>`(//div[@id='announcements']//p)[${index}]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -56,14 +58,14 @@ export class LearnerHomePage extends LearnerLogin {
 
     public async verifyImage(title: string) {
         const banner = this.page.locator(`//div/h1[text()="${title}"]/ancestor::div/img`)
-        //    await this.validateElementVisibility(banner,"Banner")
+            await this.wait("minWait")
         if (await banner.isVisible()) {
             const name = await this.getInnerText(this.selectors.bannerName)
             expect(name).toContain(title)
         } else {
-            // let attempt=0;
-            // let maxattempt=5      
-            while (!true) {
+             let attempt=0;             
+             let maxattempt=await this.page.locator("//div[contains(@class,'col pointer')]//h1").count();
+            while (attempt<maxattempt) {
                 this.validateElementVisibility(this.selectors.bannerSlider, "banner")
                 this.click(this.selectors.bannerSlider, "banner", "Slider")
                 if (await banner.isVisible()) {
@@ -71,7 +73,7 @@ export class LearnerHomePage extends LearnerLogin {
                     expect(name).toContain(title)
                     break;
                 }
-                // attempt++;          
+                 attempt++;          
             }
         }
     }
@@ -107,7 +109,19 @@ export class LearnerHomePage extends LearnerLogin {
 
     public async verifyUrl(title:string) {
             await this.click(this.selectors.bannerImg(title),"Navigate the Url", "Link")        
-            expect(await this.getTitle()).toContain("E1internal")
+            expect(await this.getTitle()).toContain("E1Internal")
     }
+
+
+    public async verifyAnnouncement(){
+        await this.wait("minWait")
+        await this.mouseHover(this.selectors.announcementIcon,"Announcement")
+        await this.click(this.selectors.announcementIcon,"Announcement","Icon")
+        const index=await this.page.locator("//div[@id='announcements']//p").count();
+        const randomIndex = Math.floor(Math.random() *  index)+ 1;
+        await this.getInnerText(this.selectors.announcementName(randomIndex));
+
+    }
+
 
 }

@@ -77,7 +77,6 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
         { type: `Test Description`, description: `Verify from learner side` }
 
     );
-
     await learnerHome.isSignOutVisible();
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
@@ -87,6 +86,4 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
     await catalog.clickViewCertificate();
-
-
 })

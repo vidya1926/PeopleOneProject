@@ -10,6 +10,7 @@ test(`Course Creation for  E-Learning work flow`, async ({ adminHome, createCour
         { type: 'TestCase', description: 'Course Creation for  E-Learning work flow'},
         { type:'Test Description', description:"Verifying E-Learning workflow"}
     ); 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

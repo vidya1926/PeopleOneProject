@@ -13,6 +13,7 @@ test(`TC058_Verify_that_for_the_compliance_course_set_as_overdue`,async({adminHo
         
     );
    
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

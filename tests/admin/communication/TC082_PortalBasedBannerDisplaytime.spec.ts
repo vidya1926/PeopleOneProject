@@ -9,6 +9,8 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
         { type: `Test Description`, description: `Verify that banner is created` }
     );
     
+    
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
     await adminHome.clickBanner();
@@ -18,7 +20,7 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.enterTotodayDate();
     await bannerHome.selectSequence(2);
     await createCourse.selectPortal();
-    await bannerHome.uploadImage();
+    await bannerHome.uploadImage("Qeagle");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
     await createCourse.clickProceed();

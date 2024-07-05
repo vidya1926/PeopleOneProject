@@ -165,7 +165,6 @@ export function getCurrentMonthFormatted(): string {
     const yy = year.toString().slice(2)
     return `${month}${yy}`
 }
-
 export function getPonumber(): string {
     const startDigit = Math.floor(Math.random() * 3) + 12;
     const restDigits = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
