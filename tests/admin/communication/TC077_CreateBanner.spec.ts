@@ -19,7 +19,7 @@ test(`Create banner in sequence
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(1);
     await createCourse.selectPortal();
-    await bannerHome.uploadImage();
+    await bannerHome.uploadImage("Profilepic");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
     await createCourse.clickProceed();

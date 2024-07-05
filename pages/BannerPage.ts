@@ -78,8 +78,8 @@ export class BannerPage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() * sequenceCount);
         await this.click(this.selectors.selectsequenceIndex(indexNumber), "SequenceOption", "Option");
     }
-    public async uploadImage() {
-        const fileName = "Qeagle"
+    public async uploadImage(fileName:string) {
+      
         const path = `../data/${fileName}.jpg`;
         await this.uploadFile(this.selectors.uploadFile, path);
     }
