@@ -12,6 +12,7 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
         { type:'Test Description', description:"Verify learning admin able to create a Single instance E-learning course with Multiple content ,Survey and Assesment"}
     ); 
  
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -56,12 +57,6 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
 //     await learnercourse.clicksecondContent()
 //     await catalog.saveLearningStatus()
 //    //need to attach the survey and assesment 
-
-
-
-
-
-
 // })
 
 

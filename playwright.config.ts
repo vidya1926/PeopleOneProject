@@ -15,17 +15,31 @@ export default defineConfig({
     trace: 'on',
     headless:false,
     screenshot:"on",
-    video:'on'
+    video:'on',
+    ignoreHTTPSErrors:true,
+    launchOptions:{
+      args: ['--start-maximized']
+    }
+    
   },
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chromium'] ,
+       
       viewport: null,
       launchOptions: {
         args: ["--start-maximized"]
         } 
        }
       },
+
+      /* {
+          name: 'firefox',
+          use: { ...devices['Desktop Firefox'] ,
+          launchOptions: {
+            args: ["--kiosk"]
+        }},
+        } */
   ],
 });

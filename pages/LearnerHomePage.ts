@@ -7,15 +7,19 @@ export class LearnerHomePage extends LearnerLogin {
     static pageUrl = URLConstants.leanerURL;
 
     public selectors = {
-              
+
         signOutLink: "//div[@class='logout']/a",
         catalogLink: `//a//span[text()='Catalog']`,
-        myLearningLink:"//a//span[text()='My Learning']",
-        myDashboardLink:"//a//span[text()='My Dashboard']",
-        img:(index:number)=>`(//div[@class='w-100 col']//img)[${index}]`,
-        bannerTitle:(titleName:string)=>`//div/h1[text()='${titleName}']`,
-        bannerImg:(titleName:string)=>`(//div/h1[text()="${titleName}"]/ancestor::div/img)[1]`, 
-        bannerSlider:`//a[@id='banner-carousel-expcarousel-right-btn']`           // Add more selectors as needed
+        myLearningLink: "//a//span[text()='My Learning']",
+        myDashboardLink: "//a//span[text()='My Dashboard']",
+        img: (index: number) => `(//div[@class='w-100 col']//img)[${index}]`,
+        bannerTitle: (titleName: string) => `//div/h1[text()='${titleName}']`,
+        bannerImg: (titleName: string) => `(//div/h1[text()="${titleName}"]/ancestor::div/img)[2]`,
+        bannerSlider: `//a[@id='banner-carousel-expcarousel-right-btn']`,
+        sequenceCounter: `(//div[@class='carousel__viewport']//div[contains(@class,'col pointer')])[1]`,       // Add more selectors as needed
+        bannerName: `(//div[contains(@class,'col pointer')]//h1)[1]`,
+        announcementIcon:`//div[@id='announcementspopover']`,
+        announcementName:(index:number)=>`(//div[@id='announcements']//p)[${index}]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -40,7 +44,7 @@ export class LearnerHomePage extends LearnerLogin {
         await this.mouseHover(this.selectors.catalogLink, "Catalog");
         await this.click(this.selectors.catalogLink, "Catalog", "Link");
         await this.page.waitForLoadState('load');
-    }    
+    }
     public async clickMyLearning() {
         await this.validateElementVisibility(this.selectors.myLearningLink, "Link");
         await this.click(this.selectors.myLearningLink, "My Learning", "Link");
@@ -52,23 +56,72 @@ export class LearnerHomePage extends LearnerLogin {
         await this.page.waitForLoadState('load');
     }
 
-    public async verifyImage(title:string){
-          const banner=this.page.locator(`//div/h1[text()="${title}"]/ancestor::div/img`)
-      //    await this.validateElementVisibility(banner,"Banner")
-        if(await banner.isVisible()){
-            await this.fetchattribute(`${banner}`,"src")
-          }else{     
-            // let attempt=0;
-            // let maxattempt=5      
-            while(!true){
-                this.validateElementVisibility(this.selectors.bannerSlider,"banner")
-                this.click(this.selectors.bannerSlider,"banner","Slider")
-                if(await banner.isVisible()){
-                  await this.fetchattribute(`${banner}`,"src")
-                  break;
-                }    
-              // attempt++;          
-            }      
-          }       
+    public async verifyImage(title: string) {
+        const banner = this.page.locator(`//div/h1[text()="${title}"]/ancestor::div/img`)
+            await this.wait("minWait")
+        if (await banner.isVisible()) {
+            const name = await this.getInnerText(this.selectors.bannerName)
+            expect(name).toContain(title)
+        } else {
+             let attempt=0;             
+             let maxattempt=await this.page.locator("//div[contains(@class,'col pointer')]//h1").count();
+            while (attempt<maxattempt) {
+                this.validateElementVisibility(this.selectors.bannerSlider, "banner")
+                this.click(this.selectors.bannerSlider, "banner", "Slider")
+                if (await banner.isVisible()) {
+                    const name = await this.getInnerText(this.selectors.bannerName)
+                    expect(name).toContain(title)
+                    break;
+                }
+                 attempt++;          
+            }
+        }
     }
+
+    public async verifySequence(title: string, seqNumber: number) {
+        await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
+
+        const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
+        for (let index = 1; index <= availaberBnner; index++) {
+            try {
+                if (index == seqNumber) {
+                    const name = await this.getInnerText(this.selectors.bannerName)
+                    expect(name).toContain(title)
+                }
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+    }
+    public async verifyAllSequence(title: string) {
+        await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
+        const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
+        try {
+            for (let index = 1; index <= availaberBnner; index++) {
+                const name = await this.getInnerText(this.selectors.bannerName)
+                expect(name).toContain(title)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    public async verifyUrl(title:string) {
+            await this.click(this.selectors.bannerImg(title),"Navigate the Url", "Link")        
+            expect(await this.getTitle()).toContain("E1Internal")
+    }
+
+
+    public async verifyAnnouncement(){
+        await this.wait("minWait")
+        await this.mouseHover(this.selectors.announcementIcon,"Announcement")
+        await this.click(this.selectors.announcementIcon,"Announcement","Icon")
+        const index=await this.page.locator("//div[@id='announcements']//p").count();
+        const randomIndex = Math.floor(Math.random() *  index)+ 1;
+        await this.getInnerText(this.selectors.announcementName(randomIndex));
+
+    }
+
+
 }

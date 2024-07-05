@@ -24,5 +24,4 @@ test(`Verify that able to create a new certificate and also able to edit the new
     await CompletionCertification.title(title+" "+"test");
     await CompletionCertification.clickUpdate();
     await CompletionCertification.verifyCeritificateSuccessMessage();
-    
 })

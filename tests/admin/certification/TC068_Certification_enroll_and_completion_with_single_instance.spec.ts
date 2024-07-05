@@ -7,7 +7,8 @@ const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let domain: any
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
-test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse,adminLogin }) => {
+test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse,//adminLogin 
+    }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -78,7 +79,6 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
         { type: `Test Description`, description: `Verify from learner side` }
 
     );
-
     await learnerHome.isSignOutVisible();
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
@@ -88,6 +88,4 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
     await catalog.clickViewCertificate();
-
-
 })

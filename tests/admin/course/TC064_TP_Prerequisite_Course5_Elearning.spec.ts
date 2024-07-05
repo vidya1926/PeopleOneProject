@@ -9,7 +9,7 @@ test.skip(`TP Prerequisite Course5- Elearning`, async ({ adminHome, createCourse
         { type: `TestCase`, description: `TP Prerequisite Course5- Elearning` },
         { type: `Test Description`, description: `Verify that course should be created as Elearning` }
     );
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

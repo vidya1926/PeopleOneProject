@@ -11,10 +11,9 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
         { type: `TestCase`, description: `E-learning course with Complete by rule` },
         { type:`Test Description`, description: `Verify that E-learning course with Complete by rule` }
         
-    );
-   
+    );   
     
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

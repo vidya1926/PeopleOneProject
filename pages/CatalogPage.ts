@@ -29,7 +29,10 @@ export class CatalogPage extends LearnerHomePage {
         posterElement: `//button[@class='vjs-big-play-button']//span[1]`,
         viewCertificationDetailsBtn: "//button[text()='View Certification Details']",
         viewCertificateBtn:"//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
-        okBtn:"//button[text()='Ok']"
+        okBtn:"//button[text()='Ok']",
+        addToCart:`//span[text()='Add to cart']`,
+        
+
         //`//button[@title='Play Video']//span[1]`
 
 
@@ -140,15 +143,18 @@ export class CatalogPage extends LearnerHomePage {
     }
 
 
-    async enterSearchFilter(tagname: string) {
+    async enterSearchFilter() :Promise<string>{
+        const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
+        const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
+        const randomTag = tags[randomIndex];
         await this.click(this.selectors.searchButton, "Tagname", "Field")
-        await this.type(this.selectors.selectTagnames, "Tagname", tagname)
-
+        await this.type(this.selectors.selectTagnames, "Tagname", randomTag)
+        return randomTag;
     }
 
-    async selectresultantTags(tagname: string) {
-        await this.mouseHover(this.selectors.reultantTagname(tagname), "Tags")
-        await this.click(this.selectors.reultantTagname(tagname), "Tags", "selected")
+    async selectresultantTags() {
+        await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
+        await this.click(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags", "selected")
     }
 
     async clickApply() {
@@ -184,6 +190,11 @@ export class CatalogPage extends LearnerHomePage {
         
     }
 
+    public async addToCart(){
+        await this.click(this.selectors.addToCart,"Add to cart","Button")
+    }
+
+    
    
 
 }

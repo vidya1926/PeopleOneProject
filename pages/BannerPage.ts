@@ -24,14 +24,17 @@ export class BannerPage extends AdminHomePage {
         unpublishtab: `//button[text()='Unpublished']`,
         deleteIcon: `(//a[@aria-label="Delete"]/i)[1]`,
         confirmDelete: `//button[text()="Delete"]`,
-        editIcon:`//i[contains(@class,'fa fa-duotone')]`,
+        editIcon: (title:string)=>`(//div[text()='${title}']/following::i[contains(@class,'fa fa-duotone')])`,
         editIconIndex:(index:number)=> `(//i[contains(@class,'fa fa-duotone')])[${index}]`,
         updatebtn: `//button[text()='Update']`,
         editSequence:`//span[text()='Sequence']/following::button[@data-id='banner_sequence']`,
         editsequenceindex:`//ul[contains(@class,'dropdown-menu inner')]//a`,
         selectsequenceIndex:(index: number)=>`(//ul[contains(@class,'dropdown-menu inner')]//a)[${index}]`,
         modalDialog:`//div[contains(@class,'modal-content ')]//span[contains(text(),'deleted')]`,
-        okButton:`//button[text()='OK']`
+        okButton:`//button[text()='OK']`,
+        randomDate: `(//td[@class='day']/following-sibling::td)[1]`,
+        nextMonth: `//div[@class='datepicker-days']//th[@class='next']`,
+
     };
 
     public async enterBannerTitile(homePage: string) {
@@ -39,12 +42,22 @@ export class BannerPage extends AdminHomePage {
     }
 
     public async enterFromDate() {
-        await this.type(this.selectors.bannerDatefield, "From Date", getCurrentDateFormatted())
+        await this.click(this.selectors.bannerDatefield, "From Date","Field")
+        await this.click(this.selectors.dateFrom, "From Date","Field")
+    }
+    public async enterToDate(){
+        await this.click(this.selectors.dateTo, "To Date", "Field")
+        await this.click(this.selectors.nextMonth,"Next Month","Navigator")
+        await this.click(this.selectors.randomDate,"Random","Date")
+    }
+    public async enterTotodayDate() {
+        await this.click(this.selectors.dateTo, "To Date", "Field")
+        await this.click(this.selectors.dateFrom, "From Date","Field") //today's date
     }
 
-
-    public async enterToDate() {
-        await this.type(this.selectors.dateTo, "To Date", getCurrentMonthFormatted())
+    public async laterDate() {
+        await this.click(this.selectors.dateTo, "To Date", "Field")
+        await this.click(this.selectors.dateFrom, "From Date","Field") //today's date
     }
 
     public async selectSequence(indexNumber: number) {
@@ -65,23 +78,20 @@ export class BannerPage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() * sequenceCount);
         await this.click(this.selectors.selectsequenceIndex(indexNumber), "SequenceOption", "Option");
     }
-    public async uploadImage() {
-        const fileName = "Qeagle"
+    public async uploadImage(fileName:string) {
+      
         const path = `../data/${fileName}.jpg`;
         await this.uploadFile(this.selectors.uploadFile, path);
     }
-
     public async clickPublish() {
         await this.click(this.selectors.publishButton, "Publish", "Button")
     }
-
-    public async enterbannerUrl() {
-        await this.type(this.selectors.bannerUrl, "Banner Url ", FakerData.getMeetingUrl())
+    public async enterbannerUrl() {         
+        await this.type(this.selectors.bannerUrl, "Banner Url ",await this.getTitle())
     }
-
-    public async clickEditIcon() {     
-        await this.validateElementVisibility(this.selectors.editIcon,"EditIcon")
-         const counter=this.page.locator(this.selectors.editIcon);
+    public async clickEditIcon(title:string) {     
+        await this.validateElementVisibility(this.selectors.editIcon(title),"EditIcon")
+         const counter=this.page.locator(this.selectors.editIcon(title));
          const index=await counter.count()
          const randomIndex = Math.floor(Math.random() * index);
         await this.click(this.selectors.editIconIndex(randomIndex), "Edit", "Icon")
@@ -100,7 +110,6 @@ export class BannerPage extends AdminHomePage {
         await this.click(this.selectors.bannerListing, "Goto Listing", "Button")
     }
 
-
     public async clickUnpublishtab() {
         await this.click(this.selectors.unpublishtab, "unPublish", "Button")
     }
@@ -110,14 +119,13 @@ export class BannerPage extends AdminHomePage {
         await this.click(this.selectors.confirmDelete, "Delete", "Button")
     }
 
-   public async verifyDeleteMsg(){
+    public async verifyDeleteMsg(){
      await this.verification(this.selectors.modalDialog,"deleted")
      await this.click(this.selectors.okButton,"OK","Button")
    }
 
-   public async verifyImage(){
-    
-   }
+   
+   
 
 
 

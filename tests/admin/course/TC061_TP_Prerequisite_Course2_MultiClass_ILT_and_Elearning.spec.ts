@@ -14,7 +14,7 @@ test.skip(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ admin
         { type: `Test Description`, description: `Verify that course should be created in  MultiClass-ILT and Elearning` }
     );
 
-    const login = "customerAdmin"
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.clickMenu("Course");
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);

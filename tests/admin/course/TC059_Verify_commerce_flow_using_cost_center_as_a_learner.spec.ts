@@ -1,5 +1,6 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture"
+import { CostcenterPage } from "../../../pages/CostcenterPage";
 import { FakerData } from '../../../utils/fakerUtils';
 
 
@@ -18,7 +19,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
 
     );
     //Fake data:
-    const login = "customerAdmin"
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -57,7 +58,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
 
 
 
-test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome,createCourse, catalog,costCenter }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
@@ -69,24 +70,32 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.searchCatalog(courseName);
     await catalog.clickMoreonCourse(courseName)
     await catalog.clickSelectcourse(courseName)
-    await catalog.clickEnroll()
-  //need to add the cost center place order ->application issue
+    await catalog.addToCart();
+    await costCenter.clickOktoorder();
+    await costCenter.enterUserdetails()
+    await costCenter.selectCountry("United States")
+    await costCenter.selectCity("Alaska")
+    await costCenter.paymentMethod("Credit Card");
+    await costCenter.fillCredeitDetails();
+    await costCenter.clickTermsandCondition();
+    await costCenter.clickCheckout();
+    await costCenter.clickCreate();    
+    await costCenter.verifySuccessMsg() 
 })
-
-
-// test(`Commerce side Verification`, async ({ adminHome, commercehome }) => {
-//     test.info().annotations.push(
-//         { type: `Author`, description: `Vidya` },
-//         { type: `TestCase`, description: `TC059_Commerce side order verification ` },
-//         { type: `Test Description`, description: `Verify that course should be created for VC` }
-//     );
-//     await adminHome.menuButton();
-//     await adminHome.clickCommerceMenu();
-//     await  commercehome.clickOrder();
-//     //order placement is pending from Learner side to continue with commerce order verfication
- 
-  
-// })
+test(`Commerce side Verification`, async ({ adminHome,costCenter,createCourse, commercehome }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `TC059_Commerce side order verification ` },
+        { type: `Test Description`, description: `Verify that course should be created for VC` }
+    );
+    await adminHome.loadAndLogin("COMMERCEADMIN")
+    await adminHome.menuButton();
+    await adminHome.clickCommerceMenu();
+    await  commercehome.clickOrder();
+    await commercehome.approveOrder();
+    await costCenter.clickOktoorder();
+    await createCourse.verifySuccessMessage();
+ })
 
 
 

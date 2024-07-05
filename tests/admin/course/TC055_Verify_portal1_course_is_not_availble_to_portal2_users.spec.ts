@@ -12,6 +12,7 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
         { type:`Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
         
     );   
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

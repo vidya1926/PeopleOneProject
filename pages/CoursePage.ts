@@ -233,7 +233,6 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.okBtn, "Tick", "image");
     }
 
-
     async modifyTheAccess() {
         await this.mouseHover(this.selectors.modifyTheAccessBtn, "No, Modify The Access");
         await this.click(this.selectors.modifyTheAccessBtn, "No, Modify The Access", "Button");
@@ -263,7 +262,6 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.currencyDropdown, "Currency", "Field");
         await this.click(this.selectors.currencyOption, "Currency", "Selected");
     }
-
 
     async selectSeats(seatCount: string) {
         await this.type(this.selectors.maxSeatsInput, "Max-Seats", seatCount);

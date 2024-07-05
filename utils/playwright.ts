@@ -110,7 +110,7 @@ export abstract class PlaywrightWrapper {
         await this.page.waitForSelector('input')
     }
     async fetchattribute(locator:string,attName:string){
-        await this.page.locator(locator).getAttribute(attName)
+       return await this.page.locator(locator).getAttribute(attName)
     }
 
     async multipleWindowsCount(): Promise<number> {

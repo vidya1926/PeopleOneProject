@@ -1,4 +1,5 @@
-const credentials = {
+
+export const credentials = {
     CUSTOMERADMIN: {
         username: "customadmin",
         password: "Welcome1@"

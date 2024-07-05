@@ -13,6 +13,7 @@ test.skip(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createC
 
     );
 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
