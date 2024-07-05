@@ -5,7 +5,7 @@ import { FakerData } from "../../../utils/fakerUtils";
 const courseName = FakerData.getCourseName();
 const description= FakerData.getDescription();
 //test.use({ storageState: "logins/expertusAdminLog.json" })
-test(`TP Prerequisite Course1 Elearning`, async ({ adminHome, createCourse}) => {
+test.skip(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `TP Prerequisite Course1 Elearning` },

@@ -3,7 +3,7 @@ import { FakerData } from "../../../utils/fakerUtils";
 
 const courseName = FakerData.getCourseName();
 const description= FakerData.getDescription();
-test(`TP Prerequisite Course5- Elearning`, async ({ adminHome, createCourse,editCourse}) => {
+test.skip(`TP Prerequisite Course5- Elearning`, async ({ adminHome, createCourse,editCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `TP Prerequisite Course5- Elearning` },

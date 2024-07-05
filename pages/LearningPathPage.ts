@@ -173,9 +173,6 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async clickAndSelectCompleteByRule() {
-        await this.mouseHover(this.selectors.completeByRuleBtn, "Complete By Rule");
-        await this.click(this.selectors.completeByRuleBtn, "Complete By Rule", "Button");
-        await this.click(this.selectors.complianceYesBtn, "Yes Button", "Button");
         await this.keyboardType(this.selectors.completeByInput, getCurrentDateFormatted());
     }
 

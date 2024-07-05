@@ -1,8 +1,10 @@
+import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 
 const courseName = FakerData.getCourseName();
 const description= FakerData.getDescription();
+const user= credentialConstants.LEARNERUSERNAME
 test(`TC064 TP Prerequisite Course5- Elearning`, async ({ adminHome, createCourse,editCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -57,11 +59,10 @@ test(`Verify certification priced flow`, async ({ learningPath, adminHome, creat
     await learningPath.clickUpdateBtn();
     await learningPath.verifySuccessMessage();
     await learningPath.clickEditCertification();
-    await createCourse.clickAccessButton()
-    
-    await createCourse.clickCompletionCertificate();
-    await createCourse.clickCertificateCheckBox();
-    await createCourse.clickAdd();
+    await createCourse.clickAccessButton();
+    await createCourse.addSingleLearnerGroup(user);
+    await createCourse.saveAccessButton();
+    await createCourse.clickDetailButton()
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();

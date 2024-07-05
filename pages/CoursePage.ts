@@ -146,6 +146,9 @@ export class CoursePage extends AdminHomePage {
         addBtn: "//button[text()='Add']",
         certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']",
         accessBtn: "//span[text()='Access']",
+        accessCloseIcon:"//i[contains(@class,'fa-swap-opacity icon')]",
+        accessUserInput:"//label[text()='User']/parent::div/following-sibling::div//input",
+        saveAccessBtn:"//button[text()='Save Access']"
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -215,7 +218,7 @@ export class CoursePage extends AdminHomePage {
 
     async uploadVideoThroughLink() {
         await this.mouseHover(this.selectors.httpsInput, "https input");
-        await this.keyboardType(this.selectors.httpsInput, "https://www.youtube.com/watch?v=EngW7tLk6R8");
+        await this.keyboardType(this.selectors.httpsInput, "https://www.youtube.com/watch?v=K4TOrB7at0Y");
         await this.wait('minWait');
         await this.click(this.selectors.addURLBtn, "Add URL", "Button");
         await this.wait('maxWait');
@@ -463,6 +466,11 @@ export class CoursePage extends AdminHomePage {
 
         // Continue with other operations without throwing an error
 
+    }
+
+    async clickDetailButton(){
+        await this.mouseHover(this.selectors.detailsbtn, "details");
+        await this.click(this.selectors.detailsbtn, "details", "button");
     }
 
     async save_editedcoursedetails() {
@@ -724,7 +732,21 @@ export class CoursePage extends AdminHomePage {
     async clickAccessButton() {
         await this.validateElementVisibility(this.selectors.accessBtn, "Access"),
         await this.click(this.selectors.accessBtn, "Access", "Link")
+        await this.wait('mediumWait');
     }
 
+    async addSingleLearnerGroup(data:any){
+        const closeIcon=this.page.locator(this.selectors.accessCloseIcon);
+        const count=await closeIcon.count();
+        for (let i = 1; i < count; i++) {
+            await this.page.locator(this.selectors.accessCloseIcon).nth(i).click({force:true})
+        }
+        await this.type(this.selectors.accessUserInput,"User",data);
+        await this.click(`//li[text()='${data}']`,"User","List");
+    }
+
+    async saveAccessButton(){
+        await this.click(this.selectors.saveAccessBtn,"Save Access","Button")
+    }
 
 }
