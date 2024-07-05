@@ -62,7 +62,7 @@ test.skip(`Certification enroll and completion with single instance`, async ({ a
     await learningPath.clickDetailTab();
     await learningPath.clickCatalogBtn();
     await learningPath.clickUpdateBtn();
-    await learningPath.verifyLearningPath();
+    await learningPath.verifySuccessMessage();
     await learningPath.clickEditCertification();
     await createCourse.clickCompletionCertificate();
     await createCourse.clickCertificateCheckBox();

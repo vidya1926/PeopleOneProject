@@ -144,7 +144,8 @@ export class CoursePage extends AdminHomePage {
         certificateCheckboxCount: "//div[contains(@id,'scroll-certificat')]//i[contains(@class,'fa-duotone fa-circle icon')]",
         certificateCheckbox: (index: string) => `(//div[contains(@id,'scroll-certificat')]//i[contains(@class,'fa-duotone fa-circle icon')])[${index}]`,
         addBtn: "//button[text()='Add']",
-        certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']"
+        certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']",
+        accessBtn: "//span[text()='Access']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -190,7 +191,6 @@ export class CoursePage extends AdminHomePage {
     }
 
     async verifySuccessMessage() {
-        //await this.spinnerDisappear();
         await this.verification(this.selectors.successMessage, "successfully");
     }
 
@@ -365,7 +365,8 @@ export class CoursePage extends AdminHomePage {
 
     // }
     async addInstances() {
-        await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances")
+        await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances");
+        await this.mouseHover(this.selectors.addInstancesBtn, "Add Instances");
         await this.click(this.selectors.addInstancesBtn, "Add Instances", "Button");
     }
 
@@ -408,11 +409,11 @@ export class CoursePage extends AdminHomePage {
 
     }
     async enterStartDate() {
-        const date =getCurrentDateFormatted();
-        await this.keyboardType(this.selectors.startDateInstanceIndex(1),date);
+        const date = getCurrentDateFormatted();
+        await this.keyboardType(this.selectors.startDateInstanceIndex(1), date);
     }
 
-    async entertimezone(country:string){
+    async entertimezone(country: string) {
         await this.click(this.selectors.timeZoneIndex(1), "TimeZone", "Text Field")
         await this.type(this.selectors.timeZoneOption, "Time Zone", country)
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
@@ -718,6 +719,11 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.addBtn, "Add", "Button");
         await this.verification(this.selectors.certificationVerifyMessage, "created successfully");
         await this.click(this.selectors.okBtn, "Ok", "Button");
+    }
+
+    async clickAccessButton() {
+        await this.validateElementVisibility(this.selectors.accessBtn, "Access"),
+        await this.click(this.selectors.accessBtn, "Access", "Link")
     }
 
 

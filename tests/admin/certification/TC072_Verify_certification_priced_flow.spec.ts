@@ -89,8 +89,8 @@ test(`Verify certification priced flow`, async ({ learningPath, adminHome, creat
     await learningPath.clickDetailTab();
     await learningPath.clickCatalogBtn();
     await learningPath.clickUpdateBtn();
-    await learningPath.verifyLearningPath();
-    await createCourse.editcourse();
+    await learningPath.verifySuccessMessage();
+    await learningPath.clickEditCertification();
     await createCourse.clickCompletionCertificate();
     await createCourse.clickCertificateCheckBox();
     await createCourse.clickAdd();
@@ -108,5 +108,12 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
 
     );
     await learnerHome.isSignOutVisible();
+    await learnerHome.clickCatalog();
+    await catalog.mostRecent();
+    await catalog.searchCatalog(title);
+    await catalog.clickEnrollButton();
+    await catalog.clickViewCertificationDetails();
+    await catalog.clickLaunchButton();
+    await catalog.saveLearningStatus();
 
 })

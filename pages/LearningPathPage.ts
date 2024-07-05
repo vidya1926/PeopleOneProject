@@ -4,7 +4,7 @@ import { AdminHomePage } from "./AdminHomePage";
 import fs from "fs"
 import { count, log } from "console";
 import { th } from "@faker-js/faker";
-import { FakerData } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
 
 export class LearningPathPage extends AdminHomePage {
 
@@ -25,21 +25,27 @@ export class LearningPathPage extends AdminHomePage {
         detailsTab: "//button[text()='Details']",
         catalogBtn: "//label[@for='publishedcatalog']/i[contains(@class,'fa-circle icon')]",
         updateBtn: "//button[text()='Update']",
+        editLearningPathBtn: "//a[text()='Edit Learning Path']",
         addCourseSearchInput: "input[id^='program-structure-title-search']",
         successMessage: "//div[@id='lms-overall-container']//h3",
         createCertification: "//button[text()='CREATE CERTIFICATION']",
         editCertification: "//a[text()='Edit Certification']",
         hasRecertification: "//span[text()='Has Recertification']/preceding::i[contains(@class,'fad fa-square icon')]",
         expiresBtn: "//label[text()='Expires']/parent::div//button[contains(@class,'customselectpicker')]",
-        expiresInput:"//label[text()='Expires']/parent::div/input",
+        expiresInput: "//label[text()='Expires']/parent::div/input",
         daysLocator: "//span[text()='Days']",
         monthsLocator: "//span[text()='Months']",
         yearsLocator: "//span[text()='Years']",
-        price:"input#program-price",
-        saveAsDraftCheckbox:"//span[text()='Save as Draft']/preceding::i[1]",
-        currencyButton:"(//label[text()='Currency']/parent::div//button)[1]",
-        currencyCount:"//label[text()='Currency']/parent::div//span[@class='text']",
-        currencyIndex:(index:any)=>`(//label[text()='Currency']/parent::div//span[@class='text'])[${index}]`,
+        price: "input#program-price",
+        saveAsDraftCheckbox: "//span[text()='Save as Draft']/preceding::i[1]",
+        currencyButton: "(//label[text()='Currency']/parent::div//button)[1]",
+        currencyCount: "//label[text()='Currency']/parent::div//span[@class='text']",
+        currencyIndex: (index: any) => `(//label[text()='Currency']/parent::div//span[@class='text'])[${index}]`,
+        complianceBtn: "(//label[text()='Compliance']/parent::div//button)[1]",
+        complianceYesBtn: "//footer//following::span[text()='Yes']",
+        completeByRuleBtn: "(//label[text()='Complete by Rule']/parent::div//button)[1]",
+        completeByInput: "//label[text()='Complete by']/parent::div//input",
+        registractionEndsInput: "input#registration-ends-input"
 
 
     };
@@ -70,8 +76,8 @@ export class LearningPathPage extends AdminHomePage {
 
     async clickExpiresButton() {
         await this.click(this.selectors.expiresBtn, "Expires", "Button")
-        await this.click(this.selectors.daysLocator,"Days","Button")
-        await this.type(this.selectors.expiresInput,"Expires Input","1")
+        await this.click(this.selectors.daysLocator, "Days", "Button")
+        await this.type(this.selectors.expiresInput, "Expires Input", "1")
     }
 
     async description(data: string) {
@@ -104,9 +110,9 @@ export class LearningPathPage extends AdminHomePage {
         // await this.mouseHover(this.selectors.checkBox(randomNumber), "Add Course CheckBox");
         // await this.click(this.selectors.checkBox(randomNumber), "Add Course CheckBox", "ChexkBox");
     }
- 
-    async enterPrice(){
-        await this.type(this.selectors.price,"price",FakerData.getPrice());
+
+    async enterPrice() {
+        await this.type(this.selectors.price, "price", FakerData.getPrice());
     }
     async clickAddSelectCourse() {
         await this.click(this.selectors.addSelectedCourseBtn, "Add Select Course", "Button")
@@ -128,11 +134,11 @@ export class LearningPathPage extends AdminHomePage {
         await this.mouseHover(this.selectors.catalogBtn, "Show Catalog");
         await this.click(this.selectors.catalogBtn, "Show Catalog", "Button");
     }
-    async clickCurrency(){
-        await this.click(this.selectors.currencyButton,"Currency","Button");
+    async clickCurrency() {
+        await this.click(this.selectors.currencyButton, "Currency", "Button");
         const count = await this.page.locator(this.selectors.currencyCount).count();
-        const randomCount= Math.floor(Math.random() * (count)) +1;
-        await this.click(this.selectors.currencyIndex(randomCount),"Currency","DropDown")
+        const randomCount = Math.floor(Math.random() * (count)) + 1;
+        await this.click(this.selectors.currencyIndex(randomCount), "Currency", "DropDown")
     }
 
     async clickUpdateBtn() {
@@ -141,8 +147,8 @@ export class LearningPathPage extends AdminHomePage {
         await this.spinnerDisappear();
     }
 
-    async verifyLearningPath() {
-        await this.verification(this.selectors.successMessage, "Published successfully.");
+    async verifySuccessMessage() {
+        await this.verification(this.selectors.successMessage, "successfully.");
     }
 
     async clickEditCertification() {
@@ -150,9 +156,30 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.editCertification, "Edit Certification", "Button");
     }
 
-    async clickSaveAsDraftBtn(){
-        await this.mouseHover(this.selectors.saveAsDraftCheckbox,"Save As Draft");
-        await this.click(this.selectors.saveAsDraftCheckbox,"Save As Draft","CheckBox");
+    async clickSaveAsDraftBtn() {
+        await this.mouseHover(this.selectors.saveAsDraftCheckbox, "Save As Draft");
+        await this.click(this.selectors.saveAsDraftCheckbox, "Save As Draft", "CheckBox");
     }
 
+    async clickEditLearningPath() {
+        await this.mouseHover(this.selectors.editLearningPathBtn, "Edit Learning Path");
+        await this.click(this.selectors.editLearningPathBtn, "Edit Learning Path", "Button");
+    }
+
+    async clickAndSelectCompliance() {
+        await this.mouseHover(this.selectors.complianceBtn, "Compliance");
+        await this.click(this.selectors.complianceBtn, "Compliance", "Button");
+        await this.click(this.selectors.complianceYesBtn, "Compliance", "Button");
+    }
+
+    async clickAndSelectCompleteByRule() {
+        await this.mouseHover(this.selectors.completeByRuleBtn, "Complete By Rule");
+        await this.click(this.selectors.completeByRuleBtn, "Complete By Rule", "Button");
+        await this.click(this.selectors.complianceYesBtn, "Yes Button", "Button");
+        await this.keyboardType(this.selectors.completeByInput, getCurrentDateFormatted());
+    }
+
+    async registractionEnds() {
+        await this.keyboardType(this.selectors.registractionEndsInput, getCurrentDateFormatted());
+    }
 }

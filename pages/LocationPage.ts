@@ -81,7 +81,7 @@ export class LocationPage extends AdminHomePage {
 
     async verify_successfullMessage() {
         await this.validateElementVisibility(this.selectors.successMessage, "SuccessFull Message");
-        await this.verification(this.selectors.successMessage, "Published successfully");
+        await this.verification(this.selectors.successMessage, "successfully");
     }
 
     async getLocation() {

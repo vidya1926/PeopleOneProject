@@ -4,7 +4,7 @@ import { URLConstants } from "../constants/urlConstants";
 import { credentialConstants } from "../constants/credentialConstants";
 import { AdminLogin } from "./AdminLogin";
 
-export class AdminHomePage extends AdminLogin {
+export class AdminHomePage extends PlaywrightWrapper {
     static pageUrl = URLConstants.adminURL;
 
    // adminLogin:AdminLogin;
