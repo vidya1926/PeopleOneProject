@@ -2,7 +2,7 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { PlaywrightWrapper } from "../utils/playwright";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData, getCurrentDateFormatted, getCurrentMonthFormatted } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
 
 export class BannerPage extends AdminHomePage {
     public selectors = {
@@ -65,7 +65,7 @@ export class BannerPage extends AdminHomePage {
         const selector = this.page.locator(this.selectors.sequenceOption);
         await this.validateElementVisibility(selector,"SequenceOption")
         // const sequenceCount = await selector.count();
-        // const randomIndex = Math.floor(Math.random() * sequenceCount);
+        // const randomIndex p0: string= Math.floor(Math.random() * sequenceCount);
        // await this.mouseHover(this.selectors.sequenceOptionIndex(indexNumber), "SequenceOption");
         await this.click(this.selectors.sequenceOptionIndex(indexNumber), "SequenceOption", "Option");
    

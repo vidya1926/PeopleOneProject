@@ -2,7 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
 
 test.use({ storageState: "logins/expertusCommerce.json" })
-test(`TC012 _Add userto Commerce Admin `, async ({ adminHome, adminGroup }) => {
+test(`TC012 _Add user to Commerce Admin `, async ({ adminHome, adminGroup }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the user to add in commerce` },
