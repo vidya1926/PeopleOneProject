@@ -39,8 +39,8 @@ export class AdminHomePage extends AdminLogin {
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        // this.common(page, context).catch(err => console.error("Error in common setup:", err));
-        // this.setupPageListeners();
+         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
+         this.setupPageListeners();
         // this.adminLogin=new AdminLogin(page,context)
         // this.common(page,context).catch(err => console.error("Error in common setup:", err));
       //  this. setupPageListeners();
@@ -51,8 +51,9 @@ export class AdminHomePage extends AdminLogin {
     public async loadAndLogin(role:string) {
     
         console.log("Loading admin home page...");
+        await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
-        await this.wait('mediumWait');
+        //await this.wait('mediumWait');
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
         if (pageTitle.toLowerCase().includes("signin")) {

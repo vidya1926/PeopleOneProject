@@ -1,5 +1,7 @@
+import data from "../data/adminGroupsData.json"
 
-export const credentials = {
+const managerName:any=(data.managerName).toString()
+export let credentials = {
     CUSTOMERADMIN: {
         username: "customadmin",
         password: "Welcome1@"
@@ -12,8 +14,8 @@ export const credentials = {
         username: "arivazhaganp",
         password: "Welcome1@"
     },
-    managerUSERNAME: {
-        username: "ajay",
+    MANAGERNAME: {
+        username: managerName,
         password: "Welcome1@"
     },
     LEARNERUSERNAME: {
@@ -23,5 +25,9 @@ export const credentials = {
     COMMERCEADMIN: {
         username: "commerceadmin",
         password: "Welcome1@"
+    },
+    SUPERADMIN:{
+        username:"admin",
+        password:"Welcome1@"
     }
 };

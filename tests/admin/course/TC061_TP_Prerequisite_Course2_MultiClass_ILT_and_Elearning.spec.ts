@@ -48,7 +48,7 @@ test.skip(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ admin
     await addinstance("Classroom");
     await createCourse.enterSessionName(sessionName);
     await createCourse.setMaxSeat();
-    await createCourse.setCurrentDate();
+    await createCourse.enterDateValue();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor(instructorName);
     await createCourse.selectLocation();

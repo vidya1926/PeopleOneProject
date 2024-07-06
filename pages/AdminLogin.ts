@@ -16,13 +16,10 @@ export class AdminLogin extends PlaywrightWrapper {
     public async adminLogin(role:string) {       
         const { username, password } = credentials[role];    
          console.log("Starting admin login process...");
-        // Ensure that the login page is loaded
-        await this.page.goto(AdminLogin.pageUrl);
-        // Clear existing value and type username
+        //await this.page.goto(AdminLogin.pageUrl); ----
         await this.clearAndType("#username", "Username",username);
         // Clear existing value and type password
         await this.clearAndType("#password", "Password", password);
-
         console.log("Clicking Sign In button...");
         // Use waitForNavigation to handle page transitions
         await Promise.all([
@@ -32,7 +29,7 @@ export class AdminLogin extends PlaywrightWrapper {
 
         console.log("Waiting for logout button to be visible...");
         const logoutButton = this.page.locator("//div[@class='logout']");
-        await expect(logoutButton).toBeVisible({ timeout: 10000 });
+        await expect(logoutButton).toBeVisible({ timeout: 5000 });
 
         //console.log("Storing state...");
         //await this.storeState("./logins/expertusAdminLog.json");

@@ -9,7 +9,7 @@ test(`Verify that a category can be added under Metadata Library - Learning - Ca
         { type: 'TestCase', description: 'Verify that a category can be added under Metadata Library - Learning - Category' },
         { type:'Test Description', description:"Creating a category in the Metadata Library within the Learning Category"}
     );
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.isSignOut();
     await adminHome.menuButton();
     await adminHome.metadataLibrary();
@@ -30,7 +30,7 @@ test(`Verify that a provider can be added under Metadata Library - Learning - Pr
         { type: 'TestCase', description: 'Verify that a provider can be added under Metadata Library - Learning - Provider' },
         { type:'Test Description', description:"Creating a provider in the Metadata Library within the Learning Provider"}
     );
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.isSignOut();
     await adminHome.menuButton();
     await adminHome.metadataLibrary();
@@ -52,7 +52,7 @@ test(`Verify that a CEU provider can be added under Metadata Library - Learning 
         { type: 'TestCase', description: 'Verify that a CEU provider can be added under Metadata Library - Learning - Ceu Provider' },
         { type:'Test Description', description:"Creaing a CEU provider in Metadata Library with in the Learning - Ceu Provider"}
     );
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.isSignOut();
     await adminHome.menuButton();
     await adminHome.metadataLibrary();

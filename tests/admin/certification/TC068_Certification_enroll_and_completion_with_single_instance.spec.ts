@@ -3,9 +3,10 @@ import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 import { credentialConstants } from "../../../constants/credentialConstants";
 
-const courseName = FakerData.getCourseName();
-const description = FakerData.getDescription();
+let courseName = FakerData.getCourseName();
+let description = FakerData.getDescription();
 let domain: any
+test.describe(`TC068_Certification_enroll_and_completion_with_single_instance.spec`,async()=>{
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
 test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse,//adminLogin 
     }) => {
@@ -16,6 +17,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse,//admin
         { type: `Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
 
     );
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     //await adminLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -44,6 +46,7 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
         { type: `Test Description`, description: `Verify Certification enroll and completion with single instance` }
     );
 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCertification();
@@ -88,4 +91,6 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
     await catalog.clickViewCertificate();
+})
+
 })

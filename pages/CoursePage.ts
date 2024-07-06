@@ -135,6 +135,7 @@ export class CoursePage extends AdminHomePage {
         //  timeZoneOptionIndex:(timeOption:number) =>`(//label[text()='Time Zone']/following::div//input[@placeholder='Search'])[${timeOption}]`,
         // indianTimezoneIndex:(timezoneIndia:number)=> `(//li[contains(text(),'Indian Standard Time/Kolkata')])[${timezoneIndia}]`,
         indianTimezone: `//li[contains(text(),'Indian Standard Time/Kolkata')]`,
+        Date:"(//label[contains(text(),'Date')]/following-sibling::div/input)[1]",
         startDateInstanceIndex: (index: number) => `(//label[text()='Start Date']/following-sibling::div/input)[${index}]`,
         timeInputIndex: (index: number) => `(//label[text()='Start Time']/following-sibling::input)[${index}]`,
         addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`,
@@ -413,6 +414,12 @@ export class CoursePage extends AdminHomePage {
         const date = getCurrentDateFormatted();
         await this.keyboardType(this.selectors.startDateInstanceIndex(1), date);
     }
+
+    async enterDateValue() {
+        const date = getCurrentDateFormatted();
+        await this.keyboardType(this.selectors.Date, date);
+    }
+
 
     async entertimezone(country: string) {
         await this.click(this.selectors.timeZoneIndex(1), "TimeZone", "Text Field")

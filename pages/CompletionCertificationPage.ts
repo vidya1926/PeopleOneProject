@@ -64,7 +64,8 @@ export class CompletionCertificationPage extends AdminHomePage {
     async clickEditCertificate() {
         await this.validateElementVisibility(this.selectors.editCertificateBtn, "Edit Certificate");
         await this.click(this.selectors.editCertificateBtn, "Edit Certificate", "Button");
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('load');
+        await this.wait('mediumWait');
     }
 
     async clickUpdate() {
