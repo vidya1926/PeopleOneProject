@@ -32,7 +32,8 @@ export class AdminHomePage extends AdminLogin {
         createBannerbutton:`//button[text()='CREATE BANNER']`,
         announcementMenu:`//a[text()='Announcement']`,
         createAnnouncementbutton:`//button[text()='CREATE ANNOUNCEMENT']`,
-
+        contentMenu:`//a[text()='Content']`,
+      
     };
 
        
@@ -204,7 +205,10 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.createAnnouncementbutton,"Create Banner","Button")
     }
 
-
+    public async clickContentmenu(){
+        await this.click(this.selectors.contentMenu,"Content","Link")
+        
+    }
 
 }
 

@@ -126,9 +126,21 @@ export abstract class PlaywrightWrapper {
         await this.page.clickAndDelay(locator);
     }
 
-    async switchToWindow(windowTitle :any ) {
+     
+
+     async focusWindow(locator:string){
+           const newPage = this.context.waitForEvent('page');
+           this.page.locator(locator).click()
+            const newWindow=await newPage;       
+            await newWindow.waitForLoadState('load')
+            return await newWindow.title();
+        }
+
+
+    async switchToWindow(windowTitle :any,locator:string ) {
         const [newPage] = await Promise.all([
-            this.context.waitForEvent('page')
+            this.context.waitForEvent('page'),
+            this.page.locator(locator).click()
         ]);
         const pages = newPage.context().pages();
         for (const page of pages) {
@@ -141,14 +153,14 @@ export abstract class PlaywrightWrapper {
         return null;
     }
 
-    async switchToWindowWithTitle(windowTitle: string) {
+    async switchToWindowWithTitle(windowTitle: string,locator:string ) {
         const [multiPage] = await Promise.all([
             this.context.waitForEvent('page'),
+            this.page.locator(locator)
         ]);
         const pages = multiPage.context().pages();
 
         console.log(`Number of pages opened: ${pages.length}`);
-
         for (const page of pages) {
             const url = page.url();
             console.log(`URL of the page is : ${url}`);
