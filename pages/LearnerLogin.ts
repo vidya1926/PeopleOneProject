@@ -1,6 +1,7 @@
 import { BrowserContext, Page, expect } from "@playwright/test";
 import { URLConstants } from "../constants/urlConstants";
 import { PlaywrightWrapper } from "../utils/playwright";
+import { LearnerHomePage } from "./LearnerHomePage";
 
 export class LearnerLogin extends PlaywrightWrapper {
 
@@ -10,7 +11,7 @@ export class LearnerLogin extends PlaywrightWrapper {
         super(page, context);
     }
 
-    public async learnerLogin(username: string, password: string, retries = 2) {
+    public async learnerLogin(username: string, password: string) {
         const signInLocator = "//span[text()='Sign In']";
         const usernameSelector = "#username";
         const passwordSelector = "#password";
@@ -19,36 +20,30 @@ export class LearnerLogin extends PlaywrightWrapper {
 
         const signIn = async () => {
             try {
-                await this.validateElementVisibility(signInLocator, "Sign In");
-                await this.mouseHover(signInLocator, "Sign In");
-                await this.click(signInLocator, "Sign In", "Button");
+                await this.waitForSelector(signInLocator);
+                await this.click(signInLocator, "Sign In button","Button");
             } catch (error) {
                 console.error(`Error during sign-in process: ${error}`);
                 throw error;
             }
         };
 
-        for (let attempt = 1; attempt <= retries; attempt++) {
-            try {
-                console.log(`Login attempt ${attempt} of ${retries}`);
-                await signIn();
-                await this.type(usernameSelector, "Username", username);
-                await this.type(passwordSelector, "Password", password);
+        try {
+           await this.loadApp(LearnerHomePage.pageUrl);
+            await signIn();
+            await this.type(usernameSelector, "Username", username);
+            await this.type(passwordSelector, "Password", password);
 
-                await this.click(signInButtonLocator, "Sign In", "Button");
-                await this.page.waitForLoadState('domcontentloaded');
+            await this.click(signInButtonLocator, "Sign In button","Button");
+            await this.page.waitForLoadState('domcontentloaded');
 
-                const logoutButton = this.page.locator(logoutButtonLocator);
-                await expect(logoutButton).toBeVisible({ timeout: 20000 });
-                console.log(`Login attempt ${attempt} successful`);
-                break;
-            } catch (error) {
-                console.error(`Attempt ${attempt} failed: ${error}`);
-                if (attempt === retries) {
-                    throw new Error(`All ${retries} attempts failed`);
-                }
-                await this.page.waitForTimeout(1000); 
-            }
+            await this.waitForSelector(logoutButtonLocator);
+            const logoutButton = this.page.locator(logoutButtonLocator);
+            await expect(logoutButton).toBeVisible({ timeout: 20000 });
+            console.log(`Login successful`);
+        } catch (error) {
+            console.error(`Login attempt failed: ${error}`);
+            throw error;
         }
     }
 }

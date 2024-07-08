@@ -17,7 +17,8 @@ export class LearningPathPage extends AdminHomePage {
         description: "//div[@id='program-description']//p",
         saveBtn: "//button[@id='program-btn-save']",
         proceedBtn: "//button[text()='Yes, Proceed']",
-        addCourseBtn: "//button[text()=' Add Course']",
+        //addCourseBtn:"//button[text()='Add Selected Course']",
+        addCourseBtn: "//button[text()=' Add Course']",  //-->changed on 05/07/2024
         addCourseCheckBox: "//i[contains(@class,'fa-duotone fa-square icon')]",
         courseChexbox: (course: string) => `//div[text()='${course}']//following::i[contains(@class,'square icon')][1]`,
         checkBox: (index: string) => `(//i[contains(@class,'fa-duotone fa-square icon')])[${index}]`,
@@ -95,6 +96,7 @@ export class LearningPathPage extends AdminHomePage {
 
     async clickAddCourse() {
         await this.validateElementVisibility(this.selectors.addCourseBtn, "Add Course Button");
+        await this.mouseHover(this.selectors.addCourseBtn, "Add Course Button");
         await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
     }
 

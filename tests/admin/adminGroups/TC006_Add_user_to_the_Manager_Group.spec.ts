@@ -26,6 +26,7 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
     for (const row of data) {
          const { country, state, timezone, currency, city, zipcode } = row;
 
+        await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.clickMenu("User");
         await createUser.verifyCreateUserLabel("CREATE USER");
         await createUser.enter("first_name",firstName);

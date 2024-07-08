@@ -10,6 +10,7 @@ test(`Verify that able to create a new certificate and also able to edit the new
         { type: `TestCase`, description: `Verify that able to create a new certificate and also able to edit the new and existing certificate` },
         { type: `Test Description`, description: `Creating a new certificate and editing the new and existing certificate` }
     );
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCompletionCertification();

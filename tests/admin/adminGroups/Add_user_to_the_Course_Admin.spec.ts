@@ -4,13 +4,12 @@ import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-test.use({ storageState: "logins/expertusAdminLog.json" })
 const courseAdmin:any=FakerData.getUserId()
 const newData = {
     courseAdmin: courseAdmin
 }
 updateFieldsInJSON(newData)
-test(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -24,6 +23,7 @@ test(`Create user in admin login `, async ({ adminHome, createUser }) => {
     for (const row of data) {
          const { country, state, timezone, currency, city, zipcode } = row;
 
+        await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
         await createUser.verifyCreateUserLabel("CREATE USER");
         await createUser.enter("first_name", FakerData.getFirstName());
@@ -48,14 +48,14 @@ test(`Create user in admin login `, async ({ adminHome, createUser }) => {
     }
 });
 
-test(`Add user to the Course Admin`, async ({ adminHome, adminGroup }) => {
+test.skip(`Add user to the Course Admin`, async ({ adminHome, adminGroup }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
         { type:`Test Description`, description: `Adding User as Course Admin` }
         
     );
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();

@@ -70,7 +70,7 @@ export abstract class PlaywrightWrapper {
         type: string
     ) {
         await test.step(`The ${type} ${name} clicked`, async () => {
-           
+
             await this.page.waitForSelector(locator, { state: 'visible' });
             await this.page.locator(locator).click({ force: true });
         });
@@ -82,16 +82,16 @@ export abstract class PlaywrightWrapper {
     async keyboardType(locator: string, data: string) {
         await test.step(`Typing the ${data}`, async () => {
             await this.page.focus(locator);
-            await this.page.keyboard.type(data,{ delay: 200 });
+            await this.page.keyboard.type(data, { delay: 200 });
         })
     }
-    async loadApp(url: string) {
+    public async loadApp(url: string) {
         try {
-            await test.step(`The URL ${url} loaded`, async () => {
-                await this.page.goto(url, { timeout: 60000 }); // Increased timeout
-            });
+            await this.page.goto(url); // Increased timeout for 60 seconds
+            console.log(`Successfully loaded the URL: ${url}`);
         } catch (error) {
-            console.error('Error loading the page:', error);
+            console.log(`Error loading the page at ${url}:`);
+            throw new Error(`Failed to load the page at ${url}`);
         }
     }
     async getInnerText(locator: string): Promise<string> {
@@ -109,8 +109,8 @@ export abstract class PlaywrightWrapper {
     async waitForSelector(locator: string) {
         await this.page.waitForSelector('input')
     }
-    async fetchattribute(locator:string,attName:string){
-       return await this.page.locator(locator).getAttribute(attName)
+    async fetchattribute(locator: string, attName: string) {
+        return await this.page.locator(locator).getAttribute(attName)
     }
 
     async multipleWindowsCount(): Promise<number> {
@@ -326,7 +326,7 @@ export abstract class PlaywrightWrapper {
 
 
     async spinnerDisappear() {
-        await this.wait('mediumWait');
+        await this.wait('minWait');
         try {
             const spinner = this.page.locator("[class='p-3'] svg");
             await expect.soft(spinner).toHaveCount(0);
@@ -356,7 +356,7 @@ export abstract class PlaywrightWrapper {
         })
     }
 
-   
+
 
 
 

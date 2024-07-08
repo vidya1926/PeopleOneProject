@@ -5,6 +5,7 @@ const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let domain: any
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
+test.describe(`TC069_Certification_with_single_instance_behavior_Enrolled_tab`, async () => {
 test(`Certification with single instance behavior Enrolled tab`, async ({ adminHome, createCourse }) => {
 
     test.info().annotations.push(
@@ -14,6 +15,7 @@ test(`Certification with single instance behavior Enrolled tab`, async ({ adminH
 
     );
 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -49,6 +51,7 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
         { type: `Test Description`, description: `Verify Certification enroll and completion with single instance` }
     );
 
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCertification();
@@ -95,9 +98,8 @@ test(`Login as a learner`, async ({ learnerHome, catalog,dashboard }) => {
     await dashboard.clickLearningPath_And_Certification();
     await dashboard.clickCertificationLink();
     await dashboard.searchCertification(title);
-    await dashboard.verifyTheEnrolledCertification(title);
+    await dashboard.verifyTheEnrolledCertification(title); 
 
-    
-
+})
 
 })

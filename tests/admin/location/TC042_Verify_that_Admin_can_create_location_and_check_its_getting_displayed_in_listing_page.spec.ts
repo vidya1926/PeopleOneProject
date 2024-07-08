@@ -15,6 +15,7 @@ test.skip(`Verify that Admin can create location and check its getting displayed
 
     for (const row of data) {
         const { country, state, timezone, currency, city, zipcode } = row;
+        await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.clickLearningMenu();
         await adminHome.locationLink();
@@ -42,7 +43,7 @@ test(`Read Location Data`, async ({ adminHome, location }) => {
         { type: `TestCase`, description: `Read Locaton data` },
         { type: `Test Description`, description: `Reading data and storing in json file` }
     );
-
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.locationLink();

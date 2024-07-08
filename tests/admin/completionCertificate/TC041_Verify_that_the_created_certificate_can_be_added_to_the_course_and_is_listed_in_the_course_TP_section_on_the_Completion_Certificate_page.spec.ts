@@ -11,6 +11,7 @@ test(`Verify that the created certificate can be added to the course and is list
         { type: `TestCase`, description: `Verify that the created certificate can be added to the course and is listed in the course/TP section on the Completion Certificate page` },
         { type: `Test Description`, description: `the created certificate can be added to the course and is listed in the course/TP section on the Completion Certificate page` }
     );
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();

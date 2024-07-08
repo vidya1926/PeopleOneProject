@@ -99,13 +99,13 @@ export class CatalogPage extends LearnerHomePage {
     // }
 
     async clickLaunchButton() {
-        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForLoadState('load');
         await this.wait('maxWait');
         await this.wait('mediumWait');
         const launchButtonSelector = this.selectors.launchButton;
         const playButton = "//button[@title='Play Video']"
         await this.mouseHover(launchButtonSelector,"Play Button")
-        await this.page.focus(playButton);
+        await this.page.focus(playButton,{strict:true});
         //await this.page.keyboard.press('Enter');
         
         // const playEle=this.selectors.posterElement;
@@ -113,7 +113,7 @@ export class CatalogPage extends LearnerHomePage {
         // await playEle.evaluate((video) => {
         //     video.currentTime = 30;
         // });
-        await this.page.locator(playButton).click();
+        await this.page.locator(playButton).click({force:true});
         await this.wait('maxWait');
         await this.wait('mediumWait');
 

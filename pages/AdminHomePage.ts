@@ -19,6 +19,7 @@ export class AdminHomePage extends AdminLogin {
         metadataLibraryMenu: "//span[text()='metadata library']",
         metaPeopleLink: "//a[text()='People']",
         metaLearningLink: "//a[text()='Learning']",
+        metaECommerceLink:"//a[text()='E-Commerce']",
         adminGroupLink: "//a[text()='Admin Group']",
         locationLink: "//a[text()='Location']",
         commerceMenu: `//span[text()='Commerce']`,
@@ -26,7 +27,7 @@ export class AdminHomePage extends AdminLogin {
         //learningPathLink:"//a[text()='Learning Path']",
         certificationLink: "//a[text()='Certification']",
         completionCertificationLink: "//a[text()='Completion Certificate']",       
-     //   learningPathLink:"//a[text()='Learning Path']",       
+        //learningPathLink:"//a[text()='Learning Path']",       
         communicationLink:"//span[text()='Communication']",
         bannerMenu:`//a[text()='Banner']`,
         createBannerbutton:`//button[text()='CREATE BANNER']`,
@@ -40,8 +41,8 @@ export class AdminHomePage extends AdminLogin {
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        // this.common(page, context).catch(err => console.error("Error in common setup:", err));
-        // this.setupPageListeners();
+         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
+         this.setupPageListeners();
         // this.adminLogin=new AdminLogin(page,context)
         // this.common(page,context).catch(err => console.error("Error in common setup:", err));
       //  this. setupPageListeners();
@@ -52,8 +53,9 @@ export class AdminHomePage extends AdminLogin {
     public async loadAndLogin(role:string) {
     
         console.log("Loading admin home page...");
+        await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
-        await this.wait('mediumWait');
+        //await this.wait('mediumWait');
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
         if (pageTitle.toLowerCase().includes("signin")) {
@@ -147,6 +149,12 @@ export class AdminHomePage extends AdminLogin {
         await this.validateElementVisibility(this.selectors.metaPeopleLink, "People");
         await this.mouseHover(this.selectors.metaPeopleLink, "People");
         await this.click(this.selectors.metaPeopleLink, "People", "Button");
+    }
+
+    public async meta_ECommerce() {
+        await this.validateElementVisibility(this.selectors.metaECommerceLink, "People");
+        await this.mouseHover(this.selectors.metaECommerceLink, "People");
+        await this.click(this.selectors.metaECommerceLink, "People", "Button");
     }
 
     public async meta_learning() {
