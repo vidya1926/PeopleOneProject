@@ -314,7 +314,7 @@ export abstract class PlaywrightWrapper {
 
 
     async spinnerDisappear() {
-        await this.wait('mediumWait');
+        await this.wait('minWait');
         try {
             const spinner = this.page.locator("[class='p-3'] svg");
             await expect.soft(spinner).toHaveCount(0);

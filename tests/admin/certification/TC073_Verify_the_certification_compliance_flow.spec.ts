@@ -22,7 +22,7 @@ test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
         await createCourse.enter("course-title", courseName);
         await createCourse.selectLanguage("English");
         await createCourse.typeDescription(description);
-        await createCourse.uploadVideoThroughLink();
+        await createCourse.contentLibrary();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
         await createCourse.clickProceed();

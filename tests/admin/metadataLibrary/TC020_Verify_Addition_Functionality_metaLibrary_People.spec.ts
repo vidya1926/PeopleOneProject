@@ -2,7 +2,6 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
 const departmentName: any = FakerData.getCategory();
-test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`verify that a department can be added under Metadata Library - People - Department`, async ({ adminHome, metadatalibrary }) => {
     test.info().annotations.push(
         { type: 'Author', description: 'Ajay Michael' },

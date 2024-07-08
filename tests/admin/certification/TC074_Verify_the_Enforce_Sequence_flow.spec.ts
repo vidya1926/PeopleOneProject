@@ -22,7 +22,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await createCourse.enter("course-title", courseName1);
         await createCourse.selectLanguage("English");
         await createCourse.typeDescription("This is a new course by name :" + description);
-        await createCourse.uploadVideoThroughLink();
+        await createCourse.contentLibrary();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
         await createCourse.clickProceed();
@@ -123,6 +123,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         }
         await addingCourse(courseName1);
         await addingCourse(courseName2);
+        
 
     })
 
