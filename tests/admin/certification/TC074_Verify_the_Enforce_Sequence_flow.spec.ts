@@ -1,10 +1,14 @@
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 import { credentialConstants } from "../../../constants/credentialConstants";
+import { CoursePage } from "../../../pages/CoursePage";
 
 
-const courseName1 = FakerData.getCourseName();
+let courseName1 = FakerData.getCourseName();
 const description = FakerData.getDescription();
+let courseName2 = FakerData.getCourseName();
+const sessionName = FakerData.getSession();
+const instructorName = credentialConstants.INSTRUCTORNAME
 test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
     test(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createCourse }) => {
         test.info().annotations.push(
@@ -30,9 +34,6 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
 
     })
 
-    const courseName2 = FakerData.getCourseName();
-    const sessionName = FakerData.getSession();
-    const instructorName = credentialConstants.INSTRUCTORNAME
     //test.use({ storageState: "logins/expertusAdminLog.json" })
     test(`TC061_TP_Prerequisite_Course2_MultiClass_ILT_and_Elearning.spec.ts`, async ({ adminHome, createCourse, editCourse }) => {
         test.info().annotations.push(
@@ -93,8 +94,8 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
 
     })
 
-    const title = FakerData.getCourseName();
-    test(`TC074_Verify_the_Enforce_Sequence_flow`, async ({ adminHome, learningPath, editCourse }) => {
+    let title = FakerData.getCourseName();
+    test(`TC074_Verify_the_Enforce_Sequence_flow`, async ({ adminHome, learningPath, createCourse }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `TC074_Verify_the_Enforce_Sequence_flow` },
@@ -123,7 +124,36 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         }
         await addingCourse(courseName1);
         await addingCourse(courseName2);
-        
+        await learningPath.clickEnforceCheckbox();
+        await learningPath.clickDetailTab();
+        await learningPath.clickCatalogBtn();
+        await learningPath.clickUpdateBtn();
+        await learningPath.verifySuccessMessage();
+        await learningPath.clickEditCertification();
+        await createCourse.clickCompletionCertificate();
+        await createCourse.clickCertificateCheckBox();
+        await createCourse.clickAdd();
+        await createCourse.clickUpdate();
+        await createCourse.verifySuccessMessage();
+
+    })
+
+    test(`Login as a learner`, async ({ learnerHome, catalog }) => {
+
+        test.info().annotations.push(
+            { type: `Author`, description: `Ajay Michael` },
+            { type: `TestCase`, description: `Login as a learner` },
+            { type: `Test Description`, description: `Verify from learner side` }
+
+        );
+        await learnerHome.isSignOutVisible();
+        await learnerHome.clickCatalog();
+        await catalog.mostRecent();
+        await catalog.searchCatalog(title);
+        await catalog.clickEnrollButton();
+        await catalog.clickViewCertificationDetails();
+        //await catalog.clickLaunchButton();
+        //await catalog.saveLearningStatus();
 
     })
 

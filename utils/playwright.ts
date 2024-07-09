@@ -1,5 +1,6 @@
 
 import { Page, test, expect, BrowserContext } from "@playwright/test";
+import { strict } from "assert";
 import { promises } from "dns";
 import * as path from 'path';
 
@@ -23,7 +24,11 @@ export abstract class PlaywrightWrapper {
     constructor(page: Page, context: BrowserContext,) {
         this.page = page;
         this.context = context;
-
+        this.page.on("console", (message) => {
+            if (message.text() === "customClickEvent") {
+              this.page.screenshot({ path: `test-results/${Math.floor(new Date().getTime() / 1000)}.png` });
+            }
+          });
 
     }
     /*
@@ -102,7 +107,7 @@ export abstract class PlaywrightWrapper {
 
     }
     async getTitle(): Promise<string> {
-        await this.page.waitForTimeout(10000);
+        await this.page.waitForLoadState('load');
         return await this.page.title();
     }
 

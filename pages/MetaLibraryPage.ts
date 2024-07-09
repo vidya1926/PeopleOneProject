@@ -46,7 +46,16 @@ export class MetaLibraryPage extends AdminHomePage {
         jobTitleExpandBtn: "//div[@id='jobtitle-header']",
         addJobTitleBtn: "//button[text()='Add Job Title']",
         jobTitleSearchField: "//input[@id='jobtitle-search-field']",
-        jobTitleVerification: (data: string) => `//div[@id='jobtitle-header']//following::span[text()='${data}']`
+        jobTitleVerification: (data: string) => `//div[@id='jobtitle-header']//following::span[text()='${data}']`,
+        typeBtn: "(//label[text()='Type']//parent::div//button)[1]",
+        cancellationTypes:(option:string)=>`//span[text()='${option}']`,
+        addAnotherPolicyButton:"//button[text()='Add Another Policy']",
+        languageExpanBtn:"//div[@id='language-header']",
+        languageCheckBox:`//div[contains(@id,'language')]//following::i[contains(@class,'fa-duotone fa-circle icon')]`,
+        equipmentExpandBtn:`//div[@id='equipment-header']`,
+        addEquipmentBtn:"//button[text()='Add Equipment']",
+        equipmentname:"#data_name",
+        equipmentSearchInput:"input#equipment-search-field",
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -263,4 +272,88 @@ export class MetaLibraryPage extends AdminHomePage {
         await this.spinnerDisappear();
         await this.validateElementVisibility(this.selectors.jobTitleVerification(data), data);
     }
+
+    public async clickOnTypeAndSelectType(option: "E-Learning" | "Classroom" | "Virtual Class" | "Learning Path" | "Certification") {
+        await this.mouseHover(this.selectors.typeBtn, "Type");
+        await this.click(this.selectors.typeBtn, "Type", "Button");
+        switch (option) {
+            case "E-Learning":
+                await this.click(this.selectors.cancellationTypes("E-Learning"),"E-Learning","Dropdown");
+                break;
+            case "Certification":
+                await this.click(this.selectors.cancellationTypes("Certification"),"E-Learning","Dropdown");
+                break;
+            case "Classroom":
+                await this.click(this.selectors.cancellationTypes("Classroom"),"E-Learning","Dropdown");
+                break;
+            case "Learning Path":
+                await this.click(this.selectors.cancellationTypes("Learning Path"),"E-Learning","Dropdown");
+                break;
+            case "Virtual Class":
+                await this.click(this.selectors.cancellationTypes("Virtual Class"),"E-Learning","Dropdown");
+                break;
+        }
+    }
+
+    public async clickAddAnotherPolicy(){
+        await this.mouseHover(this.selectors.addAnotherPolicyButton,"Add Another Policy");
+        await this.click(this.selectors.addAnotherPolicyButton,"Add Another Policy","Button");
+    }
+
+    public async clickLanuageExpandButton(){
+        await this.validateElementVisibility(this.selectors.languageExpanBtn,"Language");
+        await this.click(this.selectors.languageExpanBtn,"Language","Button");
+    }
+
+    public async clickCheckBox(){
+            const checkboxes = await this.page.$$(this.selectors.languageCheckBox);
+            if (checkboxes.length === 0) {
+              console.log('No checkboxes found.');
+              return;
+            }
+            while (checkboxes.length > 0) {
+              const randomIndex = Math.floor(Math.random() * checkboxes.length);
+              const randomCheckbox = checkboxes[randomIndex];
+              const isDisabled = await randomCheckbox.evaluate((el) => el.hasAttribute('disabled'));
+              if (!isDisabled) {
+                await randomCheckbox.hover();
+                await randomCheckbox.click();
+                await this.spinnerDisappear();
+                console.log('Clicked a checkbox.');
+                break;
+              } else {
+                checkboxes.splice(randomIndex, 1);
+                console.log('Found a disabled checkbox, trying another.');
+              }
+            }
+            if (checkboxes.length === 0) {
+              console.log('All checkboxes are disabled.');
+            }
+          
+    }
+
+    public async clickEquipmentButton(){
+        await this.validateElementVisibility(this.selectors.equipmentExpandBtn,"Equipment");
+        await this.click(this.selectors.equipmentExpandBtn,"Equipment","Button");
+    }
+    public async equipmentExpandButton(){
+        await this.validateElementVisibility(this.selectors.equipmentExpandBtn,"Equipment");
+        await this.click(this.selectors.equipmentExpandBtn,"Equipment","Button");
+    }
+
+    public async clickAddEquipment(){
+        await this.click(this.selectors.addEquipmentBtn,"Add Equipment","Button");
+    }
+
+    public async enterEquipmentName(data:string){
+        await this.validateElementVisibility(this.selectors.equipmentname,"Name");
+        await this.type(this.selectors.equipmentname,"Name",data)
+    }
+
+    public async verifyEquipment(data:string){
+        await this.typeAndEnter(this.selectors.equipmentSearchInput,"Search Input",data)
+        await this.spinnerDisappear();
+    }
+
+
 }

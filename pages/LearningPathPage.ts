@@ -1,9 +1,7 @@
 import path from "path";
 import { PlaywrightWrapper } from "../utils/playwright";
 import { AdminHomePage } from "./AdminHomePage";
-import fs from "fs"
-import { count, log } from "console";
-import { th } from "@faker-js/faker";
+
 import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
 
 export class LearningPathPage extends AdminHomePage {
@@ -20,7 +18,7 @@ export class LearningPathPage extends AdminHomePage {
         //addCourseBtn:"//button[text()='Add Selected Course']",
         addCourseBtn: "//button[text()=' Add Course']",  //-->changed on 05/07/2024
         addCourseCheckBox: "//i[contains(@class,'fa-duotone fa-square icon')]",
-        courseChexbox: (course: string) => `//div[text()='${course}']//following::i[contains(@class,'square icon')][1]`,
+        courseChexbox: (course: string) => `(//div[text()='${course}']//following::i[contains(@class,'square icon')])[1]`,
         checkBox: (index: string) => `(//i[contains(@class,'fa-duotone fa-square icon')])[${index}]`,
         addSelectedCourseBtn: "//button[text()='Add Selected Course']",
         detailsTab: "//button[text()='Details']",
@@ -46,7 +44,8 @@ export class LearningPathPage extends AdminHomePage {
         complianceYesBtn: "//footer//following::span[text()='Yes']",
         completeByRuleBtn: "(//label[text()='Complete by Rule']/parent::div//button)[1]",
         completeByInput: "//label[text()='Complete by']/parent::div//input",
-        registractionEndsInput: "input#registration-ends-input"
+        registractionEndsInput: "input#registration-ends-input",
+        enforceSequencingCheckbox:"//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
 
 
     };
@@ -85,6 +84,7 @@ export class LearningPathPage extends AdminHomePage {
         await this.type(this.selectors.description, "Description", data)
     }
 
+
     async clickSave() {
         await this.click(this.selectors.saveBtn, "Save", "Button");
     }
@@ -117,14 +117,20 @@ export class LearningPathPage extends AdminHomePage {
         await this.type(this.selectors.price, "price", FakerData.getPrice());
     }
     async clickAddSelectCourse() {
-        await this.click(this.selectors.addSelectedCourseBtn, "Add Select Course", "Button")
-        await this.validateElementVisibility("//span[@class='text-truncate']", "Populated Text");
+        await this.click(this.selectors.addSelectedCourseBtn, "Add Select Course", "Button");
+        await this.wait('minWait');
         const count = await this.page.locator("//span[@class='text-truncate']").count();
         for (let index = 0; index < count; index++) {
-            const text = await this.page.innerText("//span[@class='text-truncate']");
+            const text = await this.page.locator("//span[@class='text-truncate']").nth(index).innerText();
             console.log("Selected Course =" + text);
         }
 
+    }
+
+    async clickEnforceCheckbox(){
+        let enforceCheckbox = this.selectors.enforceSequencingCheckbox
+        await this.mouseHover(enforceCheckbox,"Enforce Sequence");
+        await this.click(enforceCheckbox,"Enforce Sequence","Checkbox");
     }
 
     async clickDetailTab() {

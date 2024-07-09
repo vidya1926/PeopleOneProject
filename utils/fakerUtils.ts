@@ -33,6 +33,9 @@ export class FakerData {
         return faker.person.jobTitle();
     }
 
+    static equipmentName():string{
+        return faker.commerce.productMaterial();
+    }
     static getTagNames() {
         const techTerm = faker.hacker.noun();
         return techTerm;

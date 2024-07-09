@@ -7,10 +7,10 @@ import { AdminLogin } from "./AdminLogin";
 export class AdminHomePage extends AdminLogin {
     static pageUrl = URLConstants.adminURL;
 
-       public selectors = {
+    public selectors = {
         signOutLink: "//div[@class='logout']/a",
         dragableMenu: (menu: string) => `//div[text()='${menu}']/following::div[text()="Create"][1]`,
-        menu:"//div[text()='Menu']",
+        menu: "//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
         learningMenu: "//span[text()='Learning']",
         courseLink: "//a[text()='Course']",
@@ -19,39 +19,44 @@ export class AdminHomePage extends AdminLogin {
         metadataLibraryMenu: "//span[text()='metadata library']",
         metaPeopleLink: "//a[text()='People']",
         metaLearningLink: "//a[text()='Learning']",
-        metaECommerceLink:"//a[text()='E-Commerce']",
+        metaECommerceLink: "//a[text()='E-Commerce']",
+        metaGeneralLink:"//a[text()='General']",
         adminGroupLink: "//a[text()='Admin Group']",
         locationLink: "//a[text()='Location']",
         commerceMenu: `//span[text()='Commerce']`,
         learningPathLink: "//a[text()='Learning Path']",
         //learningPathLink:"//a[text()='Learning Path']",
         certificationLink: "//a[text()='Certification']",
-        completionCertificationLink: "//a[text()='Completion Certificate']",       
+        completionCertificationLink: "//a[text()='Completion Certificate']",
         //learningPathLink:"//a[text()='Learning Path']",       
-        communicationLink:"//span[text()='Communication']",
-        bannerMenu:`//a[text()='Banner']`,
-        createBannerbutton:`//button[text()='CREATE BANNER']`,
-        announcementMenu:`//a[text()='Announcement']`,
-        createAnnouncementbutton:`//button[text()='CREATE ANNOUNCEMENT']`,
-        
+        communicationLink: "//span[text()='Communication']",
+        bannerMenu: `//a[text()='Banner']`,
+        createBannerbutton: `//button[text()='CREATE BANNER']`,
+        announcementMenu: `//a[text()='Announcement']`,
+        createAnnouncementbutton: `//button[text()='CREATE ANNOUNCEMENT']`,
+       
+       
+
+
+
 
     };
 
-       
+
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
-         this.setupPageListeners();
+        //this.common(page, context).catch(err => console.error("Error in common setup:", err));
+        this.setupPageListeners();
         // this.adminLogin=new AdminLogin(page,context)
         // this.common(page,context).catch(err => console.error("Error in common setup:", err));
-      //  this. setupPageListeners();
+        //  this. setupPageListeners();
 
-    
+
     }
 
-    public async loadAndLogin(role:string) {
-    
+    public async loadAndLogin(role: string) {
+
         console.log("Loading admin home page...");
         await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
@@ -61,7 +66,7 @@ export class AdminHomePage extends AdminLogin {
         if (pageTitle.toLowerCase().includes("signin")) {
             console.log("Sign-in page detected. Performing login...");
             await this.adminLogin(role);
-           
+
             await this.wait('mediumWait');
             pageTitle = await this.getTitle();
             console.log("Page Title after login:", pageTitle);
@@ -71,9 +76,9 @@ export class AdminHomePage extends AdminLogin {
         throw Error;
 
     }
-    
-   
-    private  setupPageListeners() {
+
+
+    private setupPageListeners() {
         this.page.on('load', async () => {
             try {
                 console.log("Page loaded. Executing common method...");
@@ -164,6 +169,15 @@ export class AdminHomePage extends AdminLogin {
         await this.spinnerDisappear();
     }
 
+    public async metaGeneralLink() {
+        await this.validateElementVisibility(this.selectors.metaGeneralLink, "Learning");
+        await this.mouseHover(this.selectors.metaGeneralLink, "Learning");
+        await this.click(this.selectors.metaGeneralLink, "Learning", "Button");
+        await this.spinnerDisappear();
+    }
+
+
+
     async enter(name: string, data: string) {
         await this.type(`//input[@id="${name}"]`, name, data);
     }
@@ -190,28 +204,31 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.certificationLink, "Certification", "Link");
     }
 
-    public async clickCommunicationLink(){
-        await this.mouseHover(this.selectors.communicationLink,"Communication")
+    public async clickCommunicationLink() {
+        await this.mouseHover(this.selectors.communicationLink, "Communication")
 
-        await this.click(this.selectors.communicationLink,"Communication","Link")
+        await this.click(this.selectors.communicationLink, "Communication", "Link")
 
     }
-    public async clickBanner(){
-        await this.mouseHover(this.selectors.bannerMenu,"Banner")
-        await this.click(this.selectors.bannerMenu,"Banner","Link")
+    public async clickBanner() {
+        await this.mouseHover(this.selectors.bannerMenu, "Banner")
+        await this.click(this.selectors.bannerMenu, "Banner", "Link")
     }
 
-    public async clickCreateBanner(){
-        await this.click(this.selectors.createBannerbutton,"Create Banner","Button")
+    public async clickCreateBanner() {
+        await this.click(this.selectors.createBannerbutton, "Create Banner", "Button")
     }
 
-    public async clickAnnouncement(){
-        await this.click(this.selectors.announcementMenu,"Announcement","Link")
+    public async clickAnnouncement() {
+        await this.click(this.selectors.announcementMenu, "Announcement", "Link")
     }
 
-    public async clickCreateAnnouncement(){
-        await this.click(this.selectors.createAnnouncementbutton,"Create Banner","Button")
+    public async clickCreateAnnouncement() {
+        await this.click(this.selectors.createAnnouncementbutton, "Create Banner", "Button")
     }
+
+   
+
 
 
 

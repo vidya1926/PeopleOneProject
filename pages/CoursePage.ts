@@ -106,7 +106,8 @@ export class CoursePage extends AdminHomePage {
         deliveryLabel: "//label[text()='Delivery Type']",
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
         instructorInputIndex: (index: number) => `(//input[contains(@id,'instructors') and (@placeholder='Search')])[${index}]`,
-        instance_Class: "//a[contains(@title,'Instance/Class')]",
+        //instance_Class: "//a[contains(@title,'Instance/Class')]", -->DOM Contented Changed 08-07-2024
+        instance_Class:"//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]",
         clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
         contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
@@ -135,7 +136,7 @@ export class CoursePage extends AdminHomePage {
         //  timeZoneOptionIndex:(timeOption:number) =>`(//label[text()='Time Zone']/following::div//input[@placeholder='Search'])[${timeOption}]`,
         // indianTimezoneIndex:(timezoneIndia:number)=> `(//li[contains(text(),'Indian Standard Time/Kolkata')])[${timezoneIndia}]`,
         indianTimezone: `//li[contains(text(),'Indian Standard Time/Kolkata')]`,
-        Date:"(//label[contains(text(),'Date')]/following-sibling::div/input)[1]",
+        Date: "(//label[contains(text(),'Date')]/following-sibling::div/input)[1]",
         startDateInstanceIndex: (index: number) => `(//label[text()='Start Date']/following-sibling::div/input)[${index}]`,
         timeInputIndex: (index: number) => `(//label[text()='Start Time']/following-sibling::input)[${index}]`,
         addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`,
@@ -147,9 +148,10 @@ export class CoursePage extends AdminHomePage {
         addBtn: "//button[text()='Add']",
         certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']",
         accessBtn: "//span[text()='Access']",
-        accessCloseIcon:"//i[contains(@class,'fa-swap-opacity icon')]",
-        accessUserInput:"//label[text()='User']/parent::div/following-sibling::div//input",
-        saveAccessBtn:"//button[text()='Save Access']"
+        accessCloseIcon: "//i[contains(@class,'fa-swap-opacity icon')]",
+        accessUserInput: "//label[text()='User']/parent::div/following-sibling::div//input",
+        saveAccessBtn: "//button[text()='Save Access']",
+        enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
     };
 
@@ -404,10 +406,10 @@ export class CoursePage extends AdminHomePage {
     async selectLocation() {
         await this.click(this.selectors.locationSelection, "Select Location", "DropDown");
         await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
-
-        await this.type(this.selectors.locationDropdown, "Select Location", getRandomLocation());
-        await this.mouseHover(this.selectors.locationOption(getRandomLocation()), "Location");
-        await this.click(this.selectors.locationOption(getRandomLocation()), "Location", getRandomLocation());
+        let location = getRandomLocation()
+        await this.type(this.selectors.locationDropdown, "Select Location", location);
+        await this.mouseHover(this.selectors.locationOption(location), "Location");
+        await this.click(this.selectors.locationOption(location), "Location", getRandomLocation());
 
     }
     async enterStartDate() {
@@ -463,6 +465,7 @@ export class CoursePage extends AdminHomePage {
         try {
             await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
             if (await locator.isVisible({ timeout: 5000 })) {
+                await this.mouseHover(this.selectors.willResolveLaterBtn, "Resolve Later");
                 await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
             }
         } catch (error) {
@@ -473,7 +476,7 @@ export class CoursePage extends AdminHomePage {
 
     }
 
-    async clickDetailButton(){
+    async clickDetailButton() {
         await this.mouseHover(this.selectors.detailsbtn, "details");
         await this.click(this.selectors.detailsbtn, "details", "button");
     }
@@ -513,7 +516,8 @@ export class CoursePage extends AdminHomePage {
     }
 
     async clickinstanceClass() {
-        await this.validateElementVisibility(this.selectors.instance_Class, "Instance Class");
+        await this.page.waitForSelector(this.selectors.instance_Class);
+        await this.wait("mediumWait");
         await this.click(this.selectors.instance_Class, "Edit Instance Class", "Button");
     }
 
@@ -729,6 +733,8 @@ export class CoursePage extends AdminHomePage {
     }
 
     async clickAdd() {
+        await this.validateElementVisibility(this.selectors.addBtn, "Add");
+        await this.mouseHover(this.selectors.addBtn, "Add");
         await this.click(this.selectors.addBtn, "Add", "Button");
         await this.verification(this.selectors.certificationVerifyMessage, "created successfully");
         await this.click(this.selectors.okBtn, "Ok", "Button");
@@ -736,22 +742,22 @@ export class CoursePage extends AdminHomePage {
 
     async clickAccessButton() {
         await this.validateElementVisibility(this.selectors.accessBtn, "Access"),
-        await this.click(this.selectors.accessBtn, "Access", "Link")
+            await this.click(this.selectors.accessBtn, "Access", "Link")
         await this.wait('mediumWait');
     }
 
-    async addSingleLearnerGroup(data:any){
-        const closeIcon=this.page.locator(this.selectors.accessCloseIcon);
-        const count=await closeIcon.count();
+    async addSingleLearnerGroup(data: any) {
+        const closeIcon = this.page.locator(this.selectors.accessCloseIcon);
+        const count = await closeIcon.count();
         for (let i = 1; i < count; i++) {
-            await this.page.locator(this.selectors.accessCloseIcon).nth(i).click({force:true})
+            await this.page.locator(this.selectors.accessCloseIcon).nth(i).click({ force: true })
         }
-        await this.type(this.selectors.accessUserInput,"User",data);
-        await this.click(`//li[text()='${data}']`,"User","List");
+        await this.type(this.selectors.accessUserInput, "User", data);
+        await this.click(`//li[text()='${data}']`, "User", "List");
     }
 
-    async saveAccessButton(){
-        await this.click(this.selectors.saveAccessBtn,"Save Access","Button")
+    async saveAccessButton() {
+        await this.click(this.selectors.saveAccessBtn, "Save Access", "Button")
     }
 
 }

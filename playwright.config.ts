@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  timeout: 1500000,
+  
+  timeout: 450000,
   expect: {
     timeout: 20000
   },
@@ -12,7 +13,7 @@ export default defineConfig({
   repeatEach:0,
   reporter: [['html',{open:'always'}]],
   use: {   
-    trace: 'on',
+    //trace: 'on',
     headless:false,
     screenshot:"on",
     video:'on',
