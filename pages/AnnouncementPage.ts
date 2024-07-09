@@ -1,4 +1,4 @@
-import { getCurrentDateFormatted, getCurrentMonthFormatted } from "../utils/fakerUtils";
+import { getCurrentDateFormatted, getnextMonthFormatted } from "../utils/fakerUtils";
 import { AdminHomePage } from "./AdminHomePage";
 
 
@@ -29,7 +29,8 @@ export class AnnouncementPage extends AdminHomePage {
 
     public async dateFromTo(){
          await this.keyboardType(this.selectors.dateFromInput, getCurrentDateFormatted())
-         await this.keyboardType(this.selectors.dateToInput, getCurrentMonthFormatted())
+         await this .wait("minWait")
+         await this.keyboardType(this.selectors.dateToInput, getnextMonthFormatted())
     }
 
 

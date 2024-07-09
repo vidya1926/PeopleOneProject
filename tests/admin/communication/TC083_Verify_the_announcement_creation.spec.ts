@@ -34,6 +34,6 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `Test Description`, description: `Learner Side announcement verification` }
     );
     await learnerHome.isSignOutVisible();   
-    await learnerHome.verifyAnnouncement();
+    await learnerHome.verifyAnnouncement(title);
 })
 
