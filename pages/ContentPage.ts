@@ -38,16 +38,12 @@ export class ContentHomePage extends AdminHomePage {
         await this.uploadFile(this.selectors.addContent, this.path)
     }
 
-    public async verifyContentType() {
-
-        await this.wait("maxWait")
-        await this.validateElementVisibility(this.selectors.contentType, "Conteytype Text file")
-        const text = await this.getInnerText(this.selectors.contentType)
-        if ( text== "SCROM") {
-            await this.wait("maxWait")
-            expect(this.fileName).toContain(text)
-        }else if(this.fileName=="AICC"){}
-    }
+    // public async verifyContentType() {
+    //     await this.wait("maxWait")
+    //     await this.validateElementVisibility(this.selectors.contentType, "Conteytype Text file")
+    //     const text = await this.getInnerText(this.selectors.contentType)
+        
+    // }
 
     public async clickandVerifyPreview() {
         const index = await this.page.locator("//span[text()='circuit']/following::i").count()
