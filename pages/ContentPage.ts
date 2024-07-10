@@ -12,7 +12,7 @@ export class ContentHomePage extends AdminHomePage {
         contentDesc: `//div[@id='content_description']//p`,
         addContent: `//label[text()='Click here']/following::input[@type='file']`,
         contentPreview: (index: number) => `(//a/following::i[@aria-label='Preview'])[${index}]`,
-        contentType: `//div[@id='wrapper-content_type']//div[@class='filter-option-inner-inner']`
+        contentType:`//div[@id='wrapper-content_type']//div[@class='filter-option-inner-inner']`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -35,15 +35,21 @@ export class ContentHomePage extends AdminHomePage {
 
     public async uploadContent() {
         await this.wait("mediumWait")
-        await this.uploadFile(this.selectors.addContent, this.path)
+                await this.uploadFile(this.selectors.addContent, this.path)
     }
 
-    // public async verifyContentType() {
-    //     await this.wait("maxWait")
-    //     await this.validateElementVisibility(this.selectors.contentType, "Conteytype Text file")
-    //     const text = await this.getInnerText(this.selectors.contentType)
+    public async verifyContentType(){
+
+         await this.wait("maxWait")
+         await this.validateElementVisibility(this.selectors.contentType,"Conteytype Text file")
+          if(this.fileName=="SCROM"){
+            const text= await this.getInnerText(this.selectors.contentType)
+             await this.wait("maxWait")
+            expect(this.fileName).toContain(text)
+         }
         
-    // }
+        
+    }
 
     public async clickandVerifyPreview() {
         const index = await this.page.locator("//span[text()='circuit']/following::i").count()
@@ -54,10 +60,10 @@ export class ContentHomePage extends AdminHomePage {
         console.log(title)
     }
 
-    public async verifyFileType() {
-
-
-    }
+    public async verifyFileType(){
+       
+                
+        }
 
 
 
