@@ -12,13 +12,13 @@ export class ContentHomePage extends AdminHomePage {
         contentDesc: `//div[@id='content_description']//p`,
         addContent: `//label[text()='Click here']/following::input[@type='file']`,
         contentPreview: (index: number) => `(//a/following::i[@aria-label='Preview'])[${index}]`,
+        contentType: `//div[@id='wrapper-content_type']//div[@class='filter-option-inner-inner']`
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context)
         this.fileName = "AICC File containing a PPT - Storyline 11"
-        this.path = `../data/${this.path}.zip`
-
+        this.path = `../data/${this.fileName}.zip`
     }
 
     public async clickCreateContent() {
@@ -33,10 +33,20 @@ export class ContentHomePage extends AdminHomePage {
         await this.type(this.selectors.contentDesc, "Content Description", "text field")
     }
 
-
-
     public async uploadContent() {
-                await this.uploadFile(this.selectors.addContent, this.path)
+        await this.wait("mediumWait")
+        await this.uploadFile(this.selectors.addContent, this.path)
+    }
+
+    public async verifyContentType() {
+
+        await this.wait("maxWait")
+        await this.validateElementVisibility(this.selectors.contentType, "Conteytype Text file")
+        const text = await this.getInnerText(this.selectors.contentType)
+        if ( text== "SCROM") {
+            await this.wait("maxWait")
+            expect(this.fileName).toContain(text)
+        }else if(this.fileName=="AICC"){}
     }
 
     public async clickandVerifyPreview() {
@@ -48,10 +58,11 @@ export class ContentHomePage extends AdminHomePage {
         console.log(title)
     }
 
-    // public async verifyContentPreview(){
-    //    const title= await this.focusWindow(this.selectors.clickPreview)
+    public async verifyFileType() {
 
-    // }
+
+    }
+
 
 
 }

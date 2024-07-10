@@ -116,10 +116,8 @@ export abstract class PlaywrightWrapper {
     }
     async fetchattribute(locator: string, attName: string) {
         const eleValue=await this.page.$(locator)
-        return  eleValue?.evaluate(node => node.getAttribute('src'))   
+        return  eleValue?.evaluate(node => node.getAttribute(attName))   
     }
-
-    
     
     async multipleWindowsCount(): Promise<number> {
         const windowslength = this.page.context().pages().length;
