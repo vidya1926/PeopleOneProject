@@ -14,9 +14,9 @@ test.skip(`TC012 _Add user to Commerce Admin `, async ({ adminHome, adminGroup }
     await adminHome.people();
     await adminHome.adminGroup();
     await adminGroup.searchAdmin("Commerce");
-    await adminGroup.clickSuperadminCustomer();
-    await adminGroup.searchUser("customadmin")
-    await adminGroup.clickuserCheckbox("customadmin")
+    await adminGroup.clickCommerceAdmin();
+    await adminGroup.searchUser("commerce")
+    await adminGroup.clickuserCheckbox("commerceadmin")
     await adminGroup.clickSelelctUsers();
     await adminGroup.clickUpdate();    
 })

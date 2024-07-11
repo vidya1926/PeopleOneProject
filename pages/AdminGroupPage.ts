@@ -16,6 +16,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
         selectUpdate:`//button[text()='Update']`,
         searchCustomerAdmin:`//button[text()='CREATE GROUP']/following::input[1]`,
         selectPopup:`//li[text()='Super admin - Customer']`,
+        commerceAdmin:`//div[text()='Commerce admin']`
     }
 
     constructor(page: Page, context: BrowserContext) {
@@ -30,8 +31,12 @@ export class AdminGroupPage extends PlaywrightWrapper {
         await this.click(this.selectors.clickAdminGroup("Super admin - Customer"), "Customer Admin", "Button")
     }
 
+    public async clickCommerceAdmin(){
+        await this.click(this.selectors.commerceAdmin,"Commerce Admin","Button")
+    }
+
     public async clickLearningAdmin(){
-        await this.click(this.selectors.clickAdminGroup("Learning admin"), "Customer Admin", "Button")
+        await this.click(this.selectors.clickAdminGroup("Learning admin"), "Learning Admin", "Button")
     }
     public async searchUser(data: string) {
         await this.typeAndEnter(this.selectors.searchUser, "Search User", data)

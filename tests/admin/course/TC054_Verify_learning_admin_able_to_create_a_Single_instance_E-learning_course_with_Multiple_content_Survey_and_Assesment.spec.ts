@@ -12,7 +12,7 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
         { type:'Test Description', description:"Verify learning admin able to create a Single instance E-learning course with Multiple content ,Survey and Assesment"}
     ); 
  
-    await adminHome.loadAndLogin("CUSTOMERADMIN")
+    await adminHome.loadAndLogin("LEARNERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -21,10 +21,10 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English")    
     await createCourse.typeDescription("This is a new course by name :" + courseName);
-       
-    //video content uplod is not working 
-//    await createCourse.multipleContent();
-    await createCourse.contentLibrary();
+    await createCourse.uploadvideo();
+    await createCourse.uploadVideoThroughLink();
+  //  await createCourse.addmultipleContentfromLib();
+    await createCourse.clickenforceSequence();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
@@ -38,26 +38,24 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
 })
 //
 
-// test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catalog,learnercourse})=>{
+test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catalog,learnerCourse})=>{
 
-//     test.info().annotations.push(
-//         { type: `Author`, description: `Vidya` },
-//         { type: `TestCase`, description: `TC001_Learner Side Course verification` },
-//         { type:`Test Description`, description: `Verify that course should be created for Single instance` }
-//     ); 
-//     await learnerHome.isSignOutVisible();
-//     await learnerHome.clickCatalog();
-//     await catalog.searchCatalog(courseName);
-//     await catalog.clickEnrollButton(courseName,"Enrolled");
-//     await catalog.viewCoursedetails();
-//     //video sequence issue yet to fix from Product side
-//     await learnercourse.clicksecondContent()
-//     await learnercourse.verifyWarningmessage();
-//     await learnercourse.clickfirstContent();
-//     await learnercourse.clicksecondContent()
-//     await catalog.saveLearningStatus()
-//    //need to attach the survey and assesment 
-// })
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `TC001_Learner Side Course verification` },
+        { type:`Test Description`, description: `Verify that course should be created for Single instance` }
+    ); 
+    await learnerHome.isSignOutVisible();
+    await learnerHome.clickCatalog();
+    await catalog.searchCatalog(courseName);
+    await catalog.clickEnrollButton();
+    await catalog.viewCoursedetails();
+    await learnerCourse.clickRandomcontent();
+    await learnerCourse.verifyWarningMessage();
+    await learnerCourse.clickfirstcontent();
+    await learnerCourse.clickPreAssessmentQAndA();
+    await learnerCourse.clickcontentInSequence();
+})
 
 
 

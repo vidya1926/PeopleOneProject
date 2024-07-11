@@ -28,4 +28,5 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse,content
     await adminHome.clickLearningMenu();
     await adminHome.clickContentmenu();
     await contentHome.contentVisiblity("AICC File containing a PPT - Storyline 11.zip")
+    
 })

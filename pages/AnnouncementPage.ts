@@ -1,9 +1,6 @@
 import { getCurrentDateFormatted, getnextMonthFormatted } from "../utils/fakerUtils";
 import { AdminHomePage } from "./AdminHomePage";
 
-
-
-
 export class AnnouncementPage extends AdminHomePage {
 
     public selectors = {

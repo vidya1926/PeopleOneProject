@@ -157,7 +157,8 @@ export class CoursePage extends AdminHomePage {
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
-        assessmentLabel:"//div[text()='Assessment']"
+        assessmentLabel:"//div[text()='Assessment']",
+        enforceSequence:`(//span[text()='enforce launch sequence']/preceding-sibling::i[@class='fad fa-square icon_16_1'])`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -174,7 +175,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async uploadvideo() {
-        const path = `../data/video1.mp4`
+        const path = `../data/samplevideo.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading")
@@ -556,7 +557,10 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
     }
 
-    async MultipleContent() {
+
+
+
+    async multipleContent() {
         const fileName = "sample"
         const pdf = `../data/${fileName}.pdf`
         const video = "../data/video1.mp4"
@@ -785,6 +789,13 @@ export class CoursePage extends AdminHomePage {
 
     async saveAccessButton() {
         await this.click(this.selectors.saveAccessBtn, "Save Access", "Button")
+    }
+
+
+    async clickenforceSequence(){
+        await this.validateElementVisibility(this.selectors.enforceSequence,"Enforce Sequence ")
+        await this.click(this.selectors.enforceSequence,"Enforce Sequence ","Checkbox")
+      
     }
 
 }
