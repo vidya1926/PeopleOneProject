@@ -16,12 +16,10 @@ test(`Create Content`, async ({ adminHome ,contentHome,bannerHome,createCourse})
     await contentHome.clickCreateContent();
     await contentHome.enter("content-title",title)
     await contentHome.enterDescription("AICC Content for " +title);
-    await contentHome.uploadContent();
+    await contentHome.uploadContent("samplevideo.mp4");
     await bannerHome.clickPublish();
     await createCourse.clickProceed();
     await createCourse.verifySuccessMessage() 
-
-  
 })
 
 

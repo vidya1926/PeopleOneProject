@@ -16,8 +16,8 @@ test(`TC049_Content type update`, async ({ adminHome ,contentHome,bannerHome,cre
     await contentHome.clickCreateContent();
     await contentHome.enter("content-title",title)
     await contentHome.enterDescription("AICC Content for " +title);
-    await contentHome.uploadContent();
-    await contentHome.verifyContentType();
+    await contentHome.uploadContent("AICC File containing a PPT - Storyline 11.zip");
+    await contentHome.verifyFileType("AICC File containing a PPT - Storyline 11.zip");
 
   
    })

@@ -2,7 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
 const title=FakerData.getRandomTitle();
-test(`Create Content`, async ({ adminHome ,contentHome,bannerHome,createCourse}) => {
+test(`Create Content`, async ({ adminHome ,contentHome}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create banner in sequence` },
@@ -13,7 +13,7 @@ test(`Create Content`, async ({ adminHome ,contentHome,bannerHome,createCourse})
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickContentmenu();
-    await contentHome.clickandVerifyPreview();
+    await contentHome.clickandVerifyPreview("AICC File containing a PPT - Storyline 11.zip");
    })
 
 

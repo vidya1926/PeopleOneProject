@@ -33,7 +33,4 @@ export class AnnouncementPage extends AdminHomePage {
          await this.keyboardType(this.selectors.dateToInput, getnextMonthFormatted())
     }
 
-
-
-
 }

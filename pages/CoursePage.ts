@@ -176,8 +176,17 @@ export class CoursePage extends AdminHomePage {
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading")
         await this.validateElementVisibility(this.selectors.attachedContent("video1"), "video1");
+        
     }
 
+    async uploadCourseContent(fileName:string) {
+        const path = `../data/${fileName}`
+        await this.mouseHover(this.selectors.uploadDiv, "upload");
+        await this.uploadFile(this.selectors.uploadInput, path);
+        await this.validateElementVisibility(this.selectors.progress, "Loading")
+        await this.validateElementVisibility(this.selectors.attachedContent(fileName), `${fileName}`);
+        
+    }
     async clickCatalog() {
         await this.validateElementVisibility(this.selectors.showInCatalogBtn, "Show in Catalog");
         await this.click(this.selectors.showInCatalogBtn, "Catalog", "Button");
@@ -556,6 +565,8 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
+
+
 
     async sessionType() {
         await this.click(this.selectors.sessionType, "Session Type", "Button");
