@@ -493,7 +493,7 @@ export class CoursePage extends AdminHomePage {
 
     }
 
-    async addsurvey_course() {
+    async  addsurvey_course() {
         await this.wait('minWait')
         await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
         await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
