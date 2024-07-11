@@ -59,7 +59,7 @@ export abstract class PlaywrightWrapper {
         data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
-            await this.page.locator(locator).fill(data);
+            await this.page.keyboard.type(data,{delay:100});
             await this.page.keyboard.press("Enter");
 
         });

@@ -93,9 +93,11 @@ export class CoursePage extends AdminHomePage {
         detailsbtn: "//button[text()='Details']",
         courseUpdateBtn: "//button[@id='course-btn-save']",
         surveyAndAssessmentLink: "//button[text()='Survey/Assessment']",
-        surveyCheckBox: "//div[@id='sur_ass-lms-scroll-survey-list']//i[contains(@class,'fa-duotone fa-square icon')]",
+        //surveyCheckBox: "//div[@id='sur_ass-lms-scroll-survey-list']//i[contains(@class,'fa-duotone fa-square icon')]", -->The XPath has been changed on the product side. We updated it on 10/7/2024
+        surveyCheckBox:"//div[contains(@id,'scroll-survey-list')]//i[contains(@class,'fa-duotone fa-square icon')]",
         editCourseBtn: "//a[text()='Edit Course']",
-        assessmentCheckbox: "//div[@id='sur_ass-lms-scroll-assessment-list']//i[contains(@class,'fa-duotone fa-square icon')]",
+        //assessmentCheckbox: "//div[@id='sur_ass-lms-scroll-assessment-list']//i[contains(@class,'fa-duotone fa-square icon')]", -->The XPath has been changed on the product side. We updated it on 10/7/2024
+        assessmentCheckbox:"//div[contains(@id,'scroll-assessment-list')]//i[contains(@class,'fa-duotone fa-square icon')]",
         addAssessmentBtn: "//button[text()='Add As Assessment']",
         categoryDropdown: "//div[@class='dropdown-menu show']//input[@type='search']",
         allCategoryOptions: "//select[@id='course-categorys-exp-select']/option",
@@ -154,7 +156,8 @@ export class CoursePage extends AdminHomePage {
         accessUserInput: "//label[text()='User']/parent::div/following-sibling::div//input",
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
-        // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`
+        // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
+        assessmentLabel:"//div[text()='Assessment']"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -508,7 +511,7 @@ export class CoursePage extends AdminHomePage {
 
     }
 
-    async addsurvey_course() {
+    async  addsurvey_course() {
         await this.wait('minWait')
         await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
         await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
@@ -517,8 +520,6 @@ export class CoursePage extends AdminHomePage {
         if (await popup.isVisible({ timeout: 5000 })) {
             await this.click("//button[text()='YES']", "yes", "button")
         }
-        await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "button");
-        await this.wait('mediumWait')
         const selector = this.page.locator(this.selectors.surveyCheckBox);
         const checkboxCount = await selector.count();
         const randomIndex = Math.floor(Math.random() * checkboxCount);
@@ -582,6 +583,7 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
     async addAssesment() {
+        await this.mouseHover(this.selectors.assessmentLabel,"Assessment");
         const selector = this.page.locator(this.selectors.assessmentCheckbox);
         const checkboxCount = await selector.count();
         if (checkboxCount < 2) {

@@ -139,7 +139,6 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
     })
 
     test(`Login as a learner`, async ({ learnerHome, catalog }) => {
-
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `Login as a learner` },
@@ -152,6 +151,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await catalog.searchCatalog(title);
         await catalog.clickEnrollButton();
         await catalog.clickViewCertificationDetails();
+
         //await catalog.clickLaunchButton();
         //await catalog.saveLearningStatus();
 
