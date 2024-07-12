@@ -1,10 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import path from "path";
-import fs from "fs";
 import { FakerData, getCurrentDateFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
-import { TIMEOUT } from "dns";
-import { CompletionCertificationPage } from "./CompletionCertificationPage";
 
 
 export class CoursePage extends AdminHomePage {
@@ -120,6 +116,8 @@ export class CoursePage extends AdminHomePage {
         domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
+        portalDropdown:`//button[@data-id='banner_portal_id']`,
+        portalOption:(index:string)=>`(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
         image: "(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
         httpsInput: "input[id=content_url]",
@@ -155,7 +153,8 @@ export class CoursePage extends AdminHomePage {
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
-        assessmentLabel: "//div[text()='Assessment']"
+        assessmentLabel: "//div[text()='Assessment']",
+        enforceSequence:`(//span[text()='enforce launch sequence']/preceding-sibling::i[@class='fad fa-square icon_16_1'])`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -172,13 +171,22 @@ export class CoursePage extends AdminHomePage {
     }
 
     async uploadvideo() {
-        const path = `../data/video1.mp4`
+        const path = `../data/samplevideo.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading")
         await this.validateElementVisibility(this.selectors.attachedContent("video1"), "video1");
+        
     }
 
+    async uploadCourseContent(fileName:string) {
+        const path = `../data/${fileName}`
+        await this.mouseHover(this.selectors.uploadDiv, "upload");
+        await this.uploadFile(this.selectors.uploadInput, path);
+        await this.validateElementVisibility(this.selectors.progress, "Loading")
+        await this.validateElementVisibility(this.selectors.attachedContent(fileName), `${fileName}`);
+        
+    }
     async clickCatalog() {
         await this.validateElementVisibility(this.selectors.showInCatalogBtn, "Show in Catalog");
         await this.click(this.selectors.showInCatalogBtn, "Catalog", "Button");
@@ -207,6 +215,13 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.domainBtn, "Domain", "Button");
         await this.click(this.selectors.domainOption(domain_name), "Domain Name", "Button");
         await this.click(this.selectors.domainBtn, "Domain", "Button");
+    }
+
+    async selectPortalOption() {
+        await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
+        const index=await this.page.locator("//label[text()='Domain']/following::div[@class='dropdown-menu show']//a").count();
+        const randomIndex = Math.floor(Math.random() *  index)+ 1;
+        await this.click(this.selectors.portalOption(randomIndex), "Domain Name", "Button");
     }
 
     async selectLanguage(language: string) {
@@ -539,7 +554,10 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
     }
 
-    async MultipleContent() {
+
+
+
+    async multipleContent() {
         const fileName = "sample"
         const pdf = `../data/${fileName}.pdf`
         const video = "../data/video1.mp4"
@@ -549,6 +567,8 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
+
+
 
     async sessionType() {
         await this.click(this.selectors.sessionType, "Session Type", "Button");
@@ -633,8 +653,10 @@ export class CoursePage extends AdminHomePage {
 
     }
     async selectPortal() {
+        try{
         const text = await this.page.innerText(this.selectors.domainSelectedText);
         console.log(text);
+
         if (text.includes('selected')) {
             const dropdownItems = await this.page.$$(this.selectors.domainDropdown);
             for (let index = 2; index <= dropdownItems.length; index++) {
@@ -642,6 +664,9 @@ export class CoursePage extends AdminHomePage {
                 await this.click(this.selectors.domainDropdownIndex(index), "Domain", "Dropdown");
             }
         }
+}   catch(error){
+    console.log(error +" Portal selected")
+} 
         const domainText = await this.page.innerText(this.selectors.domainInnerValue);
         return domainText;
     }
@@ -761,6 +786,13 @@ export class CoursePage extends AdminHomePage {
 
     async saveAccessButton() {
         await this.click(this.selectors.saveAccessBtn, "Save Access", "Button")
+    }
+
+
+    async clickenforceSequence(){
+        await this.validateElementVisibility(this.selectors.enforceSequence,"Enforce Sequence ")
+        await this.click(this.selectors.enforceSequence,"Enforce Sequence ","Checkbox")
+      
     }
 
 }

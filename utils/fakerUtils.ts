@@ -133,7 +133,6 @@ export function getRandomLocation(): DataItem | any {
         const jsonData = fs.readFileSync(filePath, 'utf8');
         const dataArray: DataItem[] = JSON.parse(jsonData);
         if (!Array.isArray(dataArray) || dataArray.length === 0) {
-
             throw new Error('Data array is empty or not an array');
         }
         const randomIndex = Math.floor(Math.random() * dataArray.length);
@@ -147,7 +146,7 @@ export function getRandomLocation(): DataItem | any {
 export function getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1) 
-    const day = String(date.getDate() + 1)
+    const day = String(date.getDate() )
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }

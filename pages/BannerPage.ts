@@ -123,16 +123,4 @@ export class BannerPage extends AdminHomePage {
      await this.verification(this.selectors.modalDialog,"deleted")
      await this.click(this.selectors.okButton,"OK","Button")
    }
-
-   
-   
-
-
-
-
-
-
-
-
-
 }

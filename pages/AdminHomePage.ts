@@ -29,17 +29,13 @@ export class AdminHomePage extends AdminLogin {
         certificationLink: "//a[text()='Certification']",
         completionCertificationLink: "//a[text()='Completion Certificate']",
         //learningPathLink:"//a[text()='Learning Path']",       
-        communicationLink: "//span[text()='Communication']",
-        bannerMenu: `//a[text()='Banner']`,
-        createBannerbutton: `//button[text()='CREATE BANNER']`,
-        announcementMenu: `//a[text()='Announcement']`,
-        createAnnouncementbutton: `//button[text()='CREATE ANNOUNCEMENT']`,
-       
-       
-
-
-
-
+        communicationLink:"//span[text()='Communication']",
+        bannerMenu:`//a[text()='Banner']`,
+        createBannerbutton:`//button[text()='CREATE BANNER']`,
+        announcementMenu:`//a[text()='Announcement']`,
+        createAnnouncementbutton:`//button[text()='CREATE ANNOUNCEMENT']`,
+        contentMenu:`//a[text()='Content']`,
+      
     };
 
 
@@ -216,6 +212,7 @@ export class AdminHomePage extends AdminLogin {
     }
 
     public async clickCreateBanner() {
+        await this.validateElementVisibility(this.selectors.createBannerbutton, "Create Banner")
         await this.click(this.selectors.createBannerbutton, "Create Banner", "Button")
     }
 
@@ -227,10 +224,10 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.createAnnouncementbutton, "Create Banner", "Button")
     }
 
-   
-
-
-
+    public async clickContentmenu(){
+        await this.click(this.selectors.contentMenu,"Content","Link")
+        
+    }
 
 }
 

@@ -19,7 +19,7 @@ test(`Create banner in sequence
     await bannerHome.enterFromDate();
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(1);
-    await createCourse.selectPortal();
+    await createCourse.selectPortalOption();
     await bannerHome.uploadImage("Profilepic");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
@@ -41,7 +41,7 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await adminHome.clickBanner();
     await bannerHome.clickEditIcon(title);
     await bannerHome.selectSequence(3);
-    await createCourse.selectPortal();
+    await createCourse.selectPortalOption();
     await bannerHome.clickUpdatebtn();
     await bannerHome.clickListing();
      await bannerHome.clickUnpublishtab();

@@ -9,11 +9,11 @@ test.skip(`TC004_CreateCustomerAdmin`, async ({ adminHome, adminGroup }) => {
 
     );
    
-    await adminHome.loadAndLogin("CUSTOMERADMIN")
+    await adminHome.loadAndLogin("SUPERADMIN")
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminGroup.searchAdmin("Commerce");
+    await adminGroup.searchAdmin("Customer");
     await adminGroup.clickSuperadminCustomer();
     await adminGroup.searchUser("customadmin")
     await adminGroup.clickuserCheckbox("customadmin")

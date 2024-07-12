@@ -6,7 +6,11 @@ export class LearnerCoursePage extends CatalogPage {
     public selectors = {
         ...this.selectors,
         contentPlaySeq: `//span[contains(text(),'Content')]/following::i[contains(@class,'fa-duotone fa-circle-play pointer')]`,
-        //warningMessage:
+        conentSeqOption: (index: number) => `//span[contains(text(),'Content')]/following::i[contains(@class,'fa-duotone fa-circle-play pointer')][${index}]`,
+        warningMessage: `//div[contains(@class,'align-items-center d-flex')]//span[1]`,
+        q1: `//span[text()='1. Pre']/following::i[1]`,
+        submitAnswers: `(//span[text()='Submit my Answers'])[2]`,
+        contentProgressStatus: `//span[text()='100%']`
 
     };
 
@@ -14,19 +18,37 @@ export class LearnerCoursePage extends CatalogPage {
         super(page, context);
     }
 
-    public async clickContents() {
+    public async clickRandomcontent() {
         const videoSeq = this.selectors.contentPlaySeq
-        const length = this.selectors.contentPlaySeq.count();
-        try {
-            for (let index of length) {
-                await this.click(this.selectors.contentPlaySeq(index), "All contents", "Checkbox")
-            }
-        } catch {
-            //verify warning message
-        }
+        const length = await this.page.locator(this.selectors.contentPlaySeq).count();
+        const randomIndex = Math.floor(Math.random() * length) + 1;
+        await this.click(this.selectors.conentSeqOption(2), "All contents", "Checkbox")
     }
-    async clickFirstContent() {
 
+    public async clickfirstcontent() {
+        const videoSeq = this.selectors.contentPlaySeq
+        const length = await this.page.locator(this.selectors.contentPlaySeq).count();
+        const randomIndex = Math.floor(Math.random() * length) + 1;
+        await this.click(this.selectors.conentSeqOption(1), "All contents", "Checkbox")
+    }
+
+    public async clickPreAssessmentQAndA() {
+        await this.click(this.selectors.q1, "Question 1", "CheckBox")
+        await this.click(this.selectors.submitAnswers, "Submit Answers", "Button")
+    }
+
+    public async verifyWarningMessage() {
+        const msg = await this.getInnerText(this.selectors.warningMessage)
+        console.log(msg)
+    }
+    public async clickcontentInSequence() {
+        const videoSeq = this.selectors.contentPlaySeq
+        const length = await this.page.locator(this.selectors.contentPlaySeq).count();
+        const randomIndex = Math.floor(Math.random() * length) + 1;
+        for (let index = 2; index <= randomIndex; index++) {
+            await this.click(this.selectors.conentSeqOption(index), "All contents", "Checkbox")
+            await this.waitForSelector(this.selectors.contentProgressStatus)
+        }
     }
 
     async clickSaveLearning() {

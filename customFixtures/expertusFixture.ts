@@ -21,6 +21,8 @@ import DB from '../utils/dbUtil'
 import { BannerPage } from '../pages/bannerPage'
 import { CostcenterPage } from '../pages/CostcenterPage'
 import { AnnouncementPage } from '../pages/AnnouncementPage'
+import { ContentHomePage } from '../pages/ContentPage'
+import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -36,6 +38,7 @@ type expertusFixture = {
     location: LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
+    learnerCourse:LearnerCoursePage
     catalog: CatalogPage
     dashboard: DashboardPage
     organization: OrganizationPage
@@ -46,6 +49,7 @@ type expertusFixture = {
     dataBase: DB
     costCenter: CostcenterPage
     announcementHome:AnnouncementPage
+    contentHome:ContentHomePage
 }
 export const test = baseTest.extend<expertusFixture>({
     // adminLogin: async ({ page, context }, use) => {
@@ -97,6 +101,10 @@ export const test = baseTest.extend<expertusFixture>({
         const learnerHome = new LearnerHomePage(page, context);
         await use(learnerHome);
     },
+    learnerCourse: async ({ page, context }, use) => {
+        const learnercourse = new LearnerCoursePage(page, context);
+        await use(learnercourse);
+    },
     catalog: async ({ page, context }, use) => {
         const catalog = new CatalogPage(page, context);
         await use(catalog);
@@ -144,6 +152,10 @@ export const test = baseTest.extend<expertusFixture>({
     announcementHome: async ({ page, context }, use) => {
         const announcementHome = new AnnouncementPage(page, context);
         await use(announcementHome);
+    },
+    contentHome: async ({ page, context }, use) => {
+        const ContentHome = new ContentHomePage(page, context);
+        await use(ContentHome);
     },
 
 
