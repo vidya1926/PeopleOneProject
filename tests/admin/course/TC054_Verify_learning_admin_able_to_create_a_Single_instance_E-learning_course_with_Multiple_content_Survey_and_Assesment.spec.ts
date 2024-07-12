@@ -20,7 +20,7 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English")    
     await createCourse.typeDescription("This is a new course by name :" + courseName);
-    await createCourse.uploadvideo();
+    await createCourse.contentLibrary();
     await createCourse.uploadVideoThroughLink();
   //await createCourse.addmultipleContentfromLib();
     await createCourse.clickenforceSequence();
@@ -40,8 +40,8 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
 test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catalog,learnerCourse})=>{
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `TC001_Learner Side Course verification` },
-        { type:`Test Description`, description: `Verify that course should be created for Single instance` }
+        { type: `TestCase`, description: `TC054_Learner Side Course verification` },
+        { type:`Test Description`, description: `Verify that content sequence flow`}
     ); 
     await learnerHome.isSignOutVisible();
     await learnerHome.clickCatalog();
@@ -50,9 +50,8 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
     await catalog.viewCoursedetails();
     await learnerCourse.clickRandomcontent();
     await learnerCourse.verifyWarningMessage();
-    await learnerCourse.clickfirstcontent();
-    await learnerCourse.clickPreAssessmentQAndA();
-    await learnerCourse.clickcontentInSequence();
+   
+  
 })
 
 

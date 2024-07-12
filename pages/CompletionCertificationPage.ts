@@ -34,7 +34,6 @@ export class CompletionCertificationPage extends AdminHomePage {
         const count = await this.page.locator(this.selectors.templateType).count();
         const randomIndex = Math.floor(Math.random() * (count)) + 1;
         await this.click(this.selectors.randomTemplate(randomIndex), "Template Type", "Checkbox");
-
     }
 
     async title(data: string) {

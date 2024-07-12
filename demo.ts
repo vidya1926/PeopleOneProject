@@ -24,3 +24,4 @@ for (let index = 0; index < 10; index++) {
     console.log(FakerData.getCourseName());
 }
 
+//const arry:any =[ { 'NOW()': 2024-07-11T10:44:06.000Z } ]

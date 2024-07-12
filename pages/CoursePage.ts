@@ -1,10 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import path from "path";
-import fs from "fs";
 import { FakerData, getCurrentDateFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
-import { TIMEOUT } from "dns";
-import { CompletionCertificationPage } from "./CompletionCertificationPage";
 
 
 export class CoursePage extends AdminHomePage {
@@ -94,10 +90,10 @@ export class CoursePage extends AdminHomePage {
         courseUpdateBtn: "//button[@id='course-btn-save']",
         surveyAndAssessmentLink: "//button[text()='Survey/Assessment']",
         //surveyCheckBox: "//div[@id='sur_ass-lms-scroll-survey-list']//i[contains(@class,'fa-duotone fa-square icon')]", -->The XPath has been changed on the product side. We updated it on 10/7/2024
-        surveyCheckBox:"//div[contains(@id,'scroll-survey-list')]//i[contains(@class,'fa-duotone fa-square icon')]",
+        surveyCheckBox: "//div[contains(@id,'scroll-survey-list')]//i[contains(@class,'fa-duotone fa-square icon')]",
         editCourseBtn: "//a[text()='Edit Course']",
         //assessmentCheckbox: "//div[@id='sur_ass-lms-scroll-assessment-list']//i[contains(@class,'fa-duotone fa-square icon')]", -->The XPath has been changed on the product side. We updated it on 10/7/2024
-        assessmentCheckbox:"//div[contains(@id,'scroll-assessment-list')]//i[contains(@class,'fa-duotone fa-square icon')]",
+        assessmentCheckbox: "//div[contains(@id,'scroll-assessment-list')]//i[contains(@class,'fa-duotone fa-square icon')]",
         addAssessmentBtn: "//button[text()='Add As Assessment']",
         categoryDropdown: "//div[@class='dropdown-menu show']//input[@type='search']",
         allCategoryOptions: "//select[@id='course-categorys-exp-select']/option",
@@ -109,7 +105,7 @@ export class CoursePage extends AdminHomePage {
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
         instructorInputIndex: (index: number) => `(//input[contains(@id,'instructors') and (@placeholder='Search')])[${index}]`,
         //instance_Class: "//a[contains(@title,'Instance/Class')]", -->DOM Contented Changed 08-07-2024
-        instance_Class:"//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]",
+        instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]",
         clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
         contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
@@ -158,7 +154,7 @@ export class CoursePage extends AdminHomePage {
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
         assessmentLabel:"//div[text()='Assessment']",
-        enforceSequence:`(//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`
+        enforceSequence:`//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -506,7 +502,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.courseUpdateBtn, "Update", "button");
     }
 
-    async  addsurvey_course() {
+    async addsurvey_course() {
         await this.wait('minWait')
         await this.validateElementVisibility(this.selectors.surveyAndAssessmentLink, "Survey/Assessment")
         await this.click(this.selectors.surveyAndAssessmentLink, "Survey/Assessment", "Link")
@@ -542,7 +538,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.clickContentLibrary, "Content", "button");
         await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string");
         await this.spinnerDisappear();
-        const randomIndex = Math.floor(Math.random() * 5) + 1;
+        const data = "youtube"
+        await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
         await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
         await this.mouseHover(this.selectors.addContentButton, "addcontent");
         await this.click(this.selectors.addContentButton, "addcontent", "button");
@@ -580,7 +577,7 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
     async addAssesment() {
-        await this.mouseHover(this.selectors.assessmentLabel,"Assessment");
+        await this.mouseHover(this.selectors.assessmentLabel, "Assessment");
         const selector = this.page.locator(this.selectors.assessmentCheckbox);
         const checkboxCount = await selector.count();
         if (checkboxCount < 2) {

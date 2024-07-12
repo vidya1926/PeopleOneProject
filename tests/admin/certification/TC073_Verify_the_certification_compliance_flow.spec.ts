@@ -32,11 +32,11 @@ test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
 
 
     const title = FakerData.getCourseName();
-    test(`Verify certification priced flow`, async ({ learningPath, adminHome, createCourse }) => {
+    test(`TC073_Verify_the_certification_compliance_flow`, async ({ learningPath, adminHome, createCourse }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael S` },
-            { type: `TestCase`, description: `Verify certification priced flow` },
-            { type: `Test Description`, description: `Verifing Approval on admin side` }
+            { type: `TestCase`, description: `TC073_Verify_the_certification_compliance_flow` },
+            { type: `Test Description`, description: `compliance flow` }
         );
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
