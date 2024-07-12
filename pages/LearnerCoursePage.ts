@@ -11,7 +11,6 @@ export class LearnerCoursePage extends CatalogPage {
         q1: `//span[text()='1. Pre']/following::i[1]`,
         submitAnswers: `(//span[text()='Submit my Answers'])[2]`,
         contentProgressStatus: `//span[text()='100%']`
-
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -50,12 +49,9 @@ export class LearnerCoursePage extends CatalogPage {
             await this.waitForSelector(this.selectors.contentProgressStatus)
         }
     }
+    // async clickSaveLearning() {
+    //     await this.click(this.selectors.saveLearning, "SaveLearning", "Button")
 
-    async clickSaveLearning() {
-        await this.click(this.selectors.saveLearning, "SaveLearning", "Button")
-
-    }
-
-
+    // }
 
 }

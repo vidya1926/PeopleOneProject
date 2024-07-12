@@ -11,7 +11,6 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
         { type: 'TestCase', description: 'Course Creation for Single_Instance E-Learning with multiple contents'},
         { type:'Test Description', description:"Verify learning admin able to create a Single instance E-learning course with Multiple content ,Survey and Assesment"}
     ); 
- 
     await adminHome.loadAndLogin("LEARNERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -23,7 +22,7 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.typeDescription("This is a new course by name :" + courseName);
     await createCourse.uploadvideo();
     await createCourse.uploadVideoThroughLink();
-  //  await createCourse.addmultipleContentfromLib();
+  //await createCourse.addmultipleContentfromLib();
     await createCourse.clickenforceSequence();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
@@ -39,7 +38,6 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
 //
 
 test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catalog,learnerCourse})=>{
-
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC001_Learner Side Course verification` },
