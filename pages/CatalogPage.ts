@@ -28,10 +28,12 @@ export class CatalogPage extends LearnerHomePage {
         unsupportMedia: "//div[contains(text(), 'The media could not be loaded')]",
         posterElement: `//button[@class='vjs-big-play-button']//span[1]`,
         viewCertificationDetailsBtn: "//button[text()='View Certification Details']",
-        viewCertificateBtn:"//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
-        okBtn:"//button[text()='Ok']",
-        addToCart:`//span[text()='Add to cart']`,
-        
+        viewlearningPathDetailsBtn: "//button[text()='View Learning Path Details']",
+        viewCertificateBtn: "//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
+        okBtn: "//button[text()='Ok']",
+        addToCart: `//span[text()='Add to cart']`,
+        contentLaunchBtn:"//button//span[text()='Launch']"
+
 
         //`//button[@title='Play Video']//span[1]`
 
@@ -101,29 +103,37 @@ export class CatalogPage extends LearnerHomePage {
     async clickLaunchButton() {
         await this.page.waitForLoadState('load');
         await this.wait('maxWait');
-        await this.wait('mediumWait');
-        const launchButtonSelector = this.selectors.launchButton;
         const playButton = "//button[@title='Play Video']"
-        await this.mouseHover(launchButtonSelector,"Play Button")
-        await this.page.focus(playButton,{strict:true});
-        //await this.page.keyboard.press('Enter');
-        
-        // const playEle=this.selectors.posterElement;
-        // await this.page.click(playEle);
-        // await playEle.evaluate((video) => {
-        //     video.currentTime = 30;
-        // });
-        await this.page.locator(playButton).click({force:true});
+       /*  const myElement = document.querySelector("#movie_player") as HTMLElement; 
+        myElement.addEventListener("click", (event) => {
+            myElement.click()
+          }); */
+        await this.mouseHover(playButton, "Play Button")
+        await this.page.focus(playButton, { strict: true });
+        await this.page.click(playButton, { force: true })
         await this.wait('maxWait');
         await this.wait('mediumWait');
-
-        // await this.click(this.selectors.posterElement,"Video" ,"Element")
     }
+
     async saveLearningStatus() {
         await this.click(this.selectors.saveLearningStatus, "save", "button");
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button");
         await this.spinnerDisappear();
+        const completed = this.page.locator("//span[text()='100%']");
+        try {
+            if (await completed.isVisible()) {
+                console.log("The Video Has Completed");
+            } else {
+                await this.clickLaunchButton();
+                await this.saveLearningStatus();
+            }
+        } catch (error) {
+            console.log("Try to launch the button");
+
+        }
+
     }
+
     async clickCompletedButton() {
         await this.page.waitForTimeout(10000);
         const name = "Completed Button";
@@ -143,7 +153,7 @@ export class CatalogPage extends LearnerHomePage {
     }
 
 
-    async enterSearchFilter() :Promise<string>{
+    async enterSearchFilter(): Promise<string> {
         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
         const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
         const randomTag = tags[randomIndex];
@@ -170,31 +180,43 @@ export class CatalogPage extends LearnerHomePage {
     // }
 
     async clickViewCertificationDetails() {
-        await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn,"View Certification Details");
-        await this.click(this.selectors.viewCertificationDetailsBtn,"View Certification Details","Button");
+        await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn, "View Certification Details");
+        await this.click(this.selectors.viewCertificationDetailsBtn, "View Certification Details", "Button");
         await this.page.waitForLoadState('load');
 
+    }
+
+    async clickViewLearningPathDetails() {
+        await this.validateElementVisibility(this.selectors.viewlearningPathDetailsBtn, "View Learning Path Details");
+        await this.click(this.selectors.viewlearningPathDetailsBtn, "View Learning Path Details", "Button");
+        await this.page.waitForLoadState('load');
     }
 
     async clickOkButton() {
-        await this.validateElementVisibility(this.selectors.okBtn,"View Certification Details");
-        await this.click(this.selectors.okBtn,"View Certification Details","Button");
+        await this.validateElementVisibility(this.selectors.okBtn, "View Certification Details");
+        await this.click(this.selectors.okBtn, "View Certification Details", "Button");
         await this.page.waitForLoadState('load');
 
     }
 
-    async clickViewCertificate(){
-        await this.mouseHover(this.selectors.viewCertificateBtn,"View Certificate");
-        await this.click(this.selectors.viewCertificateBtn,"View Certificate","Button");
+    async clickContentLaunchButton(){
+        await this.mouseHover(this.selectors.contentLaunchBtn,"Launch");
+        await this.click(this.selectors.contentLaunchBtn,"Launch","Button");
+        await this.spinnerDisappear();
+    }
+
+    async clickViewCertificate() {
+        await this.mouseHover(this.selectors.viewCertificateBtn, "View Certificate");
+        await this.click(this.selectors.viewCertificateBtn, "View Certificate", "Button");
         await this.wait('minWait')
-        
+
     }
 
-    public async addToCart(){
-        await this.click(this.selectors.addToCart,"Add to cart","Button")
+    public async addToCart() {
+        await this.click(this.selectors.addToCart, "Add to cart", "Button")
     }
 
-    
-   
+
+
 
 }

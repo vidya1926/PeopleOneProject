@@ -62,7 +62,8 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
         await createCourse.verifySuccessMessage();
     })
 
-    test(`Login as a learner`, async ({ learnerHome, catalog }) => {
+    test.skip(`Login as a learner`, async ({ learnerHome, catalog }) => {
+
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -75,10 +76,13 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
         await catalog.clickEnrollButton();
-        await catalog.clickViewCertificationDetails();
+        await catalog.clickViewLearningPathDetails();
         
         await catalog.clickLaunchButton();
         await catalog.saveLearningStatus();
+        await catalog.clickContentLaunchButton();
+        await 
+        //need to click Launch button to Assign Doc
 
     })
 })

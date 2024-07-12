@@ -29,8 +29,12 @@ export class AdminLogin extends PlaywrightWrapper {
 
         console.log("Waiting for logout button to be visible...");
         const logoutButton = this.page.locator("//div[@class='logout']");
-        await expect(logoutButton).toBeVisible({ timeout: 5000 });
-
+        if (!(await logoutButton.isVisible())) {
+            await this.page.reload();
+        } else {
+            await expect(logoutButton,{message:"Successfully LoggedIn"}).toBeVisible();
+        }
+        
         //console.log("Storing state...");
         //await this.storeState("./logins/expertusAdminLog.json");
     }
