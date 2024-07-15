@@ -35,7 +35,6 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.verifySuccessMessage()
 
 })
-//
 
 test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catalog,learnerCourse})=>{
     test.info().annotations.push(
@@ -49,9 +48,7 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
     await catalog.clickEnrollButton();
     await catalog.viewCoursedetails();
     await learnerCourse.clickRandomcontent();
-    await learnerCourse.verifyWarningMessage();
-   
-  
+    await learnerCourse.verifyWarningMessage();   
 })
 
 
@@ -71,6 +68,5 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
 //     await learnercourse.clickfirstContent();
 //     await learnercourse.clicksecondContent()
 //     await catalog.saveLearningStatus();
-//     //need to add survey and assessment
-       
+//     //need to add survey and assessment       
 // })

@@ -102,6 +102,12 @@ export abstract class PlaywrightWrapper {
     async getInnerText(locator: string): Promise<string> {
         return await this.page.locator(locator).innerText();
     }
+
+    async getTextContent(locator: string): Promise<string|null> {
+        return await this.page.locator(locator).textContent();
+    }
+
+
     async getText(locator: string): Promise<string> {
         return await this.page.locator(locator).inputValue();
 
