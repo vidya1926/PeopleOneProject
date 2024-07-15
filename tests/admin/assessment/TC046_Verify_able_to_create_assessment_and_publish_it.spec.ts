@@ -3,7 +3,7 @@ import { FakerData } from "../../../utils/fakerUtils";
 let title=FakerData.getRandomTitle()
 test(`TC044_Verify_able_to_create_survey_and_publish_it`,async({ adminHome,SurveyAssessment})=>{
     test.info().annotations.push(
-        { type: 'Author', description: 'Ajay Michael' },
+        { type: 'Author', description: 'Vidya' },
         { type: 'TestCase', description: 'Verify able to create survey and publish it' },
         { type:'Test Description', description:"Creating questions and publishing surveys"}
     );

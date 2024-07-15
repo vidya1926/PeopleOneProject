@@ -37,17 +37,14 @@ export class FakerData {
         const techTerm = faker.hacker.noun();
         return techTerm;
     }
-
     static getLocationName() {
         const location = faker.location.street();
         return location;
     }
-
     static getcertificationTitle() {
         const title = faker.word.sample() + " " + faker.word.noun()
         return title;
     }
-
     static generateQuestion() {
         const question = (faker.lorem.sentence({ min: 4, max: 5 }) + " ?")
         return question
@@ -58,7 +55,6 @@ export class FakerData {
         const verb = faker.hacker.verb();
         return `${capitalizeFirstLetter(adjective)} ${capitalizeFirstLetter(noun)} ${capitalizeFirstLetter(verb)}`;
     }
-
     static getUserId(): string {
         //const currentDate = new Date();
         //const milliseconds = currentDate.getTime().toString();
@@ -66,7 +62,6 @@ export class FakerData {
         const user = faker.internet.email({ firstName: fName })
         return user;
     }
-
     static getSession(): string {
         const session = faker.person.jobDescriptor()
         return session
@@ -75,7 +70,6 @@ export class FakerData {
         const description = faker.lorem.paragraph();
         return description;
     }
-
     static getCategory(): string {
         const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
         return capitalizeFirstLetter(category);
@@ -95,7 +89,6 @@ export class FakerData {
     static getRandomTitle() {
         return (faker.hacker.noun() +" " +faker.hacker.noun());
     }
-
 }
 
 export function getCreditCardNumber(): string {
