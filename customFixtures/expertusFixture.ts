@@ -9,7 +9,7 @@ import { reg_createUser, user } from "../api_Integration/reg_createUser"
 import { CoursePage } from '../pages/CoursePage'
 import { UserPage } from '../pages/UserPage'
 import { MetaLibraryPage } from '../pages/MetaLibraryPage'
-import { EditCoursePage } from '../pages/editCoursePage'
+import { EditCoursePage } from '../pages/EditCoursePage'
 import { AdminGroupPage } from '../pages/AdminGroupPage'
 import { OrganizationPage } from '../pages/OrganizationPage'
 import { LocationPage } from '../pages/LocationPage'
