@@ -34,6 +34,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
 
     })
 
+
     //test.use({ storageState: "logins/expertusAdminLog.json" })
     test(`TC061_TP_Prerequisite_Course2_MultiClass_ILT_and_Elearning.spec.ts`, async ({ adminHome, createCourse, editCourse }) => {
         test.info().annotations.push(
@@ -151,7 +152,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await catalog.searchCatalog(title);
         await catalog.clickEnrollButton();
         await catalog.clickViewCertificationDetails();
-        await catalog.
+        //await catalog.
         //await catalog.clickLaunchButton();
         //await catalog.saveLearningStatus();
 
