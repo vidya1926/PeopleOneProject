@@ -4,17 +4,13 @@ import { FakerData } from "../../../utils/fakerUtils"
  
  
 //test.use({ storageState: "logins/expertusAdminLog.json" })
-var courseName = FakerData.getCourseName();
+let courseName = FakerData.getCourseName();
 test(`Course Creation for Single_Instance E-Learning with multiple contents`, async ({ adminHome, createCourse }) => {
     test.info().annotations.push(
         { type: 'Author', description: 'Ajay Michael' },
         { type: 'TestCase', description: 'Course Creation for Single_Instance E-Learning with multiple contents'},
         { type:'Test Description', description:"Verify learning admin able to create a Single instance E-learning course with Multiple content ,Survey and Assesment"}
-<<<<<<< HEAD
-    );
-=======
     ); 
->>>>>>> 58a097de5f322057f9ea9595403ab2cc632bf5e7
     await adminHome.loadAndLogin("LEARNERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -39,32 +35,18 @@ test(`Course Creation for Single_Instance E-Learning with multiple contents`, as
     await createCourse.verifySuccessMessage()
  
 })
-<<<<<<< HEAD
-//
- 
-=======
-
->>>>>>> 58a097de5f322057f9ea9595403ab2cc632bf5e7
 test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catalog,learnerCourse})=>{
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC054_Learner Side Course verification` },
         { type:`Test Description`, description: `Verify that content sequence flow`}
-<<<<<<< HEAD
-    );
-=======
     ); 
->>>>>>> 58a097de5f322057f9ea9595403ab2cc632bf5e7
     await learnerHome.isSignOutVisible();
     await learnerHome.clickCatalog();
     await catalog.searchCatalog(courseName);
     await catalog.clickEnrollButton();
     await catalog.viewCoursedetails();
     await learnerCourse.clickRandomcontent();
-<<<<<<< HEAD
-    await learnerCourse.verifyWarningMessage();
-})
-=======
     await learnerCourse.verifyWarningMessage();   
 })
 
@@ -87,4 +69,3 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
 //     await catalog.saveLearningStatus();
 //     //need to add survey and assessment       
 // })
->>>>>>> 58a097de5f322057f9ea9595403ab2cc632bf5e7

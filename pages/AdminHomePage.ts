@@ -39,7 +39,9 @@ export class AdminHomePage extends AdminLogin {
         contentMenu:`//a[text()='Content']`,
         surveyQuestionsLink:"//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Questions']",
         //surveyLink:"//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Survey']",
-      
+        assessmentMenu:`//span[text()='Assessment']`,
+        assessmentQuestionLink:`//span[text()='Assessment']//parent::div/following-sibling::ul//a[text()='Questions']`,
+        assessmentLink:"//a[text()='Assessment']",
     };
 
 
@@ -135,10 +137,30 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.surveyLink, "Survey", "Button");
     }
 
+
+    
+    public async clickOnAssessmentLink() {
+        await this.validateElementVisibility(this.selectors.assessmentLink, "Assessment");
+        await this.click(this.selectors.assessmentLink, "Assessment", "Link");
+    }
+
     public async clickOnSurveyQuestionLink(){
         await this.mouseHover(this.selectors.surveyQuestionsLink,"Questions");
         await this.click(this.selectors.surveyQuestionsLink,"Questions","Link");
     }
+
+    public async assessmentMenu() {
+        await this.validateElementVisibility(this.selectors.assessmentMenu, "Assessment");
+        await this.click(this.selectors.assessmentMenu, "Assessment", "Button");
+    }
+
+
+
+    public async clickOnAssessmentQuestionLink(){
+        await this.mouseHover(this.selectors.assessmentQuestionLink,"Questions");
+        await this.click(this.selectors.assessmentQuestionLink,"Questions","Link");
+    }
+
 
     public async clickLearningMenu() {
         await this.validateElementVisibility(this.selectors.learningMenu, "Learning");

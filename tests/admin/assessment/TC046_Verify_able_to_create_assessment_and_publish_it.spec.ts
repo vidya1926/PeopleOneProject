@@ -10,14 +10,20 @@ test(`TC044_Verify_able_to_create_survey_and_publish_it`,async({ adminHome,Surve
     await adminHome.loadAndLogin("LEARNERADMIN")
     await adminHome.isSignOut();
     await adminHome.menuButton();
-    await adminHome.survey();
-    await adminHome.clickOnsurveyLink();
-    await SurveyAssessment.clickCreateSurvey();
-    await SurveyAssessment.fillSurveyTitle(title);
+    await adminHome.assessmentMenu();
+    await adminHome.clickOnAssessmentLink();
+    await SurveyAssessment.clickCreateAssessment();
+    await SurveyAssessment.fillAssessmentTitle(title);
     await SurveyAssessment.selectLanguage();
     await SurveyAssessment.fillDescription();
+    await SurveyAssessment.enterPasspercentage("50")
+    await SurveyAssessment.selectRandomizeOption("Both")
+    await SurveyAssessment.enterNofAttempts("2")
     await SurveyAssessment.clickSaveDraft();
     await SurveyAssessment.clickProceed();
+    await SurveyAssessment.enterQuestions();
+    await SurveyAssessment.displayOption();    
+    await SurveyAssessment.selectingType();
     await SurveyAssessment.importQuestion();
     await SurveyAssessment.clickAddSelectedQuestion();
     await SurveyAssessment.clickImportQuestion();

@@ -1,7 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
 import { FakerData, score } from "../utils/fakerUtils";
-import { JSDOM } from 'jsdom';
 
 export class SurveyAssessmentPage extends AdminHomePage {
 
@@ -26,7 +25,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
     scoreInput: "(//label[text()='Score']/following-sibling::input)[1]",
     radioBtn: "//label[contains(text(),'Option')]/parent::div//i[contains(@class,'fa-circle icon')]",
     checkBoxBtn: "(//label[contains(text(),'Option')]/parent::div//i[contains(@class,'fa-square icon')])[1]",
-    imageInput: "(//input[@id='question_upload_file_opt'])[1]",
+    imageInput: (index:number)=>`(//input[@id='question_upload_file_opt'])[${index}]`,
     survelTitle: "//label[text()='Survey Title']//following-sibling::input",
     descriptionInput: "//div[@id='assessment-description']//p",
     saveDraftBtn: "//button[text()='Save Draft']",
@@ -37,12 +36,13 @@ export class SurveyAssessmentPage extends AdminHomePage {
     addSelectedQuestionBtn: "//button[text()='Add Selected Questions']",
     importQuestionBtn: "//button[text()='Import Questions']",
     publishBtn: "//button[text()='Publish']",
-    successfullMessage: "//div[@id='lms-overall-container']//h3"
-
-
-
-
-
+    successfullMessage: "//div[@id='lms-overall-container']//h3",
+    createAssessment:`//button[text()='CREATE ASSESSMENT']`,
+    assessmentTitle:`//label[text()='Assessment Title']//following-sibling::input`,
+    passPercentage:`//input[@id='pass_percentage']`,
+    randomizedropdown:`(//label[text()='Randomize']/following::button)[1]`,
+    randomizeOption:(option:string)=>`(//a/span[text()='${option}'])`,
+    noOfAttempts:`//input[@id='attempts']`
 
   }
   constructor(page: Page, context: BrowserContext) {
@@ -51,6 +51,11 @@ export class SurveyAssessmentPage extends AdminHomePage {
   async clickCreateSurvey() {
     await this.validateElementVisibility(this.selectors.createSurveyBtn, "Survey");
     await this.click(this.selectors.createSurveyBtn, "Survey", "Button");
+  }
+
+  async clickCreateAssessment() {
+    await this.validateElementVisibility(this.selectors.createAssessment, "Survey");
+    await this.click(this.selectors.createAssessment, "Survey", "Button");
   }
   async clickCreateQuestions() {
     await this.validateElementVisibility(this.selectors.createQuestionBtn, "Questions");
@@ -67,9 +72,9 @@ export class SurveyAssessmentPage extends AdminHomePage {
     await this.click(this.selectors.language(pickedLanguage), "Language", "DropDown");
   }
 
+  
   async selectingType() {
-    await this.click(this.selectors.typeBtn, "Type", "Button");
-
+   await this.click(this.selectors.typeBtn, "Type", "Button")
     const itemXpath = this.selectors.typeItem;
     const count = await this.page.locator(itemXpath).count();
     const randomIndex = Math.floor(Math.random() * count) + 1;
@@ -82,8 +87,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
 
     switch (typeValue) {
       case "Radio Button":
-        await this.displayOption();
-        await this.type(this.selectors.option1Input, "Input", FakerData.getRandomTitle());
+           await this.type(this.selectors.option1Input, "Input", FakerData.getRandomTitle());
         await this.type(this.selectors.option2Input, "Input", FakerData.getRandomTitle());
 
         if (await scoreInput.isVisible()) {
@@ -95,7 +99,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
         break;
 
       case "Checkbox":
-        await this.displayOption();
+   
         await this.type(this.selectors.option1Input, "Input", FakerData.getRandomTitle());
         await this.type(this.selectors.option2Input, "Input", FakerData.getRandomTitle());
 
@@ -108,6 +112,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
         break;
 
       case "Dropdown":
+      
         await this.type(this.selectors.option1Input, "Input", FakerData.getRandomTitle());
         await this.type(this.selectors.option2Input, "Input", FakerData.getRandomTitle());
 
@@ -120,7 +125,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
         break;
 
       case "Grid/Matrix - Checkbox":
-
+     
         await this.type(this.selectors.row1Input, "Input", FakerData.getRandomTitle());
         await this.type(this.selectors.row2Input, "Input", FakerData.getRandomTitle());
         await this.type(this.selectors.option1Input, "Input", FakerData.getRandomTitle());
@@ -144,20 +149,32 @@ export class SurveyAssessmentPage extends AdminHomePage {
         break;
 
       case "Image - Radio Button":
+     
         if (await scoreInput.isVisible()) {
           await this.type(this.selectors.scoreInput, "Score", await score());
           //const radioCount = await this.page.locator(this.selectors.radioBtn).count();
           const radioBtn = this.page.locator(`(${this.selectors.radioBtn})[${1}]`);
+
           await radioBtn.click();
+          for(let index=1;index<=2;index++){
+            const  qa="../data/Q1.jpg"
+            await this.uploadFile(this.selectors.imageInput(index), qa)
+          }
+
         }
         break;
 
       case "Image - Checkbox":
+    
         if (await scoreInput.isVisible()) {
           await this.type(this.selectors.scoreInput, "Score", await score());
           // const checkBoxCount = await this.page.locator(this.selectors.checkBoxBtn).count();
           const checkBoxBtn = this.page.locator(`(${this.selectors.checkBoxBtn})[${1}]`);
           await checkBoxBtn.click();
+          for(let index=1;index<=2;index++){
+            const  qa="../data/Q1.jpg"
+            await this.uploadFile(this.selectors.imageInput(index), qa)
+          }
         }
         break;
 
@@ -166,17 +183,27 @@ export class SurveyAssessmentPage extends AdminHomePage {
     }
 
   }
+
   async displayOption() {
+    if(await this.page.isVisible(this.selectors.displayOptionBtn)){
     await this.click(this.selectors.displayOptionBtn, "Display Option", "Button");
+
     const dropdownList = this.selectors.displayOptionList
     const count = await this.page.locator(dropdownList).count();
     const randomIndex = Math.floor(Math.random() * count) + 1;
     await this.click(`(${dropdownList})[${randomIndex}]`, "List", "List");
-
+  
+  }
+  else{
+    console.log("Element not found")
+  }}
+    async fillSurveyTitle(data: string) {
+    await this.type(this.selectors.survelTitle, "Title", data);
   }
 
-  async fillSurveyTitle(data: string) {
-    await this.type(this.selectors.survelTitle, "Title", data);
+
+  async fillAssessmentTitle(data: string) {
+    await this.type(this.selectors.assessmentTitle, "Title", data);
   }
 
   async fillDescription() {
@@ -226,7 +253,24 @@ export class SurveyAssessmentPage extends AdminHomePage {
     await this.click(this.selectors.importQuestionBtn, "Import Question", "Button");
   }
 
+
+  async enterPasspercentage(data:string){
+      await this.type(this.selectors.passPercentage,"Pass Percentage",data)
+  }
+
+
+  async selectRandomizeOption(option:string){
+    await this.click(this.selectors.randomizedropdown,"Randomize","Dropdown")
+    await this.click(this.selectors.randomizeOption(option),"Randomize ","option")
+  }
+
+  async enterNofAttempts(data:string){
+    await this.type(this.selectors.noOfAttempts,"No. Of Attempts",data)
+  }
+
   async clickPublish() {
+    //await this.validateElementVisibility(this.selectors.publishBtn, "Publish")
+    //await this.wait("maxWait")
     await this.mouseHover(this.selectors.publishBtn, "Publish");
     await this.click(this.selectors.publishBtn, "Publish", "Button");
   }
