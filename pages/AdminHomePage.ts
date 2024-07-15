@@ -13,6 +13,8 @@ export class AdminHomePage extends AdminLogin {
         menu: "//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
         learningMenu: "//span[text()='Learning']",
+        surveyMenu:"//span[text()='Survey']",
+        surveyLink:"//a[text()='Survey']",
         courseLink: "//a[text()='Course']",
         createCourseBtn: "//button[text()='CREATE COURSE']",
         userMenu: "//a[text()='User']",
@@ -35,6 +37,8 @@ export class AdminHomePage extends AdminLogin {
         announcementMenu:`//a[text()='Announcement']`,
         createAnnouncementbutton:`//button[text()='CREATE ANNOUNCEMENT']`,
         contentMenu:`//a[text()='Content']`,
+        surveyQuestionsLink:"//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Questions']",
+        //surveyLink:"//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Survey']",
       
     };
 
@@ -44,9 +48,6 @@ export class AdminHomePage extends AdminLogin {
         super(page, context);
         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
         this.setupPageListeners();
-        // this.adminLogin=new AdminLogin(page,context)
-        // this.common(page,context).catch(err => console.error("Error in common setup:", err));
-        //  this. setupPageListeners();
 
 
     }
@@ -122,6 +123,21 @@ export class AdminHomePage extends AdminLogin {
     public async people() {
         await this.validateElementVisibility(this.selectors.peopleMenu, "People");
         await this.click(this.selectors.peopleMenu, "People", "Button");
+    }
+
+    public async survey() {
+        await this.validateElementVisibility(this.selectors.surveyMenu, "Survey");
+        await this.click(this.selectors.surveyMenu, "Survey", "Button");
+    }
+
+    public async clickOnsurveyLink() {
+        await this.validateElementVisibility(this.selectors.surveyLink, "Survey");
+        await this.click(this.selectors.surveyLink, "Survey", "Button");
+    }
+
+    public async clickOnSurveyQuestionLink(){
+        await this.mouseHover(this.selectors.surveyQuestionsLink,"Questions");
+        await this.click(this.selectors.surveyQuestionsLink,"Questions","Link");
     }
 
     public async clickLearningMenu() {

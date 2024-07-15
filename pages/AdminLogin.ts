@@ -29,10 +29,11 @@ export class AdminLogin extends PlaywrightWrapper {
 
         console.log("Waiting for logout button to be visible...");
         const logoutButton = this.page.locator("//div[@class='logout']");
-        if (!(await logoutButton.isVisible())) {
+        const title = await this.page.title();
+        if (title === "500 Internal Server Error") {
             await this.page.reload();
         } else {
-            await expect(logoutButton,{message:"Successfully LoggedIn"}).toBeVisible();
+            await expect(logoutButton, { message: "Successfully Logged In" }).toBeVisible();
         }
         
         //console.log("Storing state...");

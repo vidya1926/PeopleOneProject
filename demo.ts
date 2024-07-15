@@ -1,27 +1,103 @@
-// const count = 6
-// for (let index = 0; index < 20; index++) {
-//     const randomIndex = Math.floor(Math.random() * (count)) + 2;
+// const count = 2
+// for (let index = 0; index < 10; index++) {
+//     const randomIndex = Math.floor(Math.random() * (count)) + 1;
 //     console.log(randomIndex);
+// }
+// import { FakerData } from "./utils/fakerUtils";
 
-import { FakerData } from "./utils/fakerUtils";
 
+// // }
+
+// function getCurrentDateFormatted(): string {
+//     const date = new Date();
+//     const month = String(date.getMonth() + 1) 
+//     console.log(month);
+//     const day = String(date.getDate())
+//     console.log(day)
+//     const year = date.getFullYear();
+//     return `${month}/${day}/${year}`;
+// }
+// //getCurrentDateFormatted()
+
+
+// for (let index = 0; index < 10; index++) {
+//     console.log(FakerData.getCourseName());
+// }
+
+//const arry:any =[ { 'NOW()': 2024-07-11T10:44:06.000Z } ]
+
+/* function generateRandomNumbers(): number[] {
+    let count =50
+    const numbers: number[] = [];
+
+    for (let i = 0; i < count; i++) {
+        const randomNumber = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+        numbers.push(randomNumber);
+    }
+
+    return numbers;
+}
+
+// Example usage: Generate 50 random numbers between 50 and 100
+const randomNumbers = generateRandomNumbers();
+console.log(randomNumbers); */
+
+
+/* 
+function generateRandomNumber(): number {
+    return Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+}
+
+// Example usage: Generate one random number between 50 and 100
+const randomNumber = generateRandomNumber();
+console.log(randomNumber); */
+
+
+/* function generateSpecificRangeNumber(): number {
+    const min = 50;
+    const max = 100;
+    const step = 5;
+    const range = Math.floor((max - min) / step) + 1;
+    const randomMultiple = Math.floor(Math.random() * range) * step + min;
+    return randomMultiple;
+}
+
+// Example usage: Generate one number within the range 50 to 100, multiples of 5
+const specificRangeNumber = generateSpecificRangeNumber();
+console.log(specificRangeNumber);
+ */
+
+/* const radioCount = 9
+
+for (let index = 0; index < 10; index++) {
+    const randomCount = Math.floor(Math.random() * Math.floor(radioCount / 2))+1 ; 
+    if(randomCount !==2){
+    console.log(randomCount);
+    
+    }
+    // console.log(randomCount);
+} */
+
+// const oddIndices: number[] = [];
+// for (let i = 1; oddIndices.length < randomCount; i += 2) {
+//     oddIndices.push(i);
+// }
+// for (const index of oddIndices){
+//     console.log(index);
     
 // }
 
-function getCurrentDateFormatted(): string {
-    const date = new Date();
-    const month = String(date.getMonth() + 1) 
-    console.log(month);
-    const day = String(date.getDate())
-    console.log(day)
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-}
-//getCurrentDateFormatted()
 
 
-for (let index = 0; index < 10; index++) {
-    console.log(FakerData.getCourseName());
-}
+/* let count = 10;
+let generatedNumbers: number[] = [];
 
-//const arry:any =[ { 'NOW()': 2024-07-11T10:44:06.000Z } ]
+for (let i = 0; i < 4; i++) {
+    let randomIndex: number;
+    do {
+        randomIndex = Math.floor(Math.random() * count) + 1;
+    } while (generatedNumbers.includes(randomIndex));
+    
+    generatedNumbers.push(randomIndex);
+    console.log(randomIndex);
+} */

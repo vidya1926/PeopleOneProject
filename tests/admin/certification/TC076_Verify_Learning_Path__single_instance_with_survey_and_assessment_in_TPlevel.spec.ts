@@ -81,7 +81,7 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
         await catalog.clickLaunchButton();
         await catalog.saveLearningStatus();
         await catalog.clickContentLaunchButton();
-        await 
+       
         //need to click Launch button to Assign Doc
 
     })

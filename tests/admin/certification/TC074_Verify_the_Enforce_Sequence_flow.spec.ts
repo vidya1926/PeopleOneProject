@@ -151,6 +151,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await catalog.searchCatalog(title);
         await catalog.clickEnrollButton();
         await catalog.clickViewCertificationDetails();
+        await catalog.
         //await catalog.clickLaunchButton();
         //await catalog.saveLearningStatus();
 

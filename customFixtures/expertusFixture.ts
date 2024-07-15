@@ -23,10 +23,11 @@ import { CostcenterPage } from '../pages/CostcenterPage'
 import { AnnouncementPage } from '../pages/AnnouncementPage'
 import { ContentHomePage } from '../pages/ContentPage'
 import { LearnerCoursePage } from '../pages/LearnerCoursePage'
+import { SurveyAssessmentPage } from '../pages/SurveyAssessmentPage'
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
-   // adminLogin: AdminLogin
+    // adminLogin: AdminLogin
     adminHome: AdminHomePage
     createUser: UserPage
     createCourse: CoursePage
@@ -38,8 +39,9 @@ type expertusFixture = {
     location: LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
-    learnerCourse:LearnerCoursePage
+    learnerCourse: LearnerCoursePage
     catalog: CatalogPage
+    SurveyAssessment: SurveyAssessmentPage
     dashboard: DashboardPage
     organization: OrganizationPage
     metadatalibrary: MetaLibraryPage
@@ -48,8 +50,9 @@ type expertusFixture = {
     bannerHome: BannerPage
     dataBase: DB
     costCenter: CostcenterPage
-    announcementHome:AnnouncementPage
-    contentHome:ContentHomePage
+    announcementHome: AnnouncementPage
+    contentHome: ContentHomePage
+
 }
 export const test = baseTest.extend<expertusFixture>({
     // adminLogin: async ({ page, context }, use) => {
@@ -59,10 +62,10 @@ export const test = baseTest.extend<expertusFixture>({
     //     //console.log("Login is verified"        
     // },
 
-    adminHome: async ({ page, context  }, use,) => {
+    adminHome: async ({ page, context }, use,) => {
         const adminHome = new AdminHomePage(page, context);
         await use(adminHome);
-},
+    },
 
     learnerLogin: async ({ page, context }, use) => {
         const lnLogin = new LearnerLogin(page, context);
@@ -75,7 +78,7 @@ export const test = baseTest.extend<expertusFixture>({
         const CompletionCertification = new CompletionCertificationPage(page, context);
         await use(CompletionCertification);
     },
-   
+
     createUser: async ({ page, context }, use) => {
         const createUser = new UserPage(page, context);
         await use(createUser);
@@ -104,6 +107,10 @@ export const test = baseTest.extend<expertusFixture>({
     learnerCourse: async ({ page, context }, use) => {
         const learnercourse = new LearnerCoursePage(page, context);
         await use(learnercourse);
+    },
+    SurveyAssessment: async ({ page, context }, use) => {
+        const SurveyAssessment = new SurveyAssessmentPage(page, context);
+        await use(SurveyAssessment);
     },
     catalog: async ({ page, context }, use) => {
         const catalog = new CatalogPage(page, context);
@@ -148,7 +155,7 @@ export const test = baseTest.extend<expertusFixture>({
         await use(costcenter);
     },
 
-    
+
     announcementHome: async ({ page, context }, use) => {
         const announcementHome = new AnnouncementPage(page, context);
         await use(announcementHome);

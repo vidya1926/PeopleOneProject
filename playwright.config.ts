@@ -13,7 +13,7 @@ export default defineConfig({
   repeatEach:0,
   reporter: [['html',{open:'always'}]],
   use: {   
-    //trace: 'on',
+    trace: 'on',
     headless:false,
     screenshot:"on",
     video:'on',

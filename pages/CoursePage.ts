@@ -171,7 +171,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async uploadvideo() {
-        const path = `../data/samplevideo.mp4`
+        const path = `../data/samplevideo2.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading")

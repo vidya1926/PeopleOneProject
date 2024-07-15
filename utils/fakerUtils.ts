@@ -5,9 +5,6 @@ import { promises } from "readline";
 
 
 export class FakerData {
-    static getRandomSeat(): string {
-        throw new Error("Method not implemented.");
-    }
 
     static getFirstName(): string {
         return faker.person.firstName();
@@ -33,7 +30,7 @@ export class FakerData {
         return faker.person.jobTitle();
     }
 
-    static equipmentName():string{
+    static equipmentName(): string {
         return faker.commerce.productMaterial();
     }
     static getTagNames() {
@@ -51,6 +48,10 @@ export class FakerData {
         return title;
     }
 
+    static generateQuestion() {
+        const question = (faker.lorem.sentence({ min: 4, max: 5 }) + " ?")
+        return question
+    }
     static getCourseName(): string {
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();
@@ -61,8 +62,8 @@ export class FakerData {
     static getUserId(): string {
         //const currentDate = new Date();
         //const milliseconds = currentDate.getTime().toString();
-        const fName= faker.person.firstName();
-        const user =  faker.internet.email({firstName:fName})
+        const fName = faker.person.firstName();
+        const user = faker.internet.email({ firstName: fName })
         return user;
     }
 
@@ -92,7 +93,7 @@ export class FakerData {
 
     }
     static getRandomTitle() {
-        return faker.hacker.noun();
+        return (faker.hacker.noun() +" " +faker.hacker.noun());
     }
 
 }
@@ -117,6 +118,15 @@ export function getCVV(): string {
     return `${startDigit}${restDigits}`;
 }
 
+export async function score() { 
+const min = 50;
+const max = 100;
+const step = 5;
+const range = Math.floor((max - min) / step) + 1;
+const randomMultiple = Math.floor(Math.random() * range) * step + min;
+return randomMultiple.toString();
+    
+}
 
 export async function getRandomSeat() {
     const num = 100;
@@ -145,8 +155,8 @@ export function getRandomLocation(): DataItem | any {
 }
 export function getCurrentDateFormatted(): string {
     const date = new Date();
-    const month = String(date.getMonth() + 1) 
-    const day = String(date.getDate() )
+    const month = String(date.getMonth() + 1)
+    const day = String(date.getDate())
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
@@ -160,9 +170,9 @@ export function getnextMonthFormatted(): string {
     return `${month}/${day}/${year}`;
 }
 
-  export function getcardExpiryDate(): string {
+export function getcardExpiryDate(): string {
     const date = new Date();
-    const month = String(date.getMonth() + 1).padStart(2,"0")// getMonth() is zero-based
+    const month = String(date.getMonth() + 1).padStart(2, "0")// getMonth() is zero-based
     const year = date.getFullYear()
     const yy = year.toString().slice(2)
     return `${month}${yy}`
@@ -170,7 +180,7 @@ export function getnextMonthFormatted(): string {
 export function getPonumber(): string {
     const startDigit = Math.floor(Math.random() * 3) + 12;
     const restDigits = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
-    return `${startDigit}${restDigits}`;    
+    return `${startDigit}${restDigits}`;
 }
 
 

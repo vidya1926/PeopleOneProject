@@ -1,6 +1,6 @@
 import {test} from"../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
-
+test.describe(`TC019_Verify_Addition_Functionality_metaLibrary_Learning.spec.ts`,async()=>{
 const categoryName: any =FakerData.getCategory();
 test(`Verify that a category can be added under Metadata Library - Learning - Category`,async({ adminHome,metadatalibrary})=>{
     test.info().annotations.push(
@@ -105,3 +105,5 @@ test.skip(`Verify that a tags can be added under Metadata Library - Learning - T
     await metadatalibrary.tagsSearchField(tagName);
     await metadatalibrary.verify_Tags(tagName)
 });
+
+})

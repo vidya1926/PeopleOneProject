@@ -58,10 +58,3 @@ test(`Verify that a user can be created and a profile picture uploaded`,async({a
         await createUser.verifyUserCreationSuccessMessage();       
 })
 
-test(`Verify that the attributes created in the metadata library for people module is accessible in user page`,async({})=>{
-    test.info().annotations.push(
-        { type: 'Author', description: 'Ajay Michael' },
-        { type: 'TestCase', description: 'Verify that the attributes created in the metadata library for people module is accessible in user page' },
-        { type:'Test Description', description:"Creating the attributes accessible in the user page involves setting up the metadata library for the people module"}
-    );
-})

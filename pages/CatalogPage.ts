@@ -32,7 +32,8 @@ export class CatalogPage extends LearnerHomePage {
         viewCertificateBtn: "//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
         okBtn: "//button[text()='Ok']",
         addToCart: `//span[text()='Add to cart']`,
-        contentLaunchBtn:"//button//span[text()='Launch']"
+        contentLaunchBtn:"//button//span[text()='Launch']",
+        contentsLabel:"//button[text()='Save Learning Status']//following::span[contains(text(),'Content')]"
 
 
         //`//button[@title='Play Video']//span[1]`
@@ -214,6 +215,11 @@ export class CatalogPage extends LearnerHomePage {
 
     public async addToCart() {
         await this.click(this.selectors.addToCart, "Add to cart", "Button")
+    }
+
+    public async handlingAdditionalContents(){
+        await this.mouseHover(this.selectors.contentsLabel,"Contents");
+        await this.click("","","")
     }
 
 
