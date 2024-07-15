@@ -8,12 +8,15 @@ export class ContentHomePage extends AdminHomePage {
     public selectors = {
         ...this.selectors,
         contentButton: `//button[text()='CREATE CONTENT']`,
-        contetntTitle: `//input[@id='content-title']`,
+        contentTitle: `//input[@id='content-title']`,
         contentDesc: `//div[@id='content_description']//p`,
         addContent: `//label[text()='Click here']/following::input[@type='file']`,
         contentPreview: (index: number) => `(//a/following::i[@aria-label='Preview'])[${index}]`,
         contentType:`//div[@id='wrapper-content_type']//div[@class='filter-option-inner-inner']`,
-        contentSearch:`//input[@id='exp-search-field']`
+        contentSearch:`//input[@id='exp-search-field']`,
+        storageContent:`//div[@class="col-auto"]/p[contains(text(),'Storage Used')]`,
+        contentListing:`//a[text()='Go to Listing']`,
+        verifyContentTitle:(title:string)=>`(//div[contains(@class,'field_title_')]/span[text()='${title}'])`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -27,7 +30,7 @@ export class ContentHomePage extends AdminHomePage {
     }
 
     public async enterTitle(title: string) {
-        await this.type(this.selectors.contetntTitle, "Content title", "text field")
+        await this.type(this.selectors.contentTitle, "Content title", "text field")
     }
 
     public async enterDescription(title: string) {
@@ -42,7 +45,6 @@ export class ContentHomePage extends AdminHomePage {
     }
 
     public async verifyContentType(fileName:string){
-
          await this.wait("maxWait")
          await this.validateElementVisibility(this.selectors.contentType,"Conteytype Text file")
          const text= await this.getInnerText(this.selectors.contentType)
@@ -64,8 +66,9 @@ export class ContentHomePage extends AdminHomePage {
             const index = await this.page.locator("//span[text()='circuit']/following::i").count()
             const randomIndex = Math.floor(Math.random() * index) + 1;
             await this.validateElementVisibility(this.selectors.contentPreview(randomIndex),fileName)
-            
-    }
+            const title= await this.getInnerText(this.selectors.contentPreview(randomIndex));
+            expect(fileName).toContain(title)      
+        }
 
     public async verifyFileType(fileName:string){
         await this.wait("maxWait")
@@ -91,11 +94,23 @@ export class ContentHomePage extends AdminHomePage {
             case "AICC"||"ZIP":
                 expect(text).toContain(fileName);
                 break;
-           
-        }
-                
+        }                
         }
 
+        public async getContentStorage(){
+            await this.wait("maxWait")
+            await this.validateElementVisibility(this.selectors.storageContent,"Storage used")
+          return await this.getInnerText(this.selectors.storageContent);  
+        }
 
+        public async gotoListing(){
+            await this.click(this.selectors.contentListing,"Gotoo Listing","Button")
+            await this.wait('maxWait')
+        }
+
+        //     public async getContentTitle(title:string){
+        //     await this.validateElementVisibility(this.selectors.verifyContentTitle(title),"Content")
+        //     await this.verification(this.selectors.verifyContentTitle(title),title)
+        // }
 
 }

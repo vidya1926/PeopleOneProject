@@ -190,8 +190,8 @@ export class SurveyAssessmentPage extends AdminHomePage {
       await this.page.waitForSelector('#actiondiv');
 
       await this.page.evaluate(() => {
-        let eleValue = await this.page.$$("div[id='actiondiv']")
-        eleValue?.evaluate(node => node.removeAttribute('style'))
+        //let eleValue = await this.page.$$("div[id='actiondiv']")
+        //eleValue?.evaluate(node => node.removeAttribute('style'))
       });
       await this.page.waitForTimeout(5000);
 

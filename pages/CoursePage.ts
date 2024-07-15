@@ -153,14 +153,13 @@ export class CoursePage extends AdminHomePage {
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
-        assessmentLabel: "//div[text()='Assessment']",
-        enforceSequence:`(//span[text()='enforce launch sequence']/preceding-sibling::i[@class='fad fa-square icon_16_1'])`
+        assessmentLabel:"//div[text()='Assessment']",
+        enforceSequence:`//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context,);
     }
-
 
     async verifyCreateUserLabel(expectedLabel: string) {
         await this.verification(this.selectors.createUserLabel, expectedLabel);
@@ -176,8 +175,8 @@ export class CoursePage extends AdminHomePage {
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading")
         await this.validateElementVisibility(this.selectors.attachedContent("video1"), "video1");
-        
     }
+
 
     async uploadCourseContent(fileName:string) {
         const path = `../data/${fileName}`
@@ -377,7 +376,6 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.registrationEnd, "Enter Date", getCurrentDateFormatted())
     }
 
-
     // async selectLocation(locationName: string) {
     //     await this.click(this.selectors.locationSelection,"Select location","Field")
     //     await this.click(this.selectors.locationDropdown, "Select Location", "DropDown");
@@ -489,9 +487,7 @@ export class CoursePage extends AdminHomePage {
         } catch (error) {
             console.log("The element is not visible: ");
         }
-
-        // Continue with other operations without throwing an error
-
+       // Continue with other operations without throwing an error
     }
 
     async clickDetailButton() {
@@ -500,12 +496,10 @@ export class CoursePage extends AdminHomePage {
     }
 
     async save_editedcoursedetails() {
-
         await this.click(this.selectors.detailsbtn, "details", "button");
         await this.clickCatalog();
         await this.validateElementVisibility(this.selectors.courseUpdateBtn, "button");
         await this.click(this.selectors.courseUpdateBtn, "Update", "button");
-
     }
 
     async addsurvey_course() {
@@ -567,7 +561,6 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
-
 
 
     async sessionType() {
