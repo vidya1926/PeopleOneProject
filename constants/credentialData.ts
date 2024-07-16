@@ -29,5 +29,6 @@ export let credentials = {
     SUPERADMIN:{
         username:"admin",
         password:"Welcome1@"
-    }
+    },
+
 };

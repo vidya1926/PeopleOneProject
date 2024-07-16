@@ -81,8 +81,7 @@ export class LearnerHomePage extends PlaywrightWrapper {
         }
     }
 
-
-    public async verifyDeletedBanner(title: string) {
+    public async verifyBannerDisplay(title: string) {
         const banner = this.page.locator(`(//div/h1[text()="${title}"]/ancestor::div/img)[1]`)
             await this.wait("minWait")
         if (await banner.isVisible()) {

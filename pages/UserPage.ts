@@ -1,3 +1,4 @@
+import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, Page } from "@playwright/test";
 
@@ -5,7 +6,8 @@ export class UserPage extends AdminHomePage {
 
     public selectors = {
         ...this.selectors,
-        createUserLabel: "//h1[text()='Create User']",
+        createUserbtn:`//button[text()='CREATE USER']`,
+      //  createUserLabel: "//h1[text()='Create User']",
         inputField: (name: string) => `//input[@id="${name}"]`,
         addressInput: (label: string) => `//label[contains(text(),'${label}')]/following-sibling::input`,
         dropdownToggle: (label: string) => `(//label[text()='${label}']/following::button[@data-bs-toggle='dropdown'])[1]`,
@@ -19,7 +21,13 @@ export class UserPage extends AdminHomePage {
         editIcon: "//span[contains(@class,'justify-content-start') and @aria-label='Edit User']",
         userProfileUploadInput: "//input[@id='upload-usr-pic-file']",
         updateButton: "//button[text()='Update']",
-        successMessage: "//div[@id='addedit-user-form-container']//h3[contains(text(),'successfully')]"
+        successMessage: "//div[@id='addedit-user-form-container']//h3[contains(text(),'successfully')]",
+        employmentTypeInput:"//label[text()='employment type']//parent::div//input",
+        commonOptionBtn:(value:string)=>`//div[@id='user-department-filter-lms-scroll-results']//li`,
+        departmentType:`//label[text()='department']/following::div[@id='user-department']//input`,
+        timeZone:`(//div[@id='wrapper-user-timezone']//button)[1]`,
+        timeZoneSearch:`//footer/following-sibling::div//input`,
+        selectlocationtz:(index:number,timeZone:string)=>`(//li/a/span[contains(text(),'${timeZone}')])[${index}]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -27,8 +35,13 @@ export class UserPage extends AdminHomePage {
     }
 
     async verifyCreateUserLabel(expectedLabel: string) {
-        await this.verification(this.selectors.createUserLabel, expectedLabel);
+        await this.verification(this.selectors.createUserbtn, expectedLabel);
     }
+    
+    async clickCreateUser() {
+        await this.click(this.selectors.createUserbtn, "Create User", "Button");
+    }
+
 
     async enter(name: string, data: string) {
         const selector = this.selectors.inputField(name);
@@ -47,6 +60,18 @@ export class UserPage extends AdminHomePage {
         const optionSelector = this.selectors.dropdownOption(data);
         await this.click(optionSelector, data, 'DropDown');
         await this.verification(toggleSelector, data);
+    }
+
+    async selectEmploymentType(){
+        let data =getRandomItemFromFile("../data/peopleEmploymentData.json");
+        await this.type(this.selectors.employmentTypeInput,"Employment Type",data)
+        await this.click(this.selectors.commonOptionBtn(data),data,"List");
+    }
+    async selectDepartmentType(){
+        let data =getRandomItemFromFile("../data/peopleDepartmentData.json");
+        await this.typeAndEnter(this.selectors.departmentType,"Department Type",data)
+        await this.mouseHover(this.selectors.commonOptionBtn(data),data);
+        await this.click(this.selectors.commonOptionBtn(data),data,"List");
     }
 
     async clickSave() {
@@ -76,8 +101,6 @@ export class UserPage extends AdminHomePage {
         await this.spinnerDisappear();
     }
 
-
-
     async userProfileUpload() {
         const filePath = "../data/Profilepic.jpg";
         await this.mouseHover(this.selectors.userProfileUploadInput, "Upload");
@@ -92,6 +115,17 @@ export class UserPage extends AdminHomePage {
 
     async verifyUserCreationSuccessMessage() {
         await this.verification(this.selectors.successMessage, "successfully");
+    }
+
+    async selectTimeZone(data:string,timeStd:string){
+        await this.validateElementVisibility(this.selectors.timeZone,"TimeZone")
+        await this.click(this.selectors.timeZone,"TimeZone","Input")
+        await this.keyboardType(this.selectors.timeZoneSearch,data,)
+      const index=  await this.page.locator(`//li/a/span[contains(text(),'${timeStd}')]`).count();
+      const randomIndex = Math.floor(Math.random() * index)+1;
+        await this.mouseHover(this.selectors.selectlocationtz(randomIndex,timeStd),"TimeZone")
+        await this.click(this.selectors.selectlocationtz(randomIndex,timeStd),"TimeZone","Option")
+
     }
 
 }

@@ -17,6 +17,7 @@ test(`TC043_Verify_able_to_create_survey_questions`,async({ adminHome,SurveyAsse
     await SurveyAssessment.selectLanguage();
     await SurveyAssessment.selectingType();
     await SurveyAssessment. clickSave();    
+    await SurveyAssessment. clickSave();    
     
 
 })

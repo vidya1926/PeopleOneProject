@@ -48,8 +48,6 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
-    }
-
-   
+    }  
   
 });

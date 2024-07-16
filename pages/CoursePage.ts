@@ -664,8 +664,6 @@ export class CoursePage extends AdminHomePage {
         return domainText;
     }
 
-
-
     async clickHere() {
         await this.mouseHover(this.selectors.clickHere, "Click Here");
         await this.click(this.selectors.clickHere, "Click Here", "button");
@@ -719,8 +717,7 @@ export class CoursePage extends AdminHomePage {
     async clickaddIcon() {
         await this.click(this.selectors.addDeleteIcon, "Add Icon", "Button")
     }
-
-
+    
     async startDateVC() {
         await this.type(this.selectors.startDateInstance, "Start Date", getCurrentDateFormatted())
     }
