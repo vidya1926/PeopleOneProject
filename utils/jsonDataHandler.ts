@@ -39,9 +39,16 @@ export function updateFieldsInJSON(newData: Data): void {
     }
   });
 
-
-
-
-
-
 }
+
+
+
+ function getRandomItemFromFile(filePath: string): string {
+    const dataFilePath = path.join(__dirname, filePath);
+    const data: string[] = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
+    
+    const randomIndex = Math.floor(Math.random() * data.length);
+    return data[randomIndex];
+}
+
+export { getRandomItemFromFile };

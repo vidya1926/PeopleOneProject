@@ -1,7 +1,7 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
 import { FakerData, score } from "../utils/fakerUtils";
-import { JSDOM } from 'jsdom';
+
 
 export class SurveyAssessmentPage extends AdminHomePage {
 
@@ -185,22 +185,8 @@ export class SurveyAssessmentPage extends AdminHomePage {
 
   async importQuestion() {
     await this.page.waitForLoadState('load');
-    await this.wait('mediumWait');
-    try {
-      await this.page.waitForSelector('#actiondiv');
-
-      await this.page.evaluate(() => {
-        //let eleValue = await this.page.$$("div[id='actiondiv']")
-        //eleValue?.evaluate(node => node.removeAttribute('style'))
-      });
-      await this.page.waitForTimeout(5000);
-
-
-    } catch (error) {
-      console.log(error);
-    }
-
     await this.mouseHover(this.selectors.importQuestionIcon, "Import");
+    await this.wait('minWait');
     await this.click(this.selectors.importQuestionIcon, "Import", "Idiomatic Text");
     await this.mouseHover(this.selectors.questionType, "Question Type");
     let checkBox = this.selectors.questionLibCheckbox;
@@ -214,6 +200,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
       generatedNumbers.push(randomIndex);
       await this.click(`(${checkBox})[${randomIndex}]`, "Questions", "Checkbox");
     }
+    await this.wait("minWait");
   }
 
   async clickAddSelectedQuestion() {

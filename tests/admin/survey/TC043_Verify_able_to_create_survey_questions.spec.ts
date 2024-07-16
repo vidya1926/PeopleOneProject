@@ -7,7 +7,7 @@ test(`TC043_Verify_able_to_create_survey_questions`,async({ adminHome,SurveyAsse
         { type: 'TestCase', description: 'Verify_able_to_create_survey_questions' },
         { type:'Test Description', description:"Creating a question for survey"}
     );
-    await adminHome.loadAndLogin("CUSTOMERADMIN")
+    await adminHome.loadAndLogin("CUSTOMERADMIN");
     await adminHome.isSignOut();
     await adminHome.menuButton();
     await adminHome.survey();
@@ -16,7 +16,7 @@ test(`TC043_Verify_able_to_create_survey_questions`,async({ adminHome,SurveyAsse
     await SurveyAssessment.enterQuestions();
     await SurveyAssessment.selectLanguage();
     await SurveyAssessment.selectingType();
-    //await SurveyAssessment. clickSave();    
+    await SurveyAssessment. clickSave();    
     
 
 })

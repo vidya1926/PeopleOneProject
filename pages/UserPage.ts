@@ -1,3 +1,4 @@
+import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, Page } from "@playwright/test";
 
@@ -19,7 +20,10 @@ export class UserPage extends AdminHomePage {
         editIcon: "//span[contains(@class,'justify-content-start') and @aria-label='Edit User']",
         userProfileUploadInput: "//input[@id='upload-usr-pic-file']",
         updateButton: "//button[text()='Update']",
-        successMessage: "//div[@id='addedit-user-form-container']//h3[contains(text(),'successfully')]"
+        successMessage: "//div[@id='addedit-user-form-container']//h3[contains(text(),'successfully')]",
+        employmentTypeInput:"//label[text()='employment type']//parent::div//input",
+        commonOptionBtn:(value:string)=>`//li[text()='${value}']`
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -47,6 +51,12 @@ export class UserPage extends AdminHomePage {
         const optionSelector = this.selectors.dropdownOption(data);
         await this.click(optionSelector, data, 'DropDown');
         await this.verification(toggleSelector, data);
+    }
+
+    async selectEmploymentType(){
+        let data =getRandomItemFromFile("../data/peopleEmploymentData.json");
+        await this.type(this.selectors.employmentTypeInput,"Employment Type",data)
+        await this.click(this.selectors.commonOptionBtn(data),data,"List");
     }
 
     async clickSave() {

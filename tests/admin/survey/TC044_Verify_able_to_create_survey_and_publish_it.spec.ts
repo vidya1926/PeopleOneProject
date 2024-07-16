@@ -20,8 +20,9 @@ test(`TC044_Verify_able_to_create_survey_and_publish_it`,async({ adminHome,Surve
     await SurveyAssessment.clickProceed();
     await SurveyAssessment.importQuestion();
     await SurveyAssessment.clickAddSelectedQuestion();
+    await SurveyAssessment.clickImportQuestion();
     await SurveyAssessment.clickPublish();
     await SurveyAssessment.verifySuccessMessage();
 
 
-})
+});
