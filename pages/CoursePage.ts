@@ -116,8 +116,11 @@ export class CoursePage extends AdminHomePage {
         domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
-        portalDropdown:`//button[@data-id='banner_portal_id']`,
+        portalDropdown:`(//label[text()='Domain']/following::div)[1]`,
+        allPortalOptions:`//label[text()='Domain']/following::div[@class='dropdown-menu show']//a`,
         portalOption:(index:string)=>`(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
+        domainNameOption: (portalName: string) => `//label[text()='Domain']/following::div[@class='dropdown-menu show']//a/span[text()='${portalName}']`,
+        portal:`(//label[text()='Domain']/following::div[@id='wrapper-user-portals']//button)[1]`,
         image: "(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
         httpsInput: "input[id=content_url]",
@@ -222,6 +225,20 @@ export class CoursePage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() *  index)+ 1;
         await this.click(this.selectors.portalOption(randomIndex), "Domain Name", "Button");
     }
+
+
+    async selectDomainOption(portalName:string) {
+    await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
+       for( const options of await this.page.locator(this.selectors.allPortalOptions).all())
+          {
+            await options.click();            
+            }
+            await this.doubleClick(this.selectors.domainBtn, "Domain");
+            await this.click(this.selectors.domainOption(portalName), "Domain Name", "Button");
+            await this.click(this.selectors.domainBtn, "Domain", "Button");
+    }
+
+
 
     async selectLanguage(language: string) {
         await this.click(this.selectors.courseLanguagesWrapper, "Language", "Field");
