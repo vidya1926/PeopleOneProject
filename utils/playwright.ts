@@ -280,7 +280,7 @@ export abstract class PlaywrightWrapper {
     async validateElementVisibility(locator: any, elementName: string) {
         try {
             const element = this.page.locator(locator);
-            await this.page.waitForSelector(locator, { state: 'visible', timeout: 40000, strict: true });
+            await this.page.waitForSelector(locator, { state: 'visible', timeout: 30000, strict: true });
             if (await element.isVisible()) {
                 console.log(`${elementName} is visible as expected.`);
             } else {

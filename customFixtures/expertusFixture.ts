@@ -16,7 +16,7 @@ import { LocationPage } from '../pages/LocationPage'
 import { CommerceHomePage } from '../pages/CommerceHomePage'
 import { LearningPathPage } from '../pages/LearningPathPage'
 import { CompletionCertificationPage } from '../pages/CompletionCertificationPage'
-import { DashboardPage } from '../pages/DashboardPage'
+import { LearnerDashboardPage } from '../pages/LearnerDashboardPage'
 import DB from '../utils/dbUtil'
 import { BannerPage } from '../pages/BannerPage'
 import { CostcenterPage } from '../pages/CostcenterPage'
@@ -32,17 +32,15 @@ type expertusFixture = {
     createUser: UserPage
     createCourse: CoursePage
     editCourse: EditCoursePage
-    // learnercourse:LearnerCoursePage
     learningPath: LearningPathPage
     CompletionCertification: CompletionCertificationPage
-    //learnercourse:LearnerCoursePage
     location: LocationPage
     learnerLogin: LearnerLogin
     learnerHome: LearnerHomePage
     learnerCourse: LearnerCoursePage
     catalog: CatalogPage
     SurveyAssessment: SurveyAssessmentPage
-    dashboard: DashboardPage
+    dashboard: LearnerDashboardPage
     organization: OrganizationPage
     metadatalibrary: MetaLibraryPage
     adminGroup: AdminGroupPage
@@ -117,7 +115,7 @@ export const test = baseTest.extend<expertusFixture>({
         await use(catalog);
     },
     dashboard: async ({ page, context }, use) => {
-        const dashboard = new DashboardPage(page, context);
+        const dashboard = new LearnerDashboardPage(page, context);
         await use(dashboard);
     },
     // learnercourse: async ({ page, context }, use) => {
