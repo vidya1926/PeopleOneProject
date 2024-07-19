@@ -76,7 +76,7 @@ test(`Verification from learner site`, async ({ learnerHome,createCourse, catalo
     await costCenter.selectCountry("United States")
     await costCenter.selectCity("Alaska")
     await costCenter.paymentMethod("Credit Card");
-    await costCenter.fillCredeitDetails();
+    await costCenter.fillCreditDetails();
     await costCenter.clickTermsandCondition();
     await costCenter.clickCheckout();
     await costCenter.clickCreate();    

@@ -36,7 +36,8 @@ export class CatalogPage extends LearnerHomePage {
         contentsLabel: "//button[text()='Save Learning Status']//following::span[contains(text(),'Content')]",
         completedVideo: "//span[text()='100%']",
         expiredContent: "//span[text()='Expired']",
-        recertifyBtn: "//span[text()='Recertify']"
+        recertifyBtn: "//span[text()='Recertify']",
+         shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
 
 
         //`//button[@title='Play Video']//span[1]`
@@ -232,6 +233,11 @@ export class CatalogPage extends LearnerHomePage {
 
     public async addToCart() {
         await this.click(this.selectors.addToCart, "Add to cart", "Button")
+    }
+
+    public async clickShoppingCartIcon(){
+        await this.mouseHover(this.selectors.shoppingCardIcon,'Shopping Cart Icon');
+        await this.click(this.selectors.shoppingCardIcon,'Shopping Cart Icon',"Icon");
     }
 
     public async handlingAdditionalContents() {

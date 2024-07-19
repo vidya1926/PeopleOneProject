@@ -62,6 +62,10 @@ export class FakerData {
         const user = faker.internet.email({ firstName: fName })
         return user;
     }
+
+    static randomCityName():string{
+        return faker.person.jobArea();
+    }
     static getSession(): string {
         const session = faker.person.jobDescriptor()
         return session
@@ -146,10 +150,11 @@ export function getRandomLocation(): DataItem | any {
         return null;
     }
 }
-export function getCurrentDateFormatted(): string {
+export function 
+getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1)
-    const day = String(date.getDate())
+    const day = String(date.getDate()+1)
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }

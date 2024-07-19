@@ -105,7 +105,8 @@ export class CoursePage extends AdminHomePage {
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
         instructorInputIndex: (index: number) => `(//input[contains(@id,'instructors') and (@placeholder='Search')])[${index}]`,
         //instance_Class: "//a[contains(@title,'Instance/Class')]", -->DOM Contented Changed 08-07-2024
-        instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]",
+       // instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]", --> update on 18/07/2024
+        instance_Class:"//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class') or contains(@title,'Instance/Class')]",
         clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
         contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
@@ -701,7 +702,7 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.timeZoneOption, "Time Zone", country)
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
-        await this.type(this.selectors.startDateInstanceIndex(index), "Start Date", getCurrentDateFormatted())
+        await this.typeAndEnter(this.selectors.startDateInstanceIndex(index), "Start Date", getCurrentDateFormatted())
         await this.click(this.selectors.timeInputIndex(index), "Start Time", "Selected")
         await this.click(this.selectors.chooseStartTimeIndex(index, randomIndex), "StartTime", "Selected")
         await this.type(this.selectors.attendeeUrlIndex(index), "Attendee url", meetingUrl)

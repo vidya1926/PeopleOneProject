@@ -18,11 +18,13 @@ export class LearnerDashboardPage extends LearnerHomePage {
 
     async clickLearningPath_And_Certification() {
         await this.validateElementVisibility(this.selectors.learningPathAndCertification, "LearningPath and Certification");
+        await this.wait('mediumWait');
         await this.click(this.selectors.learningPathAndCertification, "LearningPath and Certification", "Button");
     }
 
     async clickCertificationLink() {
         await this.validateElementVisibility(this.selectors.certification, "Certification");
+        await this.wait('mediumWait');
         await this.click(this.selectors.certification, "Certification", "Link");
     }
 

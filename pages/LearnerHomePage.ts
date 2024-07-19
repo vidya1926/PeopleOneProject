@@ -53,6 +53,7 @@ export class LearnerHomePage extends PlaywrightWrapper {
     }
     public async clickDashboardLink() {
         await this.validateElementVisibility(this.selectors.myDashboardLink, "Link");
+        await this.mouseHover(this.selectors.myDashboardLink, "Link");
         await this.click(this.selectors.myDashboardLink, "My Learning", "Link");
         await this.page.waitForLoadState('load');
     }

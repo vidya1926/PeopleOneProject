@@ -35,7 +35,7 @@ test.describe(`TC070_Certification_with_multi_instance_course_is_attached.spec`,
         await editCourse.clickTagMenu();
         await editCourse.selectTags();
         await editCourse.clickClose();
-        /* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
+        /* Need to Update the script due to Automation Site issue (20-6-2024) 15:26 */
         // await editCourse.clickCompletionCertificate();
         //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
         await createCourse.clickCatalog();
