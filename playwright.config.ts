@@ -16,12 +16,9 @@ export default defineConfig({
     trace: 'on',
     headless:false,
     screenshot:"on",
-    video:'on',
+    video:'off',
     ignoreHTTPSErrors:true,
-    launchOptions:{
-      args: ['--start-maximized']
-    }
-    
+    //slowMo:2000,
   },
   projects: [
     {

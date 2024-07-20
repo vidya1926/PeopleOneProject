@@ -388,6 +388,7 @@ export class CoursePage extends AdminHomePage {
     // }
     async addInstances() {
         await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances");
+        await this.wait('minWait');
         await this.mouseHover(this.selectors.addInstancesBtn, "Add Instances");
         await this.click(this.selectors.addInstancesBtn, "Add Instances", "Button");
     }

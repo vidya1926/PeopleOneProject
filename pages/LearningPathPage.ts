@@ -49,7 +49,7 @@ export class LearningPathPage extends AdminHomePage {
         recertificationAddCourse: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()=' Add Course']",
         recertificationSaveBtn: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()='SAVE']",
         verifyRecertificationCourse: (course: string) => `//label[text()='Recertification ']/parent::div//following-sibling::div//span[text()='${course}']`,
-
+        usCurrency:"//span[text()='US Dollar']"
 
 
     };
@@ -155,9 +155,11 @@ export class LearningPathPage extends AdminHomePage {
     }
     async clickCurrency() {
         await this.click(this.selectors.currencyButton, "Currency", "Button");
-        const count = await this.page.locator(this.selectors.currencyCount).count();
-        const randomCount = Math.floor(Math.random() * (count)) + 1;
-        await this.click(this.selectors.currencyIndex(randomCount), "Currency", "DropDown")
+        //const count = await this.page.locator(this.selectors.currencyCount).count();
+       // const randomCount = Math.floor(Math.random() * (count)) + 1;
+        //await this.click(this.selectors.currencyIndex(randomCount), "Currency", "DropDown")
+        await this.click(this.selectors.usCurrency, "US Dollar", "DropDown")
+        
     }
 
     async clickUpdateBtn() {
@@ -176,6 +178,7 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async clickSaveAsDraftBtn() {
+        
         await this.mouseHover(this.selectors.saveAsDraftCheckbox, "Save As Draft");
         await this.click(this.selectors.saveAsDraftCheckbox, "Save As Draft", "CheckBox");
     }

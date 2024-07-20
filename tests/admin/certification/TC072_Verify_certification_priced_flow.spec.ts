@@ -102,7 +102,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await createCourse.verifySuccessMessage();
     })
 
-    test.skip(`Login as a learner`, async ({ learnerHome, catalog ,costCenter}) => {
+    test.skip(`Login as a learner`, async ({ learnerHome, catalog, costCenter }) => {
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -115,20 +115,20 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
         await catalog.clickMoreonCourse(title)
-        await catalog.clickSelectcourse(title)
         await catalog.addToCart();
-        await costCenter.clickOktoorder();
-        await costCenter.enterUserdetails()
-        await costCenter.selectCountry("United States")
-        await costCenter.selectCity("Alaska")
-        await costCenter.paymentMethod("Credit Card");
-        await costCenter.fillCreditDetails();
+        await catalog.verifyAddedToCart();
+        await catalog.clickShoppingCartIcon();
+        await catalog.clickProceedToCheckout();
+        await costCenter.orderSummaryLabelVerify();
+        await costCenter.billingDetails("United States", "Alaska");
+        await costCenter.paymentMethod("Cost center");
+        await costCenter.fillCostCenterInput();
         await costCenter.clickTermsandCondition();
         await costCenter.clickCheckout();
-        await costCenter.clickCreate();    
-        await costCenter.verifySuccessMsg(); 
+        await costCenter.verifySuccessMsg();
+
     })
-    test.skip(`Commerce side Verification`, async ({ adminHome,costCenter,createCourse, commercehome }) => {
+    test.skip(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Vidya` },
             { type: `TestCase`, description: `TC059_Commerce side order verification ` },
@@ -137,10 +137,10 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await adminHome.loadAndLogin("COMMERCEADMIN")
         await adminHome.menuButton();
         await adminHome.clickCommerceMenu();
-        await  commercehome.clickOrder();
+        await commercehome.clickOrder();
         await commercehome.approveOrder();
         await costCenter.clickOktoorder();
         await createCourse.verifySuccessMessage();
-     })
+    })
 
 })

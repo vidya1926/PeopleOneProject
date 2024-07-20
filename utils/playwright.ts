@@ -230,7 +230,7 @@ export abstract class PlaywrightWrapper {
 
     async mouseHover(hoverLocator: string, Menu: string) {
         await test.step(`The pointer hovers over the ${Menu} element.  `, async () => {
-            await this.page.hover(hoverLocator);
+            await this.page.hover(hoverLocator,{force:true});
         })
     }
 
@@ -317,7 +317,7 @@ export abstract class PlaywrightWrapper {
         try {
             switch (waitType) {
                 case 'minWait':
-                    await this.page.waitForTimeout(2000);
+                    await this.page.waitForTimeout(3000);
                     break;
                 case 'mediumWait':
                     await this.page.waitForTimeout(5000);

@@ -4,6 +4,7 @@ import { LearnerHomePage } from "./LearnerHomePage";
 export class CostcenterPage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
+        orderSummaryLabel: "//div[text()='order summary']",
         okButton: `//p[text()='Add to cart']/following::button[text()='Ok']`,
         firstName: `//label[text()='First Name']/following-sibling::input`,
         lastName: `//label[text()='Last Name']/following-sibling::input`,
@@ -26,39 +27,35 @@ export class CostcenterPage extends LearnerHomePage {
         savedAddress: `//label[text()='Address Name']/following::div/input`,
         createButton: `//button[text()='create']`,
         successMsg: `//h3[contains(text(),' Thank you for your order')]`,
+        costCenterInput: "//label[text()='Cost center:']//following-sibling::input",
         // :"//label[text()='City/Town']//parent::div//input"
-       
+        paymentMethodValue: "//label[text()='Payment Method']/parent::div//div[@class='filter-option-inner-inner']"
     };
 
+    public async orderSummaryLabelVerify() {
+        await this.spinnerDisappear();
+        await this.validateElementVisibility(this.selectors.orderSummaryLabel, "Order Summary");
+    }
 
     public async clickOktoorder() {
         await this.click(this.selectors.okButton, "OK ", "Button")
     }
 
-    public async enterUserdetails() {
-
-        await this.type(this.selectors.firstName, "FirstName", FakerData.getFirstName())
-        await this.type(this.selectors.lastName, "LastName", FakerData.getLastName())
+    public async billingDetails(countryName: string,cityName:string) {
         await this.type(this.selectors.address, "Address", FakerData.getAddress())
-
-    }
-
-    public async selectCountry(countryName: string) {
         await this.click(this.selectors.countrySelect, "Country", "Dropdown")
         await this.type(this.selectors.ddOption, "Country", countryName)
         await this.mouseHover(this.selectors.countryName(countryName), "Country")
         await this.click(this.selectors.countryName(countryName), "Country", "Option")
-    }
-
-    public async selectCity(cityName: string) {
-
         await this.click(this.selectors.stateField, "state", "Dropdown")
         await this.type(this.selectors.ddOption, "state", cityName);
         await this.mouseHover(this.selectors.countryName(cityName), "City/Town");
         await this.click(this.selectors.countryName(cityName), "city/Town", "Option");
-        await this.type(this.selectors.cityTown,"CityTown",FakerData.randomCityName());
+        await this.type(this.selectors.cityTown, "CityTown", FakerData.randomCityName());
         await this.type(this.selectors.zipcode, "Zipcode", getPonumber())
     }
+
+   
 
     public async paymentMethod(payMode: string) {
         await this.validateElementVisibility(this.selectors.paymentMode, "Payment mode")
@@ -66,6 +63,9 @@ export class CostcenterPage extends LearnerHomePage {
         await this.click(this.selectors.paymentMethod(payMode), "Payment Mode", "Option")
     }
 
+    public async fillCostCenterInput(){
+        await this.type(this.selectors.costCenterInput,"Input","67675545546");
+    }
     public async fillCreditDetails() {
         await this.type(this.selectors.cardNumber, "Card Number", getCreditCardNumber())
         await this.type(this.selectors.expiryDate, "Expiry Date", getcardExpiryDate())
@@ -77,18 +77,19 @@ export class CostcenterPage extends LearnerHomePage {
     }
 
     public async clickTermsandCondition() {
-        await this.click(this.selectors.termsAndCondition, "TermsandCondition", "Checkbox")
+        await this.click(this.selectors.termsAndCondition, "TermsandCondition", "Checkbox");
     }
 
-    
+
 
     public async clickCheckout() {
-        await this.click(this.selectors.checkOut, "checkout", "button")
+        await this.validateElementVisibility(this.selectors.checkOut, "checkout",);
+        await this.click(this.selectors.checkOut, "checkout", "button");
     }
 
     public async clickCreate() {
-        await this.type(this.selectors.savedAddress, "Address Name", getRandomLocation())
-        await this.click(this.selectors.createButton, "Create", "button")
+        await this.type(this.selectors.savedAddress, "Address Name", getRandomLocation());
+        await this.click(this.selectors.createButton, "Create", "button");
     }
 
     public async verifySuccessMsg() {

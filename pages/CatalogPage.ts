@@ -37,7 +37,10 @@ export class CatalogPage extends LearnerHomePage {
         completedVideo: "//span[text()='100%']",
         expiredContent: "//span[text()='Expired']",
         recertifyBtn: "//span[text()='Recertify']",
-         shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
+        shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
+        addedToCartBtn:"//span[text()='Added to Cart']",
+        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']"
+        
 
 
         //`//button[@title='Play Video']//span[1]`
@@ -218,6 +221,11 @@ export class CatalogPage extends LearnerHomePage {
 
     }
 
+    async verifyAddedToCart(){
+        await this.validateElementVisibility(this.selectors.addedToCartBtn,"Added to Cart");
+        await this.verification(this.selectors.addedToCartBtn,"Added to Cart")
+    }
+
     async clickContentLaunchButton() {
         await this.mouseHover(this.selectors.contentLaunchBtn, "Launch");
         await this.click(this.selectors.contentLaunchBtn, "Launch", "Button");
@@ -235,9 +243,14 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.addToCart, "Add to cart", "Button")
     }
 
-    public async clickShoppingCartIcon(){
-        await this.mouseHover(this.selectors.shoppingCardIcon,'Shopping Cart Icon');
-        await this.click(this.selectors.shoppingCardIcon,'Shopping Cart Icon',"Icon");
+    public async clickShoppingCartIcon() {
+        await this.mouseHover(this.selectors.shoppingCardIcon, 'Shopping Cart Icon');
+        await this.click(this.selectors.shoppingCardIcon, 'Shopping Cart Icon', "Icon");
+    }
+
+    public async clickProceedToCheckout(){
+        await this.validateElementVisibility(this.selectors.proceedToCheckoutBtn,"Proceed To Checkout");
+        await this.click(this.selectors.proceedToCheckoutBtn,"Proceed To Checkout","Button");
     }
 
     public async handlingAdditionalContents() {
