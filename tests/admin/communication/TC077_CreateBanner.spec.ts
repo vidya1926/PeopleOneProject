@@ -1,15 +1,15 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
-const title=FakerData.getRandomTitle();
+const title = FakerData.getRandomTitle();
 test(`Create banner in sequence
-    `, async ({ adminHome, bannerHome,createCourse }) => {
+    `, async ({ adminHome, bannerHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
     );
-    
+
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
@@ -24,7 +24,7 @@ test(`Create banner in sequence
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
     await createCourse.clickProceed();
-    await createCourse.verifySuccessMessage()   
+    await createCourse.verifySuccessMessage()
 })
 
 test(`Verification from learner site`, async ({ learnerHome }) => {
@@ -33,9 +33,9 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.isSignOutVisible();
-      await learnerHome.verifyImage(title);
-    
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.verifyImage(title);
+
 })
 
 test(`Verification from banner URL navigation`, async ({ learnerHome }) => {
@@ -44,7 +44,7 @@ test(`Verification from banner URL navigation`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.isSignOutVisible();
-      await learnerHome.verifyUrl(title);
-    
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.verifyUrl(title);
+
 })

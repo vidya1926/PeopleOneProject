@@ -102,7 +102,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await createCourse.verifySuccessMessage();
     })
 
-    test.skip(`Login as a learner`, async ({ learnerHome, catalog, costCenter }) => {
+    test(`Login as a learner`, async ({ learnerHome, catalog, costCenter }) => {
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -110,7 +110,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.isSignOutVisible();
+        await learnerHome.learnerLogin("LEARNERUSERNAME");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
@@ -128,7 +128,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await costCenter.verifySuccessMsg();
 
     })
-    test.skip(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {
+    test(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Vidya` },
             { type: `TestCase`, description: `TC059_Commerce side order verification ` },

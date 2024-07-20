@@ -240,7 +240,9 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     public async addToCart() {
-        await this.click(this.selectors.addToCart, "Add to cart", "Button")
+        await this.validateElementVisibility(this.selectors.addToCart, "Add to cart");
+        await this.wait('mediumWait');
+        await this.click(this.selectors.addToCart, "Add to cart", "Button");
     }
 
     public async clickShoppingCartIcon() {

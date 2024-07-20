@@ -1,3 +1,4 @@
+import { time } from "console";
 import { FakerData, getcardExpiryDate, getCreditCardNumber, getCVV, getPonumber, getRandomLocation } from "../utils/fakerUtils";
 import { LearnerHomePage } from "./LearnerHomePage";
 
@@ -28,6 +29,7 @@ export class CostcenterPage extends LearnerHomePage {
         createButton: `//button[text()='create']`,
         successMsg: `//h3[contains(text(),' Thank you for your order')]`,
         costCenterInput: "//label[text()='Cost center:']//following-sibling::input",
+        addressYouEnteredPopup:"//p[contains(text(),'The address you entered has not been created.')]",
         // :"//label[text()='City/Town']//parent::div//input"
         paymentMethodValue: "//label[text()='Payment Method']/parent::div//div[@class='filter-option-inner-inner']"
     };
@@ -85,12 +87,16 @@ export class CostcenterPage extends LearnerHomePage {
     public async clickCheckout() {
         await this.validateElementVisibility(this.selectors.checkOut, "checkout",);
         await this.click(this.selectors.checkOut, "checkout", "button");
+        await this.wait('mediumWait');
+        const popup = this.page.locator(this.selectors.addressYouEnteredPopup);
+        if(await popup.isVisible()){
+            await this.type(this.selectors.savedAddress,"Address Name","Input");
+            await this.click(this.selectors.createBtn,"Create","Button");
+            await this.click(this.selectors.createButton, "Create", "button");
+            await this.clickCheckout();
+        }
     }
 
-    public async clickCreate() {
-        await this.type(this.selectors.savedAddress, "Address Name", getRandomLocation());
-        await this.click(this.selectors.createButton, "Create", "button");
-    }
 
     public async verifySuccessMsg() {
         await this.validateElementVisibility(this.selectors.successMsg, "toastMessage")

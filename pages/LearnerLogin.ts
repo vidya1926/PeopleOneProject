@@ -1,17 +1,17 @@
 import { BrowserContext, Page, expect } from "@playwright/test";
 import { URLConstants } from "../constants/urlConstants";
 import { PlaywrightWrapper } from "../utils/playwright";
-import { LearnerHomePage } from "./LearnerHomePage";
+import { credentials } from "../constants/credentialData";
 
 export class LearnerLogin extends PlaywrightWrapper {
-
     static pageUrl = URLConstants.leanerURL;
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
     }
 
-    public async learnerLogin(username: string, password: string) {
+    public async learnerLogin(role: string) {
+        const { username, password } = credentials[role];
         const signInLocator = "//span[text()='Sign In']";
         const usernameSelector = "#username";
         const passwordSelector = "#password";
@@ -21,7 +21,8 @@ export class LearnerLogin extends PlaywrightWrapper {
         const signIn = async () => {
             try {
                 await this.waitForSelector(signInLocator);
-                await this.click(signInLocator, "Sign In button","Button");
+                await this.wait('mediumWait');
+                await this.click(signInLocator, "Sign In button", "Button");
             } catch (error) {
                 console.error(`Error during sign-in process: ${error}`);
                 throw error;
@@ -29,14 +30,12 @@ export class LearnerLogin extends PlaywrightWrapper {
         };
 
         try {
-           await this.loadApp(LearnerHomePage.pageUrl);
+            await this.loadApp(LearnerLogin.pageUrl);
             await signIn();
             await this.type(usernameSelector, "Username", username);
             await this.type(passwordSelector, "Password", password);
-
-            await this.click(signInButtonLocator, "Sign In button","Button");
+            await this.click(signInButtonLocator, "Sign In button", "Button");
             await this.page.waitForLoadState('domcontentloaded');
-
             await this.waitForSelector(logoutButtonLocator);
             const logoutButton = this.page.locator(logoutButtonLocator);
             await expect(logoutButton).toBeVisible({ timeout: 20000 });

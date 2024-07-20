@@ -54,7 +54,7 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC78_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.verifyAllSequence(title)
     })
 
@@ -64,6 +64,6 @@ test(`Verifying the deleted Banner through learner site`, async ({ learnerHome }
         { type: `TestCase`, description: `TC78_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.verifyImage(title);
     })

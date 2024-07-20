@@ -94,7 +94,7 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
 
     );
 
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(title);
@@ -128,7 +128,7 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
 
     );
 
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.clickDashboardLink();
     await dashboard.clickLearningPath_And_Certification();
     await dashboard.clickCertificationLink();

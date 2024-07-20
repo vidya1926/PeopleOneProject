@@ -4,7 +4,7 @@ import { URLConstants } from "../constants/urlConstants";
 import { credentialConstants } from "../constants/credentialConstants";
 import { PlaywrightWrapper } from "../utils/playwright";
 
-export class LearnerHomePage extends PlaywrightWrapper {
+export class LearnerHomePage extends LearnerLogin {
     static pageUrl = URLConstants.leanerURL;
 
     public selectors = {
@@ -26,17 +26,16 @@ export class LearnerHomePage extends PlaywrightWrapper {
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        this.commonSetup().catch(err => console.error("Error in common setup:", err));
+
     }
 
-    private async commonSetup() {
+    public async loadLearner(role:string) {
+        await this.learnerLogin(role)
+        await this.isSignOutVisible()
         
-        // await this.page.goto(LearnerLogin.pageUrl);
-        const learnerLogin = new LearnerLogin(this.page, this.page.context());
-        await learnerLogin.learnerLogin(credentialConstants.LEARNERUSERNAME, credentialConstants.PASSWORD);
     }
     public async isSignOutVisible() {
-        //await this.page.waitForLoadState('load');
+        await this.page.waitForLoadState('load');
         await this.validateElementVisibility(this.selectors.signOutLink, "Sign Out");
     }
     public async clickCatalog() {

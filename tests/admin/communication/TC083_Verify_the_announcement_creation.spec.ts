@@ -33,7 +33,7 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC83_Learner Side announcement  verification` },
         { type: `Test Description`, description: `Learner Side announcement verification` }
     );
-    await learnerHome.isSignOutVisible();   
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.verifyAnnouncement(title);
 })
 

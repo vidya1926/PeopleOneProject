@@ -47,7 +47,7 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
     //         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
     //         { type:`Test Description`, description: `Verify that course should be created for Single instance` }
     //     ); 
-    //     await learnerHome.isSignOutVisible();
+    //     await learnerHome.learnerLogin("LEARNERUSERNAME");
     //     await learnerHome.clickCatalog();
     //     await catalog.mostRecent();
     //     await catalog.searchCatalog(courseName);  
