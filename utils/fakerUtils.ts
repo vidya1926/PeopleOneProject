@@ -26,6 +26,10 @@ export class FakerData {
         return faker.location.streetAddress();
     }
 
+    static addressName(): string {
+        return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`; 
+    }
+
     static jobRole(): string {
         return faker.person.jobTitle();
     }

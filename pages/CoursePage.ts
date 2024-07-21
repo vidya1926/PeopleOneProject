@@ -764,6 +764,7 @@ export class CoursePage extends AdminHomePage {
         await this.wait('mediumWait');
        // await this.mouseHover(this.selectors.addBtn, "Add");
         await this.click(this.selectors.addBtn, "Add", "Button");
+        await this.wait('minWait');
         await this.verification(this.selectors.certificationVerifyMessage, "created successfully");
         await this.click(this.selectors.okBtn, "Ok", "Button");
     }

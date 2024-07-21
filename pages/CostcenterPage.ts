@@ -90,8 +90,7 @@ export class CostcenterPage extends LearnerHomePage {
         await this.wait('mediumWait');
         const popup = this.page.locator(this.selectors.addressYouEnteredPopup);
         if(await popup.isVisible()){
-            await this.type(this.selectors.savedAddress,"Address Name","Input");
-            await this.click(this.selectors.createBtn,"Create","Button");
+            await this.type(this.selectors.savedAddress,"Address Name",FakerData.addressName());
             await this.click(this.selectors.createButton, "Create", "button");
             await this.clickCheckout();
         }

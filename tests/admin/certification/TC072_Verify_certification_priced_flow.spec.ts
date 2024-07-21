@@ -102,7 +102,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await createCourse.verifySuccessMessage();
     })
 
-    test(`Login as a learner`, async ({ learnerHome, catalog, costCenter }) => {
+    test(`Login as a learner`, async ({ learnerHome, catalog, costCenter,dashboard }) => {
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -126,11 +126,16 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await costCenter.clickTermsandCondition();
         await costCenter.clickCheckout();
         await costCenter.verifySuccessMsg();
+        await learnerHome.clickMyLearning();
+        await learnerHome.clickDashboardLink();
+        await dashboard.clickLearningPath_And_Certification();
+        await dashboard.clickCertificationLink();
+        await dashboard.pendingTab(title);
 
     })
     test(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {
         test.info().annotations.push(
-            { type: `Author`, description: `Vidya` },
+            { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `TC059_Commerce side order verification ` },
             { type: `Test Description`, description: `Verify that course should be created for VC` }
         );
@@ -139,8 +144,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await adminHome.clickCommerceMenu();
         await commercehome.clickOrder();
         await commercehome.approveOrder();
-        await costCenter.clickOktoorder();
-        await createCourse.verifySuccessMessage();
+        await commercehome.verifySuccessMessage();
     })
 
 })

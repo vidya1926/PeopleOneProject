@@ -11,8 +11,10 @@ export class LearnerHomePage extends LearnerLogin {
 
         signOutLink: "//div[@class='logout']/a",
         catalogLink: `//a//span[text()='Catalog']`,
+        catalogLabel:"//div//h1[text()='Catalog']",
         myLearningLink: "//a//span[text()='My Learning']",
         myDashboardLink: "//a//span[text()='My Dashboard']",
+        myDashboardLabel:"//div/h1[text()='My Dashboard']",
         img: (index: number) => `(//div[@class='w-100 col']//img)[${index}]`,
         bannerTitle: (titleName: string) => `//div/h1[text()='${titleName}']`,
         bannerImg: (titleName: string) => `(//div/h1[text()="${titleName}"]/ancestor::div/img)[1]`,
@@ -44,6 +46,7 @@ export class LearnerHomePage extends LearnerLogin {
         await this.mouseHover(this.selectors.catalogLink, "Catalog");
         await this.click(this.selectors.catalogLink, "Catalog", "Link");
         await this.page.waitForLoadState('load');
+        await this.mouseHover(this.selectors.catalogLabel,"Catalog Label");
     }
     public async clickMyLearning() {
         await this.validateElementVisibility(this.selectors.myLearningLink, "Link");
@@ -52,9 +55,10 @@ export class LearnerHomePage extends LearnerLogin {
     }
     public async clickDashboardLink() {
         await this.validateElementVisibility(this.selectors.myDashboardLink, "Link");
-        await this.mouseHover(this.selectors.myDashboardLink, "Link");
+        // await this.mouseHover(this.selectors.myDashboardLink, "Link");
         await this.click(this.selectors.myDashboardLink, "My Learning", "Link");
-        await this.page.waitForLoadState('load');
+        await this.mouseHover(this.selectors.myDashboardLabel,"My Dashboard");
+        await this.verification(this.selectors.myDashboardLabel,"My Dashboard");
     }
 
     public async verifyImage(title: string) {
