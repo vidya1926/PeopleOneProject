@@ -7,6 +7,7 @@ export class CostcenterPage extends LearnerHomePage {
         ...this.selectors,
         orderSummaryLabel: "//div[text()='order summary']",
         okButton: `//p[text()='Add to cart']/following::button[text()='Ok']`,
+        supportOkButton:`//button[text()='Ok']`,
         firstName: `//label[text()='First Name']/following-sibling::input`,
         lastName: `//label[text()='Last Name']/following-sibling::input`,
         savedAddress:`(//label[text()='Saved Address']/following::button)[1]`,
@@ -98,11 +99,11 @@ export class CostcenterPage extends LearnerHomePage {
         await this.wait('mediumWait');
         const popup = this.page.locator(this.selectors.addressYouEnteredPopup);
         if(await popup.isVisible()){
-            await this.type(this.selectors.chkOutAddress,"Address Name",address);
+            await this.type(this.selectors.chkOutAddress,"Address Name",FakerData.addressName());
             await this.click(this.selectors.createButton,"Create","Button");
             await this.click(this.selectors.createButton, "Create", "button");
         }else{
-            
+            await this.click(this.selectors.supportOkButton,"ContactSupport"," OK Button")
         }
     }
 

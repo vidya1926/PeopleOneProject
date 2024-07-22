@@ -8,8 +8,11 @@ export class CommerceHomePage extends AdminHomePage{
     public selectors = {
         ...this.selectors,
              orderLink:`//a[text()='Order']`,
-             approveOrder:`//i[@aria-label='Approve Payment']`,
-             yesBtn:`//button[text()='Yes']`
+             approveOrder:`(//i[@aria-label='Approve Payment'])[1]`,
+             yesBtn:`//button[text()='Yes']`,
+             successMsg:"//span[text()='Payment of the order has been confirmed successfully']",
+             okBtn:"//button[text()='OK']",
+             
         };
 
     
@@ -24,11 +27,17 @@ export class CommerceHomePage extends AdminHomePage{
 
     
    public async approveOrder(){
-      await this.validateElementVisibility(this.selectors.approveOrder,"Approve Order")
-      await this.click(this.selectors.approveOrder,"Approve Order","Tick")
-      await this.click(this.selectors.yesBtn,"Yes","Buttton")
+      await this.validateElementVisibility(this.selectors.approveOrder,"Approve Order");
+      await this.wait('mediumWait');
+      await this.click(this.selectors.approveOrder,"Approve Order","Tick");
+      await this.wait('mediumWait');
+      await this.click(this.selectors.yesBtn,"Yes","Buttton");
    }
 
+   public async verifySuccessMessage(){
+    await this.verification(this.selectors.successMsg,"confirmed successfully");
+    await this.click(this.selectors.okBtn,"OK","Button");
+   }
 
 
 

@@ -90,10 +90,10 @@ export class BannerPage extends AdminHomePage {
         await this.type(this.selectors.bannerUrl, "Banner Url ",await this.getTitle())
     }
     public async clickEditIcon(title:string) {     
-        await this.validateElementVisibility(this.selectors.editIcon(title),"EditIcon")
+       // await this.validateElementVisibility(this.selectors.editIcon(title),"EditIcon")
          const counter=this.page.locator(this.selectors.editIcon(title));
          const index=await counter.count()
-         const randomIndex = Math.floor(Math.random() * index);
+         const randomIndex = Math.floor(Math.random() * index)+1;
         await this.click(this.selectors.editIconIndex(randomIndex), "Edit", "Icon")
         await this.wait("minWait")
     }

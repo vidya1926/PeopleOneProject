@@ -65,5 +65,5 @@ test(`Verifying the deleted Banner through learner site`, async ({ learnerHome }
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME");
-    await learnerHome.verifyImage(title);
+    await learnerHome.verifyBannerDisplay(title);
     })

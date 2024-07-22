@@ -89,8 +89,7 @@ test(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse,
     await adminHome.clickCommerceMenu();
     await commercehome.clickOrder();
     await commercehome.approveOrder();
-    await costCenter.clickOktoorder();
-    await createCourse.verifySuccessMessage();
+    await commercehome.verifySuccessMessage();
 })
 
 

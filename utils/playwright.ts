@@ -54,6 +54,20 @@ export abstract class PlaywrightWrapper {
     @name: Name of the element
     @data: Data to be typed
     */
+
+    
+    async fillAndEnter(locator: string,
+        name: string,
+        data: string) {
+        await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
+            await this.page.locator(locator).clear();
+            await this.page.fill(locator,data,{force:true})
+            await this.page.focus(locator)
+            await this.page.keyboard.press("Enter");
+
+        });
+    }
+   
     async typeAndEnter(locator: string,
         name: string,
         data: string) {
