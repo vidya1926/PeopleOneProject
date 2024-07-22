@@ -10,8 +10,7 @@ export class AdminLogin extends PlaywrightWrapper {
     
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-        // Uncomment the line below if you want to navigate to the page URL during instantiation
-        // this.loadApp(AdminLogin.pageUrl);
+
     }
     public async adminLogin(role:string) {       
         const { username, password } = credentials[role];    

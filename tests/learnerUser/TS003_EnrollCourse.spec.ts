@@ -8,7 +8,7 @@ const courseName="Neural Firewall Connect"
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
 test('Registering a learner on the platform',async({catalog,learnerHome})=>{
     
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.clickCatalog()
     await catalog.mostRecent();
     await catalog.searchCatalog(courseName);

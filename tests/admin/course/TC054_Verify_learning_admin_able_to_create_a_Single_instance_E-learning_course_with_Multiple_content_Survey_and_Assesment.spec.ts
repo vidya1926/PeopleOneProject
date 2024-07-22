@@ -41,7 +41,7 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
         { type: `TestCase`, description: `TC054_Learner Side Course verification` },
         { type:`Test Description`, description: `Verify that content sequence flow`}
     ); 
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.clickCatalog();
     await catalog.searchCatalog(courseName);
     await catalog.clickEnrollButton();
@@ -59,7 +59,7 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
 //         { type: `TestCase`, description: `TC001_Learner Side Course verification` },
 //         { type:`Test Description`, description: `Verify that course should be created for Single instance` }
 //     ); 
-//     await learnerHome.isSignOutVisible();
+//    await learnerHome.learnerLogin("LEARNERUSERNAME");
 //     await learnerHome.clickCatalog();
 //     await catalog.searchCatalog("");
 //     await catalog.clickEnrollButton(courseName,"Enrolled");

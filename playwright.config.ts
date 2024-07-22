@@ -7,21 +7,19 @@ export default defineConfig({
     timeout: 20000
   },
   testDir: './tests',
+  testMatch:`/admin/course/*.spec.ts`,
   fullyParallel: false,
   retries: 0,
   workers: 1,
-  repeatEach:0,
+ // repeatEach:0,
   reporter: [['html',{open:'always'}]],
   use: {   
     trace: 'on',
     headless:false,
     screenshot:"on",
-    video:'on',
+    video:'off',
     ignoreHTTPSErrors:true,
-    launchOptions:{
-      args: ['--start-maximized']
-    }
-    
+    //slowMo:2000,
   },
   projects: [
     {
@@ -30,6 +28,7 @@ export default defineConfig({
        
       viewport: null,
       launchOptions: {
+        slowMo:500,
         args: ["--start-maximized"]
         } 
        }

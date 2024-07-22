@@ -21,6 +21,7 @@ test(`Course Creation for  E-Learning work flow`, async ({ adminHome, createCour
     await createCourse.typeDescription("This is a new course by name :" + courseName); 
     await createCourse.selectDomain("E1Internal");
     await createCourse.selectProvider("Transition");
+    await createCourse.clickregistrationEnds();
     await createCourse.selectCompliance();
     await createCourse.selectValidity();
     await createCourse.daysOfValidity("1");

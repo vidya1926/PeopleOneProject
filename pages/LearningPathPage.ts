@@ -45,7 +45,11 @@ export class LearningPathPage extends AdminHomePage {
         completeByRuleBtn: "(//label[text()='Complete by Rule']/parent::div//button)[1]",
         completeByInput: "//label[text()='Complete by']/parent::div//input",
         registractionEndsInput: "input#registration-ends-input",
-        enforceSequencingCheckbox:"//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
+        enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
+        recertificationAddCourse: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()=' Add Course']",
+        recertificationSaveBtn: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()='SAVE']",
+        verifyRecertificationCourse: (course: string) => `//label[text()='Recertification ']/parent::div//following-sibling::div//span[text()='${course}']`,
+        usCurrency:"//span[text()='US Dollar']"
 
 
     };
@@ -97,11 +101,18 @@ export class LearningPathPage extends AdminHomePage {
     async clickAddCourse() {
         await this.validateElementVisibility(this.selectors.addCourseBtn, "Add Course Button");
         await this.mouseHover(this.selectors.addCourseBtn, "Add Course Button");
-        await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
+        //await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
+        await this.page.locator(this.selectors.addCourseBtn).last().click({ force: true })
     }
 
     async searchAndClickCourseCheckBox(data: string) {
-        await this.typeAndEnter(this.selectors.addCourseSearchInput, "Course Serach Input", data)
+        //await this.typeAndEnter(this.selectors.addCourseSearchInput, "Course Serach Input", data) --> changed in new update('16/07/2024')
+        //"//input[contains(@id,'program-structure-title-search')]"
+        const addCourseInput = this.page.locator(this.selectors.addCourseSearchInput).last();
+        await addCourseInput.focus(),
+        await this.page.keyboard.type(data, { delay: 150 })
+        await this.page.keyboard.press('Enter');
+
         await this.wait('minWait');
         await this.click(this.selectors.courseChexbox(data), data, "CheckBox")
         // const count = await this.page.locator(this.selectors.addCourseCheckBox).count();
@@ -127,10 +138,10 @@ export class LearningPathPage extends AdminHomePage {
 
     }
 
-    async clickEnforceCheckbox(){
+    async clickEnforceCheckbox() {
         let enforceCheckbox = this.selectors.enforceSequencingCheckbox
-        await this.mouseHover(enforceCheckbox,"Enforce Sequence");
-        await this.click(enforceCheckbox,"Enforce Sequence","Checkbox");
+        await this.mouseHover(enforceCheckbox, "Enforce Sequence");
+        await this.click(enforceCheckbox, "Enforce Sequence", "Checkbox");
     }
 
     async clickDetailTab() {
@@ -144,9 +155,11 @@ export class LearningPathPage extends AdminHomePage {
     }
     async clickCurrency() {
         await this.click(this.selectors.currencyButton, "Currency", "Button");
-        const count = await this.page.locator(this.selectors.currencyCount).count();
-        const randomCount = Math.floor(Math.random() * (count)) + 1;
-        await this.click(this.selectors.currencyIndex(randomCount), "Currency", "DropDown")
+        //const count = await this.page.locator(this.selectors.currencyCount).count();
+       // const randomCount = Math.floor(Math.random() * (count)) + 1;
+        //await this.click(this.selectors.currencyIndex(randomCount), "Currency", "DropDown")
+        await this.click(this.selectors.usCurrency, "US Dollar", "DropDown")
+        
     }
 
     async clickUpdateBtn() {
@@ -165,6 +178,7 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async clickSaveAsDraftBtn() {
+        
         await this.mouseHover(this.selectors.saveAsDraftCheckbox, "Save As Draft");
         await this.click(this.selectors.saveAsDraftCheckbox, "Save As Draft", "CheckBox");
     }
@@ -182,6 +196,17 @@ export class LearningPathPage extends AdminHomePage {
 
     async clickAndSelectCompleteByRule() {
         await this.keyboardType(this.selectors.completeByInput, getCurrentDateFormatted());
+    }
+
+    async addRecertificationCourse() {
+        await this.mouseHover(this.selectors.recertificationAddCourse, "Add Course");
+        await this.click(this.selectors.recertificationAddCourse, "Add Course", "Button");
+    }
+
+    async saveRecertification(data: string) {
+        await this.mouseHover(this.selectors.recertificationSaveBtn, "Save");
+        await this.click(this.selectors.recertificationSaveBtn, "Save", "Button");
+        await this.verification(this.selectors.verifyRecertificationCourse(data), data);
     }
 
     async registractionEnds() {

@@ -1,6 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData, getCurrentDateFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, getnextMonthFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
 
 
 export class CoursePage extends AdminHomePage {
@@ -30,7 +30,7 @@ export class CoursePage extends AdminHomePage {
         okBtn: "//span[contains(text(),'created successfully')]/following::button[text()='OK']",
         cancelBtn: "//label[text()='Category']/following::span[contains(@class,'lms-cat-cancel')]",
         providerDropdown: "(//label[text()='Provider']/following::button)[1]",
-        providerOption: (provider: string) => `//a[@class='dropdown-item active']//span[text()='${provider}']`,
+        providerOption: (provider: string) => `//a/span[text()='${provider}']`,
         totalDurationInput: "(//label[text()='Total Duration']/following::input)[1]",
         additionalInfoInput: "//div[@id='additional_information_description_id']//p",
         priceInput: "//label[text()='Price']/following::input[1]",
@@ -77,7 +77,7 @@ export class CoursePage extends AdminHomePage {
         tomorrowdate: "//td[@class='today day']/following-sibling::td[1]",
         nextMonth: `//div[@class='datepicker-days']//th[@class='next']`,
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
-
+        registrationEnd: `//div[@id='registration-ends']/input`,
         todayDate: "td[class='today day']",
         randomDate: `(//td[@class='day']/following-sibling::td)[1]`,
         seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
@@ -105,7 +105,8 @@ export class CoursePage extends AdminHomePage {
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
         instructorInputIndex: (index: number) => `(//input[contains(@id,'instructors') and (@placeholder='Search')])[${index}]`,
         //instance_Class: "//a[contains(@title,'Instance/Class')]", -->DOM Contented Changed 08-07-2024
-        instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]",
+       // instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]", --> update on 18/07/2024
+        instance_Class:"//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class') or contains(@title,'Instance/Class')]",
         clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
         contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
@@ -113,7 +114,8 @@ export class CoursePage extends AdminHomePage {
         attachedContentLabel: "//label[text()='Attached Content']",
         getCourse: "//input[@id='course-title']",
         domainDropdown: "//a[@class='dropdown-item selected']",
-        domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
+        domainDropdownValue: "//label[text()='Domain']/following-sibling::div//div[contains(@class,'dropdown-menu')]//span[@class='text']",
+        //domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         portalDropdown:`(//label[text()='Domain']/following::div)[1]`,
@@ -156,8 +158,8 @@ export class CoursePage extends AdminHomePage {
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
-        assessmentLabel:"//div[text()='Assessment']",
-        enforceSequence:`//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`
+        assessmentLabel: "//div[text()='Assessment']",
+        enforceSequence: `//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -181,13 +183,13 @@ export class CoursePage extends AdminHomePage {
     }
 
 
-    async uploadCourseContent(fileName:string) {
+    async uploadCourseContent(fileName: string) {
         const path = `../data/${fileName}`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
         await this.validateElementVisibility(this.selectors.progress, "Loading")
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), `${fileName}`);
-        
+
     }
     async clickCatalog() {
         await this.validateElementVisibility(this.selectors.showInCatalogBtn, "Show in Catalog");
@@ -221,8 +223,8 @@ export class CoursePage extends AdminHomePage {
 
     async selectPortalOption() {
         await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
-        const index=await this.page.locator("//label[text()='Domain']/following::div[@class='dropdown-menu show']//a").count();
-        const randomIndex = Math.floor(Math.random() *  index)+ 1;
+        const index = await this.page.locator("//label[text()='Domain']/following::div[@class='dropdown-menu show']//a").count();
+        const randomIndex = Math.floor(Math.random() * index) + 1;
         await this.click(this.selectors.portalOption(randomIndex), "Domain Name", "Button");
     }
 
@@ -313,6 +315,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.complianceOption, "Compaliance", "Field");
     }
     async selectCompleteByRule() {
+        await this.validateElementVisibility(this.selectors.completeByRule, "CompleteByRule")
+        await this.mouseHover(this.selectors.completeByRule, "CompleteByRule");
         await this.click(this.selectors.completeByRule, "CompleteByRule", "Field");
         await this.click(this.selectors.completeByRuleOption, "CompleteByRule Option", "Field");
     }
@@ -383,6 +387,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.tomorrowdate, "Tomorrow", "Field")
     }
     async selectDate() {
+
         await this.click(this.selectors.CourseCalendaricon, "Date", "Field");
         await this.wait("minWait")
         await this.click(this.selectors.nextMonth, "Next", "button")
@@ -390,7 +395,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.randomDate, "RandomDate", "Field")
     }
     async clickregistrationEnds() {
-        await this.type(this.selectors.registrationEnd, "Enter Date", getCurrentDateFormatted())
+        await this.validateElementVisibility(this.selectors.registrationEnd, "Enter Date")
+        await this.keyboardType(this.selectors.registrationEnd, getCurrentDateFormatted())
     }
 
     // async selectLocation(locationName: string) {
@@ -403,6 +409,7 @@ export class CoursePage extends AdminHomePage {
     // }
     async addInstances() {
         await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances");
+        await this.wait('minWait');
         await this.mouseHover(this.selectors.addInstancesBtn, "Add Instances");
         await this.click(this.selectors.addInstancesBtn, "Add Instances", "Button");
     }
@@ -496,7 +503,8 @@ export class CoursePage extends AdminHomePage {
         await this.wait('mediumWait');
 
         try {
-            await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
+           // await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
+           await this.wait('mediumWait');
             if (await locator.isVisible({ timeout: 5000 })) {
                 await this.mouseHover(this.selectors.willResolveLaterBtn, "Resolve Later");
                 await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
@@ -504,7 +512,7 @@ export class CoursePage extends AdminHomePage {
         } catch (error) {
             console.log("The element is not visible: ");
         }
-       // Continue with other operations without throwing an error
+        // Continue with other operations without throwing an error
     }
 
     async clickDetailButton() {
@@ -663,20 +671,24 @@ export class CoursePage extends AdminHomePage {
 
     }
     async selectPortal() {
-        try{
-        const text = await this.page.innerText(this.selectors.domainSelectedText);
-        console.log(text);
+        try {
+            const text = await this.page.innerText(this.selectors.domainSelectedText);
+            console.log(text);
 
-        if (text.includes('selected')) {
-            const dropdownItems = await this.page.$$(this.selectors.domainDropdown);
-            for (let index = 2; index <= dropdownItems.length; index++) {
+            if (text.includes('selected')) {
+                const dropdownItems = this.page.locator(this.selectors.domainDropdown);
                 await this.click(this.selectors.domainSelectedText, "dropdown", "button")
-                await this.click(this.selectors.domainDropdownIndex(index), "Domain", "Dropdown");
+                const dropdownValues = await this.page.locator(this.selectors.domainDropdownValue).allInnerTexts();
+                for (let index = 1; index < dropdownValues.length; index++) {
+                    const value = dropdownValues[index];
+                    await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
+                }
+
             }
         }
-}   catch(error){
-    console.log(error +" Portal selected")
-} 
+        catch (error) {
+            console.log(error + " Portal selected")
+        }
         const domainText = await this.page.innerText(this.selectors.domainInnerValue);
         return domainText;
     }
@@ -695,7 +707,7 @@ export class CoursePage extends AdminHomePage {
     async selectMeetingType(instructorName: string, sessionName: string, index: number) {
         //  const sessiontype = this.page.locator(this.selectors.selectType);
         const pickRandomTime = async () => {
-            const timeElements = await this.page.locator(`(//ul[@class='ui-timepicker-list'])[${index}]/li`).count();
+            const timeElements = await this.page.locator(`(//ul[@class='ui-timepicker-list'])[1]/li`).count();
             const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
             return randomIndex;
         };
@@ -712,7 +724,7 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.timeZoneOption, "Time Zone", country)
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
-        await this.type(this.selectors.startDateInstanceIndex(index), "Start Date", getCurrentDateFormatted())
+        await this.typeAndEnter(this.selectors.startDateInstanceIndex(index), "Start Date", getCurrentDateFormatted())
         await this.click(this.selectors.timeInputIndex(index), "Start Time", "Selected")
         await this.click(this.selectors.chooseStartTimeIndex(index, randomIndex), "StartTime", "Selected")
         await this.type(this.selectors.attendeeUrlIndex(index), "Attendee url", meetingUrl)
@@ -734,7 +746,7 @@ export class CoursePage extends AdminHomePage {
     async clickaddIcon() {
         await this.click(this.selectors.addDeleteIcon, "Add Icon", "Button")
     }
-    
+
     async startDateVC() {
         await this.type(this.selectors.startDateInstance, "Start Date", getCurrentDateFormatted())
     }
@@ -748,6 +760,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async clickCompletionCertificate() {
+        await this.wait('mediumWait');
         await this.validateElementVisibility(this.selectors.completionCertificationlink, "Completion Certificate");
         await this.click(this.selectors.completionCertificationlink, "Completion Certificate", "Button");
         await this.spinnerDisappear();
@@ -761,7 +774,7 @@ export class CoursePage extends AdminHomePage {
         await this.spinnerDisappear();
         const count = await this.page.locator(this.selectors.certificateCheckboxCount).count();
         console.log(count);
-        const randomIndex = Math.floor(Math.random() * (count)) + 1;
+        const randomIndex = Math.floor(Math.random() * (count - 1)) + 2;
         await this.wait('minWait');
         await this.mouseHover(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox");
         await this.click(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox", "Checkbox");
@@ -796,10 +809,10 @@ export class CoursePage extends AdminHomePage {
     }
 
 
-    async clickenforceSequence(){
-        await this.validateElementVisibility(this.selectors.enforceSequence,"Enforce Sequence ")
-        await this.click(this.selectors.enforceSequence,"Enforce Sequence ","Checkbox")
-      
+    async clickenforceSequence() {
+        await this.validateElementVisibility(this.selectors.enforceSequence, "Enforce Sequence ")
+        await this.click(this.selectors.enforceSequence, "Enforce Sequence ", "Checkbox")
+
     }
 
 }

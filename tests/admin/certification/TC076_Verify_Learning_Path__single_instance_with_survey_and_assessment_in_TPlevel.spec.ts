@@ -71,7 +71,7 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.isSignOutVisible();
+        await learnerHome.learnerLogin("LEARNERUSERNAME");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);

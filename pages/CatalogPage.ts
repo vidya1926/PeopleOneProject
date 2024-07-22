@@ -32,8 +32,15 @@ export class CatalogPage extends LearnerHomePage {
         viewCertificateBtn: "//div[text()='modules/courses']/parent::div//span[text()='View Certificate']",
         okBtn: "//button[text()='Ok']",
         addToCart: `//span[text()='Add to cart']`,
-        contentLaunchBtn:"//button//span[text()='Launch']",
-        contentsLabel:"//button[text()='Save Learning Status']//following::span[contains(text(),'Content')]"
+        contentLaunchBtn: "//button//span[text()='Launch']",
+        contentsLabel: "//button[text()='Save Learning Status']//following::span[contains(text(),'Content')]",
+        completedVideo: "//span[text()='100%']",
+        expiredContent: "//span[text()='Expired']",
+        recertifyBtn: "//span[text()='Recertify']",
+        shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
+        addedToCartBtn:"//span[text()='Added to Cart']",
+        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']"
+        
 
 
         //`//button[@title='Play Video']//span[1]`
@@ -50,6 +57,7 @@ export class CatalogPage extends LearnerHomePage {
         await this.type(searchSelector, "Search Field", data);
         await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
         await this.page.waitForTimeout(10000);
+
     }
 
     async mostRecent() {
@@ -81,6 +89,13 @@ export class CatalogPage extends LearnerHomePage {
 
     }
 
+    async clickRecertify() {
+        await this.validateElementVisibility(this.selectors.recertifyBtn, "Recertify")
+        await this.click(this.selectors.recertifyBtn, "Recertify", "Button");
+        await this.validateElementVisibility(this.selectors.viewCertificateBtn, "View Certificate");
+        await this.mouseHover(this.selectors.completedVideo, "Completed Video");
+        await this.wait('mediumWait');
+    }
     // async clickLaunchButton() {
 
     //    // playAndForwardVideo(this.selectors.launchButton)
@@ -105,10 +120,10 @@ export class CatalogPage extends LearnerHomePage {
         await this.page.waitForLoadState('load');
         await this.wait('maxWait');
         const playButton = "//button[@title='Play Video']"
-       /*  const myElement = document.querySelector("#movie_player") as HTMLElement; 
-        myElement.addEventListener("click", (event) => {
-            myElement.click()
-          }); */
+        /*  const myElement = document.querySelector("#movie_player") as HTMLElement; 
+         myElement.addEventListener("click", (event) => {
+             myElement.click()
+           }); */
         await this.mouseHover(playButton, "Play Button")
         await this.page.focus(playButton, { strict: true });
         await this.page.click(playButton, { force: true })
@@ -120,9 +135,10 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.saveLearningStatus, "save", "button");
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button");
         await this.spinnerDisappear();
-        const completed = this.page.locator("//span[text()='100%']");
+        const completed = this.page.locator(this.selectors.completedVideo);
         try {
             if (await completed.isVisible()) {
+                await completed.hover({ force: true });
                 console.log("The Video Has Completed");
             } else {
                 await this.clickLaunchButton();
@@ -134,6 +150,8 @@ export class CatalogPage extends LearnerHomePage {
         }
 
     }
+
+
 
     async clickCompletedButton() {
         await this.page.waitForTimeout(10000);
@@ -153,6 +171,10 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
 
+    async verifyExpiredContent() {
+        await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
+        await this.verification(this.selectors.expiredContent, "Expired")
+    }
 
     async enterSearchFilter(): Promise<string> {
         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
@@ -160,15 +182,20 @@ export class CatalogPage extends LearnerHomePage {
         const randomTag = tags[randomIndex];
         await this.click(this.selectors.searchButton, "Tagname", "Field")
         await this.type(this.selectors.selectTagnames, "Tagname", randomTag)
+        console.log(randomTag)
         return randomTag;
     }
 
     async selectresultantTags() {
+        
         await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
+        await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
         await this.click(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags", "selected")
+  
     }
 
     async clickApply() {
+        await this.mouseHover(this.selectors.applyButton, "Apply")
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
 
@@ -200,9 +227,14 @@ export class CatalogPage extends LearnerHomePage {
 
     }
 
-    async clickContentLaunchButton(){
-        await this.mouseHover(this.selectors.contentLaunchBtn,"Launch");
-        await this.click(this.selectors.contentLaunchBtn,"Launch","Button");
+    async verifyAddedToCart(){
+        await this.validateElementVisibility(this.selectors.addedToCartBtn,"Added to Cart");
+        await this.verification(this.selectors.addedToCartBtn,"Added to Cart")
+    }
+
+    async clickContentLaunchButton() {
+        await this.mouseHover(this.selectors.contentLaunchBtn, "Launch");
+        await this.click(this.selectors.contentLaunchBtn, "Launch", "Button");
         await this.spinnerDisappear();
     }
 
@@ -214,12 +246,24 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     public async addToCart() {
-        await this.click(this.selectors.addToCart, "Add to cart", "Button")
+        await this.validateElementVisibility(this.selectors.addToCart, "Add to cart");
+        await this.wait('mediumWait');
+        await this.click(this.selectors.addToCart, "Add to cart", "Button");
     }
 
-    public async handlingAdditionalContents(){
-        await this.mouseHover(this.selectors.contentsLabel,"Contents");
-        await this.click("","","")
+    public async clickShoppingCartIcon() {
+        await this.mouseHover(this.selectors.shoppingCardIcon, 'Shopping Cart Icon');
+        await this.click(this.selectors.shoppingCardIcon, 'Shopping Cart Icon', "Icon");
+    }
+
+    public async clickProceedToCheckout(){
+        await this.validateElementVisibility(this.selectors.proceedToCheckoutBtn,"Proceed To Checkout");
+        await this.click(this.selectors.proceedToCheckoutBtn,"Proceed To Checkout","Button");
+    }
+
+    public async handlingAdditionalContents() {
+        await this.mouseHover(this.selectors.contentsLabel, "Contents");
+        await this.click("", "", "")
     }
 
 

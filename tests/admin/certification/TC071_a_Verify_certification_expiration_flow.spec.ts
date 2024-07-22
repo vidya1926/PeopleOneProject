@@ -1,13 +1,14 @@
 import { log } from "console";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
+import { updateCronForEnrollment } from "../DB/DBJobs";
 
 
 
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let domain: any
-test.describe(`TC071_Verify_certification_expiration_flow`, async () => {
+test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
   test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 
     test.info().annotations.push(
@@ -38,8 +39,8 @@ test.describe(`TC071_Verify_certification_expiration_flow`, async () => {
     await createCourse.verifySuccessMessage();
   })
 
-  const title = FakerData.getCourseName();
-  test.skip(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
+  const title = ("CRON " + FakerData.getCourseName());
+  test(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
     test.info().annotations.push(
       { type: `Author`, description: `Ajay Michael` },
       { type: `TestCase`, description: `Certification enroll and completion with single instance` },
@@ -64,6 +65,8 @@ test.describe(`TC071_Verify_certification_expiration_flow`, async () => {
     await learningPath.searchAndClickCourseCheckBox(courseName);
     await learningPath.clickAddSelectCourse();
     await learningPath.clickDetailTab();
+    await learningPath.addRecertificationCourse();
+    await learningPath.saveRecertification(courseName);
     await learningPath.clickCatalogBtn();
     await learningPath.clickUpdateBtn();
     await learningPath.verifySuccessMessage();
@@ -76,19 +79,11 @@ test.describe(`TC071_Verify_certification_expiration_flow`, async () => {
     await createCourse.verifySuccessMessage();
 
 
+
+
   })
 
-  /* test(`featch data from database`,async({dataBase})=>{
-    
-    try {
-      const sample= await dataBase.executeQuery("Select * From iris.course_session_details Order by id Desc Limit 10 ;")
-    console.log(sample);
-    } catch (error) {
-      console.log( "Not executed " + error);
-      
-    }
-  
-  }) */
+
 
   test(`Login as a learner`, async ({ learnerHome, catalog }) => {
 
@@ -99,7 +94,7 @@ test.describe(`TC071_Verify_certification_expiration_flow`, async () => {
 
     );
 
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(title);
@@ -111,5 +106,40 @@ test.describe(`TC071_Verify_certification_expiration_flow`, async () => {
 
 
   })
+
+  test(`Test to execute CRON JOB`, async ({ }) => {
+
+    test.info().annotations.push(
+      { type: `Author`, description: `Ajay Michael` },
+      { type: `TestCase`, description: `Test to execute CRON JOB` },
+      { type: `Test Description`, description: `Verify the CRON Job` }
+    );
+
+    await updateCronForEnrollment();
+  })
+
+
+  test.skip(`Veriy a certification expiration`, async ({ learnerHome, dashboard, catalog }) => {
+
+    test.info().annotations.push(
+      { type: `Author`, description: `Ajay Michael` },
+      { type: `TestCase`, description: `Veriy a certification expiration` },
+      { type: `Test Description`, description: `Verify from learner side` }
+
+    );
+
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.clickDashboardLink();
+    await dashboard.clickLearningPath_And_Certification();
+    await dashboard.clickCertificationLink();
+    await dashboard.searchCertification(title);
+    await dashboard.clickRecertifyIcon(title);
+    await catalog.verifyExpiredContent();
+
+
+
+
+  })
+
 
 })

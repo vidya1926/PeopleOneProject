@@ -13,5 +13,5 @@ test.skip(`TC026 _Create LeanerGroup-1 `, async ({ adminHome, adminGroup }) => {
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminHome
+   // await adminHome
 })

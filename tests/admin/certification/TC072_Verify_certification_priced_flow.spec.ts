@@ -102,7 +102,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await createCourse.verifySuccessMessage();
     })
 
-    test(`Login as a learner`, async ({ learnerHome, catalog }) => {
+    test(`Login as a learner`, async ({ learnerHome, catalog, costCenter }) => {
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -110,15 +110,37 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.isSignOutVisible();
+        await learnerHome.learnerLogin("LEARNERUSERNAME");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
-        await catalog.clickEnrollButton();
-        await catalog.clickViewCertificationDetails();
-        await catalog.clickLaunchButton();
-        await catalog.saveLearningStatus();
+        await catalog.clickMoreonCourse(title)
+        await catalog.addToCart();
+        await catalog.verifyAddedToCart();
+        await catalog.clickShoppingCartIcon();
+        await catalog.clickProceedToCheckout();
+        await costCenter.orderSummaryLabelVerify();
+        await costCenter.billingDetails("United States", "Alaska");
+        await costCenter.paymentMethod("Cost center");
+        await costCenter.fillCostCenterInput();
+        await costCenter.clickTermsandCondition();
+        await costCenter.clickCheckout();
+        await costCenter.verifySuccessMsg();
 
+    })
+    test(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {
+        test.info().annotations.push(
+            { type: `Author`, description: `Vidya` },
+            { type: `TestCase`, description: `TC059_Commerce side order verification ` },
+            { type: `Test Description`, description: `Verify that course should be created for VC` }
+        );
+        await adminHome.loadAndLogin("COMMERCEADMIN")
+        await adminHome.menuButton();
+        await adminHome.clickCommerceMenu();
+        await commercehome.clickOrder();
+        await commercehome.approveOrder();
+        await costCenter.clickOktoorder();
+        await createCourse.verifySuccessMessage();
     })
 
 })

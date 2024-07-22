@@ -6,9 +6,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 
 const courseName = FakerData.getCourseName();
 const instructorName = credentialConstants.INSTRUCTORNAME
-const price=FakerData.getPrice();
-
-
+const price = FakerData.getPrice();
 
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
@@ -44,27 +42,27 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
 
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
-        await createCourse.clickCreateInstance();       
+        await createCourse.clickCreateInstance();
     }
-    await addinstance("Virtual Class");    
-    await createCourse.selectMeetingType(instructorName,courseName,1);
+    await addinstance("Virtual Class");
+    await createCourse.selectMeetingType(instructorName, courseName, 1);
     await createCourse.typeAdditionalInfo(courseName)
     await createCourse.clickaddIcon();
-    await createCourse.selectMeetingType(instructorName,courseName,2);
+    await createCourse.selectMeetingType(instructorName, courseName, 2);
     await createCourse.setMaxSeat();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    })
+})
 
 
 
-test(`Verification from learner site`, async ({ learnerHome,createCourse, catalog,costCenter }) => {
+test(`Verification from learner site`, async ({ learnerHome, createCourse, catalog, costCenter }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );
-    await learnerHome.isSignOutVisible();
+    await learnerHome.learnerLogin("LEARNERUSERNAME");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(courseName);
@@ -72,17 +70,15 @@ test(`Verification from learner site`, async ({ learnerHome,createCourse, catalo
     await catalog.clickSelectcourse(courseName)
     await catalog.addToCart();
     await costCenter.clickOktoorder();
-    await costCenter.enterUserdetails()
-    await costCenter.selectCountry("United States")
-    await costCenter.selectCity("Alaska")
+    await costCenter.selectSavedAddressDropdown("Home")
+    // await costCenter.billingDetails("United States", "Alaska")
     await costCenter.paymentMethod("Credit Card");
-    await costCenter.fillCredeitDetails();
+    await costCenter.fillCreditDetails();
     await costCenter.clickTermsandCondition();
-    await costCenter.clickCheckout();
-    await costCenter.clickCreate();    
-    await costCenter.verifySuccessMsg() 
+    await costCenter.clickCheckout("HomeAddress");
+    await costCenter.verifySuccessMsg()
 })
-test(`Commerce side Verification`, async ({ adminHome,costCenter,createCourse, commercehome }) => {
+test(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC059_Commerce side order verification ` },
@@ -91,11 +87,11 @@ test(`Commerce side Verification`, async ({ adminHome,costCenter,createCourse, c
     await adminHome.loadAndLogin("COMMERCEADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommerceMenu();
-    await  commercehome.clickOrder();
+    await commercehome.clickOrder();
     await commercehome.approveOrder();
     await costCenter.clickOktoorder();
     await createCourse.verifySuccessMessage();
- })
+})
 
 
 
