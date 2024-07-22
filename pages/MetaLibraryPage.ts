@@ -275,6 +275,9 @@ export class MetaLibraryPage extends AdminHomePage {
     }
 
     async jobTitleExpandButton() {
+        await this.validateElementVisibility(this.selectors.jobTitleExpandBtn, "Job Title");
+        await this.wait('minWait');
+        await this.mouseHover(this.selectors.jobTitleExpandBtn, "Job Title");
         await this.click(this.selectors.jobTitleExpandBtn, "Job Title", "Button");
     }
 

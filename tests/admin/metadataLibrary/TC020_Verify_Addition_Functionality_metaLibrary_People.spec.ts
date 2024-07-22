@@ -97,7 +97,6 @@ test(`verify that a job title can be added under Metadata Library - People - Job
         { type: 'Test Description', description: "Creating a Job title in the Metadata Library within the People Category" }
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN") 
-    await adminHome.isSignOut();
     await adminHome.menuButton();
     await adminHome.metadataLibrary();
     await adminHome.meta_People();
