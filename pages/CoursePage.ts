@@ -121,7 +121,7 @@ export class CoursePage extends AdminHomePage {
         portalDropdown:`(//label[text()='Domain']/following::div)[1]`,
         allPortalOptions:`//label[text()='Domain']/following::div[@class='dropdown-menu show']//a`,
         portalOption:(index:string)=>`(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
-        domainNameOption: (portalName: string) => `//label[text()='Domain']/following::div[@class='dropdown-menu show']//a/span[text()='${portalName}']`,
+        domainNameOption: (portalName: string) => `//a[@class='dropdown-item']//span[text()='${portalName}']`,
         portal:`(//label[text()='Domain']/following::div[@id='wrapper-user-portals']//button)[1]`,
         image: "(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
@@ -228,16 +228,18 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.portalOption(randomIndex), "Domain Name", "Button");
     }
 
-
     async selectDomainOption(portalName:string) {
     await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
        for( const options of await this.page.locator(this.selectors.allPortalOptions).all())
           {
             await options.click();            
             }
-            await this.doubleClick(this.selectors.domainBtn, "Domain");
-            await this.click(this.selectors.domainOption(portalName), "Domain Name", "Button");
             await this.click(this.selectors.domainBtn, "Domain", "Button");
+            await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
+            await this.click(`//span[@class='text' and text()='${portalName}']`, "Domain", "Dropdown")
+            // await this.validateElementVisibility(this.selectors.domainNameOption(portalName), "Domain Name")
+           await this.click(this.selectors.domainNameOption(portalName), "Domain Name", "Button");
+           await this.click(this.selectors.domainBtn, "Domain", "Button");
     }
 
 
@@ -670,28 +672,6 @@ export class CoursePage extends AdminHomePage {
         console.log(course);
 
     }
-    async selectPortal() {
-        try {
-            const text = await this.page.innerText(this.selectors.domainSelectedText);
-            console.log(text);
-
-            if (text.includes('selected')) {
-                const dropdownItems = this.page.locator(this.selectors.domainDropdown);
-                await this.click(this.selectors.domainSelectedText, "dropdown", "button")
-                const dropdownValues = await this.page.locator(this.selectors.domainDropdownValue).allInnerTexts();
-                for (let index = 1; index < dropdownValues.length; index++) {
-                    const value = dropdownValues[index];
-                    await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
-                }
-
-            }
-        }
-        catch (error) {
-            console.log(error + " Portal selected")
-        }
-        const domainText = await this.page.innerText(this.selectors.domainInnerValue);
-        return domainText;
-    }
 
     async clickHere() {
         await this.mouseHover(this.selectors.clickHere, "Click Here");
@@ -816,5 +796,31 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.enforceSequence, "Enforce Sequence ", "Checkbox")
 
     }
+
+async selectPortal() {
+        try {
+            const text = await this.page.innerText(this.selectors.domainSelectedText);
+            console.log(text);
+
+            if (text.includes('selected')) {
+                const dropdownItems = this.page.locator(this.selectors.domainDropdown);
+                await this.click(this.selectors.domainSelectedText, "dropdown", "button")
+                const dropdownValues = await this.page.locator(this.selectors.domainDropdownValue).allInnerTexts();
+                for (let index = 1; index < dropdownValues.length; index++) {
+                    const value = dropdownValues[index];
+                    await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
+                }
+
+            }
+        }
+        catch (error) {
+            console.log(error + " Portal selected")
+        }
+        const domainText = await this.page.innerText(this.selectors.domainInnerValue);
+        return domainText;
+    }
+
+
+
 
 }

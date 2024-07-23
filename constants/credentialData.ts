@@ -30,5 +30,13 @@ export let credentials = {
         username:"admin",
         password:"Welcome1@"
     },
+    LEARNERPORTAL_1User:{
+        username:'johnMathew',
+        password:'Welcome1@'
+    },
+    LEARNERPORTAL_2User:{
+        username:'Retta44@gmail.com',
+        password:'Welcome1@',
+    }
 
 };
