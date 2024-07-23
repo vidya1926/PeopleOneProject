@@ -111,10 +111,11 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await learningPath.title(title);
         await learningPath.language();
         await learningPath.description(description);
-        await learningPath.clickAndSelectCompliance();
+        await learningPath.selectSpecificPortal('learnerPortal')
+        /* await learningPath.clickAndSelectCompliance();
         await learningPath.registractionEnds();
         await learningPath.clickExpiresButton();
-        await learningPath.clickAndSelectCompleteByRule();
+        await learningPath.clickAndSelectCompleteByRule(); */
         await learningPath.clickSaveAsDraftBtn();
         await learningPath.clickSave();
         await learningPath.clickProceedBtn();

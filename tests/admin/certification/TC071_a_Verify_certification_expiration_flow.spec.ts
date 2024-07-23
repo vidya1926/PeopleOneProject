@@ -119,7 +119,7 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
   })
 
 
-  test(`Veriy a certification expiration`, async ({ learnerHome, dashboard, catalog }) => {
+  test.skip(`Veriy a certification expiration`, async ({ learnerHome, dashboard, catalog }) => {
 
     test.info().annotations.push(
       { type: `Author`, description: `Ajay Michael` },

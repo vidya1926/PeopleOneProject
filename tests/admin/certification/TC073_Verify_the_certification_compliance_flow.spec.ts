@@ -71,4 +71,15 @@ test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
         await createCourse.verifySuccessMessage();
     })
 
+
+    test(`Test to execute CRON JOB`, async ({ }) => {
+
+        test.info().annotations.push(
+            { type: `Author`, description: `Ajay Michael` },
+            { type: `TestCase`, description: `Test to execute CRON JOB` },
+            { type: `Test Description`, description: `Verify the CRON Job` }
+        );
+
+
+    })
 })

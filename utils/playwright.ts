@@ -26,9 +26,9 @@ export abstract class PlaywrightWrapper {
         this.context = context;
         this.page.on("console", (message) => {
             if (message.text() === "customClickEvent") {
-              this.page.screenshot({ path: `test-results/${Math.floor(new Date().getTime() / 1000)}.png` });
+                this.page.screenshot({ path: `test-results/${Math.floor(new Date().getTime() / 1000)}.png` });
             }
-          });
+        });
 
     }
     /*
@@ -55,25 +55,25 @@ export abstract class PlaywrightWrapper {
     @data: Data to be typed
     */
 
-    
+
     async fillAndEnter(locator: string,
         name: string,
         data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
-            await this.page.fill(locator,data,{force:true})
+            await this.page.fill(locator, data, { force: true })
             await this.page.focus(locator)
             await this.page.keyboard.press("Enter");
 
         });
     }
-   
+
     async typeAndEnter(locator: string,
         name: string,
         data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
-            await this.page.keyboard.type(data,{delay:100});
+            await this.page.keyboard.type(data, { delay: 100 });
             await this.page.keyboard.press("Enter");
 
         });
@@ -117,7 +117,7 @@ export abstract class PlaywrightWrapper {
         return await this.page.locator(locator).innerText();
     }
 
-    async getTextContent(locator: string): Promise<string|null> {
+    async getTextContent(locator: string): Promise<string | null> {
         return await this.page.locator(locator).textContent();
     }
 
@@ -135,10 +135,10 @@ export abstract class PlaywrightWrapper {
         await this.page.waitForSelector('input')
     }
     async fetchattribute(locator: string, attName: string) {
-        const eleValue=await this.page.$(locator)
-        return  eleValue?.evaluate(node => node.getAttribute(attName))   
+        const eleValue = await this.page.$(locator)
+        return eleValue?.evaluate(node => node.getAttribute(attName))
     }
-    
+
     async multipleWindowsCount(): Promise<number> {
         const windowslength = this.page.context().pages().length;
         return windowslength;
@@ -152,16 +152,16 @@ export abstract class PlaywrightWrapper {
         await this.page.clickAndDelay(locator);
     }
 
-     async focusWindow(locator:string){
-           const newPage = this.context.waitForEvent('page');
-           this.page.locator(locator).click()
-            const newWindow=await newPage;       
-            await newWindow.waitForLoadState('load')
-            return await newWindow.title();
-        }
+    async focusWindow(locator: string) {
+        const newPage = this.context.waitForEvent('page');
+        this.page.locator(locator).click()
+        const newWindow = await newPage;
+        await newWindow.waitForLoadState('load')
+        return await newWindow.title();
+    }
 
 
-    async switchToWindow(windowTitle :any,locator:string ) {
+    async switchToWindow(windowTitle: any, locator: string) {
         const [newPage] = await Promise.all([
             this.context.waitForEvent('page'),
             this.page.locator(locator).click()
@@ -177,7 +177,7 @@ export abstract class PlaywrightWrapper {
         return null;
     }
 
-    async switchToWindowWithTitle(windowTitle: string,locator:string ) {
+    async switchToWindowWithTitle(windowTitle: string, locator: string) {
         const [multiPage] = await Promise.all([
             this.context.waitForEvent('page'),
             this.page.locator(locator)
@@ -244,7 +244,7 @@ export abstract class PlaywrightWrapper {
 
     async mouseHover(hoverLocator: string, Menu: string) {
         await test.step(`The pointer hovers over the ${Menu} element.  `, async () => {
-            await this.page.hover(hoverLocator,{force:true});
+            await this.page.hover(hoverLocator, { force: true });
         })
     }
 

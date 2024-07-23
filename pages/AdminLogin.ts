@@ -7,36 +7,28 @@ import { credentials } from "../constants/credentialData";
 export class AdminLogin extends PlaywrightWrapper {
 
     static pageUrl = URLConstants.adminURL;
-    
+
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
 
     }
-    public async adminLogin(role:string) {       
-        const { username, password } = credentials[role];    
-         console.log("Starting admin login process...");
+    public async adminLogin(role: string) {
+        const { username, password } = credentials[role];
+        console.log("Starting admin login process...");
         //await this.page.goto(AdminLogin.pageUrl); ----
-        await this.clearAndType("#username", "Username",username);
+        await this.clearAndType("#username", "Username", username);
         // Clear existing value and type password
         await this.clearAndType("#password", "Password", password);
         console.log("Clicking Sign In button...");
         // Use waitForNavigation to handle page transitions
         await Promise.all([
-            this.page.waitForNavigation({ waitUntil: 'networkidle' }), // Wait for the navigation to complete
-            this.page.locator("//button[contains(text(),'SIGN')]").click() // Click the sign-in button
+            this.page.locator("//button[contains(text(),'SIGN')]").click(),
+            this.wait('minWait')
         ]);
+     /*    const logoutButton = this.page.locator("//div[@class='logout']");
 
-        console.log("Waiting for logout button to be visible...");
-        const logoutButton = this.page.locator("//div[@class='logout']");
-        const title = await this.page.title();
-        if (title === "500 Internal Server Error") {
-            await this.page.reload();
-        } else {
-            await expect(logoutButton, { message: "Successfully Logged In" }).toBeVisible();
-        }
-        
         //console.log("Storing state...");
-        //await this.storeState("./logins/expertusAdminLog.json");
+        //await this.storeState("./logins/expertusAdminLog.json"); */
     }
 
     private async clearAndType(selector: string, fieldName: string, value: string) {

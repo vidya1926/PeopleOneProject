@@ -105,8 +105,8 @@ export class CoursePage extends AdminHomePage {
         instructorInput: "//input[contains(@id,'instructors') and (@placeholder='Search')]",
         instructorInputIndex: (index: number) => `(//input[contains(@id,'instructors') and (@placeholder='Search')])[${index}]`,
         //instance_Class: "//a[contains(@title,'Instance/Class')]", -->DOM Contented Changed 08-07-2024
-       // instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]", --> update on 18/07/2024
-        instance_Class:"//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class') or contains(@title,'Instance/Class')]",
+        // instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class')]", --> update on 18/07/2024
+        instance_Class: "//a[contains(@title,'Instance Class') or contains(@aria-label,'Instance/Class') or contains(@title,'Instance/Class')]",
         clickContentLibrary: "//span[text()='Add Content']//following::span[text()='Click here'][1]",
         allContents: "//i[@class='fa-duotone fa-square icon_16_1']",
         contentIndex: (index: number) => `(//i[contains(@class,'fa-duotone fa-square ico')])[${index}]`,
@@ -150,13 +150,15 @@ export class CoursePage extends AdminHomePage {
         addBtn: "//button[text()='Add']",
         certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']",
         accessBtn: "//span[text()='Access']",
-        accessCloseIcon: "//i[contains(@class,'fa-swap-opacity icon')]",
+        accessCloseIcon: "(//i[contains(@class,'fa-swap-opacity icon')])",
+        MultiaccessCloseIcon: "(//i[contains(@class,'fa-swap-opacity icon')])[2]",
         accessUserInput: "//label[text()='User']/parent::div/following-sibling::div//input",
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
         assessmentLabel: "//div[text()='Assessment']",
-        enforceSequence: `//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`
+        enforceSequence: `//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`,
+        learnerGroup: "div[id$='learner-group-list'] button div[class='filter-option-inner-inner']"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -482,8 +484,8 @@ export class CoursePage extends AdminHomePage {
         await this.wait('mediumWait');
 
         try {
-           // await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
-           await this.wait('mediumWait');
+            // await this.validateElementVisibility(this.selectors.willResolveLaterBtn, "Resolve Later");
+            await this.wait('mediumWait');
             if (await locator.isVisible({ timeout: 5000 })) {
                 await this.mouseHover(this.selectors.willResolveLaterBtn, "Resolve Later");
                 await this.click(this.selectors.willResolveLaterBtn, "Resolve Later", "Button");
@@ -655,7 +657,7 @@ export class CoursePage extends AdminHomePage {
             console.log(text);
 
             if (text.includes('selected')) {
-                const dropdownItems = this.page.locator(this.selectors.domainDropdown);
+                //const dropdownItems = this.page.locator(this.selectors.domainDropdown);
                 await this.click(this.selectors.domainSelectedText, "dropdown", "button")
                 const dropdownValues = await this.page.locator(this.selectors.domainDropdownValue).allInnerTexts();
                 for (let index = 1; index < dropdownValues.length; index++) {
@@ -762,7 +764,7 @@ export class CoursePage extends AdminHomePage {
     async clickAdd() {
         await this.validateElementVisibility(this.selectors.addBtn, "Add");
         await this.wait('mediumWait');
-       // await this.mouseHover(this.selectors.addBtn, "Add");
+        // await this.mouseHover(this.selectors.addBtn, "Add");
         await this.click(this.selectors.addBtn, "Add", "Button");
         await this.wait('minWait');
         await this.verification(this.selectors.certificationVerifyMessage, "created successfully");
@@ -778,9 +780,14 @@ export class CoursePage extends AdminHomePage {
     async addSingleLearnerGroup(data: any) {
         const closeIcon = this.page.locator(this.selectors.accessCloseIcon);
         const count = await closeIcon.count();
+        console.log("learner groups : " + count);
         for (let i = 1; i < count; i++) {
-            await this.page.locator(this.selectors.accessCloseIcon).nth(i).click({ force: true })
+            await this.mouseHover(this.selectors.MultiaccessCloseIcon, "close Icon")
+            await this.page.locator(this.selectors.MultiaccessCloseIcon).click({ force: true });
+            await this.wait('mediumWait');
         }
+        let learnerGroupValue = await this.getInnerText(this.selectors.learnerGroup)
+        console.log(learnerGroupValue);
         await this.type(this.selectors.accessUserInput, "User", data);
         await this.click(`//li[text()='${data}']`, "User", "List");
     }

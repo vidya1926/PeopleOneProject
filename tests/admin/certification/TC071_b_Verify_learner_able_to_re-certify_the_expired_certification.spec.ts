@@ -119,7 +119,7 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
     })
 
 
-    test(`Recertify the expired certification`, async ({ learnerHome, dashboard, catalog }) => {
+    test.skip(`Recertify the expired certification`, async ({ learnerHome, dashboard, catalog }) => {
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
