@@ -24,7 +24,7 @@ export class UserPage extends AdminHomePage {
         updateButton: "//button[text()='Update']",
         successMessage: "//div[@id='addedit-user-form-container']//h3[contains(text(),'successfully')]",
         employmentTypeInput:"//label[text()='employment type']//parent::div//input",
-        commonOptionBtn:(value:string,data:string)=>`//div[@id='user-${value}-filter-lms-scroll-results']//li`,
+        commonOptionBtn:(value:string,data:string)=>`(//div[@id='user-${value}-filter-lms-scroll-results']//li)[1]`,
         departmentType:`//label[text()='department']/following::div[@id='user-department']//input`,
         timeZone:`(//div[@id='wrapper-user-timezone']//button)[1]`,
         timeZoneSearch:`//footer/following-sibling::div//input`,
@@ -32,6 +32,14 @@ export class UserPage extends AdminHomePage {
         hireDate:`//input[@id='user-hiredate-input']`,
         userType:`//input[@id='user-usertype-filter-field']`,
         jobtitle:`//input[@id='user-jobtitle-filter-field']`,
+        manager:`//input[@id='user-manager-filter-field']`,
+        othermanager:`//input[@id='user-other-managers-filter-field']`,
+        searchOtherManager:`//div[@id='user-other-managers']`,
+        otherMgrOption:(index:number)=>`(//div[@id='user-other-managers']/following::li)[${index}]`,
+        language:`//label[contains(text(),'Language')]/following::div[@id='wrapper-user-language']`,
+        searchLanguage:`//footer/following::div/input`,
+        courseLanguageLink: (language: string) => `//label[text()='Language']//following::span[text()='${language}']`,
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -84,6 +92,31 @@ export class UserPage extends AdminHomePage {
         await this.mouseHover(this.selectors.commonOptionBtn(userType,data),data);
         await this.click(this.selectors.commonOptionBtn(userType,data),data,"List");
     }
+    async selectManager(manager:string){
+        let data =getRandomItemFromFile("../data/peopleDirectManager.json");
+        await this.typeAndEnter(this.selectors.manager,"User Type",data)
+        await this.mouseHover(this.selectors.commonOptionBtn(manager,data),data);
+        await this.click(this.selectors.commonOptionBtn(manager,data),data,"List");
+    }
+
+    async selectOtherManager(){
+      //  let data =getRandomItemFromFile("../data/peopleOtherManager.json");
+        await this.click(this.selectors.othermanager,"OtherManager","input field")
+    //    await this.typeAndEnter(this.selectors.searchOtherManager,"OtherManagers",data)
+        const count=await this.page.locator("//div[@id='user-other-managers']/following::li").count();
+        const randomIndex = Math.floor(Math.random() * count) + 1;
+        await this.mouseHover(this.selectors.otherMgrOption(randomIndex),"OtherManager");
+        await this.click(this.selectors.otherMgrOption(randomIndex),"OtherManager","List");
+    }
+
+    async selectLanguage(language: string) {
+        await this.click(this.selectors.language, "Language", "Field");
+        await this.type(this.selectors.searchLanguage, "Input Field", language);
+        await this.mouseHover(this.selectors.courseLanguageLink(language), language);
+        await this.click(this.selectors.courseLanguageLink(language), language, "Button");
+
+    }
+
 
     
     async selectjobTitle(jobTitle:string){

@@ -45,6 +45,7 @@ test.skip(`Create user as  People Admin `, async ({ adminHome, createUser }) => 
         await createUser.enter("user-zipcode", zipcode);
         await createUser.enter("user-mobile", FakerData.getMobileNumber());
         await createUser.clickRolesButton("Manager")
+        await createUser.selectLanguage("English")
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();

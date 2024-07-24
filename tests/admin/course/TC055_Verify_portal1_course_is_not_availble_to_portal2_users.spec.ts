@@ -23,7 +23,7 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse,learn
     await createCourse.getCourse();
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription(description);
-    await createCourse.selectDomainOption("LearnerPortal");
+    await createCourse.selectDomainOption("LearnerPortal2");
     await createCourse.contentLibrary();
     await createCourse.clickHere();
     await createCourse.selectImage();
