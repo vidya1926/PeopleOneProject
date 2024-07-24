@@ -35,7 +35,7 @@ test(`TC057_E-learning course with Complete by rule`,async({adminHome,createCour
     await editCourse.addLearnerGroup();
     await editCourse.clickAccessSetting();
     await editCourse.setCourseMandatory();
-    
+    await editCourse.saveAccess();    
 })
     
 

@@ -88,7 +88,7 @@ test(`Login as a learner`, async ({ learnerHome, catalog,dashboard }) => {
 
     );
 
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(title);

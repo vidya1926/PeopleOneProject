@@ -1,4 +1,4 @@
-import { Page, BrowserContext } from "@playwright/test";
+import { Page,expect, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
@@ -39,14 +39,9 @@ export class CatalogPage extends LearnerHomePage {
         recertifyBtn: "//span[text()='Recertify']",
         shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
         addedToCartBtn:"//span[text()='Added to Cart']",
-        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']"
-        
-
-
-        //`//button[@title='Play Video']//span[1]`
-
-
-    };
+        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']",
+        resultNotFound:`(//div[@id='most_recent']/following::div[text()='No results found.'])[1]`
+  };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -57,6 +52,7 @@ export class CatalogPage extends LearnerHomePage {
         await this.type(searchSelector, "Search Field", data);
         await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
         await this.page.waitForTimeout(10000);
+
     }
 
     async mostRecent() {
@@ -181,15 +177,20 @@ export class CatalogPage extends LearnerHomePage {
         const randomTag = tags[randomIndex];
         await this.click(this.selectors.searchButton, "Tagname", "Field")
         await this.type(this.selectors.selectTagnames, "Tagname", randomTag)
+        console.log(randomTag)
         return randomTag;
     }
 
     async selectresultantTags() {
+        
         await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
+        await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
         await this.click(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags", "selected")
+  
     }
 
     async clickApply() {
+        await this.mouseHover(this.selectors.applyButton, "Apply")
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
 
@@ -260,6 +261,11 @@ export class CatalogPage extends LearnerHomePage {
         await this.click("", "", "")
     }
 
+
+    public async verifyCourse(courseName:string){
+         const result=   await this.getInnerText(this.selectors.resultNotFound);
+         expect(result).not.toContain(courseName);
+    }
 
 
 

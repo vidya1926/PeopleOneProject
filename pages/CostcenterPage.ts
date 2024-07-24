@@ -7,8 +7,12 @@ export class CostcenterPage extends LearnerHomePage {
         ...this.selectors,
         orderSummaryLabel: "//div[text()='order summary']",
         okButton: `//p[text()='Add to cart']/following::button[text()='Ok']`,
+        supportOkButton:`//button[text()='Ok']`,
         firstName: `//label[text()='First Name']/following-sibling::input`,
         lastName: `//label[text()='Last Name']/following-sibling::input`,
+        savedAddress:`(//label[text()='Saved Address']/following::button)[1]`,
+        searchAddress:`//footer/following::input`,
+        selectAddress:(addressName:string)=>`//li//span[text()='${addressName}']`,
         address: `//label[text()='Address1']/following-sibling::input`,
         countrySelect: `//label[text()='Country']/following::button[@data-id='country']`,
         ddOption: `//div[@class='dropdown-menu show']//input[@aria-label='Search']`,
@@ -25,7 +29,7 @@ export class CostcenterPage extends LearnerHomePage {
         poNumber: `//label[text()='PO number:']/following-sibling::input`,
         termsAndCondition: `//label[text()=' I agree to the ']/i[2]`,
         checkOut: `//button[text()='check out']`,
-        savedAddress: `//label[text()='Address Name']/following::div/input`,
+        chkOutAddress: `//label[text()='Address Name']/following::div/input`,
         createButton: `//button[text()='create']`,
         successMsg: `//h3[contains(text(),' Thank you for your order')]`,
         costCenterInput: "//label[text()='Cost center:']//following-sibling::input",
@@ -82,17 +86,24 @@ export class CostcenterPage extends LearnerHomePage {
         await this.click(this.selectors.termsAndCondition, "TermsandCondition", "Checkbox");
     }
 
+    public async selectSavedAddressDropdown(address:string){
+        await this.click(this.selectors.savedAddress,"Address","Dropdown")
+        await this.type(this.selectors.searchAddress,"Address",address)
+        await this.click(this.selectors.selectAddress(address),"Saved Address","Dropdown")
+    }
 
 
-    public async clickCheckout() {
+    public async clickCheckout(address:string) {
         await this.validateElementVisibility(this.selectors.checkOut, "checkout",);
         await this.click(this.selectors.checkOut, "checkout", "button");
         await this.wait('mediumWait');
         const popup = this.page.locator(this.selectors.addressYouEnteredPopup);
         if(await popup.isVisible()){
-            await this.type(this.selectors.savedAddress,"Address Name",FakerData.addressName());
+            await this.type(this.selectors.chkOutAddress,"Address Name",FakerData.addressName());
+            await this.click(this.selectors.createButton,"Create","Button");
             await this.click(this.selectors.createButton, "Create", "button");
-            await this.clickCheckout();
+        }else{
+            await this.click(this.selectors.supportOkButton,"ContactSupport"," OK Button")
         }
     }
 

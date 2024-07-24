@@ -34,6 +34,6 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
     await learnerHome.verifySequence(title,2);
     })

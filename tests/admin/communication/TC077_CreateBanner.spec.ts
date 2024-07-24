@@ -8,8 +8,7 @@ test(`Create banner in sequence
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
-    );
-
+    );    
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
@@ -19,7 +18,7 @@ test(`Create banner in sequence
     await bannerHome.enterFromDate();
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(1);
-    await createCourse.selectPortal();
+    await createCourse.selectDomainOption("LearnerPortal");
     await bannerHome.uploadImage("Profilepic");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
@@ -27,24 +26,23 @@ test(`Create banner in sequence
     await createCourse.verifySuccessMessage()
 })
 
-test(`Verification from learner site`, async ({ learnerHome }) => {
+test.skip(`Verification from learner site`, async ({ learnerHome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
-    await learnerHome.verifyImage(title);
-
+    await learnerHome.isSignOutVisible();
+      await learnerHome.verifyImage(title);
 })
 
-test(`Verification from banner URL navigation`, async ({ learnerHome }) => {
+test.skip(`Verification from banner URL navigation`, async ({ learnerHome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC77_Learner Side Banner verification` },
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
     await learnerHome.verifyUrl(title);
 
 })

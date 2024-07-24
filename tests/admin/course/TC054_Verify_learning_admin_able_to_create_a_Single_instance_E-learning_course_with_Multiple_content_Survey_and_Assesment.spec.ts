@@ -41,7 +41,7 @@ test(`TC0054_Learner Verification For Video Sequencing`,async({learnerHome,catal
         { type: `TestCase`, description: `TC054_Learner Side Course verification` },
         { type:`Test Description`, description: `Verify that content sequence flow`}
     ); 
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","Portal1");
     await learnerHome.clickCatalog();
     await catalog.searchCatalog(courseName);
     await catalog.clickEnrollButton();

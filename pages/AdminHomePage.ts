@@ -24,6 +24,7 @@ export class AdminHomePage extends AdminLogin {
         metaECommerceLink: "//a[text()='E-Commerce']",
         metaGeneralLink: "//a[text()='General']",
         adminGroupLink: "//a[text()='Admin Group']",
+        learnerGrouplink:`//a[text()='Learner Group']`,
         locationLink: "//a[text()='Location']",
         commerceMenu: `//span[text()='Commerce']`,
         learningPathLink: "//a[text()='Learning Path']",
@@ -223,6 +224,13 @@ export class AdminHomePage extends AdminLogin {
     public async adminGroup() {
         await this.click(this.selectors.adminGroupLink, "AdminGroup", "Link");
     }
+
+    
+    public async learnerGroup() {
+        await this.click(this.selectors.learnerGrouplink, "AdminGroup", "Link");
+    }
+
+
 
     public async locationLink() {
         await this.click(this.selectors.locationLink, "Location", "Link");

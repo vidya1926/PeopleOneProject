@@ -8,8 +8,6 @@ const courseName = FakerData.getCourseName();
 const instructorName = credentialConstants.INSTRUCTORNAME
 const price = FakerData.getPrice();
 
-
-
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
@@ -64,7 +62,7 @@ test(`Verification from learner site`, async ({ learnerHome, createCourse, catal
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","Portal1");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(courseName);
@@ -72,11 +70,12 @@ test(`Verification from learner site`, async ({ learnerHome, createCourse, catal
     await catalog.clickSelectcourse(courseName)
     await catalog.addToCart();
     await costCenter.clickOktoorder();
-    await costCenter.billingDetails("United States", "Alaska")
+    await costCenter.selectSavedAddressDropdown("Home")
+    // await costCenter.billingDetails("United States", "Alaska")
     await costCenter.paymentMethod("Credit Card");
     await costCenter.fillCreditDetails();
     await costCenter.clickTermsandCondition();
-    await costCenter.clickCheckout();
+    await costCenter.clickCheckout("HomeAddress");
     await costCenter.verifySuccessMsg()
 })
 test(`Commerce side Verification`, async ({ adminHome, costCenter, createCourse, commercehome }) => {

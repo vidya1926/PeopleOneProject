@@ -19,7 +19,7 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.enterFromDate();
     await bannerHome.enterTotodayDate();
     await bannerHome.selectSequence(2);
-    await createCourse.selectPortal();
+    await createCourse.selectDomainOption("LearnPortal");
     await bannerHome.uploadImage("Qeagle");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
@@ -33,6 +33,6 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC81_Learner Side Banner sequence verification` },
         { type: `Test Description`, description: `Learner Side Banner sequence verification` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal2");
     await learnerHome.verifySequence(title,2);
 })

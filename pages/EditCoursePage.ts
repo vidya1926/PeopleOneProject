@@ -35,8 +35,8 @@ export class EditCoursePage extends AdminHomePage {
         otherMeeting:`//label[text()='Session Type']/following::div//span[text()='other Meetings']`,
         attendeeUrl:`//label[text()='Attendee URL']/following-sibling::input`,
         presenterUrl:`//label[text()='Presenter URL']/following-sibling::input`,
-        addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`
-        
+        addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`,
+        saveAccessBtn:`//button[@id='add-language-btn' and text()='Save']`
         //`(//label[text()='session add/delete']/following::div//i)[2]`
  
     };
@@ -79,30 +79,26 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.okBtnCertificate, "OK", "Button");
     }
 
-
-
     async clickAccesstab() {
         await this.wait("minWait")
-
         await this.click(this.selectors.accessTab, "Access", "Button")
     }
-
     async addLearnerGroup() {
         await this.click(this.selectors.learnerGroup, "LearnerGroup", "Dropdown")
-        await this.type(this.selectors.learnerGropSearch, "LG", "Option")
+        await this.type(this.selectors.learnerGropSearch, "LG", "Learner")
         await this.click(this.selectors.learnerGroupOption, "LG", "Option")
         await this.click(this.selectors.closeBtn, "Close", "Button")
     }
-
     async clickAccessSetting() {
         await this.click(this.selectors.accessSetting, "Access Setting", "Button")
     }
-
     async setCourseMandatory() {
         await this.click(this.selectors.optionalGroup, "Group Access", "dropdown")
         await this.click(this.selectors.setMandatory, "Mandatory", "Option")
     }
-
+    async saveAccess(){
+        await this.click(this.selectors.saveAccessBtn,"Save","Button")
+    }
 
     async selectTimeZone(country: string) {
         await this.click(this.selectors.timeZone, "TimeZone", "Text Field")
@@ -111,7 +107,5 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
     
-    
-
-   
+       
 }

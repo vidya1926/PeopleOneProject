@@ -1,3 +1,4 @@
+import { getCurrentDateFormatted } from "../utils/fakerUtils";
 import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, Page } from "@playwright/test";
@@ -23,11 +24,14 @@ export class UserPage extends AdminHomePage {
         updateButton: "//button[text()='Update']",
         successMessage: "//div[@id='addedit-user-form-container']//h3[contains(text(),'successfully')]",
         employmentTypeInput:"//label[text()='employment type']//parent::div//input",
-        commonOptionBtn:(value:string)=>`//div[@id='user-department-filter-lms-scroll-results']//li`,
+        commonOptionBtn:(value:string,data:string)=>`//div[@id='user-${value}-filter-lms-scroll-results']//li`,
         departmentType:`//label[text()='department']/following::div[@id='user-department']//input`,
         timeZone:`(//div[@id='wrapper-user-timezone']//button)[1]`,
         timeZoneSearch:`//footer/following-sibling::div//input`,
-        selectlocationtz:(index:number,timeZone:string)=>`(//li/a/span[contains(text(),'${timeZone}')])[${index}]`
+        selectlocationtz:(index:number,timeZone:string)=>`(//li/a/span[contains(text(),'${timeZone}')])[${index}]`,
+        hireDate:`//input[@id='user-hiredate-input']`,
+        userType:`//input[@id='user-usertype-filter-field']`,
+        jobtitle:`//input[@id='user-jobtitle-filter-field']`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -67,12 +71,28 @@ export class UserPage extends AdminHomePage {
         await this.type(this.selectors.employmentTypeInput,"Employment Type",data)
         await this.click(this.selectors.commonOptionBtn(data),data,"List");
     }
-    async selectDepartmentType(){
+    async selectDepartmentType(dpmtType:string){
         let data =getRandomItemFromFile("../data/peopleDepartmentData.json");
         await this.typeAndEnter(this.selectors.departmentType,"Department Type",data)
-        await this.mouseHover(this.selectors.commonOptionBtn(data),data);
-        await this.click(this.selectors.commonOptionBtn(data),data,"List");
+        await this.mouseHover(this.selectors.commonOptionBtn(dpmtType,data),data);
+        await this.click(this.selectors.commonOptionBtn(dpmtType,data),data,"List");
     }
+
+    async selectUserType(userType:string){
+        let data =getRandomItemFromFile("../data/peopleUserTypeData.json");
+        await this.typeAndEnter(this.selectors.userType,"User Type",data)
+        await this.mouseHover(this.selectors.commonOptionBtn(userType,data),data);
+        await this.click(this.selectors.commonOptionBtn(userType,data),data,"List");
+    }
+
+    
+    async selectjobTitle(jobTitle:string){
+        let data =getRandomItemFromFile("../data/peopleJobtitle.json");
+        await this.typeAndEnter(this.selectors.jobtitle,"User Type",data)
+        await this.mouseHover(this.selectors.commonOptionBtn(jobTitle,data),data);
+        await this.click(this.selectors.commonOptionBtn(jobTitle,data),data,"List");
+    }
+
 
     async clickSave() {
         await this.validateElementVisibility(this.selectors.saveButton, 'Save');
@@ -127,5 +147,10 @@ export class UserPage extends AdminHomePage {
         await this.click(this.selectors.selectlocationtz(randomIndex,timeStd),"TimeZone","Option")
 
     }
+
+    public async enterHireDate(){
+        await this.keyboardType(this.selectors.hireDate,getCurrentDateFormatted())
+    }
+
 
 }

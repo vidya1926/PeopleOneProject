@@ -140,8 +140,9 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
     public async verifyUrl(title:string) {
+        await this.verifyAllSequence(title)
         const srcUrl= await this.fetchattribute(this.selectors.bannerImg(title),'src')
-        await this.page.waitForLoadState();
+        await this.page.waitForLoadState();        
         await this.focusWindow(this.selectors.bannerimgLink(title))
     }
 

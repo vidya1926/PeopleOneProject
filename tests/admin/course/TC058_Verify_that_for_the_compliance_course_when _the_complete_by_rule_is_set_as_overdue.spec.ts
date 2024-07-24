@@ -23,10 +23,10 @@ test(`TC058_Verify_that_for_the_compliance_course_set_as_overdue`,async({adminHo
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :"+courseName);  
     await createCourse.clickregistrationEnds();
-    await createCourse.contentLibrary(); 
     await createCourse.selectCompleteByRule();
     await createCourse.selectDate();
     await createCourse.selectPostCompletebyOverDue();
+    await createCourse.contentLibrary(); 
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
@@ -34,12 +34,12 @@ test(`TC058_Verify_that_for_the_compliance_course_set_as_overdue`,async({adminHo
 })
 
 
-    test(`TC052_Learner Verification For Single Instance`,async({learnerHome,catalog})=>{
+    test(`TC058_Learner Verification For Single Instance`,async({learnerHome,catalog})=>{
 
         test.info().annotations.push(
             { type: `Author`, description: `Vidya` },
-            { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
-            { type:`Test Description`, description: `Verify that course should be created for Single instance` }
+            { type: `TestCase`, description: `TC058_Verify_that_for_the_compliance_course_set_as_overdue` },
+            { type:`Test Description`, description: `Verify_that_for_the_compliance_course_set_as_overdue` }
         ); 
         await learnerHome.learnerLogin("LEARNERUSERNAME");
         await learnerHome.clickCatalog();

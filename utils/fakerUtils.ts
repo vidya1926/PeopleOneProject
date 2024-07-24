@@ -177,7 +177,7 @@ export function getcardExpiryDate(): string {
     const month = String(date.getMonth() + 1).padStart(2, "0")// getMonth() is zero-based
     const year = date.getFullYear()
     const yy = year.toString().slice(2)
-    return `${month}${yy}`
+    return `${month}/${yy}`
 }
 export function getPonumber(): string {
     const startDigit = Math.floor(Math.random() * 3) + 12;

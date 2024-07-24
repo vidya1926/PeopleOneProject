@@ -82,7 +82,7 @@ test(`Login as a learner`, async ({ learnerHome, catalog }) => {
         { type: `Test Description`, description: `Verify from learner side` }
 
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(title);

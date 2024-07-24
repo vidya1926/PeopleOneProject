@@ -1,6 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData, getCurrentDateFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, getnextMonthFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
 
 
 export class CoursePage extends AdminHomePage {
@@ -30,7 +30,7 @@ export class CoursePage extends AdminHomePage {
         okBtn: "//span[contains(text(),'created successfully')]/following::button[text()='OK']",
         cancelBtn: "//label[text()='Category']/following::span[contains(@class,'lms-cat-cancel')]",
         providerDropdown: "(//label[text()='Provider']/following::button)[1]",
-        providerOption: (provider: string) => `//a[@class='dropdown-item active']//span[text()='${provider}']`,
+        providerOption: (provider: string) => `//a/span[text()='${provider}']`,
         totalDurationInput: "(//label[text()='Total Duration']/following::input)[1]",
         additionalInfoInput: "//div[@id='additional_information_description_id']//p",
         priceInput: "//label[text()='Price']/following::input[1]",
@@ -77,7 +77,7 @@ export class CoursePage extends AdminHomePage {
         tomorrowdate: "//td[@class='today day']/following-sibling::td[1]",
         nextMonth: `//div[@class='datepicker-days']//th[@class='next']`,
         calanderIcon: "(//label[text()='Date']//following::button[contains(@class,'calendaricon')])[1]",
-
+        registrationEnd: `//div[@id='registration-ends']/input`,
         todayDate: "td[class='today day']",
         randomDate: `(//td[@class='day']/following-sibling::td)[1]`,
         seatMaxInput: "//label[text()='Seats-Max']/following-sibling::input",
@@ -118,8 +118,11 @@ export class CoursePage extends AdminHomePage {
         //domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
-        portalDropdown: `//button[@data-id='banner_portal_id']`,
-        portalOption: (index: string) => `(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
+        portalDropdown:`(//label[text()='Domain']/following::div)[1]`,
+        allPortalOptions:`//label[text()='Domain']/following::div[@class='dropdown-menu show']//a`,
+        portalOption:(index:string)=>`(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
+        domainNameOption: (portalName: string) => `//a[@class='dropdown-item']//span[text()='${portalName}']`,
+        portal:`(//label[text()='Domain']/following::div[@id='wrapper-user-portals']//button)[1]`,
         image: "(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
         httpsInput: "input[id=content_url]",
@@ -227,6 +230,21 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.portalOption(randomIndex), "Domain Name", "Button");
     }
 
+    async selectDomainOption(portalName:string) {
+    await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
+       for( const options of await this.page.locator(this.selectors.allPortalOptions).all())
+          {
+           const value= await options.innerText();    
+           console.log(value)
+           if (value !== portalName) {
+            await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
+        }
+            }
+    
+    }
+
+
+
     async selectLanguage(language: string) {
         await this.click(this.selectors.courseLanguagesWrapper, "Language", "Field");
         await this.type(this.selectors.courseLanguageInput, "Input Field", language);
@@ -300,6 +318,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.complianceOption, "Compaliance", "Field");
     }
     async selectCompleteByRule() {
+        await this.validateElementVisibility(this.selectors.completeByRule, "CompleteByRule")
+        await this.mouseHover(this.selectors.completeByRule, "CompleteByRule");
         await this.click(this.selectors.completeByRule, "CompleteByRule", "Field");
         await this.click(this.selectors.completeByRuleOption, "CompleteByRule Option", "Field");
     }
@@ -370,6 +390,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.tomorrowdate, "Tomorrow", "Field")
     }
     async selectDate() {
+
         await this.click(this.selectors.CourseCalendaricon, "Date", "Field");
         await this.wait("minWait")
         await this.click(this.selectors.nextMonth, "Next", "button")
@@ -377,7 +398,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.randomDate, "RandomDate", "Field")
     }
     async clickregistrationEnds() {
-        await this.type(this.selectors.registrationEnd, "Enter Date", getCurrentDateFormatted())
+        await this.validateElementVisibility(this.selectors.registrationEnd, "Enter Date")
+        await this.keyboardType(this.selectors.registrationEnd, getCurrentDateFormatted())
     }
 
     // async selectLocation(locationName: string) {
@@ -688,7 +710,7 @@ export class CoursePage extends AdminHomePage {
     async selectMeetingType(instructorName: string, sessionName: string, index: number) {
         //  const sessiontype = this.page.locator(this.selectors.selectType);
         const pickRandomTime = async () => {
-            const timeElements = await this.page.locator(`(//ul[@class='ui-timepicker-list'])[${index}]/li`).count();
+            const timeElements = await this.page.locator(`(//ul[@class='ui-timepicker-list'])[1]/li`).count();
             const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
             return randomIndex;
         };

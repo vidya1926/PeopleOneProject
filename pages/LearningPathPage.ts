@@ -16,13 +16,13 @@ export class LearningPathPage extends AdminHomePage {
         saveBtn: "//button[@id='program-btn-save']",
         proceedBtn: "//button[text()='Yes, Proceed']",
         //addCourseBtn:"//button[text()='Add Selected Course']",
-        addCourseBtn: "//button[text()=' Add Course']",  //-->changed on 05/07/2024
+        addCourseBtn: "(//button[text()=' Add Course'])[1]",  //-->changed on 05/07/2024
         addCourseCheckBox: "//i[contains(@class,'fa-duotone fa-square icon')]",
         courseChexbox: (course: string) => `(//div[text()='${course}']//following::i[contains(@class,'square icon')])[1]`,
         checkBox: (index: string) => `(//i[contains(@class,'fa-duotone fa-square icon')])[${index}]`,
         addSelectedCourseBtn: "//button[text()='Add Selected Course']",
         detailsTab: "//button[text()='Details']",
-        catalogBtn: "//label[@for='publishedcatalog']/i[contains(@class,'fa-circle icon')]",
+        catalogBtn: "(//label[@for='publishedcatalog']/i[contains(@class,'fa-circle icon')])[1]",
         updateBtn: "//button[text()='Update']",
         editLearningPathBtn: "//a[text()='Edit Learning Path']",
         addCourseSearchInput: "input[id^='program-structure-title-search']",
