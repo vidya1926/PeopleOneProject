@@ -84,11 +84,11 @@ async function updatetableForAnnoncement() {
         const newTime = addMinutes(subDays(currentTime, 1), 15);
         const formattedNewTime = format(newTime, 'yyyy-MM-dd HH:mm:ss');
         console.log('Formatted New Time (after 15 minutes):', formattedNewTime);
-        const banner = await dataBase.executeQuery(`SELECT * FROM iris.announcement ORDER BY id DESC LIMIT 10;`)
+        const banner = await dataBase.executeQuery(`SELECT * FROM iris.announcement ORDER BY id DESC LIMIT 10;`);
         console.log(banner);
         const idString = String(banner[0].id);
         console.log("Retrived Id = " + idString);
-        const updateBanner = await dataBase.executeQuery(`update iris.banner set date_activate='${formattedNewTime}',date_deactivate='${formattedNewTime}' where id=${idString};`)
+        const updateBanner = await dataBase.executeQuery(`update iris.banner set date_activate='${formattedNewTime}',date_deactivate='${formattedNewTime}' where id=${idString};`);
         console.log(updateBanner);
     } catch (error) {
         console.log("Not executed " + error);
@@ -97,20 +97,19 @@ async function updatetableForAnnoncement() {
 }
 
 async function updateCertificationComplianceFlow() {
-let retriveID = await dataBase.executeQuery(` SELECT * FORM iris.cron_master WHERE name = 'Autoregister' AND portal = '1';`)
-    /* select * from iris.cron_master where name = 'Autoregister' and portal = '1';
-    #retrive  id from select query
-update iris.cron_master set status = '1' where id = '8';
+    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM iris.cron_master WHERE name = 'Autoregister'`);
+    let retriveAutoRegisterID = String(AutoRegister[0].id);
+    console.log("Retrived registerId is : " + retriveAutoRegisterID);
+    await dataBase.executeQuery(`UPDATE iris.cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
 
-    select * from iris.cron_details where name = 'LearningPlan and Certification AutoRegister' and portal_id = 1;
-    #need to retrive id from select query
-update iris.cron_details set current_status = 'waiting', previous_status = 'NULL', status = '1' where id = '21';
-    SELECT * FROM iris.program_enrollment ORDER BY id DESC LIMIT 1;
-update iris.program_enrollment set completion_date = '2024-07-16 10:27:27'  where id = 61;
-update iris.cron_details set next_run = '2024-07-18 06:15:27', current_status = 'waiting', previous_status = 'processing'  where cron_id = 18;
-    select * from iris.program_enrollment where id = 61; */
+    let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM iris.cron_details WHERE name = 'LearningPlan and Certification AutoRegister' AND portal_id = 1;`);
+    let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
+    console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
+    let updateLearningPlan = await dataBase.executeQuery(`UPDATE iris.cron_details SET current_status = 'waiting', previous_status= '', status= '1' WHERE id = '${retriveLearningPlanId}';`);
+    console.log(updateLearningPlan);
+     
 
 
 }
 
-export { updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement }
+export { updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement, updateCertificationComplianceFlow }

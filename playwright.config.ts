@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 import { format } from 'date-fns';
 
-const timestamp = format(new Date(), 'yyyy/MM/dd');
+const timestamp = format(new Date(), 'MM/dd/yyyy');
 const reportDir = `./reporter/playwright-reports-${timestamp}`;
 export default defineConfig({
 
@@ -16,10 +16,10 @@ export default defineConfig({
   repeatEach: 0,
   reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   use: {
-    trace: 'on',
+    trace: 'off',
     headless: false,
     screenshot: "on",
-    video: 'off',
+    video: 'on',
     ignoreHTTPSErrors: true,
 
     //slowMo:2000,
