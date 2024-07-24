@@ -5,7 +5,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 const courseName  =FakerData.getCourseName();
 const description= FakerData.getDescription();
 //test.use({ storageState: "logins/expertuslearnerLog.json"})
-test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
+test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse,learningPath})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -23,8 +23,7 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse})=>{
     await createCourse.getCourse();
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription(description);
-    await createCourse.selectDomainOption("LeanerPortal");
-    await createCourse.selectPortal();
+    await createCourse.selectDomainOption("LearnerPortal");
     await createCourse.contentLibrary();
     await createCourse.clickHere();
     await createCourse.selectImage();
@@ -43,12 +42,12 @@ test(`Verify using learner login`, async({learnerHome,catalog})=>{
         { type:`Test Description`, description: `Verify portal1 course is not availble to portal2 users` }
         
     );
-
-    await learnerHome.learnerLogin("LEARNERPORTAL_2User","Portal1");
+    await learnerHome.learnerLogin("LEARNERPORTAL_2User","Portal2");
     await learnerHome.clickCatalog();
     console.log(courseName)
-    await catalog.searchCatalog(courseName);
-  
+    await catalog.searchCatalog(courseName);  
+    await catalog.verifyCourse(courseName);
+
 })
 
     

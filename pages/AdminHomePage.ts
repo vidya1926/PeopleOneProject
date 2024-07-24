@@ -1,4 +1,4 @@
-import { Page, BrowserContext } from "@playwright/test";
+import { Page, BrowserContext, expect } from "@playwright/test";
 import { PlaywrightWrapper } from "../utils/playwright";
 import { URLConstants } from "../constants/urlConstants";
 import { credentialConstants } from "../constants/credentialConstants";
@@ -13,8 +13,8 @@ export class AdminHomePage extends AdminLogin {
         menu: "//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
         learningMenu: "//span[text()='Learning']",
-        surveyMenu:"//span[text()='Survey']",
-        surveyLink:"//a[text()='Survey']",
+        surveyMenu: "//span[text()='Survey']",
+        surveyLink: "//a[text()='Survey']",
         courseLink: "//a[text()='Course']",
         createCourseBtn: "//button[text()='CREATE COURSE']",
         userMenu: "//a[text()='User']",
@@ -22,7 +22,7 @@ export class AdminHomePage extends AdminLogin {
         metaPeopleLink: "//a[text()='People']",
         metaLearningLink: "//a[text()='Learning']",
         metaECommerceLink: "//a[text()='E-Commerce']",
-        metaGeneralLink:"//a[text()='General']",
+        metaGeneralLink: "//a[text()='General']",
         adminGroupLink: "//a[text()='Admin Group']",
         learnerGrouplink:`//a[text()='Learner Group']`,
         locationLink: "//a[text()='Location']",
@@ -32,18 +32,17 @@ export class AdminHomePage extends AdminLogin {
         certificationLink: "//a[text()='Certification']",
         completionCertificationLink: "//a[text()='Completion Certificate']",
         //learningPathLink:"//a[text()='Learning Path']",       
-        communicationLink:"//span[text()='Communication']",
-        bannerMenu:`//a[text()='Banner']`,
-        createBannerbutton:`//button[text()='CREATE BANNER']`,
-        announcementMenu:`//a[text()='Announcement']`,
-        createAnnouncementbutton:`//button[text()='CREATE ANNOUNCEMENT']`,
-        contentMenu:`//a[text()='Content']`,
-        surveyQuestionsLink:"//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Questions']",
+        communicationLink: "//span[text()='Communication']",
+        bannerMenu: `//a[text()='Banner']`,
+        createBannerbutton: `//button[text()='CREATE BANNER']`,
+        announcementMenu: `//a[text()='Announcement']`,
+        createAnnouncementbutton: `//button[text()='CREATE ANNOUNCEMENT']`,
+        contentMenu: `//a[text()='Content']`,
+        surveyQuestionsLink: "//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Questions']",
         //surveyLink:"//span[text()='Survey']//parent::div/following-sibling::ul//a[text()='Survey']",
-        assessmentMenu:`//span[text()='Assessment']`,
-        assessmentQuestionLink:`//span[text()='Assessment']//parent::div/following-sibling::ul//a[text()='Questions']`,
-        assessmentLink:"//a[text()='Assessment']",
-
+        assessmentMenu: `//span[text()='Assessment']`,
+        assessmentQuestionLink: `//span[text()='Assessment']//parent::div/following-sibling::ul//a[text()='Questions']`,
+        assessmentLink: "//a[text()='Assessment']",
     };
 
 
@@ -92,8 +91,13 @@ export class AdminHomePage extends AdminLogin {
     }
     private async executeAfterLoad() {
         try {
-            console.log("Executing common method after page load...");
-            await this.isSignOut(); // Example: Check if sign-out link is visible after page load
+            const logoutButton = this.page.locator("//div[@class='logout']");
+            const title = await this.page.title();
+            if (title == " 500 Internal Server Error") {
+                await this.page.reload();
+            } else {
+                await expect(logoutButton, { message: "Successfully Logged In" }).toBeVisible();
+            }
         } catch (err) {
             console.error("Error executing common method after load:", err);
             throw err;
@@ -140,15 +144,15 @@ export class AdminHomePage extends AdminLogin {
     }
 
 
-    
+
     public async clickOnAssessmentLink() {
         await this.validateElementVisibility(this.selectors.assessmentLink, "Assessment");
         await this.click(this.selectors.assessmentLink, "Assessment", "Link");
     }
 
-    public async clickOnSurveyQuestionLink(){
-        await this.mouseHover(this.selectors.surveyQuestionsLink,"Questions");
-        await this.click(this.selectors.surveyQuestionsLink,"Questions","Link");
+    public async clickOnSurveyQuestionLink() {
+        await this.mouseHover(this.selectors.surveyQuestionsLink, "Questions");
+        await this.click(this.selectors.surveyQuestionsLink, "Questions", "Link");
     }
 
     public async assessmentMenu() {
@@ -158,9 +162,9 @@ export class AdminHomePage extends AdminLogin {
 
 
 
-    public async clickOnAssessmentQuestionLink(){
-        await this.mouseHover(this.selectors.assessmentQuestionLink,"Questions");
-        await this.click(this.selectors.assessmentQuestionLink,"Questions","Link");
+    public async clickOnAssessmentQuestionLink() {
+        await this.mouseHover(this.selectors.assessmentQuestionLink, "Questions");
+        await this.click(this.selectors.assessmentQuestionLink, "Questions", "Link");
     }
 
 
@@ -271,9 +275,9 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.createAnnouncementbutton, "Create Banner", "Button")
     }
 
-    public async clickContentmenu(){
-        await this.click(this.selectors.contentMenu,"Content","Link")
-        
+    public async clickContentmenu() {
+        await this.click(this.selectors.contentMenu, "Content", "Link")
+
     }
 
 }

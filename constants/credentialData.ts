@@ -30,6 +30,10 @@ export let credentials = {
         username:"admin",
         password:"Welcome1@"
     },
+    PEOPLEADMIN:{
+        username:'peopleadmin',
+        password:'Welcome1@'
+    },
     LEARNERPORTAL_1User:{
         username:'johnMathew',
         password:'Welcome1@'
@@ -38,5 +42,4 @@ export let credentials = {
         username:'Retta44@gmail.com',
         password:'Welcome1@',
     }
-
 };

@@ -37,7 +37,7 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
         { type: `TestCase`, description: `TC052_Learner Side Course Enrollment` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","Portal1");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(courseName);

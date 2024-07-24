@@ -63,15 +63,13 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
     })
 
     test(`Login as a learner`, async ({ learnerHome, catalog }) => {
-
-
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `Login as a learner` },
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.learnerLogin("LEARNERUSERNAME");
+        await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);

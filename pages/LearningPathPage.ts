@@ -49,8 +49,10 @@ export class LearningPathPage extends AdminHomePage {
         recertificationAddCourse: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()=' Add Course']",
         recertificationSaveBtn: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()='SAVE']",
         verifyRecertificationCourse: (course: string) => `//label[text()='Recertification ']/parent::div//following-sibling::div//span[text()='${course}']`,
-        usCurrency:"//span[text()='US Dollar']"
-
+        usCurrency: "//span[text()='US Dollar']",
+        domainDropdown: "//a[@class='dropdown-item selected']",
+        domainDropdownValue: "//label[text()='Domain']/following-sibling::div//div[contains(@class,'dropdown-menu')]//span[@class='text']",
+        domainSelectedText: "//div[contains(text(),'selected')]",
 
     };
     async clickCreateLearningPath() {
@@ -87,7 +89,22 @@ export class LearningPathPage extends AdminHomePage {
     async description(data: string) {
         await this.type(this.selectors.description, "Description", data)
     }
+    async selectSpecificPortal(portal:string) {
+        const text = await this.page.innerText(this.selectors.domainSelectedText);
+        console.log(text);
+        if (text.includes('selected')) {
+            //const dropdownItems = this.page.locator(this.selectors.domainDropdown);
+            await this.click(this.selectors.domainSelectedText, "dropdown", "button")
+            const dropdownValues = await this.page.locator(this.selectors.domainDropdownValue).allInnerTexts();
+            for (let index = 0; index < dropdownValues.length; index++) {
+                const value = dropdownValues[index];
+                if (value !== portal) {
+                    await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
+                }
+            }
 
+        }
+    }
 
     async clickSave() {
         await this.click(this.selectors.saveBtn, "Save", "Button");
@@ -110,7 +127,7 @@ export class LearningPathPage extends AdminHomePage {
         //"//input[contains(@id,'program-structure-title-search')]"
         const addCourseInput = this.page.locator(this.selectors.addCourseSearchInput).last();
         await addCourseInput.focus(),
-        await this.page.keyboard.type(data, { delay: 150 })
+            await this.page.keyboard.type(data, { delay: 150 })
         await this.page.keyboard.press('Enter');
 
         await this.wait('minWait');
@@ -156,10 +173,10 @@ export class LearningPathPage extends AdminHomePage {
     async clickCurrency() {
         await this.click(this.selectors.currencyButton, "Currency", "Button");
         //const count = await this.page.locator(this.selectors.currencyCount).count();
-       // const randomCount = Math.floor(Math.random() * (count)) + 1;
+        // const randomCount = Math.floor(Math.random() * (count)) + 1;
         //await this.click(this.selectors.currencyIndex(randomCount), "Currency", "DropDown")
         await this.click(this.selectors.usCurrency, "US Dollar", "DropDown")
-        
+
     }
 
     async clickUpdateBtn() {
@@ -178,7 +195,7 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async clickSaveAsDraftBtn() {
-        
+
         await this.mouseHover(this.selectors.saveAsDraftCheckbox, "Save As Draft");
         await this.click(this.selectors.saveAsDraftCheckbox, "Save As Draft", "CheckBox");
     }

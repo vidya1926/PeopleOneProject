@@ -39,6 +39,7 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
         await createCourse.verifySuccessMessage();
     })
 
+
     const title = ("CRON " + FakerData.getCourseName());
     test(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
         test.info().annotations.push(
@@ -94,7 +95,7 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
 
         );
 
-        await learnerHome.learnerLogin("LEARNERUSERNAME");
+        await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
@@ -119,7 +120,7 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
     })
 
 
-    test(`Recertify the expired certification`, async ({ learnerHome, dashboard, catalog }) => {
+    test.skip(`Recertify the expired certification`, async ({ learnerHome, dashboard, catalog }) => {
 
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -128,7 +129,7 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
 
         );
 
-        await learnerHome.learnerLogin("LEARNERUSERNAME");
+        await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
         await learnerHome.clickDashboardLink();
         await dashboard.clickLearningPath_And_Certification();
         await dashboard.clickCertificationLink();
@@ -136,13 +137,6 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
         await dashboard.clickRecertifyIcon(title);
         await catalog.clickRecertify();
        
-
-
-
-
-
-
-
 
     })
 

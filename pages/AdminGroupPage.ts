@@ -11,7 +11,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
         searchUser: "#includeLearner-filter-field",      
         chooseUser:(user:string)=>`//li[text()=${user}]`,
         //(username:string)=>`//span[text()=${username}]/following::i[contains(@class,'fa-square icon')][1]
-        selectUser:`//div[contains(@class,'custom-control custom-chkbox')][2]`,
+        selectUser:`(//div[contains(@class,'custom-control custom-chkbox')])[2]`,
         clickSelectUser:`//button[text()='Select Users']`,
         selectUpdate:`//button[text()='Update']`,
         searchCustomerAdmin:`//button[text()='CREATE GROUP']/following::input[1]`,
@@ -38,6 +38,18 @@ export class AdminGroupPage extends PlaywrightWrapper {
     public async clickLearningAdmin(){
         await this.click(this.selectors.clickAdminGroup("Learning admin"), "Learning Admin", "Button")
     }
+
+    
+    public async clickPeopleAdmin(){
+        await this.click(this.selectors.clickAdminGroup("People admin"), "People Admin", "Button")
+    }
+
+
+    public async clickCourseAdmin(){
+        await this.click(this.selectors.clickAdminGroup("Course creator admin"), "Course Admin", "Button")
+    }
+
+
     public async searchUser(data: string) {
         await this.typeAndEnter(this.selectors.searchUser, "Search User", data)
     

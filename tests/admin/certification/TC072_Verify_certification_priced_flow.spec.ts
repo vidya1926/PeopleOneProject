@@ -110,7 +110,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.learnerLogin("LEARNERUSERNAME");
+        await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
@@ -124,7 +124,7 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await costCenter.paymentMethod("Cost center");
         await costCenter.fillCostCenterInput();
         await costCenter.clickTermsandCondition();
-        await costCenter.clickCheckout();
+        await costCenter.clickCheckout("Home");
         await costCenter.verifySuccessMsg();
         await learnerHome.clickMyLearning();
         await learnerHome.clickDashboardLink();

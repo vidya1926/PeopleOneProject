@@ -115,7 +115,7 @@ test.describe(`TC070_Certification_with_multi_instance_course_is_attached.spec`,
 
         );
 
-        await learnerHome.learnerLogin("LEARNERUSERNAME");
+        await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);

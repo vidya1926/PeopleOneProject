@@ -1,4 +1,4 @@
-import { Page, BrowserContext } from "@playwright/test";
+import { Page,expect, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
@@ -39,14 +39,9 @@ export class CatalogPage extends LearnerHomePage {
         recertifyBtn: "//span[text()='Recertify']",
         shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
         addedToCartBtn:"//span[text()='Added to Cart']",
-        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']"
-        
-
-
-        //`//button[@title='Play Video']//span[1]`
-
-
-    };
+        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']",
+        resultNotFound:`(//div[@id='most_recent']/following::div[text()='No results found.'])[1]`
+  };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -266,6 +261,11 @@ export class CatalogPage extends LearnerHomePage {
         await this.click("", "", "")
     }
 
+
+    public async verifyCourse(courseName:string){
+         const result=   await this.getInnerText(this.selectors.resultNotFound);
+         expect(result).not.toContain(courseName);
+    }
 
 
 

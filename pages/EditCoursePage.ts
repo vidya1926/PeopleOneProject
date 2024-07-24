@@ -79,34 +79,26 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.okBtnCertificate, "OK", "Button");
     }
 
-
-
     async clickAccesstab() {
         await this.wait("minWait")
-
         await this.click(this.selectors.accessTab, "Access", "Button")
     }
-
     async addLearnerGroup() {
         await this.click(this.selectors.learnerGroup, "LearnerGroup", "Dropdown")
         await this.type(this.selectors.learnerGropSearch, "LG", "Learner")
         await this.click(this.selectors.learnerGroupOption, "LG", "Option")
         await this.click(this.selectors.closeBtn, "Close", "Button")
     }
-
     async clickAccessSetting() {
         await this.click(this.selectors.accessSetting, "Access Setting", "Button")
     }
-
     async setCourseMandatory() {
         await this.click(this.selectors.optionalGroup, "Group Access", "dropdown")
         await this.click(this.selectors.setMandatory, "Mandatory", "Option")
     }
-
     async saveAccess(){
         await this.click(this.selectors.saveAccessBtn,"Save","Button")
     }
-
 
     async selectTimeZone(country: string) {
         await this.click(this.selectors.timeZone, "TimeZone", "Text Field")
@@ -115,7 +107,5 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
     
-    
-
-   
+       
 }

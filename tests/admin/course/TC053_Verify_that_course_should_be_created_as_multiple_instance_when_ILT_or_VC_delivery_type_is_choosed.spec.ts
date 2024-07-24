@@ -77,7 +77,7 @@ test(`TC053_Learner Verification For Single Instance`,async({learnerHome,catalog
         { type: `TestCase`, description: `TC053_Learner Side Course verification` },
         { type:`Test Description`, description: `Verify that course should be created for Multiple instance` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
     await learnerHome.clickCatalog();
     await catalog.clickFilter();
     await catalog.selectresultantTags();

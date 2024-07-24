@@ -96,5 +96,21 @@ async function updatetableForAnnoncement() {
 
 }
 
+async function updateCertificationComplianceFlow() {
+let retriveID = await dataBase.executeQuery(` SELECT * FORM iris.cron_master WHERE name = 'Autoregister' AND portal = '1';`)
+    /* select * from iris.cron_master where name = 'Autoregister' and portal = '1';
+    #retrive  id from select query
+update iris.cron_master set status = '1' where id = '8';
+
+    select * from iris.cron_details where name = 'LearningPlan and Certification AutoRegister' and portal_id = 1;
+    #need to retrive id from select query
+update iris.cron_details set current_status = 'waiting', previous_status = 'NULL', status = '1' where id = '21';
+    SELECT * FROM iris.program_enrollment ORDER BY id DESC LIMIT 1;
+update iris.program_enrollment set completion_date = '2024-07-16 10:27:27'  where id = 61;
+update iris.cron_details set next_run = '2024-07-18 06:15:27', current_status = 'waiting', previous_status = 'processing'  where cron_id = 18;
+    select * from iris.program_enrollment where id = 61; */
+
+
+}
 
 export { updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement }
