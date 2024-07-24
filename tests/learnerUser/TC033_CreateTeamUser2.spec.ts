@@ -6,8 +6,8 @@ import { FakerData } from '../../utils/fakerUtils';
 test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create Team User1` },
-        { type: `Test Description`, description: `Verify that user is created as Team User1` }
+        { type: `TestCase`, description: `Create Team User2` },
+        { type: `Test Description`, description: `Verify that user is created as Team User2` }
     );   
 
         await adminHome.loadAndLogin("PEOPLEADMIN");
@@ -21,7 +21,7 @@ test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) =
         await createUser.enter("username","Team__User2");
         await createUser.enter("user-password", "Welcome1@");
         await createUser.selectLanguage("English")
-        await createUser.selectOtherManager("other-managers");
+        await createUser.selectOtherManager();
         await createCourse.selectDomainOption("LearnerPortal")
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");
