@@ -96,7 +96,7 @@ async function updatetableForAnnoncement() {
 
 }
 
-async function updateCertificationComplianceFlow() {
+ async function updateCertificationComplianceFlow() {
     let AutoRegister = await dataBase.executeQuery(` SELECT * FROM iris.cron_master WHERE name = 'Autoregister'`);
     let retriveAutoRegisterID = String(AutoRegister[0].id);
     console.log("Retrived registerId is : " + retriveAutoRegisterID);
@@ -107,7 +107,7 @@ async function updateCertificationComplianceFlow() {
     console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
     let updateLearningPlan = await dataBase.executeQuery(`UPDATE iris.cron_details SET current_status = 'waiting', previous_status= '', status= '1' WHERE id = '${retriveLearningPlanId}';`);
     console.log(updateLearningPlan);
-     
+
 
 
 }

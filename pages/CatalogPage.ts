@@ -1,4 +1,4 @@
-import { Page,expect, BrowserContext } from "@playwright/test";
+import { Page, expect, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
@@ -38,10 +38,12 @@ export class CatalogPage extends LearnerHomePage {
         expiredContent: "//span[text()='Expired']",
         recertifyBtn: "//span[text()='Recertify']",
         shoppingCardIcon: "//div[@aria-label='shopping cart']//i[contains(@class,'cart-shopping')]",
-        addedToCartBtn:"//span[text()='Added to Cart']",
-        proceedToCheckoutBtn:"//button[text()=' Proceed to checkout']",
-        resultNotFound:`(//div[@id='most_recent']/following::div[text()='No results found.'])[1]`
-  };
+        addedToCartBtn: "//span[text()='Added to Cart']",
+        proceedToCheckoutBtn: "//button[text()=' Proceed to checkout']",
+        resultNotFound: `(//div[@id='most_recent']/following::div[text()='No results found.'])[1]`,
+        checkBoxandRadioBtn:`//i[contains(@class,'fa-square icon') or contains(@class,'fa-circle icon') ]`,
+        assessmentDropdown:(index:string)=>`(//span[contains(text(),'Content')]//following::button[@data-bs-toggle="dropdown"])[${index}]`,
+    };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -182,11 +184,11 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async selectresultantTags() {
-        
+
         await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
         await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
         await this.click(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags", "selected")
-  
+
     }
 
     async clickApply() {
@@ -222,9 +224,9 @@ export class CatalogPage extends LearnerHomePage {
 
     }
 
-    async verifyAddedToCart(){
-        await this.validateElementVisibility(this.selectors.addedToCartBtn,"Added to Cart");
-        await this.verification(this.selectors.addedToCartBtn,"Added to Cart")
+    async verifyAddedToCart() {
+        await this.validateElementVisibility(this.selectors.addedToCartBtn, "Added to Cart");
+        await this.verification(this.selectors.addedToCartBtn, "Added to Cart")
     }
 
     async clickContentLaunchButton() {
@@ -251,9 +253,9 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.shoppingCardIcon, 'Shopping Cart Icon', "Icon");
     }
 
-    public async clickProceedToCheckout(){
-        await this.validateElementVisibility(this.selectors.proceedToCheckoutBtn,"Proceed To Checkout");
-        await this.click(this.selectors.proceedToCheckoutBtn,"Proceed To Checkout","Button");
+    public async clickProceedToCheckout() {
+        await this.validateElementVisibility(this.selectors.proceedToCheckoutBtn, "Proceed To Checkout");
+        await this.click(this.selectors.proceedToCheckoutBtn, "Proceed To Checkout", "Button");
     }
 
     public async handlingAdditionalContents() {
@@ -262,9 +264,18 @@ export class CatalogPage extends LearnerHomePage {
     }
 
 
-    public async verifyCourse(courseName:string){
-         const result=   await this.getInnerText(this.selectors.resultNotFound);
-         expect(result).not.toContain(courseName);
+    public async verifyCourse(courseName: string) {
+        const result = await this.getInnerText(this.selectors.resultNotFound);
+        expect(result).not.toContain(courseName);
+    }
+
+    public async writeContent() {
+        let checkBoxcount = await this.page.locator(this.selectors.checkBoxandRadioBtn).count();
+        for (let index = 0; index <= checkBoxcount; index++) {
+            await this.page.locator(this.selectors.checkBoxandRadioBtn).nth(index).click();
+            
+        }
+
     }
 
 

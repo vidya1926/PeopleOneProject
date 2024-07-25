@@ -10,7 +10,7 @@ let courseName2 = FakerData.getCourseName();
 const sessionName = FakerData.getSession();
 const instructorName = credentialConstants.INSTRUCTORNAME
 test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
-    test(`TC065 TP Prerequisite Course6- Elearning`, async ({ adminHome, createCourse, learningPath }) => {
+    test(`TC065 TP Prerequisite Course6- Elearning`, async ({ adminHome, createCourse ,learningPath}) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `TP Prerequisite Course6- Elearning` },
@@ -44,7 +44,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
             { type: `Test Description`, description: `Verify that course should be created course` }
         );
 
-
+      
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.menuButton();
         await adminHome.clickLearningMenu();
@@ -63,7 +63,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
 
     })
 
-    let title = FakerData.getCourseName();
+    let title = ("portal "+FakerData.getCourseName());
     test(`TC074_Verify_the_Enforce_Sequence_flow`, async ({ adminHome, learningPath, createCourse }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
@@ -108,22 +108,19 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
 
     })
 
-    test.skip(`Login as a learner`, async ({ learnerHome, catalog }) => {
+    test(`Login as a learner`, async ({ learnerHome, catalog }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `Login as a learner` },
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.learnerLogin("LEARNERPORTAL_User", "Portal1");
+        await learnerHome.learnerLogin("LEARNERUSERNAME","DefaultPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
-        await catalog.clickEnrollButton();
-        await catalog.clickViewCertificationDetails();
-       // await catalog.
-        
-
+        await catalog.verifyCourse(title);
+       
     })
 
 })

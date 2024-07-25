@@ -10,7 +10,7 @@ test(`TC_082_Verify the  announcement is created`, async ({ adminHome, announcem
         { type: `Test Description`, description: `Verify that banner is created` }
     );
 
-    
+
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink();
@@ -34,7 +34,7 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC84_Learner Side announcement  verification` },
         { type: `Test Description`, description: `Learner Side announcement verification` }
     );
-    await learnerHome.isSignOutVisible();   
+    await learnerHome.learnerLogin("LEARNERUSERNAME", "LearnerPortal");
     await learnerHome.verifyAnnouncement(title);
 })
 
