@@ -6,6 +6,8 @@ import { promises } from "readline";
 
 export class FakerData {
 
+
+
     static getFirstName(): string {
         return faker.person.firstName();
     }
@@ -27,7 +29,7 @@ export class FakerData {
     }
 
     static addressName(): string {
-        return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`; 
+        return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`;
     }
 
     static jobRole(): string {
@@ -56,7 +58,7 @@ export class FakerData {
     static getCourseName(): string {
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();
-        const verb = faker.hacker.verb();
+        const verb = faker.hacker.verb(); 
         return `${capitalizeFirstLetter(adjective)} ${capitalizeFirstLetter(noun)} ${capitalizeFirstLetter(verb)}`;
     }
     static getUserId(): string {
@@ -66,8 +68,18 @@ export class FakerData {
         const user = faker.internet.email({ firstName: fName })
         return user;
     }
+    static getEmployeeid():string{
+        const employee_id = faker.helpers.fromRegExp('emp[1-5]')
+        return employee_id;
+    }
 
-    static randomCityName():string{
+
+
+    static getRandomSkill(): string {
+        return faker.hacker.adjective();
+    }
+
+    static randomCityName(): string {
         return faker.person.jobArea();
     }
     static getSession(): string {
@@ -95,7 +107,7 @@ export class FakerData {
 
     }
     static getRandomTitle() {
-        return (faker.hacker.noun() +" " +faker.hacker.noun());
+        return (faker.hacker.noun() + " " + faker.hacker.noun());
     }
 }
 
@@ -119,14 +131,14 @@ export function getCVV(): string {
     return `${startDigit}${restDigits}`;
 }
 
-export async function score() { 
-const min = 50;
-const max = 100;
-const step = 5;
-const range = Math.floor((max - min) / step) + 1;
-const randomMultiple = Math.floor(Math.random() * range) * step + min;
-return randomMultiple.toString();
-    
+export async function score() {
+    const min = 50;
+    const max = 100;
+    const step = 5;
+    const range = Math.floor((max - min) / step) + 1;
+    const randomMultiple = Math.floor(Math.random() * range) * step + min;
+    return randomMultiple.toString();
+
 }
 
 export async function getRandomSeat() {
@@ -154,17 +166,17 @@ export function getRandomLocation(): DataItem | any {
         return null;
     }
 }
-export function 
-gettomorrowDateFormatted(): string {
+export function
+    gettomorrowDateFormatted(): string {
     const date = new Date();
-    const month = String(date.getMonth()+1)
+    const month = String(date.getMonth() + 1)
     const day = String(date.getDate())
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
 
-export function 
-getCurrentDateFormatted(): string {
+export function
+    getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1)
     const day = String(date.getDate())

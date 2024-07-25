@@ -24,6 +24,8 @@ import { AnnouncementPage } from '../pages/AnnouncementPage'
 import { ContentHomePage } from '../pages/ContentPage'
 import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 import { SurveyAssessmentPage } from '../pages/SurveyAssessmentPage'
+import {ProfilePage} from '../pages/ProfilePage'
+
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -50,7 +52,7 @@ type expertusFixture = {
     costCenter: CostcenterPage
     announcementHome: AnnouncementPage
     contentHome: ContentHomePage
-
+    profile:ProfilePage
 }
 export const test = baseTest.extend<expertusFixture>({
     // adminLogin: async ({ page, context }, use) => {
@@ -161,6 +163,11 @@ export const test = baseTest.extend<expertusFixture>({
     contentHome: async ({ page, context }, use) => {
         const ContentHome = new ContentHomePage(page, context);
         await use(ContentHome);
+    },
+
+    profile: async ({ page, context }, use) => {
+        const profile = new ProfilePage(page, context);
+        await use(profile);
     },
 
 
