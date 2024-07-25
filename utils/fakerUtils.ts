@@ -155,10 +155,19 @@ export function getRandomLocation(): DataItem | any {
     }
 }
 export function 
+gettomorrowDateFormatted(): string {
+    const date = new Date();
+    const month = String(date.getMonth()+1)
+    const day = String(date.getDate())
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+}
+
+export function 
 getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1)
-    const day = String(date.getDate()+1)
+    const day = String(date.getDate())
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }

@@ -39,8 +39,11 @@ export class UserPage extends AdminHomePage {
         language:`//label[contains(text(),'Language')]/following::div[@id='wrapper-user-language']`,
         searchLanguage:`//footer/following::div/input`,
         courseLanguageLink: (language: string) => `//label[text()='Language']//following::span[text()='${language}']`,
-
-    };
+        editButton:`//a[text()='Edit User']`,
+        deleteUser:`(//a[@aria-label="Delete"]/i)[1]`,
+        confirmDeleteoption:`//button[text()='Delete']`,
+        verifyDeletemsg:`//div[@id='lms-overall-container']//h3`,
+    }
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -55,7 +58,7 @@ export class UserPage extends AdminHomePage {
     }
 
 
-    async enter(name: string, data: string) {
+    async enter(name: string, data: string){
         const selector = this.selectors.inputField(name);
         await this.type(selector, name, data);
     }
@@ -74,10 +77,12 @@ export class UserPage extends AdminHomePage {
         await this.verification(toggleSelector, data);
     }
 
-    async selectEmploymentType(){
+    async selectEmploymentType(empType:string){
         let data =getRandomItemFromFile("../data/peopleEmploymentData.json");
         await this.type(this.selectors.employmentTypeInput,"Employment Type",data)
-        await this.click(this.selectors.commonOptionBtn(data),data,"List");
+        await this.mouseHover(this.selectors.commonOptionBtn(empType,data),data);
+        await this.click(this.selectors.commonOptionBtn(empType,data),data,"List");
+        return data;
     }
     async selectDepartmentType(dpmtType:string){
         let data =getRandomItemFromFile("../data/peopleDepartmentData.json");
@@ -170,6 +175,11 @@ export class UserPage extends AdminHomePage {
         await this.verification(this.selectors.successMessage, "successfully");
     }
 
+
+    async verifyUserdeleteSuccessMessage() {
+        await this.verification(this.selectors.verifyDeletemsg, "no results");
+    }
+
     async selectTimeZone(data:string,timeStd:string){
         await this.validateElementVisibility(this.selectors.timeZone,"TimeZone")
         await this.click(this.selectors.timeZone,"TimeZone","Input")
@@ -183,6 +193,15 @@ export class UserPage extends AdminHomePage {
 
     public async enterHireDate(){
         await this.keyboardType(this.selectors.hireDate,getCurrentDateFormatted())
+    }
+
+    public async editbtn(){
+        await this.click(this.selectors.editButton,"Edit Course","Button")
+    }
+
+    public async clickdeleteIcon(){
+        await this.click(this.selectors.deleteUser,"Delete Course","Icon")
+        await this.click(this.selectors.confirmDeleteoption,"Delete","Button")
     }
 
 

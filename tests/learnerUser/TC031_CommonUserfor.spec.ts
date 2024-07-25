@@ -3,11 +3,11 @@ import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
 
 
-test(`TC029_Create user for portal 1`, async ({ adminHome, createUser ,createCourse}) => {
+test(`TC031_Common User Ceation`, async ({ adminHome, createUser ,createCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create user for portal 1` },
-        { type: `Test Description`, description: `Verify that user is created for portal 1` }
+        { type: `TestCase`, description: `Create user for all portals` },
+        { type: `Test Description`, description: `Verify that user is created for all portals` }
     );   
 
         await adminHome.loadAndLogin("CUSTOMERADMIN");
