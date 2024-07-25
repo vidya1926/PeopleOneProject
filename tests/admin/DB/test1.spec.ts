@@ -11,36 +11,16 @@ test('fetch data from database', async () => {
     );
     const dataBase = new DB();
     try {
-        //Query to Retrive the
-        const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
-        const currentTimeString = currentTimeResult[0]['NOW()'];
+        let AutoRegister = await dataBase.executeQuery(` SELECT * FROM iris.cron_master WHERE name = 'Autoregister'`);
+        let retriveAutoRegisterID = String(AutoRegister[0].id);
+        console.log("Retrived registerId is : " + retriveAutoRegisterID);
+        await dataBase.executeQuery(`UPDATE iris.cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
 
-        const currentTime = new Date(currentTimeString);
-        const pastDate = currentTime.setDate(currentTime.getDate() - 2);
-        const formattedPreviousDate = format(pastDate, 'yyyy-MM-dd HH:mm:ss');
-
-        //Query to retrive the data
-        const programEnrollment = await dataBase.executeQuery(`SELECT * FROM iris.program_enrollment ORDER BY id DESC LIMIT 1;`)
-        console.log(programEnrollment);
-
-        const idString = String(programEnrollment[0].id);
-        console.log("Retrived Id = " + idString);
-
-        //Query to UPDATE the ProgramEnrollment 
-        const updateProgramEnrollment = await dataBase.executeQuery(`update iris.program_enrollment set completion_date='${formattedPreviousDate}' where id='${idString}';`)
-        console.log(updateProgramEnrollment);
-
-
-        const formattedCurrentTime = format(currentTime, 'yyyy-MM-dd HH:mm:ss');
-        console.log('Formatted Current Time:', formattedCurrentTime);
-        currentTime.setDate(currentTime.getDate() + 2)
-        const newTime = new Date(currentTime.getTime() - 15 * 60 * 1000);
-        const formattedNewTime = format(newTime, 'yyyy-MM-dd HH:mm:ss');
-        console.log('Formatted New Time (15 mins subtracted):', formattedNewTime);
-        
-        //Query to run the CRON job
-        const cronJob = await dataBase.executeQuery(`update cron_details set next_run='${formattedNewTime}',current_status='processing'  where id=${idString} ;`)
-        console.log(cronJob);
+        let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM iris.cron_details WHERE name = 'LearningPlan and Certification AutoRegister' AND portal_id = 1;`);
+        let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
+        console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
+        let updatedResult = await dataBase.executeQuery(`UPDATE iris.cron_details SET current_status = 'waiting', previous_status= '', status= '1' WHERE id = '${retriveLearningPlanId}' ;`);
+        console.log(updatedResult);
 
 
     } catch (error) {

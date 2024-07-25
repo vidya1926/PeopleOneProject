@@ -5,14 +5,14 @@ import { credentials } from "../constants/credentialData";
 
 export class LearnerLogin extends PlaywrightWrapper {
 
-     
-   // static pageUrl = URLConstants.leanerURL;
+
+    // static pageUrl = URLConstants.leanerURL;
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-       
+
     }
 
-    public async learnerLogin(role: string,url:string) {
+    public async learnerLogin(role: string, url: string) {
         const { username, password } = credentials[role];
         const signInLocator = "//span[text()='Sign In']";
         const usernameSelector = "#username";
@@ -32,20 +32,20 @@ export class LearnerLogin extends PlaywrightWrapper {
         };
 
         try {
-            switch(url){
-            case "Portal1": {    
-                await this.loadApp(URLConstants.learnerportal1);
-                break;
-            }
-            case "Portal2": {    
-                await this.loadApp(URLConstants.learnerportal2);
-                break;
-            }
-            default :
-            await this.loadApp(URLConstants.leanerURL);
-            break;
+            switch (url) {
+                case "Portal1": {
+                    await this.loadApp(URLConstants.learnerportal);
+                    break;
+                }
+                case "Portal2": {
+                    await this.loadApp(URLConstants.learnerportal2);
+                    break;
+                }
+                default:
+                    await this.loadApp(URLConstants.leanerURL);
+                    break;
 
-        }
+            }
             await signIn();
             await this.type(usernameSelector, "Username", username);
             await this.type(passwordSelector, "Password", password);

@@ -84,7 +84,7 @@ for (let index = 0; index < 10; index++) {
 // }
 // for (const index of oddIndices){
 //     console.log(index);
-    
+
 // }
 
 
@@ -101,10 +101,12 @@ for (let i = 0; i < 4; i++) {
     generatedNumbers.push(randomIndex);
     console.log(randomIndex);
 } */
-    let count = 5;
-    for (let i = 0; i < 4; i++) {
-        const randomIndex = Math.floor(Math.random() * (count - 1)) + 2;
-        console.log(randomIndex);
-    }
-    
-    
+// let count = 5;
+// for (let i = 0; i < 4; i++) {
+//     const randomIndex = Math.floor(Math.random() * (count - 1)) + 2;
+//     console.log(randomIndex);
+// }
+
+
+
+

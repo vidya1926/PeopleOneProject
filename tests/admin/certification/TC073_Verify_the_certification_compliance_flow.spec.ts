@@ -1,6 +1,7 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
+import { updateCertificationComplianceFlow } from "../DB/DBJobs";
 
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
@@ -80,6 +81,7 @@ test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
             { type: `Test Description`, description: `Verify the CRON Job` }
         );
 
+        await updateCertificationComplianceFlow();
 
     })
 })

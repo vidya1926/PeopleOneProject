@@ -34,7 +34,7 @@ export let credentials = {
         username:'peopleadmin',
         password:'Welcome1@'
     },
-    LEARNERPORTAL_1User:{
+    LEARNERPORTAL_User:{
         username:'johnMathew',
         password:'Welcome1@'
     },

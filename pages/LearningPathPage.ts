@@ -45,6 +45,7 @@ export class LearningPathPage extends AdminHomePage {
         completeByRuleBtn: "(//label[text()='Complete by Rule']/parent::div//button)[1]",
         completeByInput: "//label[text()='Complete by']/parent::div//input",
         registractionEndsInput: "input#registration-ends-input",
+        enforceLabel:"//span[text()='Enforce Sequencing']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
         recertificationAddCourse: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()=' Add Course']",
         recertificationSaveBtn: "//label[text()='Recertification ']/parent::div//following-sibling::div//button[text()='SAVE']",
@@ -53,6 +54,8 @@ export class LearningPathPage extends AdminHomePage {
         domainDropdown: "//a[@class='dropdown-item selected']",
         domainDropdownValue: "//label[text()='Domain']/following-sibling::div//div[contains(@class,'dropdown-menu')]//span[@class='text']",
         domainSelectedText: "//div[contains(text(),'selected')]",
+        domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
+
 
     };
     async clickCreateLearningPath() {
@@ -157,12 +160,16 @@ export class LearningPathPage extends AdminHomePage {
 
     async clickEnforceCheckbox() {
         let enforceCheckbox = this.selectors.enforceSequencingCheckbox
-        await this.mouseHover(enforceCheckbox, "Enforce Sequence");
+        await this.validateElementVisibility(this.selectors.enforceLabel, "Enforce Sequence");
+        await this.wait('minWait');
+        await this.mouseHover(this.selectors.enforceLabel, "Enforce Sequence");
         await this.click(enforceCheckbox, "Enforce Sequence", "Checkbox");
     }
 
     async clickDetailTab() {
-        await this.mouseHover(this.selectors.detailsTab, "Details");
+        await this.validateElementVisibility(this.selectors.detailsTab, "Details");
+        await this.wait('mediumWait')
+        await this.page.keyboard.press('PageUp');
         await this.click(this.selectors.detailsTab, "Details", "Button");
     }
 

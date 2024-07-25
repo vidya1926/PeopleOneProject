@@ -9,7 +9,7 @@ export class AdminHomePage extends AdminLogin {
 
     public selectors = {
         signOutLink: "//div[@class='logout']/a",
-        dragableMenu: (menu: string) => `//div[text()='${menu}']/following::div[text()="Create"][1]`,
+        dragableMenu: (menu: string) =>`//div[text()='${menu}']/following::div[text()="Create"][1]`,
         menu: "//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
         learningMenu: "//span[text()='Learning']",
@@ -50,7 +50,7 @@ export class AdminHomePage extends AdminLogin {
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
-        this.setupPageListeners();
+       // this.setupPageListeners();
 
 
     }
@@ -60,7 +60,6 @@ export class AdminHomePage extends AdminLogin {
         console.log("Loading admin home page...");
         await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
-        //await this.wait('mediumWait');
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
         if (pageTitle.toLowerCase().includes("signin")) {
@@ -77,7 +76,7 @@ export class AdminHomePage extends AdminLogin {
 
     }
 
-
+/* 
     private setupPageListeners() {
         this.page.on('load', async () => {
             try {
@@ -102,7 +101,7 @@ export class AdminHomePage extends AdminLogin {
             console.error("Error executing common method after load:", err);
             throw err;
         }
-    }
+    } */
 
     public async isSignOut() {
         await this.validateElementVisibility(this.selectors.signOutLink, "Sign Out");
