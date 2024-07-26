@@ -13,7 +13,7 @@ export class UserPage extends AdminHomePage {
         addressInput: (label: string) => `//label[contains(text(),'${label}')]/following-sibling::input`,
         dropdownToggle: (label: string) => `(//label[text()='${label}']/following::button[@data-bs-toggle='dropdown'])[1]`,
         dropdownSearchInput: "//footer//following::input[@type='search']",
-        dropdownOption: (data: string) => `//span[text()='${data}']`,
+        dropdownOption: (data: string) => `//span[contains(text(),'${data}')]`,
         saveButton: "//button[text()='Save']",
         proceedButton: (name: string) => `//footer//following::button[contains(text(),'${name}')]`,
         searchField: "//input[@id='exp-search-field']",

@@ -69,8 +69,10 @@ export class FakerData {
         return user;
     }
     static getEmployeeid():string{
-        const employee_id = faker.helpers.fromRegExp('emp[1-5]')
-        return employee_id;
+        const employeeId = faker.string.numeric({ length: 4 });
+        const formattedEmployeeId = `EMP-${employeeId}`;
+
+        return formattedEmployeeId;
     }
 
 
@@ -86,6 +88,8 @@ export class FakerData {
         const session = faker.person.jobDescriptor()
         return session
     }
+
+
     static getDescription(): string {
         const description = faker.lorem.paragraph();
         return description;
@@ -102,6 +106,7 @@ export class FakerData {
         return faker.commerce.price()
     }
 
+   
     static getMeetingUrl(): string {
         return faker.internet.url();
 
@@ -112,26 +117,31 @@ export class FakerData {
 }
 
 export function getCreditCardNumber(): string {
-    const startDigit = Math.floor(Math.random() * 3) + 7;
-    const restDigits = Array.from({ length: 16 }, () => Math.floor(Math.random() * 10)).join('');
-    return `${startDigit}${restDigits}`;
+    // const startDigit = Math.floor(Math.random() * 3) + 7;
+    // const restDigits = Array.from({ length: 16 }, () => Math.floor(Math.random() * 10)).join('');
+    // return `${startDigit}${restDigits}`;
+    return faker.finance.creditCardNumber();
 }
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+
+
 function getPhoneNumber(): string {
-    const startDigit = Math.floor(Math.random() * 3) + 7;
-    const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
-    return `${startDigit}${restDigits}`;
+    // const startDigit = Math.floor(Math.random() * 3) + 7;
+    // const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
+    // return `${startDigit}${restDigits}`;
+    return faker.phone.number();
 }
 export function getCVV(): string {
-    const startDigit = Math.floor(Math.random() * 1) + 12;
-    const restDigits = Array.from({ length: 1 }, () => Math.floor(Math.random() * 10)).join('');
-    return `${startDigit}${restDigits}`;
+    // const startDigit = Math.floor(Math.random() * 1) + 12;
+    // const restDigits = Array.from({ length: 1 }, () => Math.floor(Math.random() * 10)).join('');
+    // return `${startDigit}${restDigits}`;
+    return faker.finance.creditCardCVV()
 }
 
-export async function score() {
+export function score() {
     const min = 50;
     const max = 100;
     const step = 5;
@@ -140,6 +150,13 @@ export async function score() {
     return randomMultiple.toString();
 
 }
+
+export function generateCreditScore(): number {
+    // Credit scores typically range from 300 to 850
+    const minCreditScore = 300;
+    const maxCreditScore = 850;
+    return faker.number.int({ min: minCreditScore, max: maxCreditScore });
+  }
 
 export async function getRandomSeat() {
     const num = 100;
@@ -180,6 +197,26 @@ export function
     const date = new Date();
     const month = String(date.getMonth() + 1)
     const day = String(date.getDate())
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+}
+
+export function getPastDate(daysAgo: number,monthsAgo:number): string {
+    const date = new Date();
+    date.setDate(date.getDate() - daysAgo);
+    date.setMonth(date.getMonth() - monthsAgo);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+}
+
+export function getFutureDate(daysAhead: number,monthsAhead:number): string {
+    const date = new Date();
+    date.setDate(date.getDate() - daysAhead);
+    date.setMonth(date.getMonth() - monthsAhead);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }

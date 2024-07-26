@@ -50,7 +50,7 @@ test(`TC089_To_create_Scheduled_Course`, async ({ adminHome, createCourse, editC
     await addinstance("Classroom");
     await createCourse.setMaxSeat();
     await createCourse.enterSessionName(courseName);
-    await createCourse.enterDateValue();
+    await createCourse.enterfutureDateValue();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor("arivazhaganp")
     await createCourse.typeAdditionalInfo(courseName)

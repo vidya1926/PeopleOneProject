@@ -4,7 +4,7 @@ import { LearnerHomePage } from "./LearnerHomePage";
 import { da } from "@faker-js/faker";
 import { time } from "console";
 import { stat } from "fs";
-import { FakerData } from "../utils/fakerUtils";
+import { FakerData, generateCreditScore } from "../utils/fakerUtils";
 
 export class ProfilePage extends LearnerHomePage {
     public selectors = {
@@ -28,10 +28,10 @@ export class ProfilePage extends LearnerHomePage {
         oneProfile: "//a[text()='ONE-Profile']",
         oneProfileClick: "(//a[text()='Click Here'])[1]",
         oneProfilePage: "//h1[text()='One-Profile CEU Summary']",
-        timezoneOptions: (option: string) => `//span[text()='${option}']`,
+        timezoneOptions: (option: string) => `(//span[contains(text(),'${option}')])[1]`,
         PreferenceLanguagesWrapper: "//label[text()='Language']/following::div[@id='wrapper-lnr_languages']",
         PreferenceLanguageInput: `//label[text()='Language']/following::input[1]`,
-        PreferenceLanguage: (Language: string) => `//li[@class='selected active']//following::span[text()='${Language}']`,
+        PreferenceLanguage: (language:string)=>`//label[text()='Language']//following::span[text()='${language}']`,
         PreferenceCurrency: "//label[text()='Currency']/following::div[@id='wrapper-lnr_currency']",
         PreferenceCurrencyInput: "//label[text()='Currency']/following::input[1]",
         PreferenceCurrencyOption: (Option: string) => `//span[text()='${Option}']`,
@@ -48,9 +48,10 @@ export class ProfilePage extends LearnerHomePage {
         PreferenceDetailsPage: "//label[text()='Details page view']/following::div[@id='wrapper-details_page']",
         PreferenceDetailsPageInput: "//label[text()='Details page view']/following::input[1]",
         PreferenceDetailsPageOption: (Option: string) => `//span[text()='${Option}']`,
+        ceuType:`//div[@id='wrapper-ceu_type']`,
+        ceuOption: (Option: string) => `//span[text()='${Option}']`,
         PreferenceCreditPeriod: "//label[text()='Credit Period']/following::div[@id='wrapper-credit_period']",
-
-        PreferenceCreditPeriodOption: (Option: string) => `(//span[text()=${Option}])[1]`,
+        PreferenceCreditPeriodOption: (Option: string) => `(//span[text()='${Option}'])[1]`,
         CreditScore: "//label[text()='Target Credit']/following::input[1]",
         //PreferenceCreditPeriod:"//label[text()='Credit Period']/following::div[@id='wrapper-credit_period']",
         PreferenceAddress1: "//input[@id='address1']",
@@ -112,22 +113,30 @@ export class ProfilePage extends LearnerHomePage {
     }
 
     async preferenceTimeZone(timezone: string) {
+
         await this.click(this.selectors.preferenceTimeZone, "timezone", "dropdown")
         await this.type(this.selectors.TimeZoneSearch, "dropdown", timezone)
         await this.mouseHover(this.selectors.timezoneOptions(timezone), timezone);
         //await this.waitForSelector(this.selectors.timezoneOptions(timezone))
         await this.click(this.selectors.timezoneOptions(timezone), "dropdownOptions", "button")
     }
-    async selectLanguage() {
-        const Languages = await this.page.$$(this.selectors.Language);
-        const randomIndex = Math.floor(Math.random() * Languages.length);
-        const randomElement = Languages[randomIndex].textContent();
-        const randomOptions = await randomElement
-        const trimmedRandomOption: string = randomOptions?.trim() || '';
-        await this.click(this.selectors.PreferenceLanguagesWrapper, "Language", "Field");
-        await this.type(this.selectors.PreferenceLanguageInput, "Input Field", trimmedRandomOption);
-        await this.mouseHover(this.selectors.PreferenceLanguage(trimmedRandomOption), trimmedRandomOption);
-        await this.click(this.selectors.PreferenceLanguage(trimmedRandomOption), trimmedRandomOption, "Button");
+    async selectLanguage(language:string) {
+        await this.click(this.selectors.PreferenceLanguagesWrapper, "Language", "Field");  
+        await this.type(this.selectors.PreferenceLanguageInput,"Language","English")
+        await this.mouseHover(this.selectors.PreferenceLanguage(language), language);
+        await this.click(this.selectors.PreferenceLanguage(language), language, "Button");
+
+    
+        // const Language = await this.page.$$(this.selectors.Language);
+        // const count= Language.length;
+        // const randomIndex = Math.floor(Math.random() *count)+1;
+        // console.log(randomIndex)
+        // const randomElement = Language[count].innerText();
+        // const randomOptions = await randomElement
+        // const trimmedRandomOption: string = randomOptions?.trim() || '';       
+        // await this.type(this.selectors.PreferenceLanguageInput, "Input Field", trimmedRandomOption);
+        // await this.mouseHover(this.selectors.PreferenceLanguage(trimmedRandomOption), trimmedRandomOption);
+        // await this.click(this.selectors.PreferenceLanguage(trimmedRandomOption), trimmedRandomOption, "Button");
 
     }
     async selectCurrency() {
@@ -178,14 +187,14 @@ export class ProfilePage extends LearnerHomePage {
     async zipcode(zipcode: string) {
         await this.type(this.selectors.PreferenceZipcode, "Zipcode", zipcode);
     }
-    async mobile(mobileNumber: string) {
-        await this.type(this.selectors.PreferenceMobile, "Mobile", mobileNumber);
+    async mobile() {
+        await this.type(this.selectors.PreferenceMobile, "Mobile", FakerData.getMobileNumber());
     }
-    async phone(phoneNumber: string) {
-        await this.type(this.selectors.PreferencePhone, "Phone", phoneNumber);
+    async phone() {
+        await this.type(this.selectors.PreferencePhone, "Phone", FakerData.getMobileNumber());
     }
-    async employeeId(employeeId: string) {
-        await this.type(this.selectors.PreferenceEmployeeId, "Employee Id", employeeId);
+    async employeeId() {
+        await this.type(this.selectors.PreferenceEmployeeId, "Employee Id", FakerData.getEmployeeid());
     }
 
     async selectDateFormat() {
@@ -282,15 +291,21 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.PreferenceUserTypeOptions(trimmedRandomOption), trimmedRandomOption, "Button");
     }
 
-
-    async CreditPeriod(month: string) {
-        await this.click(this.selectors.PreferenceCreditPeriod, "creditperiod", "dropdown")
-        await this.type(this.selectors.PreferenceCreditTypeInput, "Input Field", month);
-        await this.mouseHover(this.selectors.PreferenceCreditPeriodOption(month), month);
-        await this.click(this.selectors.PreferenceCreditPeriodOption, "CreditPeriodOptions", "Button")
+    async ceuType(data:string) {
+        await this.click(this.selectors.ceuType, "CEUTYPE", "dropdown")       
+        await this.mouseHover(this.selectors.ceuOption(data), data);
+        await this.click(this.selectors.PreferenceCreditPeriodOption(data), "CEUType", "option")
     }
-    async CreditScore(creditScore: string) {
-        await this.type(this.selectors.CreditScore, "CreditScore", creditScore)
+
+    async creditPeriod(month: string) {
+        await this.click(this.selectors.PreferenceCreditPeriod, "creditperiod", "dropdown")
+      //  await this.type(this.selectors.PreferenceCreditTypeInput, "Input Field", month);
+        await this.mouseHover(this.selectors.PreferenceCreditPeriodOption(month), month);
+        await this.click(this.selectors.PreferenceCreditPeriodOption(month), "CreditPeriodOptions", "Button")
+    }
+    async creditScore() {
+        const score:any=generateCreditScore()
+        await this.type(this.selectors.CreditScore, "CreditScore",score.toString() )
     }
 
     async clickSave() {

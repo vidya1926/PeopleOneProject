@@ -8,8 +8,7 @@ test(`TC107_Add_Skills`,async({profile,learnerHome})=>{
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Adding skills` },
         { type:`Test Description`, description: `Verify that learner can add the skills successfully` }
-    
-        
+            
     );
 
     await learnerHome.learnerLogin("LEARNERUSERNAME","Portal");

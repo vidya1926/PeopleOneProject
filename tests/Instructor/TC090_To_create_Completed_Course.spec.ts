@@ -45,13 +45,14 @@ test(`TC090_To_create_Completed_Course`,async({adminHome,createCourse,editCourse
         await createCourse.clickCreateInstance();
     }
     await addinstance("Classroom");
-    await createCourse.selectMeetingType(instructorName, courseName, 1);
+    await createCourse.enterSessionName(courseName);
+    await createCourse.enterpastDateValue()
+    await createCourse.startandEndTime();
+    await createCourse.selectInstructor("arivazhaganp")
     await createCourse.typeAdditionalInfo(courseName)
-    await createCourse.setMaxSeat();
-    await createCourse.clickCatalog();
+    await createCourse.selectLocation();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
-
 
 
 

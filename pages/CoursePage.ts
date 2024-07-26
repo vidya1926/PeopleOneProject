@@ -1,6 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData, getCurrentDateFormatted, getnextMonthFormatted, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, getFutureDate, getnextMonthFormatted, getPastDate, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
 
 
 export class CoursePage extends AdminHomePage {
@@ -465,6 +465,14 @@ export class CoursePage extends AdminHomePage {
         await this.keyboardType(this.selectors.Date, date);
     }
 
+    async enterpastDateValue() {
+        const date =getPastDate(10,3)
+        await this.keyboardType(this.selectors.Date, date);
+    }
+    async enterfutureDateValue() {
+        const date = getFutureDate(10,2)
+        await this.keyboardType(this.selectors.Date, date);
+    }
 
     async entertimezone(country: string) {
         await this.click(this.selectors.timeZoneIndex(1), "TimeZone", "Text Field")
