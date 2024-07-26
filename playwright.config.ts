@@ -16,10 +16,10 @@ export default defineConfig({
   repeatEach: 0,
   reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   use: {
-    trace: 'off',
+    trace: 'on',
     headless: false,
     screenshot: "on",
-    video: 'on',
+    video: 'off',
     ignoreHTTPSErrors: true,
 
     //slowMo:2000,

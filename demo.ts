@@ -108,5 +108,51 @@ for (let i = 0; i < 4; i++) {
 // }
 
 
+/* 
+    for (let i = 0; i < 15; i += 5) {
+        let indexToClick = i + 1;
+        if (indexToClick <= 15) {
+           console.log(indexToClick -1);
+           
+        }
+    } */
+
+/* 
+        let clickIndices: number[] = [];
+        for (let i = 0; i < 15; i++) {
+            clickIndices.push((i * 5) + 4);
+        }
+
+        for (let index of clickIndices) {
+            if (index < 15) {
+                console.log(index);
+                
+            }
+        }
+ */
+
+
+/* for (let index = 0; index <= 10; index ++) {
+    if (index % 2 == 0) {
+        console.log(index);
+    }
+}
+ */
+
+let printedIndices: number[] = []; 
+for (let i = 0; i < 2; i++) {
+    console.log(i);
+    for (let index = 0; index < 4; index++) {
+        if (index % 2 === 0) {
+            if (!printedIndices.includes(index)) {
+                printedIndices.push(index);
+                console.log(index);
+                break;
+            }
+
+        }
+    }
+}
+
 
 

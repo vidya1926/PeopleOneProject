@@ -9,7 +9,7 @@ const courseName = FakerData.getCourseName();
 
 
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test(`TC089_To_create_Scheduled_Course`, async ({ adminHome, createCourse, editCourse }) => {
+test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCourse }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -55,6 +55,8 @@ test(`TC089_To_create_Scheduled_Course`, async ({ adminHome, createCourse, editC
     await createCourse.selectInstructor("arivazhaganp")
     await createCourse.typeAdditionalInfo(courseName)
     await createCourse.selectLocation();
+    await createCourse.setMaxSeat();
+    await createCourse.typeDescription("Check for instance class for the availed course")
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
 })

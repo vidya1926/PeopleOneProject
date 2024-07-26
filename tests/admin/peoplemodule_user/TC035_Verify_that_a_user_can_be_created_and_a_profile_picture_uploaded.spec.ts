@@ -56,7 +56,7 @@ test.describe(``, async () => {
         await adminHome.user();
         await createUser.userSearchField(username);
         await createUser.editIcon();
-        await createUser.selectEmploymentType();
+        await createUser.selectEmploymentType("emp_type");
         await createUser.updateUser();
         await createUser.verifyUserCreationSuccessMessage();
      

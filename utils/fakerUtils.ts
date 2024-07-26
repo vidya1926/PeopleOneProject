@@ -16,6 +16,10 @@ export class FakerData {
         return faker.person.lastName();
     }
 
+    static getOrganizationName(){
+        return faker.company.buzzNoun()
+    }
+
     static getMobileNumber(): string {
         return getPhoneNumber();
     }

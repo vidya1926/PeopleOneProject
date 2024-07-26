@@ -49,12 +49,11 @@ test(`TC090_To_create_Completed_Course`,async({adminHome,createCourse,editCourse
     await createCourse.enterpastDateValue()
     await createCourse.startandEndTime();
     await createCourse.selectInstructor("arivazhaganp")
-    await createCourse.typeAdditionalInfo(courseName)
     await createCourse.selectLocation();
+   await createCourse.setMaxSeat();
+   await createCourse.typeDescription("Check for instance Classes for the given course");
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
-
-
 
 
 
