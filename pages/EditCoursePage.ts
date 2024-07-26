@@ -68,6 +68,8 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")
         await this.validateElementVisibility(this.selectors.tagsSuccesfully, "Tags")
         await this.verification(this.selectors.tagsSuccesfully, "Tag has been added successfully.")
+        await this.validateElementVisibility(this.selectors.okBtnTag, "OK");
+        await this.mouseHover(this.selectors.okBtnTag, "OK");
         await this.click(this.selectors.okBtnTag, "OK", "Button");
     }
 
@@ -76,6 +78,7 @@ export class EditCoursePage extends AdminHomePage {
         const certSelector = this.selectors.certificateRadioBtn(certificateName);
         await this.click(certSelector, "Certificate", "Radio button");
         await this.click(this.selectors.addBtn, "Add", "Button");
+        await this.mouseHover(this.selectors.okBtnCertificate, "OK");
         await this.click(this.selectors.okBtnCertificate, "OK", "Button");
     }
 
