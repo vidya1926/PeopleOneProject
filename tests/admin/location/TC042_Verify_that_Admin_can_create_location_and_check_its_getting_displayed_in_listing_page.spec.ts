@@ -33,8 +33,6 @@ test.skip(`Verify that Admin can create location and check its getting displayed
         await location.verify_successfullMessage()
 
     }
-
-
 })
 
 test(`Read Location Data`, async ({ adminHome, location }) => {

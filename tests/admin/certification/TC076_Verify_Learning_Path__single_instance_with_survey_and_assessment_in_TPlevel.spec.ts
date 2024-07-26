@@ -69,7 +69,7 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
+        await learnerHome.learnerLogin("LEARNERUSERNAME", "LeanrerPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
@@ -78,9 +78,12 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
         await catalog.clickLaunchButton();
         await catalog.saveLearningStatus();
         await catalog.clickContentLaunchButton();
-        await catalog.
-
-
-
+        async function assessment() {
+            await catalog.writeContent();
+            await catalog.submitMyAnswer();
+        }
+        await assessment();
+        await assessment();
+        await assessment();
     })
 })

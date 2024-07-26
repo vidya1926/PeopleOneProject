@@ -1,5 +1,6 @@
 import { Page, expect, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
+import { FakerData } from "../utils/fakerUtils";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
 
@@ -41,8 +42,15 @@ export class CatalogPage extends LearnerHomePage {
         addedToCartBtn: "//span[text()='Added to Cart']",
         proceedToCheckoutBtn: "//button[text()=' Proceed to checkout']",
         resultNotFound: `(//div[@id='most_recent']/following::div[text()='No results found.'])[1]`,
-        checkBoxandRadioBtn:`//i[contains(@class,'fa-square icon') or contains(@class,'fa-circle icon') ]`,
-        assessmentDropdown:(index:string)=>`(//span[contains(text(),'Content')]//following::button[@data-bs-toggle="dropdown"])[${index}]`,
+        checkBox: `//i[contains(@class,'fa-circle icon') ]`,
+        RadioBtn: `//i[contains(@class,'fa-square icon')]`,
+        assessmentDropdown: `[id^='wrapper-ques'] button[data-bs-toggle='dropdown']`,
+        questionInput: `div[class='question-wrapper'] input[type=text]`,
+        starIcon: `//i[contains(@class,'fa-star icon')]`,
+        submitMyAnswerBtn: `div[class^='pagination-wrapper'] span:text-is('Submit my Answers')`,
+        submitSurveyBtn: `div[class^='pagination-wrapper'] span:text-is('submit survey')`,
+        doneBtn: `//span[text()='done']`,
+        recievedScore: `//span[text()='Score:']//parent::div`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -270,14 +278,92 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     public async writeContent() {
-        let checkBoxcount = await this.page.locator(this.selectors.checkBoxandRadioBtn).count();
-        for (let index = 0; index <= checkBoxcount; index++) {
-            await this.page.locator(this.selectors.checkBoxandRadioBtn).nth(index).click();
-            
+        let checkBox = this.page.locator(this.selectors.checkBox);
+        let checkBoxCount = await checkBox.count();
+        let radioIcon = this.page.locator(this.selectors.RadioBtn);
+        let radioIconCount = await radioIcon.count();
+        let dropdown = this.page.locator(this.selectors.assessmentDropdown);
+        let dropDownCount = await dropdown.count();
+        let dropdownValue = this.page.locator("[id^='wrapper-ques'] a");
+        let input = this.page.locator(this.selectors.questionInput);
+        let inputCount = await input.count();
+        let starIcon = this.page.locator(this.selectors.starIcon)
+        let starIconCount = await starIcon.count();
+        await this.wait('mediumWait');
+        if (await checkBox.nth(0).isVisible()) {
+            for (let index = 0; index < checkBoxCount; index++) {
+                if (index % 2 == 0) {
+                    await checkBox.nth(index).click();
+                }
+            }
         }
 
+        await this.wait('minWait');
+        if (await radioIcon.nth(0).isVisible()) {
+            for (let index = 0; index < radioIconCount; index++) {
+                if (index % 2 == 0) {
+                    await radioIcon.nth(index).click();
+                }
+            }
+        }
+        await this.wait('minWait');
+        if (await dropdown.nth(0).isVisible()) {
+            let printedIndices: number[] = [];
+            for (let i = 0; i < dropDownCount; i++) {
+                await dropdown.nth(i).click();
+                for (let index = 0; index < await dropdownValue.count(); index++) {
+                    if (index % 2 === 0) {
+                        if (!printedIndices.includes(index)) {
+                            printedIndices.push(index);
+                            await dropdownValue.nth(index).click();
+                            break;
+                        }
+
+                    }
+                }
+            }
+        }
+        await this.wait('minWait');
+        if (await input.nth(0).isVisible()) {
+            for (let index = 0; index < inputCount; index++) {
+                await input.nth(index).fill(FakerData.getDescription());
+            }
+        }
+        await this.wait('minWait');
+        if (await starIcon.nth(0).isVisible()) {
+            let clickIndices: number[] = [];
+            for (let i = 0; i < starIconCount; i++) {
+                clickIndices.push((i * 5) + 4);
+                for (let index of clickIndices) {
+                    if (index < 15) {
+                        starIcon.nth(index).click();
+
+                    }
+                }
+            }
+
+
+        }
     }
 
+    async submitMyAnswer() {
+        let submitBtn = this.page.locator(this.selectors.submitMyAnswerBtn);
+        let surveySubmitBtn = this.page.locator(this.selectors.submitSurveyBtn);
+        let scoreVisible = this.page.locator(this.selectors.recievedScore);
+        if (await submitBtn.isVisible()) {
+            await this.click(this.selectors.submitMyAnswerBtn, "Submit My Answer", "Button");
+            await this.wait(`minWait`);
+            if (await scoreVisible.isVisible()) {
+                let score = await this.getInnerText(this.selectors.recievedScore)
+                console.log(score);
+            }
+            await this.wait(`minWait`);
+            await this.click(this.selectors.doneBtn, "Done", "Button");
+        }
 
+        if (await surveySubmitBtn.isVisible()) {
+            await this.click(this.selectors.submitSurveyBtn, "Survey", "Button");
+        }
+    }
 
 }
