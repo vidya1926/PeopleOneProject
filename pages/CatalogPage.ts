@@ -207,10 +207,7 @@ export class CatalogPage extends LearnerHomePage {
     async viewCoursedetails() {
         await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button");
     }
-    // async searchCatalog(courseName:string){
-    //     await this.validateElementVisibility(this.selectors.searchCatalog,"Textbox");
-    //     await this.type(this.selectors.searchCatalog, "Search", courseName);
-    // }
+
 
     async clickViewCertificationDetails() {
         await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn, "View Certification Details");

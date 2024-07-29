@@ -31,8 +31,8 @@ export class LearnerHomePage extends LearnerLogin {
 
     }
 
-    public async loadLearner(role:string) {
-        await this.learnerLogin(role)
+    public async loadLearner(role:string,url:any) {
+        await this.learnerLogin(role,url)
         await this.isSignOutVisible()
         
     }
