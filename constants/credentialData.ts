@@ -1,6 +1,7 @@
 import data from "../data/adminGroupsData.json"
 
-const managerName:any=(data.managerName).toString()
+const managerName:any=(data.managerName).toString();
+const commonUser:any=(data.commonUser).toString();
 export let credentials = {
     CUSTOMERADMIN: {
         username: "customadmin",
@@ -41,5 +42,11 @@ export let credentials = {
     LEARNERPORTAL_2User:{
         username:'Retta44@gmail.com',
         password:'Welcome1@',
-    }
+    },
+
+    COMMONUSER:{
+        username:commonUser,
+        password:"Welcome1@"
+    },
+
 };

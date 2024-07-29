@@ -1,7 +1,9 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
+import { FakerData } from "../utils/fakerUtils";
 
 export class OrganizationPage extends AdminHomePage{
+    
     public selectors = {
         ...this.selectors,
         menu: "//div[text()='Menu']",
@@ -10,9 +12,16 @@ export class OrganizationPage extends AdminHomePage{
         create: "//button[@id='admin-view-btn-primary']",
         enterName: "//input[@id='Name']",
         selectTab: "//label[text()='Type']//following::div[@id='wrapper-Type']",
-        selectType: (type: string)=>`//a[@class='dropdown-item']//span[text()='${type}']`,
+        selectType: (index: number)=>`(//a[@class='dropdown-item']//span)[${index}]`,
         description: "//div[@id='Description']//p",
-        save: "//button[text()='Save']"
+        save: "//button[text()='Save']",
+        editOrganization:`//a[text()='Edit Organization']`,
+        contactName:`//input[@id='ContactName']`,
+        updateBtn:`//button[text()='Update']`,
+        orgeditIcon:`//i[contains(@class,'fa-duotone fa-pen ')]`,
+        parentOrg:`//input[@id='ParentOrg-filter-field']`,
+        childCount:`//span[contains(text(),'Child Organizations')]`
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -39,24 +48,57 @@ export class OrganizationPage extends AdminHomePage{
         await this.click(this.selectors.create, "Create Organization", "Button");
     }
 
-    public async enterName(organizationName: string) {
-        await this.typeAndEnter(this.selectors.enterName, "Name", organizationName);
+    public async childOrgCount() {
+     return await this.getInnerText(this.selectors.childCount);
     }
 
-    public async clickSelect(){
+    public async enterName(orgName:string) {
+        await this.typeAndEnter(this.selectors.enterName, "Name",orgName);
+    }
+
+    public async typeDropdown() {
         await this.click(this.selectors.selectTab, "Select", "Dropdown" );
+        const count=await this.page.locator("//a[@class='dropdown-item']//span").count()
+        const randomIndex = Math.floor(Math.random() * count) + 1;
+        await this.click(this.selectors.selectType(randomIndex),"Type","dropdown");
     }
 
-    public async typeDropdown(data: string) {
-        await this.click(this.selectors.selectType(data),"Type",data);
-    }
-
-    public async typeDescription(input: string){
-        await this.typeAndEnter(this.selectors.description, "Textbox", input);
+    public async typeDescription(){
+        await this.typeAndEnter(this.selectors.description, "Textbox", FakerData.getDescription());
     }
 
     public async clickSave() {
         await this.click(this.selectors.save, "Save", "Button")
     }
+
+    public async clickEditOrg(){
+        await this.click(this.selectors.editOrganization,"Edit ","Button")
+
+    }
+
+    
+    public async clickEditIcon(){
+        await this.click(this.selectors.orgeditIcon,"Edit ","Icon")
+
+    }
+
+
+    public async enterParentOrg(orgName:string){
+        await this.type(this.selectors.parentOrg,"ParentOrg",orgName )
+    }
+
+
+
+    public async enterContactName(){
+        await this.type(this.selectors.contactName,"ContactName", FakerData.getFirstName())
+    }
+
+    
+    public async clickUpdate(){
+        await this.click(this.selectors.updateBtn,"Update","Button")
+    }
+
+
+
 
 }

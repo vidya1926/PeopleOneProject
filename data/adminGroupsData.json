@@ -1,6 +1,14 @@
 {
+<<<<<<< HEAD
   "managerName": "Mireille62@hotmail.com",
+=======
+  "managerName": "Johan.Goldner@gmail.com",
+>>>>>>> c515514834848ce67f7d7b6291c427a35daa95ab
   "adminName": "Jane Smith",
   "learnerAdmin": "Alice Johnson",
-  "courseAdmin": "Arjun.Ullrich16@yahoo.com"
+  "courseAdmin": "London.Greenholt@hotmail.com",
+  "customAdmin": "Jaylen.Huels@gmail.com",
+  "peopleAdmin": "Chloe_Muller@gmail.com",
+  "commerceAdmin": "Jaquan.Stracke@gmail.com",
+  "commonUser": "Ezra_Bergnaum-Weissnat@gmail.com"
 }

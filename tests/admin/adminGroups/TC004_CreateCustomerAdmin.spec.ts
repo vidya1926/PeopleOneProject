@@ -10,7 +10,7 @@ const newData = {
     customAdmin: customAdmin
 }
 updateFieldsInJSON(newData)
-test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test.skip(`TC04_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -27,7 +27,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
         await createUser.verifyCreateUserLabel("CREATE USER");
-        
+        await createUser.clickCreateUser();
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
         await createUser.enter("username", customAdmin);
@@ -49,7 +49,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
         await createUser.verifyUserCreationSuccessMessage();
     }
 });
-test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test.skip(`Create user for admin login  `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -66,7 +66,8 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
         await createUser.verifyCreateUserLabel("CREATE USER");
-        
+        await createUser.clickCreateUser();
+
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
         await createUser.enter("username", customAdmin);
@@ -83,6 +84,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
         await createUser.enter("user-zipcode", zipcode);
         await createUser.enter("user-mobile", FakerData.getMobileNumber());
         await createUser.clickRolesButton("Manager")
+        await createUser.selectLanguage("English")
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();

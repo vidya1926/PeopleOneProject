@@ -1,3 +1,4 @@
+import { expect } from "@playwright/test";
 import { test } from "../../../customFixtures/expertusFixture"
 import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from "../../../utils/fakerUtils";
@@ -40,7 +41,6 @@ test.describe(``, async () => {
             await createUser.clickSave();
             await createUser.clickProceed("Proceed");
             await createUser.verifyUserCreationSuccessMessage();
-
         }
     })
 
@@ -56,9 +56,14 @@ test.describe(``, async () => {
         await adminHome.user();
         await createUser.userSearchField(username);
         await createUser.editIcon();
-        await createUser.selectEmploymentType()
+        await createUser.selectEmploymentType("emp_type");
         await createUser.updateUser();
         await createUser.verifyUserCreationSuccessMessage();
+     
+
     })
+
+
+
 
 })

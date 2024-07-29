@@ -9,6 +9,7 @@ interface Data {
   commerceAdmin?:string;
   customAdmin?:string;
   instructorName?:string;
+  commonUser?:string;
 }
 
 const fileName = '../data/adminGroupsData.json';

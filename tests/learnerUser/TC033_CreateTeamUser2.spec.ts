@@ -3,14 +3,14 @@ import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
 
 
-test(`TC031_Common User Ceation`, async ({ adminHome, createUser ,createCourse}) => {
+test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create user for all portals` },
-        { type: `Test Description`, description: `Verify that user is created for all portals` }
+        { type: `TestCase`, description: `Create Team User2` },
+        { type: `Test Description`, description: `Verify that user is created as Team User2` }
     );   
 
-        await adminHome.loadAndLogin("CUSTOMERADMIN");
+        await adminHome.loadAndLogin("PEOPLEADMIN");
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
@@ -18,13 +18,11 @@ test(`TC031_Common User Ceation`, async ({ adminHome, createUser ,createCourse})
         await createUser.clickCreateUser();        
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username", FakerData.getUserId());
+        await createUser.enter("username","Team__User2");
         await createUser.enter("user-password", "Welcome1@");
-        await createUser.selectTimeZone("USA","Pacific Standard")
-        await createUser.enterHireDate();
-        await createUser.selectDepartmentType("department");
-        await createUser.selectUserType("usertype")
-        await createUser.selectjobTitle("jobtitle");      
+        await createUser.selectLanguage("English")
+        await createUser.selectOtherManager();
+        await createCourse.selectDomainOption("LearnerPortal")
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();

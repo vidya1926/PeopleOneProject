@@ -10,7 +10,6 @@ export default defineConfig({
     timeout: 20000
   },
   testDir: './tests',
-  //testMatch:`/admin/location/*.spec.ts`,
   fullyParallel: false,
   retries: 0,
   workers: 1,

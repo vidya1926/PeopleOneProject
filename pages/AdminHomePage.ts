@@ -56,7 +56,6 @@ export class AdminHomePage extends AdminLogin {
     }
 
     public async loadAndLogin(role: string) {
-
         console.log("Loading admin home page...");
         await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
@@ -65,7 +64,6 @@ export class AdminHomePage extends AdminLogin {
         if (pageTitle.toLowerCase().includes("signin")) {
             console.log("Sign-in page detected. Performing login...");
             await this.adminLogin(role);
-
             await this.wait('mediumWait');
             pageTitle = await this.getTitle();
             console.log("Page Title after login:", pageTitle);
