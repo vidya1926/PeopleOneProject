@@ -58,8 +58,7 @@ test.describe(``, async () => {
         await createUser.editIcon();
         await createUser.selectEmploymentType("emp_type");
         await createUser.updateUser();
-        await createUser.verifyUserCreationSuccessMessage();
-     
+        await createUser.verifyUserCreationSuccessMessage();     
 
     })
 

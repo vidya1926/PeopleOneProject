@@ -466,11 +466,11 @@ export class CoursePage extends AdminHomePage {
     }
 
     async enterpastDateValue() {
-        const date =getPastDate(10,3)
+        const date =getPastDate()
         await this.keyboardType(this.selectors.Date, date);
     }
     async enterfutureDateValue() {
-        const date = getFutureDate(10,2)
+        const date = getFutureDate()
         await this.keyboardType(this.selectors.Date, date);
     }
 
@@ -583,9 +583,6 @@ export class CoursePage extends AdminHomePage {
         await this.mouseHover(this.selectors.attachedContentLabel, "button");
         await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
     }
-
-
-
 
     async multipleContent() {
         const fileName = "sample"

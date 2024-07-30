@@ -18,6 +18,11 @@ export class FakerData {
 
     static getOrganizationName(){
         return faker.company.buzzNoun()
+
+    }
+
+    static getcurrentYear(){
+        return `${faker.date.anytime().getFullYear() -2}`;
     }
 
     static getMobileNumber(): string {
@@ -35,6 +40,11 @@ export class FakerData {
     static addressName(): string {
         return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`;
     }
+
+    static getAwardName(){
+        const awardName=faker.helpers.arrayElement(["Excellency Award", "Leadership Award", "Trailblazer Award","Pioneer Award"])
+        return awardName
+        }
 
     static jobRole(): string {
         return faker.person.jobTitle();
@@ -79,6 +89,13 @@ export class FakerData {
         return formattedEmployeeId;
     }
 
+    static getCertificationNumber():string{
+        const employeeId = faker.string.numeric({ length: 4 });
+        const formattedEmployeeId = `CER-${employeeId}`;
+
+        return formattedEmployeeId;
+    }
+
 
 
     static getRandomSkill(): string {
@@ -110,12 +127,26 @@ export class FakerData {
         return faker.commerce.price()
     }
 
-   
+    static getQualification(){
+        const qualification = {
+            degree: faker.helpers.arrayElement(['Bachelor', 'Master', 'PhD', 'Certificate', 'Diploma']),
+            fieldOfStudy: faker.helpers.arrayElement(['Computer Science', 'Engineering', 'Business', 'Arts', 'Science']),
+            institution: faker.company.name(),
+            graduationDate: faker.date.past(10).toLocaleDateString(),
+            grade: faker.helpers.arrayElement(['A', 'B', 'C', 'D', 'E']),
+          };
+
+          return qualification;
+          
+    }
+
+       
     static getMeetingUrl(): string {
         return faker.internet.url();
 
     }
     static getRandomTitle() {
+    
         return (faker.hacker.noun() + " " + faker.hacker.noun());
     }
 }
@@ -196,8 +227,7 @@ export function
     return `${month}/${day}/${year}`;
 }
 
-export function
-    getCurrentDateFormatted(): string {
+export function  getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1)
     const day = String(date.getDate())
@@ -205,25 +235,37 @@ export function
     return `${month}/${day}/${year}`;
 }
 
-export function getPastDate(daysAgo: number,monthsAgo:number): string {
+export function getPastDate(): string {
     const date = new Date();
-    date.setDate(date.getDate() - daysAgo);
-    date.setMonth(date.getMonth() - monthsAgo);
+    date.setDate(date.getDate() - 5);
+    date.setMonth(date.getMonth() - 2);
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
     const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
+    const year = String(date.getFullYear()-4);
     return `${month}/${day}/${year}`;
 }
 
-export function getFutureDate(daysAhead: number,monthsAhead:number): string {
+export function getFutureDate(): string {
     const date = new Date();
-    date.setDate(date.getDate() - daysAhead);
-    date.setMonth(date.getMonth() - monthsAhead);
+    date.setDate(date.getDate() + 3);
+    date.setMonth(date.getMonth() + 7);
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
     const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
+    const year = String(date.getFullYear()+3);
     return `${month}/${day}/${year}`;
 }
+
+
+
+export function getFutureyear(): string {
+    const date = new Date();
+    date.setDate(date.getDate() - 2);
+    date.setMonth(date.getMonth() - 2);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = String(date.getFullYear()+4);
+    return `${month}/${day}/${year}`;
+  }
 
 
 export function getnextMonthFormatted(): string {

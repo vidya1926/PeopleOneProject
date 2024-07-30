@@ -4,7 +4,9 @@ import { LearnerHomePage } from "./LearnerHomePage";
 import { da } from "@faker-js/faker";
 import { time } from "console";
 import { stat } from "fs";
-import { FakerData, generateCreditScore } from "../utils/fakerUtils";
+import { FakerData, generateCreditScore, getCurrentDateFormatted, getFutureDate, getFutureyear, getPastDate } from "../utils/fakerUtils";
+import { getDayOfYear } from "date-fns/fp/getDayOfYear";
+import { getYear } from "date-fns";
 
 export class ProfilePage extends LearnerHomePage {
     public selectors = {
@@ -16,7 +18,7 @@ export class ProfilePage extends LearnerHomePage {
         addIcon: "//span[text()='Add']",
         skillNameField: "//label[text()='Skills']/following::input[@id='skill_name']",
         proficiencyField: "//label[text()='Proficiency']/following::input[@id='proficiency']",
-        showToAllSkills: "//span[text()='Show To All']",
+        showToAllSkills: "(//span[text()='Show To All']/preceding-sibling::i)[2]",
         saveskills: "//button[text()='Save']",
         verifySkills: "//span[contains(text(),'saved')]",
         imgUpload: "//div//input[@id='userfiles']",
@@ -81,7 +83,9 @@ export class ProfilePage extends LearnerHomePage {
         PreferenceUserTypeOptions: (Option: string) => `//span[text()='${Option}']`,
         PreferenceCreditTypeInput: "//label[text()='Credit Period']/following::input[1]",
         saveButton: "//button[text()='Save']",
-
+        education: "(//h5[text()='Education']/following-sibling::i)[1]",
+        addEducation: "//span[text()='Add']/preceding-sibling::i",
+        verifyChanges:`//span[text()='Your changes have been saved']`,
         Language: "//select[@id='lnr_languages']/option",
         Currency: " //select[@id='lnr_currency']/option",
         Country: " //select[@id='lnr_country']/option",
@@ -94,9 +98,49 @@ export class ProfilePage extends LearnerHomePage {
         JobTitle: "//select[@id='job_title']/option",
         Organization: "//select[@id='organization']/option",
         UserType: "//select[@id='user_type']/option",
-        oneProfileInfo: (data:string)=> `(//div[contains(@class,'start justify-content-start')]//div[contains(text(),'${data}: ')])[1]`
-
-
+        oneProfileInfo: (data:string)=> `(//div[contains(@class,'start justify-content-start')]//div[contains(text(),'${data}: ')])[1]`,
+        editAwards: "(//h5[text()='Awards']/following-sibling::i[contains(@class, 'fa-pencil')])[1]",
+        awardYear: "//input[@id='userawardyear-input']",
+        awardName: "//input[@id='userawardname']",
+        company: "//input[@id='userawardcompany']",
+        location: "//input[@id='userawardlocation']",
+        upload: "//label[text()='Upload Certificate ']",
+       // saveAwards: "//button[text()='Save']",
+        fromDate: "//input[@id='education_from_date-input']",
+        toDate: "//input[@id='education_to_date-input']",
+        qualification: "//input[@id='qualification']",
+        specialization: "//input[@id='specialization']",
+        school: "//input[@id='school']",
+        workExp: "(//h5[text()='Work Experience']/following-sibling::i)[1]",
+        addWorkExp: "//span[text()='Add']/preceding-sibling::i",
+        fromWDate: "//input[@id='workexp_from_date-input']",
+        toWDate: "//input[@id='workexp_to_date-input']",
+        designation: "//label[text()='Designation']//following-sibling::input",
+        companyName: "//label[text()='Company']//following-sibling::input",
+        locationName: "//label[text()='Location']//following-sibling::input",
+        interests: "(//h5[text()='Interests']/following-sibling::i)[1]",
+        interestsTitle:"//input[@id='interests']",
+        interestTitleOption:(index:number)=>`(//input[@id='interests'])[${index}]`, 
+        addInterest: "(//label[text()='Interests']/following::i)[1]",   
+        externalTraining: "(//h5[text()='External Training']/following-sibling::i)[1]",
+        verifyCertificate: "//span[text()='Verify Certificate By']",
+      //  selectVerification: "//select[@id='selectedVerificationBy']",
+        verifyBy:`//div[@id='wrapper-verify_by']`,
+        selectManger: (userType:string)=>`//div[@id='wrapper-verify_by']//span[text()='${userType}']`,
+        managerName:`//div[text()='Select']`,
+        name: "//input[@id='trainingUserName']",
+        othersName:`//input[@id='other_user_name']`,
+        titleField: "(//input[@id='title'])[1]",
+        issuedBy: "(//input[@id='company'])[1]",
+        certificateNumber: "(//input[@id='certificate_number'])[1]",
+        //completedOn: "//div[@id='complete_on']//button",
+        completedOn: "//input[@id='completed_on-input']",
+        //validityFrom: "//div[@id='validity_from']//button",
+        validityFrom: "//input[@id='valid_from-input']",
+        //validityTo: "//div[@id='validity_to']//button",
+        validityTo: "//input[@id='valid_to-input']",
+        uploadCert:`//span[text()='Upload Certificate']`,
+        emailId:`//input[@id='email']`,
     }
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -112,6 +156,10 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.preference, "preference", "tab")
     }
 
+
+
+    
+    
     async preferenceTimeZone(timezone: string) {
 
         await this.click(this.selectors.preferenceTimeZone, "timezone", "dropdown")
@@ -221,6 +269,63 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.PreferenceDetailsPageOption(trimmedRandomOption), trimmedRandomOption, "Button");
 
     }
+    async addAwards() {
+        await this.click(this.selectors.editAwards, "Edit", "Icon");
+        await this.click(this.selectors.addIcon, "Add", "Icon");
+        await this.keyboardType(this.selectors.awardYear, FakerData.getcurrentYear());
+        await this.type(this.selectors.awardName, "Awards Name",FakerData.getAwardName() );
+        await this.type(this.selectors.company, "Company", FakerData.getOrganizationName());
+        await this.type(this.selectors.location, "Location", FakerData.getLocationName());
+        await this.uploadFile(this.selectors.upload, "../data/sample.pdf");
+        await this.click(this.selectors.showToAllSkills, "Show to All", "Link");
+      
+    }
+    
+    async addInterests() {
+        await this.click(this.selectors.interests, "Interests", "Icon");
+        await this.click(this.selectors.addIcon, "Add", "Icon");
+        await this.type(this.selectors.interestTitleOption(1), "Enter Interest", FakerData.jobRole());
+        await this.click(this.selectors.addInterest, "Add", "Icon");
+        await this.type(this.selectors.interestTitleOption(2), "Enter Interest",FakerData.jobRole());
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
+    }
+
+    async certificateVerificationbyManager() {
+        await this.click(this.selectors.externalTraining, "External Training", "Icon");
+        await this.click(this.selectors.addIcon, "Add", "Icon");
+        await this.type(this.selectors.titleField, "Title", FakerData.getcertificationTitle());
+        await this.type(this.selectors.issuedBy, "Issued By", FakerData.getOrganizationName());
+        await this.type(this.selectors.certificateNumber, "Certificate Number",FakerData.getCertificationNumber() );
+        await this.typeAndEnter(this.selectors.completedOn, "Completed On", getCurrentDateFormatted());
+        await this.typeAndEnter(this.selectors.validityFrom, "Valid From", getCurrentDateFormatted());
+        await this.typeAndEnter(this.selectors.validityTo, "Validity To", getFutureDate());
+        await this.uploadFile(this.selectors.uploadCert, "../data/sample.pdf");
+        await this.click(this.selectors.verifyCertificate, "Verify Certificate By", "Checkbox");        
+        await this.click(this.selectors.verifyBy,"Manager/Other","Dropdown")
+        //need to addd manager name ..stored values are not populated
+        await this.click(this.selectors.selectManger("Manager"),"Manager","Option")      
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
+    }
+
+    async certificateVerificationbyOther() {
+        await this.click(this.selectors.externalTraining, "External Training", "Icon");
+        await this.click(this.selectors.addIcon, "Add", "Icon");
+        await this.type(this.selectors.titleField, "Title", FakerData.getcertificationTitle());
+        await this.type(this.selectors.issuedBy, "Issued By", FakerData.getOrganizationName());
+        await this.type(this.selectors.certificateNumber, "Certificate Number",FakerData.getCertificationNumber() );
+        await this.typeAndEnter(this.selectors.completedOn, "Completed On", getCurrentDateFormatted());
+        await this.typeAndEnter(this.selectors.validityFrom, "Valid From", getCurrentDateFormatted());
+        await this.typeAndEnter(this.selectors.validityTo, "Validity To", getFutureDate());
+        await this.uploadFile(this.selectors.uploadCert,"../data/sample.pdf")
+        await this.click(this.selectors.verifyCertificate, "Verify Certificate By", "Checkbox");
+        await this.click(this.selectors.verifyBy,"Manager/others","Dropdown")
+        await this.click(this.selectors.selectManger("Others"),"Other","Option")
+        await this.type(this.selectors.othersName, "Name", FakerData.getFirstName());
+        await this.type(this.selectors.emailId,"E-Mail",FakerData.getUserId())
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
+    }
+
+
 
 
     async selectDepartment() {
@@ -361,6 +466,133 @@ export class ProfilePage extends LearnerHomePage {
         return info;
      }
 
+
+     async chooseLanguage() {
+        const options = this.selectors.languageDropdown;
+        const optionsCount = await options.count();
+            for (let i = 0; i < optionsCount; i++) {
+                await this.click(this.selectors.language, "Language", "Dropdown");
+                await options.nth(i).click();
+                await this.page.waitForTimeout(1000);
+        }
+
+    }
+
+    async timezone(city:string) {
+        await this.click(this.selectors.timezone, "Timezone", "Dropdown");
+        await this.type(this.selectors.timezoneSearchbox, "Timezone", city);
+    }
+
+    async currency(currency:string) {
+        await this.click(this.selectors.currency, "Currency", "Dropdown");
+        await this.type(this.selectors.currencyInput, "Currency", currency);
+        await this.click(`//span[text()='${currency}']`, "Currency", "Dropdown"); 
+    }
+
+    async country(country:string) {
+        await this.click(this.selectors.country, "United States", "Dropdown");
+        await this.type(this.selectors.countryInput, "Country", country);
+        await this.click(`//a/span[text()='${country}']`, "Country", "Dropdpwn");
+    }
+
+    async state(state:string) {
+        await this.click(this.selectors.state, "State", "Dropdown");
+        await this.type(this.selectors.stateInput, "State", state);
+        await this.click(`//a/span[text()='${state}']`, "State", "Dropdown");
+    }
+
+    async cityDropdown(city:string) {
+        await this.click(this.selectors.cityInput, "City", "Textbox");
+        await this.type(this.selectors.cityInput, "City", city)
+    }
+
+    async dateFormat() {
+        await this.click(this.selectors.date, "Date Format", "Dropdown");
+        await this.click(this.selectors.dateFormat, "Date Format", "Dropdown");
+
+    }
+
+    async details(data:string) {
+        await this.click(this.selectors.detailsPageView, "Details Page View", "Dropdown");
+        await this.click(`//a/span[text()='${data}']`, "Details Page View", "Dropddown");
+    }
+
+    async creditFrom(month:string) {
+        await this.click(this.selectors.creditPeriodFrom, "From", "Dropdown");
+        await this.click(`(//a/span[text()='${month}'])[1]`, "From", "Dropdown");
+    }
+
+    async creditTo(month:string) {
+        await this.click(this.selectors.creditPeriodTo, "To", "Dropdown");
+        await this.click(`//div[@id='wrapper-credit_period1']//span[text()='${month}']`, "To", "Dropdown");
+    }
+
+    async targetCredit(target:string) {
+        await this.type(this.selectors.targetCredit, "Target Credit", target);
+    }
+
+    async otherDetails(address1:string, address2:string, zipcode:string, mobile:string, phone:string, dept:string, id:string, empType:string,
+        jobRole:string, jobTitle:string, organization:string, userType:string
+    ) {
+        await this.type(this.selectors.address1, "Address1", address1);
+        await this.type(this.selectors.address2, "Address2", address2);
+        await this.type(this.selectors.zipcode, "Zipcode", zipcode);
+        await this.type(this.selectors.mobile, "Mobile Number", mobile);
+        await this.type(this.selectors.phone, "Phone Number", phone);
+        await this.click(this.selectors.department, "Department", "Dropdown");
+        await this.type(this.selectors.departmentInput, "Department Input", dept);
+        await this.click(`//a/span[text()='${dept}']`, "Department", "Dropdown");
+        await this.type(this.selectors.employeeId, "Employee ID", id);
+        await this.click(this.selectors.employeeType, "Employee Type", "Dropdown");
+        await this.type(this.selectors.empTypeInput, "Employee Type", empType);
+        await this.click(`//span[text()='${empType}']`, "Employee Type", "Dropdown");
+        await this.click(this.selectors.jobRole, "Job Role", "Dropdown");
+        await this.type(this.selectors.jobRoleInput, "Job Role", jobRole);
+        await this.click(`//span[text()='${jobRole}']`, "Job Role", "Dropdown");        
+        await this.click(this.selectors.jobTitle, "Job Title", "Dropdown");
+        await this.type(this.selectors.jobTitleInput, "Job Title", jobTitle);
+        await this.click(`//span[text()='${jobTitle}']`, "Job Title", "Dropdown");        
+        await this.click(this.selectors.organization, "Organization", "Dropdown");
+        await this.type(this.selectors.organizationInput, "Organization", organization);
+        await this.click(`//span[text()='${organization}']`, "Organization", "Dropdown");
+        await this.click(this.selectors.userType, "User Type", "Dropdown");
+        await this.type(this.selectors.userTypeInput, "User Type", userType);
+        await this.click(`//span[text()='${userType}']`, "User Type", "Dropdown");
+        //terms
+    }
+
+    async addEducation() {
+        await this.click(this.selectors.education, "Education", "Edit Icon");
+        await this.click(this.selectors.addEducation, "Add", "Plus Icon");
+        await this.type(this.selectors.fromDate, "From Date",  getPastDate());
+        await this.type(this.selectors.toDate, "To Date",FakerData.getQualification().graduationDate );
+        await this.type(this.selectors.qualification, "Qualification", FakerData.getQualification().degree);
+        await this.type(this.selectors.specialization, "Specialization", FakerData.getQualification().fieldOfStudy);
+        await this.type(this.selectors.school, "School", FakerData.getQualification().institution);
+        await this.validateElementVisibility(this.selectors.showToAllSkills, "Show To All");
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox" );
+    }
+
+    async addWorkExperience() {
+        await this.click(this.selectors.workExp, "Work Experience", "Edit Icon");
+        await this.click(this.selectors.addWorkExp, "Add", "Plus Icon");
+        await this.type(this.selectors.fromWDate, "From Date", getPastDate());
+        await this.type(this.selectors.toWDate, "To Date", getCurrentDateFormatted());
+        await this.type(this.selectors.designation, "Designation", FakerData.jobRole());
+        await this.type(this.selectors.companyName, "Company", FakerData.getOrganizationName());
+        await this.type(this.selectors.locationName, "Location", FakerData.getLocationName());
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox" );
+    }
+
+      async verifySavedChanges(){
+           await this.verification(this.selectors.verifyChanges,"Saved")
+      }
+
+
 }
+
+
+
+
 
 
