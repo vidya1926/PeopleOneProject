@@ -19,6 +19,7 @@ export class LearnerDashboardPage extends LearnerHomePage {
     }
 
     async clickLearningPath_And_Certification() {
+        await this.wait('minWait');
         await this.validateElementVisibility(this.selectors.learningPathAndCertification, "LearningPath and Certification");
         await this.wait('minWait');
         await this.click(this.selectors.learningPathAndCertification, "LearningPath and Certification", "Button");

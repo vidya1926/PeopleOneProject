@@ -118,11 +118,11 @@ export class CoursePage extends AdminHomePage {
         //domainDropdownIndex: (domain_index: number) => `(//a[@class='dropdown-item selected'])[${domain_index}]`,
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
-        portalDropdown:`(//label[text()='Domain']/following::div)[1]`,
-        allPortalOptions:`//label[text()='Domain']/following::div[@class='dropdown-menu show']//a`,
-        portalOption:(index:string)=>`(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
+        portalDropdown: `(//label[text()='Domain']/following::div)[1]`,
+        allPortalOptions: `//label[text()='Domain']/following::div[@class='dropdown-menu show']//a`,
+        portalOption: (index: string) => `(//label[text()='Domain']/following::div[@class='dropdown-menu show']//a)[${index}]`,
         domainNameOption: (portalName: string) => `//a[@class='dropdown-item']//span[text()='${portalName}']`,
-        portal:`(//label[text()='Domain']/following::div[@id='wrapper-user-portals']//button)[1]`,
+        portal: `(//label[text()='Domain']/following::div[@id='wrapper-user-portals']//button)[1]`,
         image: "(//div[@class='img-wrapper']/img)[1]",
         clickHere: "//div[@class='form-label']/span",
         httpsInput: "input[id=content_url]",
@@ -230,17 +230,16 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.portalOption(randomIndex), "Domain Name", "Button");
     }
 
-    async selectDomainOption(portalName:string) {
-    await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
-       for( const options of await this.page.locator(this.selectors.allPortalOptions).all())
-          {
-           const value= await options.innerText();    
-           console.log(value)
-           if (value !== portalName) {
-            await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
-        }
+    async selectDomainOption(portalName: string) {
+        await this.click(this.selectors.portalDropdown, "Portal", "dropdown");
+        for (const options of await this.page.locator(this.selectors.allPortalOptions).all()) {
+            const value = await options.innerText();
+            console.log(value)
+            if (value !== portalName) {
+                await this.click(`//span[@class='text' and text()='${value}']`, "Domain", "Dropdown");
             }
-    
+        }
+
     }
 
 
@@ -466,7 +465,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async enterpastDateValue() {
-        const date =getPastDate()
+        const date = getPastDate()
         await this.keyboardType(this.selectors.Date, date);
     }
     async enterfutureDateValue() {
@@ -740,7 +739,7 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.instructorDropdownIndex(index), "Select Instructor", "DropDown");
         await this.type(this.selectors.instructorInput, "Instructor Name", instructorName);
         await this.mouseHover(this.selectors.instructorOption(instructorName), "Instructor Name");
-        await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button")
+        await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button");
     }
 
     async attendeeUrl() {
@@ -748,11 +747,11 @@ export class CoursePage extends AdminHomePage {
     }
 
     async presenterUrl() {
-        await this.type(this.selectors.presenterUrlIndex(1), "Presenter url", FakerData.getMeetingUrl())
+        await this.type(this.selectors.presenterUrlIndex(1), "Presenter url", FakerData.getMeetingUrl());
     }
 
     async clickaddIcon() {
-        await this.click(this.selectors.addDeleteIcon, "Add Icon", "Button")
+        await this.click(this.selectors.addDeleteIcon, "Add Icon", "Button");
     }
 
     async startDateVC() {
@@ -760,11 +759,11 @@ export class CoursePage extends AdminHomePage {
     }
 
     async addAttendeeUrl(attendeeUrl: string) {
-        await this.type(this.selectors.attendeeUrl, "Attendee url", attendeeUrl)
+        await this.type(this.selectors.attendeeUrl, "Attendee url", attendeeUrl);
     }
 
     async addPresenterUrl(presenterUrl: string) {
-        await this.type(this.selectors.presenterUrl, "Presenter url", presenterUrl)
+        await this.type(this.selectors.presenterUrl, "Presenter url", presenterUrl);
     }
 
     async clickCompletionCertificate() {
@@ -791,7 +790,6 @@ export class CoursePage extends AdminHomePage {
     async clickAdd() {
         await this.validateElementVisibility(this.selectors.addBtn, "Add");
         await this.wait('mediumWait');
-        // await this.mouseHover(this.selectors.addBtn, "Add");
         await this.click(this.selectors.addBtn, "Add", "Button");
         await this.wait('minWait');
         await this.verification(this.selectors.certificationVerifyMessage, "created successfully");
@@ -800,7 +798,7 @@ export class CoursePage extends AdminHomePage {
 
     async clickAccessButton() {
         await this.validateElementVisibility(this.selectors.accessBtn, "Access"),
-            await this.click(this.selectors.accessBtn, "Access", "Link")
+            await this.click(this.selectors.accessBtn, "Access", "Link");
         await this.wait('mediumWait');
     }
 
@@ -809,7 +807,7 @@ export class CoursePage extends AdminHomePage {
         const count = await closeIcon.count();
         console.log("learner groups : " + count);
         for (let i = 1; i < count; i++) {
-            await this.mouseHover(this.selectors.MultiaccessCloseIcon, "close Icon")
+            await this.mouseHover(this.selectors.MultiaccessCloseIcon, "close Icon");
             await this.page.locator(this.selectors.MultiaccessCloseIcon).click({ force: true });
             await this.wait('mediumWait');
         }
@@ -820,17 +818,17 @@ export class CoursePage extends AdminHomePage {
     }
 
     async saveAccessButton() {
-        await this.click(this.selectors.saveAccessBtn, "Save Access", "Button")
+        await this.click(this.selectors.saveAccessBtn, "Save Access", "Button");
     }
 
 
     async clickenforceSequence() {
-        await this.validateElementVisibility(this.selectors.enforceSequence, "Enforce Sequence ")
-        await this.click(this.selectors.enforceSequence, "Enforce Sequence ", "Checkbox")
+        await this.validateElementVisibility(this.selectors.enforceSequence, "Enforce Sequence ");
+        await this.click(this.selectors.enforceSequence, "Enforce Sequence ", "Checkbox");
 
     }
 
 
-    
+
 
 }
