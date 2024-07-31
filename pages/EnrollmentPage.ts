@@ -31,7 +31,7 @@ export class EnrollmentPage extends AdminHomePage{
          
     }
 
-    async SelecCourse(data:string){
+    async selectCourse(data:string){
         await this.type(this.selectors.searchcourseOrUser,"Search user", data)
         const count=await this.page.locator("//label[contains(@for,'training')]//i").count()
         const randomIndex = Math.floor(Math.random() * count) + 1;

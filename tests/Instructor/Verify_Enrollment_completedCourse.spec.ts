@@ -49,20 +49,21 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await addinstance("Classroom");
     await createCourse.setMaxSeat();
     await createCourse.enterSessionName(courseName);
-    await createCourse.enterfutureDateValue();
+    await createCourse.enterpastDateValue();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor("arivazhaganp")
     await createCourse.typeAdditionalInfo(courseName)
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();
     await createCourse.typeDescription("Check the instance class for the availed course")
+    await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
 })
 
 
 
-test(`TC091_Enrollment for schedule class`,async({adminHome,enrollHome})=>{
+test(`TC092_Enrollment for Completed class`,async({adminHome,enrollHome})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -76,9 +77,29 @@ test(`TC091_Enrollment for schedule class`,async({adminHome,enrollHome})=>{
     await adminHome.clickEnrollmentMenu();
     await adminHome.clickEnroll();
     await enrollHome.selectEnroll();
-    await enrollHome.enterSearchUser(courseName)  
+    await enrollHome.selectCourse(courseName)
     await enrollHome.clickSelectedLearner();
     await enrollHome.enterSearchUser("User")
     await enrollHome.clickEnrollBtn();
     await enrollHome.verifytoastMessage()
 })
+
+
+
+
+test(`TC094_Instructor role for Completed class`,async({adminHome,enrollHome,instructorHome})=>{
+
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `Enrollment for schedule class` },
+        { type:`Test Description`, description: `Enrollment for schedule class` }
+    
+        
+    );
+    await adminHome.loadAndLogin("INSTRUCTORNAME");
+    await instructorHome.clickEnrollmentIcon(); 
+    await enrollHome.enterSearchUser("User")
+
+})
+
+

@@ -56,6 +56,7 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();
     await createCourse.typeDescription("Check the instance class for the availed course")
+    await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
 })
@@ -76,9 +77,29 @@ test(`TC091_Enrollment for schedule class`,async({adminHome,enrollHome})=>{
     await adminHome.clickEnrollmentMenu();
     await adminHome.clickEnroll();
     await enrollHome.selectEnroll();
-    await enrollHome.enterSearchUser(courseName)  
+    await enrollHome.selectCourse(courseName)
     await enrollHome.clickSelectedLearner();
     await enrollHome.enterSearchUser("User")
     await enrollHome.clickEnrollBtn();
     await enrollHome.verifytoastMessage()
 })
+
+
+
+
+test.only(`TC093_Instructor role for Scheduled class`,async({adminHome,enrollHome,instructorHome})=>{
+
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `Enrollment for schedule class` },
+        { type:`Test Description`, description: `Enrollment for schedule class` }
+    
+        
+    );
+    await adminHome.loadAndLogin("INSTRUCTORNAME");
+    await instructorHome.clickEnrollmentIcon(); 
+    await enrollHome.enterSearchUser("User")
+
+})
+
+
