@@ -112,7 +112,7 @@ export class FakerData {
 
 
     static getDescription(): string {
-        const description = faker.lorem.paragraph();
+        const description = faker.lorem.paragraph(1);
         return description;
     }
     static getCategory(): string {
