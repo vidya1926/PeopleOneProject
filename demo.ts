@@ -139,7 +139,7 @@ for (let i = 0; i < 4; i++) {
 }
  */
 
-let printedIndices: number[] = []; 
+/* let printedIndices: number[] = []; 
 for (let i = 0; i < 2; i++) {
     console.log(i);
     for (let index = 0; index < 4; index++) {
@@ -153,6 +153,11 @@ for (let i = 0; i < 2; i++) {
         }
     }
 }
+ */
+
+const startDigit = Math.floor(Math.random() * 3) + 7;
+const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
+console.log(`${startDigit}${restDigits}`);
 
 
 

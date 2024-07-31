@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import { format } from 'date-fns';
 
-const timestamp = format(new Date(), 'MM/dd/yyyy');
-const reportDir = `./reporter/playwright-reports-${timestamp}`;
+/* const timestamp = format(new Date(), 'MM/dd/yyyy');
+const reportDir = `./reporter/playwright-reports-${timestamp}`; */
 export default defineConfig({
 
   timeout: 450000,
@@ -14,7 +14,8 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   repeatEach: 0,
-  reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
+  //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
+  reporter: [['html', { open: 'always' }]],
   use: {
     trace: 'on',
     headless: false,

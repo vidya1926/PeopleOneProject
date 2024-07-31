@@ -44,7 +44,7 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
         await createUser.enter("user-city", city);
         await createUser.enter("user-zipcode", zipcode);
         await createUser.enter("user-mobile", FakerData.getMobileNumber());
-        await createUser.clickRolesButton("Manager")
+        await createUser.clickRolesButton("Manager");
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();

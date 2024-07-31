@@ -16,7 +16,7 @@ export class FakerData {
         return faker.person.lastName();
     }
 
-    static getOrganizationName(){
+    static getOrganizationName() {
         return faker.company.buzzNoun()
     }
 
@@ -62,7 +62,7 @@ export class FakerData {
     static getCourseName(): string {
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();
-        const verb = faker.hacker.verb(); 
+        const verb = faker.hacker.verb();
         return `${capitalizeFirstLetter(adjective)} ${capitalizeFirstLetter(noun)} ${capitalizeFirstLetter(verb)}`;
     }
     static getUserId(): string {
@@ -72,7 +72,7 @@ export class FakerData {
         const user = faker.internet.email({ firstName: fName })
         return user;
     }
-    static getEmployeeid():string{
+    static getEmployeeid(): string {
         const employeeId = faker.string.numeric({ length: 4 });
         const formattedEmployeeId = `EMP-${employeeId}`;
 
@@ -110,7 +110,7 @@ export class FakerData {
         return faker.commerce.price()
     }
 
-   
+
     static getMeetingUrl(): string {
         return faker.internet.url();
 
@@ -133,10 +133,10 @@ function capitalizeFirstLetter(string) {
 
 
 function getPhoneNumber(): string {
-    // const startDigit = Math.floor(Math.random() * 3) + 7;
-    // const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
-    // return `${startDigit}${restDigits}`;
-    return faker.phone.number();
+    const startDigit = Math.floor(Math.random() * 3) + 7;
+    const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${startDigit}${restDigits}`;
+
 }
 export function getCVV(): string {
     // const startDigit = Math.floor(Math.random() * 1) + 12;
@@ -160,7 +160,7 @@ export function generateCreditScore(): number {
     const minCreditScore = 300;
     const maxCreditScore = 850;
     return faker.number.int({ min: minCreditScore, max: maxCreditScore });
-  }
+}
 
 export async function getRandomSeat() {
     const num = 100;
@@ -205,7 +205,7 @@ export function
     return `${month}/${day}/${year}`;
 }
 
-export function getPastDate(daysAgo: number,monthsAgo:number): string {
+export function getPastDate(daysAgo: number, monthsAgo: number): string {
     const date = new Date();
     date.setDate(date.getDate() - daysAgo);
     date.setMonth(date.getMonth() - monthsAgo);
@@ -215,7 +215,7 @@ export function getPastDate(daysAgo: number,monthsAgo:number): string {
     return `${month}/${day}/${year}`;
 }
 
-export function getFutureDate(daysAhead: number,monthsAhead:number): string {
+export function getFutureDate(daysAhead: number, monthsAhead: number): string {
     const date = new Date();
     date.setDate(date.getDate() - daysAhead);
     date.setMonth(date.getMonth() - monthsAhead);

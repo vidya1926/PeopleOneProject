@@ -9,9 +9,7 @@ const newData = {
     commonUser: commonUser
 }
 updateFieldsInJSON(newData)
-
-//test.use({ storageState: "logins/expertusAdminLog.json" })
-test(`Creating User for the application`, async ({ page,adminHome, createUser, learnerHome, profile }) => {
+test(`Creating User for the application`, async ({ adminHome, createUser, learnerHome, profile }) => {
     test.info().annotations.push(
         { type: 'Author', description: 'Vidya' },
         { type: 'TestCase', description: 'One Profile Training Summary' },
@@ -49,7 +47,7 @@ test(`Creating User for the application`, async ({ page,adminHome, createUser, l
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
-       
+
         await learnerHome.learnerLogin("COMMONUSER", "Portal");
         await profile.clickProfile();
         await profile.oneProfile();
@@ -59,7 +57,7 @@ test(`Creating User for the application`, async ({ page,adminHome, createUser, l
         await profile.verifyprofileInfo("Phone")
     }
 
-    })
+})
 
 
 

@@ -3,9 +3,9 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from "../../../utils/fakerUtils";
 
-const username: any = FakerData.getUserId();
+const username: any = ("people" + FakerData.getUserId());
 test.describe(``, async () => {
-    test(`Verify that a user can be created and a profile picture uploaded`, async ({ adminHome, createUser }) => {
+    test(`TC035_Verify that a user can be created and a profile picture uploaded`, async ({ adminHome, createUser }) => {
 
         test.info().annotations.push(
             { type: 'Author', description: 'Ajay Michael' },
@@ -57,12 +57,36 @@ test.describe(``, async () => {
         await createUser.userSearchField(username);
         await createUser.editIcon();
         await createUser.selectEmploymentType("emp_type");
+        await createUser.clickRolesButton("Manager");
+        await createUser.clickRolesButton("Instructor");
+        await createUser.organizationType("Internal");
         await createUser.updateUser();
         await createUser.verifyUserCreationSuccessMessage();
-     
 
     })
 
+    test(` TC036_Verify that a user can be updated by adding new information to the fields (Edit)`, async ({ adminHome, createUser }) => {
+
+        test.info().annotations.push(
+            { type: 'Author', description: 'Ajay Michael' },
+            { type: 'TestCase', description: 'Verify that a user can be updated by adding new information to the fields (Edit)' },
+            { type: 'Test Description', description: "Try to edit created user" }
+        );
+        await adminHome.loadAndLogin("CUSTOMERADMIN");
+        await adminHome.menuButton();
+        await adminHome.people();
+        await adminHome.user();
+        await createUser.userSearchField(username);
+        await createUser.editIcon();
+        await createUser.enter("first_name", FakerData.getFirstName());
+        await createUser.enter("last_name", FakerData.getLastName());
+        await createUser.enter("user-phone", FakerData.getMobileNumber());
+        await createUser.typeAddress("Address 1", FakerData.getAddress());
+        await createUser.typeAddress("Address 2", FakerData.getAddress());
+        
+
+
+    })
 
 
 
