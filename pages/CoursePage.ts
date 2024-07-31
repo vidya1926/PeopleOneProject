@@ -1,6 +1,6 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData, getCurrentDateFormatted, getFutureDate, getnextMonthFormatted, getPastDate, getRandomLocation, getRandomSeat } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, getFutureDate, getnextMonthFormatted, getPastDate, getRandomLocation, getRandomSeat, gettomorrowDateFormatted } from "../utils/fakerUtils";
 
 
 export class CoursePage extends AdminHomePage {
@@ -399,7 +399,7 @@ export class CoursePage extends AdminHomePage {
     }
     async clickregistrationEnds() {
         await this.validateElementVisibility(this.selectors.registrationEnd, "Enter Date")
-        await this.keyboardType(this.selectors.registrationEnd, getCurrentDateFormatted())
+        await this.keyboardType(this.selectors.registrationEnd, gettomorrowDateFormatted())
     }
 
     // async selectLocation(locationName: string) {
@@ -456,12 +456,12 @@ export class CoursePage extends AdminHomePage {
 
     }
     async enterStartDate() {
-        const date = getCurrentDateFormatted();
+        const date = gettomorrowDateFormatted();
         await this.keyboardType(this.selectors.startDateInstanceIndex(1), date);
     }
 
     async enterDateValue() {
-        const date = getCurrentDateFormatted();
+        const date = gettomorrowDateFormatted();
         await this.keyboardType(this.selectors.Date, date);
     }
 
@@ -732,7 +732,7 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.timeZoneOption, "Time Zone", country)
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
-        await this.typeAndEnter(this.selectors.startDateInstanceIndex(index), "Start Date", getCurrentDateFormatted())
+        await this.typeAndEnter(this.selectors.startDateInstanceIndex(index), "Start Date", gettomorrowDateFormatted())
         await this.click(this.selectors.timeInputIndex(index), "Start Time", "Selected")
         await this.click(this.selectors.chooseStartTimeIndex(index, randomIndex), "StartTime", "Selected")
         await this.type(this.selectors.attendeeUrlIndex(index), "Attendee url", meetingUrl)
@@ -756,7 +756,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async startDateVC() {
-        await this.type(this.selectors.startDateInstance, "Start Date", getCurrentDateFormatted())
+        await this.type(this.selectors.startDateInstance, "Start Date", gettomorrowDateFormatted())
     }
 
     async addAttendeeUrl(attendeeUrl: string) {

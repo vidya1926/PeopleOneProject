@@ -1,4 +1,4 @@
-import { getCurrentDateFormatted } from "../utils/fakerUtils";
+import { getCurrentDateFormatted, gettomorrowDateFormatted } from "../utils/fakerUtils";
 import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, Page } from "@playwright/test";
@@ -211,7 +211,7 @@ export class UserPage extends AdminHomePage {
     }
 
     public async enterHireDate() {
-        await this.keyboardType(this.selectors.hireDate, getCurrentDateFormatted())
+        await this.keyboardType(this.selectors.hireDate, gettomorrowDateFormatted())
     }
 
     public async editbtn() {

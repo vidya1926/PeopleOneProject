@@ -2,7 +2,7 @@ import path from "path";
 import { PlaywrightWrapper } from "../utils/playwright";
 import { AdminHomePage } from "./AdminHomePage";
 
-import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, gettomorrowDateFormatted } from "../utils/fakerUtils";
 
 export class LearningPathPage extends AdminHomePage {
 
@@ -219,7 +219,7 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async clickAndSelectCompleteByRule() {
-        await this.keyboardType(this.selectors.completeByInput, getCurrentDateFormatted());
+        await this.keyboardType(this.selectors.completeByInput, gettomorrowDateFormatted());
     }
 
     async addRecertificationCourse() {
@@ -234,6 +234,6 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async registractionEnds() {
-        await this.keyboardType(this.selectors.registractionEndsInput, getCurrentDateFormatted());
+        await this.keyboardType(this.selectors.registractionEndsInput, gettomorrowDateFormatted());
     }
 }
