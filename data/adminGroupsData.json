@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "managerName": "Ignatius.Koch-Kessler61@hotmail.com",
   "adminName": "Jane Smith",
   "learnerAdmin": "Alice Johnson",
@@ -7,4 +8,16 @@
   "peopleAdmin": "Chloe_Muller@gmail.com",
   "commerceAdmin": "Jaquan.Stracke@gmail.com",
   "commonUser": "Kennedy.Reinger@yahoo.com"
+=======
+
+  "managerName": "Johan.Goldner@gmail.com",
+  "adminName": "Jane Smith",
+  "learnerAdmin": "Alice Johnson",
+  "courseAdmin": "Rory_Toy-Hartmann@yahoo.com",
+  "customAdmin": "Brady89@hotmail.com",
+  "peopleAdmin": "Michale20@hotmail.com",
+  "commerceAdmin": "Richard_Lakin52@hotmail.com",
+  "commonUser": "Ryan_Reichert16@hotmail.com",
+  "enrollAdmin": "Samara.Cummings77@gmail.com"
+>>>>>>> f673c463a19354720b0becef3d2456f2004f99ac
 }

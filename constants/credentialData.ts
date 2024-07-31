@@ -43,10 +43,12 @@ export let credentials = {
         username:'Retta44@gmail.com',
         password:'Welcome1@',
     },
-
     COMMONUSER:{
         username:commonUser,
         password:"Welcome1@"
     },
-
+    ENROLLADMIN:{
+        username:"enrollAdmin",
+        password:"Welcome1@"
+    },
 };

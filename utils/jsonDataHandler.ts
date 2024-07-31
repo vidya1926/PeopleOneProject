@@ -10,6 +10,7 @@ interface Data {
   customAdmin?:string;
   instructorName?:string;
   commonUser?:string;
+  enrollAdmin?:string;
 }
 
 const fileName = '../data/adminGroupsData.json';
@@ -17,7 +18,9 @@ const fileName = '../data/adminGroupsData.json';
 export function updateFieldsInJSON(newData: Data): void {
   const filepath = path.join(__dirname, fileName);
 
-  let existingData: Data = {};
+  let existingData: Data = {
+    enrollAdmin: ''
+  };
 
 
   try {

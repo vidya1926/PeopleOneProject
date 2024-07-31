@@ -6,7 +6,7 @@ import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
 
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test(`TC001_CreateCourseFor Single Instance`, async ({ learnerHome, profile, createUser }) => {
+test(`TC110_Adding Preference Details`, async ({ learnerHome, profile, createUser }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -47,6 +47,7 @@ test(`TC001_CreateCourseFor Single Instance`, async ({ learnerHome, profile, cre
             await profile.selectOrganization()
             await profile.selectUserType()
             await profile.clickSave()
+            await profile.verifySavedChanges()
 
         }
     }

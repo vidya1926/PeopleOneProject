@@ -43,6 +43,9 @@ export class AdminHomePage extends AdminLogin {
         assessmentMenu: `//span[text()='Assessment']`,
         assessmentQuestionLink: `//span[text()='Assessment']//parent::div/following-sibling::ul//a[text()='Questions']`,
         assessmentLink: "//a[text()='Assessment']",
+        enrollMenu:`//span[text()='Enrollments']`,
+        enrollLink:`//a[text()='Enroll']`
+
     };
 
 
@@ -230,6 +233,7 @@ export class AdminHomePage extends AdminLogin {
 
 
 
+
     public async locationLink() {
         await this.click(this.selectors.locationLink, "Location", "Link");
     }
@@ -276,6 +280,17 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.contentMenu, "Content", "Link")
 
     }
+
+    public async clickEnrollmentMenu(){
+        await this.click(this.selectors.enrollMenu,"Enrollment","Link")
+    }
+
+    public async clickEnroll(){
+        await this.click(this.selectors.enrollLink,"Enrollment","Link")
+    }
+
+
+    
 
 }
 

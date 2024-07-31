@@ -27,7 +27,7 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'TC089',
       use: {
         ...devices['Desktop Chromium'],
         viewport: null,
@@ -35,6 +35,7 @@ export default defineConfig({
           slowMo: 300,
           args: ["--start-maximized"]
         }
+      
       }
     },
 

@@ -46,8 +46,7 @@ test(`Creating User for the application`, async ({ adminHome, createUser, learne
         await createUser.selectLanguage("English")
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
-        await createUser.verifyUserCreationSuccessMessage();
-
+        await createUser.verifyUserCreationSuccessMessage();       
         await learnerHome.learnerLogin("COMMONUSER", "Portal");
         await profile.clickProfile();
         await profile.oneProfile();
@@ -55,6 +54,7 @@ test(`Creating User for the application`, async ({ adminHome, createUser, learne
         await profile.verifyprofileInfo("Division")
         await profile.verifyprofileInfo("Email")
         await profile.verifyprofileInfo("Phone")
+        
     }
 
 })
