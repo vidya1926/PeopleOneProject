@@ -4,7 +4,7 @@ import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from "../../../utils/fakerUtils";
 
 const username: any = ("people" + FakerData.getUserId());
-test.describe(``, async () => {
+test.describe(`People Module TC035,TC036,TC037 and TC039 `, async () => {
     test(`TC035_Verify that a user can be created and a profile picture uploaded`, async ({ adminHome, createUser }) => {
 
         test.info().annotations.push(
@@ -19,7 +19,7 @@ test.describe(``, async () => {
         for (const row of data) {
             const { country, state, timezone, currency, city, zipcode } = row;
 
-            await adminHome.loadAndLogin("CUSTOMERADMIN");
+            await adminHome.loadAndLogin("NEWCUSTOMERADMIN");
             await adminHome.clickMenu("User");
             await createUser.verifyCreateUserLabel();
             await createUser.enter("first_name", FakerData.getFirstName());
@@ -50,7 +50,7 @@ test.describe(``, async () => {
             { type: 'TestCase', description: 'Verify that the attributes created in the metadata library for people module is accessible in user page' },
             { type: 'Test Description', description: "Using the attributes created in the metadata library for people module " }
         );
-        await adminHome.loadAndLogin("CUSTOMERADMIN");
+        await adminHome.loadAndLogin("NEWCUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
@@ -72,7 +72,7 @@ test.describe(``, async () => {
             { type: 'TestCase', description: 'Verify that a user can be updated by adding new information to the fields (Edit)' },
             { type: 'Test Description', description: "Try to edit created user" }
         );
-        await adminHome.loadAndLogin("CUSTOMERADMIN");
+        await adminHome.loadAndLogin("NEWCUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
@@ -83,6 +83,7 @@ test.describe(``, async () => {
         await createUser.enter("user-phone", FakerData.getMobileNumber());
         await createUser.typeAddress("Address 1", FakerData.getAddress());
         await createUser.typeAddress("Address 2", FakerData.getAddress());
+        await createUser.updateUser();
         await createUser.verifyUserCreationSuccessMessage();
 
     })
@@ -91,17 +92,54 @@ test.describe(``, async () => {
 
         test.info().annotations.push(
             { type: 'Author', description: 'Ajay Michael' },
-            { type: 'TestCase', description: '' },
+            { type: 'TestCase', description: 'Verify that a user can be suspended even if they have active or inactive enrollments' },
             { type: 'Test Description', description: "Suspend the User" }
         );
-        await adminHome.loadAndLogin("CUSTOMERADMIN");
+        await adminHome.loadAndLogin("NEWCUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
         await createUser.userSearchField(username);
         await createUser.editIcon();
-       await createUser.verifyEditUserLabel()
-       await createUser.clickSuspendButton();
+        await createUser.verifyEditUserLabel()
+        await createUser.clickSuspendButton();
+        await createUser.userSearchField(username);
+
+    })
+    test(` TC038 Verify that the impersonation flow in diffferent portal`, async ({ adminHome, createUser }) => {
+/*  */
+        test.info().annotations.push(
+            { type: 'Author', description: 'Ajay Michael' },
+            { type: 'TestCase', description: 'Verify that the impersonation flow in diffferent portal' },
+            { type: 'Test Description', description: "IMpersonate the User to debug" }
+        );
+        await adminHome.loadAndLogin("NEWCUSTOMERADMIN");
+        await adminHome.menuButton();
+        await adminHome.people();
+        await adminHome.user();
+        await createUser.userSearchField(username);
+        await createUser.clickActivateIcon();
+        await createUser.clickImpersonationIcon();
+        await createUser.fillImpersonateForm();
+
+
+    })
+
+    test(` TC039 Verify that a user without active enrollments can be deleted`, async ({ adminHome, createUser }) => {
+
+        test.info().annotations.push(
+            { type: 'Author', description: 'Ajay Michael' },
+            { type: 'TestCase', description: 'Verify that a user without active enrollments can be deleted' },
+            { type: 'Test Description', description: "Delete the User" }
+        );
+        await adminHome.loadAndLogin("NEWCUSTOMERADMIN");
+        await adminHome.menuButton();
+        await adminHome.people();
+        await adminHome.user();
+        await createUser.userSearchField(username);
+        await createUser.clickDeleteIcon();
+        await createUser.userSearchField(username);
+        await createUser.verifyDeletedUser();
 
     })
 

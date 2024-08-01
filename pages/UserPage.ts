@@ -1,4 +1,4 @@
-import { getCurrentDateFormatted, gettomorrowDateFormatted } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, gettomorrowDateFormatted } from "../utils/fakerUtils";
 import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, Page } from "@playwright/test";
@@ -52,6 +52,23 @@ export class UserPage extends AdminHomePage {
         suspendBtn: "//button[text()='Suspend']",
         suspendDialog: "//span[contains(text(),'Are you sure you want to suspend the user')]",
         suspendDialogBtn: "//span[contains(text(),'Are you sure you want to suspend the user')]//following::button[text()='Suspend']",
+        deleteIcon: "a[aria-label='Delete'] , a[title='Delete'] i",
+        deleteDialog: "//span[contains(text(),'Are you sure you want to delete the user')]",
+        deleteBtn: "//button[text()='Delete']",
+        noResultText: "//h3[contains(text(),'There are no results that match your current filters')]",
+        activateUserIcon: "a[title='Activate'], a[aria-label='Activate'] i",
+        activateDialog: "//span[contains(text(),'Are you sure you want to activate the user')]",
+        activateBtn: "//button[text()='Activate']",
+        impersonationIcon: " a[aria-label='Impersonation'] , a[title='Impersonation'] i",
+        impersonateLabel: "//label[text()='Select Domain you want to Impersonate']",
+        impersonateOptionDD: "(//label[text()='Select Domain you want to Impersonate']//parent::div//button)[1]",
+        impersonateDomainValue: (option: string) => `//footer//following::a/span[text()='${option}']`,
+        reasonInput: "//label[text()='Reason']//parent::div//textarea",
+        impersonateProceedBtn: "//button[text()='Proceed']",
+        okBtn: "//button[text()='OK']",
+
+
+
 
         //Internal
 
@@ -195,6 +212,7 @@ export class UserPage extends AdminHomePage {
 
     async updateUser() {
         await this.validateElementVisibility(this.selectors.updateButton, "Update");
+        await this.wait('minWait');
         await this.click(this.selectors.updateButton, "Update", "Button");
         await this.wait('minWait');
     }
@@ -247,5 +265,58 @@ export class UserPage extends AdminHomePage {
 
     }
 
+    public async clickDeleteIcon() {
+        await this.validateElementVisibility(this.selectors.deleteIcon, "Delete Icon");
+        await this.mouseHover(this.selectors.deleteIcon, "Delete Icon");
+        await this.wait('mediumWait');
+        await this.click(this.selectors.deleteIcon, "Delete Icon", "Delete");
+        await this.wait('mediumWait');
+        let dialog = this.page.locator(this.selectors.deleteDialog);
+        if (await dialog.isVisible()) {
+            let text = await dialog.innerText();
+            console.log(text);
+            await this.click(this.selectors.deleteBtn, "Suspend", "Button")
+        }
+    }
+
+    public async verifyDeletedUser() {
+        await this.validateElementVisibility(this.selectors.noResultText, "No Result");
+        await this.verification(this.selectors.noResultText, "There are no results that match your current filters");
+    }
+
+    public async clickActivateIcon() {
+        await this.validateElementVisibility(this.selectors.activateUserIcon, "Delete Icon");
+        await this.mouseHover(this.selectors.activateUserIcon, "Delete Icon");
+        await this.wait('mediumWait');
+        await this.click(this.selectors.activateUserIcon, "Delete Icon", "Delete");
+        await this.wait('mediumWait');
+        let dialog = this.page.locator(this.selectors.activateDialog);
+        if (await dialog.isVisible()) {
+            let text = await dialog.innerText();
+            console.log(text);
+            await this.click(this.selectors.activateBtn, "Suspend", "Button")
+        }
+    }
+
+    public async clickImpersonationIcon() {
+        await this.validateElementVisibility(this.selectors.impersonationIcon, "Delete Icon");
+        await this.mouseHover(this.selectors.impersonationIcon, "Delete Icon");
+        await this.wait('mediumWait');
+        await this.click(this.selectors.impersonationIcon, "Delete Icon", "Delete");
+        await this.wait('mediumWait');
+
+    }
+
+    public async fillImpersonateForm() {
+        let option = "E1Internal"
+        await this.validateElementVisibility(this.selectors.impersonateLabel, "Impersonate Label");
+        await this.click(this.selectors.impersonateOptionDD, "Select Domain you want ?", "Drop Down");
+        await this.click(this.selectors.impersonateDomainValue(option), "Select Domain you want ?", "Option");
+        await this.type(this.selectors.reasonInput, "Reason", FakerData.getDescription());
+        await this.click(this.selectors.impersonateProceedBtn, "Proceed", "Button");
+        await this.wait('mediumWait');
+        await this.click(this.selectors.okBtn, "OK", "Button");
+
+    }
 
 }

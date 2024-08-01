@@ -5,7 +5,7 @@ const commonUser: any = (data.commonUser).toString();
 export let credentials = {
 
     CUSTOMERADMIN: {
-        username: "newcustomadmin",
+        username: "customadmin",
         password: "Welcome1@"
     },
     LEARNERADMIN: {
@@ -52,8 +52,8 @@ export let credentials = {
         username: "enrollAdmin",
         password: "Welcome1@"
     },
-    OLDCUSTOMERADMIN: {
-        username: "customadmin",
+    NEWCUSTOMERADMIN: {
+        username: "newcustomadmin",
         password: "Welcome1@"
     },
 };
