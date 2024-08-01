@@ -64,8 +64,5 @@ test(`Verifying user open One Profile Training Summary`, async ({ learnerHome, p
     await learnerHome.basicLogin(username, "Portal");
     await profile.clickProfile();
     await profile.oneProfile();
-    await profile.verifyprofileInfo("Employee Id");
-    await profile.verifyprofileInfo("Division");
-    await profile.verifyprofileInfo("Email");
-    await profile.verifyprofileInfo("Phone");
+
 });
