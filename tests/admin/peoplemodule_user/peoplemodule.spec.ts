@@ -83,10 +83,7 @@ test.describe(``, async () => {
         await createUser.enter("user-phone", FakerData.getMobileNumber());
         await createUser.typeAddress("Address 1", FakerData.getAddress());
         await createUser.typeAddress("Address 2", FakerData.getAddress());
-        await createUser.verifyUserCreationSuccessMessage();     
+        await createUser.verifyUserCreationSuccessMessage();
 
     })
-
-
-
 })

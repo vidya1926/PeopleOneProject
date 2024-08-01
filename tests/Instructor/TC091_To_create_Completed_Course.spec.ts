@@ -55,22 +55,30 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.typeAdditionalInfo(courseName)
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();
-    await createCourse.typeDescription("Check for instance class for the availed course")
+    await createCourse.typeDescription("Check the instance class for the availed course")
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
 })
 
 
 
-test(`TC091_To_create_Completed_Course`,async({adminHome,createCourse,editCourse})=>{
+test(`TC091_Enrollment for schedule class`,async({adminHome,enrollHome})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Course creation for instructor` },
-        { type:`Test Description`, description: `Verify that Course creation for instructor scheduled tab activities` }
+        { type: `TestCase`, description: `Enrollment for schedule class` },
+        { type:`Test Description`, description: `Enrollment for schedule class` }
     
         
     );
-    await adminHome.loadAndLogin("ENROLLADMIN")
-       
+    await adminHome.loadAndLogin("ENROLLADMIN");
+    await adminHome.menuButton()
+    await adminHome.clickEnrollmentMenu();
+    await adminHome.clickEnroll();
+    await enrollHome.selectEnroll();
+    await enrollHome.enterSearchUser(courseName)  
+    await enrollHome.clickSelectedLearner();
+    await enrollHome.enterSearchUser("User")
+    await enrollHome.clickEnrollBtn();
+    await enrollHome.verifytoastMessage()
 })

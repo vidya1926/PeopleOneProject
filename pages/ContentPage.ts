@@ -76,25 +76,17 @@ export class ContentHomePage extends AdminHomePage {
          const text= await this.getInnerText(this.selectors.contentType)
          console.log(text)
          await this.wait("maxWait")
-        switch (fileName) {
-            case "doc"||"Document":
-            case "Presentation"||"PPT":
-            case "PPS"||"Presention":
-            case "xls"||"EXCEL":
-            case "pdf"||"Pdf":
-            case "png"||"Image":
-            case "jpg"||"Image":
-            case "jpeg"||"Image":
-            case "gif"||"Image":
-            case "mp4"||"Video":
-            case "mpg"||"Video":
-            case "mp3"||"Audio":
-            case "XAPI"||"ZIP":
-            case "SCORM"||"ZIP":
-            case "AICC"||"ZIP":
-                expect(text).toContain(fileName);
-                break;
-        }                
+         const fileTypes = [
+            "doc", "Document", "Presentation", "PPT", "PPS", "Presention",
+            "xls", "EXCEL", "pdf", "Pdf", "png", "jpg", "jpeg", "gif",
+            "mp4", "mpg", "mp3", "XAPI", "SCORM", "AICC"
+        ];
+        
+        if (fileTypes.includes(fileName)) {
+            expect(text).toContain(fileName);
+        } else {
+           console.log("File Does not match")
+        }
         }
 
         public async getContentStorage(){
@@ -104,7 +96,8 @@ export class ContentHomePage extends AdminHomePage {
         }
 
         public async gotoListing(){
-            await this.click(this.selectors.contentListing,"Gotoo Listing","Button")
+            await this.validateElementVisibility(this.selectors.contentListing,"Goto Listing")
+            await this.click(this.selectors.contentListing,"Goto Listing","Button")
             await this.wait('maxWait')
         }
 

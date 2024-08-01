@@ -112,7 +112,7 @@ export class FakerData {
 
 
     static getDescription(): string {
-        const description = faker.lorem.paragraph();
+        const description = faker.lorem.paragraph(1);
         return description;
     }
     static getCategory(): string {
@@ -222,7 +222,7 @@ export function getRandomLocation(): DataItem | any {
 export function gettomorrowDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1)
-    const day = String(date.getDate()+1);
+    const day = String(date.getDate() + 1);
     const year = date.getFullYear();
     return `${month}/${day}/${year}`;
 }
