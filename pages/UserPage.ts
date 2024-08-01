@@ -9,6 +9,7 @@ export class UserPage extends AdminHomePage {
         ...this.selectors,
         createUserbtn: `//button[text()='CREATE USER']`,
         createUserLabel: "//h1[text()='Create User']",
+        editUserLabel: "//h1[text()='Edit User']",
         inputField: (name: string) => `//input[@id="${name}"]`,
         addressInput: (label: string) => `//label[contains(text(),'${label}')]/following-sibling::input`,
         dropdownToggle: (label: string) => `(//label[text()='${label}']/following::button[@data-bs-toggle='dropdown'])[1]`,
@@ -48,6 +49,9 @@ export class UserPage extends AdminHomePage {
         closeIcon: "//i[contains(@class,'xmark')]",
         managerclosePopup: "//span[contains(text(),'Are you sure you want to continue?')]",
         yesBtn: "//button[text()='Yes']",
+        suspendBtn: "//button[text()='Suspend']",
+        suspendDialog: "//span[contains(text(),'Are you sure you want to suspend the user')]",
+        suspendDialogBtn: "//span[contains(text(),'Are you sure you want to suspend the user')]//following::button[text()='Suspend']",
 
         //Internal
 
@@ -57,9 +61,14 @@ export class UserPage extends AdminHomePage {
         super(page, context);
     }
 
-    async verifyCreateUserLabel(expectedLabel: string) {
-        await this.verification(this.selectors.createUserLabel, expectedLabel);
+    async verifyCreateUserLabel() {
+        await this.verification(this.selectors.createUserLabel, "CREATE USER");
     }
+
+    async verifyEditUserLabel() {
+        await this.verification(this.selectors.editUserLabel, "Edit User");
+    }
+
 
     async clickCreateUser() {
         await this.click(this.selectors.createUserbtn, "Create User", "Button");
@@ -200,27 +209,42 @@ export class UserPage extends AdminHomePage {
     }
 
     async selectTimeZone(data: string, timeStd: string) {
-        await this.validateElementVisibility(this.selectors.timeZone, "TimeZone")
-        await this.click(this.selectors.timeZone, "TimeZone", "Input")
-        await this.keyboardType(this.selectors.timeZoneSearch, data,)
+        await this.validateElementVisibility(this.selectors.timeZone, "TimeZone");
+        await this.click(this.selectors.timeZone, "TimeZone", "Input");
+        await this.keyboardType(this.selectors.timeZoneSearch, data,);
         const index = await this.page.locator(`//li/a/span[contains(text(),'${timeStd}')]`).count();
         const randomIndex = Math.floor(Math.random() * index) + 1;
-        await this.mouseHover(this.selectors.selectlocationtz(randomIndex, timeStd), "TimeZone")
-        await this.click(this.selectors.selectlocationtz(randomIndex, timeStd), "TimeZone", "Option")
+        await this.mouseHover(this.selectors.selectlocationtz(randomIndex, timeStd), "TimeZone");
+        await this.click(this.selectors.selectlocationtz(randomIndex, timeStd), "TimeZone", "Option");
 
     }
 
     public async enterHireDate() {
-        await this.keyboardType(this.selectors.hireDate, gettomorrowDateFormatted())
+        await this.keyboardType(this.selectors.hireDate, gettomorrowDateFormatted());
     }
 
     public async editbtn() {
-        await this.click(this.selectors.editButton, "Edit Course", "Button")
+        await this.click(this.selectors.editButton, "Edit Course", "Button");
     }
 
     public async clickdeleteIcon() {
-        await this.click(this.selectors.deleteUser, "Delete Course", "Icon")
-        await this.click(this.selectors.confirmDeleteoption, "Delete", "Button")
+        await this.click(this.selectors.deleteUser, "Delete Course", "Icon");
+        await this.click(this.selectors.confirmDeleteoption, "Delete", "Button");
+    }
+
+    public async clickSuspendButton() {
+        await this.validateElementVisibility(this.selectors.suspendBtn, "Suspend");
+        await this.wait('minWait');
+        await this.page.keyboard.press('PageDown');
+        await this.click(this.selectors.suspendBtn, "Suspend", "Button");
+        await this.wait('mediumWait');
+        let dialog = this.page.locator(this.selectors.suspendDialog);
+        if (await dialog.isVisible()) {
+            let text = await dialog.innerText();
+            console.log(text);
+            await this.click(this.selectors.suspendDialogBtn, "Suspend", "Button")
+        }
+
     }
 
 

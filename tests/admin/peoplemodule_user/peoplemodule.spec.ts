@@ -21,7 +21,7 @@ test.describe(``, async () => {
 
             await adminHome.loadAndLogin("CUSTOMERADMIN");
             await adminHome.clickMenu("User");
-            await createUser.verifyCreateUserLabel("CREATE USER");
+            await createUser.verifyCreateUserLabel();
             await createUser.enter("first_name", FakerData.getFirstName());
             await createUser.enter("last_name", FakerData.getLastName());
             await createUser.enter("username", username);
@@ -86,4 +86,24 @@ test.describe(``, async () => {
         await createUser.verifyUserCreationSuccessMessage();
 
     })
+
+    test(` TC037 Verify that a user can be suspended even if they have active or inactive enrollments`, async ({ adminHome, createUser }) => {
+
+        test.info().annotations.push(
+            { type: 'Author', description: 'Ajay Michael' },
+            { type: 'TestCase', description: '' },
+            { type: 'Test Description', description: "Suspend the User" }
+        );
+        await adminHome.loadAndLogin("CUSTOMERADMIN");
+        await adminHome.menuButton();
+        await adminHome.people();
+        await adminHome.user();
+        await createUser.userSearchField(username);
+        await createUser.editIcon();
+       await createUser.verifyEditUserLabel()
+       await createUser.clickSuspendButton();
+
+    })
+
+
 })

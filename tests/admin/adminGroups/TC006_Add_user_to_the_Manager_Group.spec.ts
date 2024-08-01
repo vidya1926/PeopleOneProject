@@ -28,7 +28,7 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
 
         await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.clickMenu("User");
-        await createUser.verifyCreateUserLabel("CREATE USER");
+        await createUser.verifyCreateUserLabel();
         await createUser.enter("first_name",firstName);
         await createUser.enter("last_name",lastName);
         await createUser.enter("username",managerName);

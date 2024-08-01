@@ -26,7 +26,7 @@ test.skip(`TC04_Create user in admin login `, async ({ adminHome, createUser }) 
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
-        await createUser.verifyCreateUserLabel("CREATE USER");
+        await createUser.verifyCreateUserLabel();
         await createUser.clickCreateUser();
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
@@ -65,7 +65,7 @@ test.skip(`Create user for admin login  `, async ({ adminHome, createUser }) => 
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
-        await createUser.verifyCreateUserLabel("CREATE USER");
+        await createUser.verifyCreateUserLabel();
         await createUser.clickCreateUser();
 
         await createUser.enter("first_name", FakerData.getFirstName());

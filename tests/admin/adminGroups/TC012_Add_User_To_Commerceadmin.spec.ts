@@ -25,7 +25,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
-        await createUser.verifyCreateUserLabel("CREATE USER");
+        await createUser.verifyCreateUserLabel();
         
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
