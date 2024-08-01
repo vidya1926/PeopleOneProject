@@ -40,6 +40,7 @@ export class LearnerDashboardPage extends LearnerHomePage {
 
     async searchCertification(data: string) {
         await this.validateElementVisibility(this.selectors.certificationInput, "Search Field");
+        await this.wait('mediumWait');
         await this.typeAndEnter(this.selectors.certificationInput, "Search Field", data);
     }
 

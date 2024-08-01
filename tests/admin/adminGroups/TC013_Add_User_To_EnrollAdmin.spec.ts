@@ -1,7 +1,7 @@
-import { test } from "../../customFixtures/expertusFixture"
-import { readDataFromCSV } from "../../utils/csvUtil";
-import { FakerData } from '../../utils/fakerUtils';
-import { updateFieldsInJSON } from "../../utils/jsonDataHandler";
+import { test } from "../../../customFixtures/expertusFixture"
+import { readDataFromCSV } from "../../../utils/csvUtil";
+import { FakerData } from '../../../utils/fakerUtils';
+import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
 const enrollAdmin:any=FakerData.getUserId()

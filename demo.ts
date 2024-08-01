@@ -154,10 +154,16 @@ for (let i = 0; i < 2; i++) {
     }
 }
  */
-
+/* 
 const startDigit = Math.floor(Math.random() * 3) + 7;
 const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
-console.log(`${startDigit}${restDigits}`);
+console.log(`${startDigit}${restDigits}`); */
 
 
 
+const date = new Date();
+    const month = String(date.getMonth() + 1)
+    const day = String(date.getDate()+1);
+    const year = date.getFullYear();
+    console.log( `${month}/${day}/${year}`);
+    

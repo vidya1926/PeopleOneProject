@@ -20,7 +20,7 @@ export default defineConfig({
     trace: 'on',
     headless: false,
     screenshot: "on",
-    video: 'off',
+    video: 'on',
     ignoreHTTPSErrors: true,
 
     //slowMo:2000,

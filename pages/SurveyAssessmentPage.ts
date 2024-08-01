@@ -25,7 +25,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
     scoreInput: "(//label[text()='Score']/following-sibling::input)[1]",
     radioBtn: "//label[contains(text(),'Option')]/parent::div//i[contains(@class,'fa-circle icon')]",
     checkBoxBtn: "(//label[contains(text(),'Option')]/parent::div//i[contains(@class,'fa-square icon')])[1]",
-    imageInput: `//input[@id='question_upload_file_opt']`,
+    imageInput: `(//input[@id='question_upload_file_opt'])[1]`,
     survelTitle: "//label[text()='Survey Title']//following-sibling::input",
     descriptionInput: "//div[@id='assessment-description']//p",
     saveDraftBtn: "//button[text()='Save Draft']",
