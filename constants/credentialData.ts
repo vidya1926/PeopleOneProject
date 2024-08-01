@@ -1,7 +1,7 @@
 import data from "../data/adminGroupsData.json"
 
-const managerName: any = (data.managerName).toString();
-const commonUser: any = (data.commonUser).toString();
+const managerName: any = data.managerName
+const commonUser: any = data.commonUser
 export let credentials = {
 
     CUSTOMERADMIN: {

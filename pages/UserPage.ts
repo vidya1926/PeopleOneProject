@@ -66,6 +66,7 @@ export class UserPage extends AdminHomePage {
         reasonInput: "//label[text()='Reason']//parent::div//textarea",
         impersonateProceedBtn: "//button[text()='Proceed']",
         okBtn: "//button[text()='OK']",
+        logOutBtn: "//div[@class='logout']//a"
 
 
 
@@ -319,4 +320,8 @@ export class UserPage extends AdminHomePage {
 
     }
 
+    public async clickLogOutButton() {
+        await this.mouseHover(this.selectors.logOutBtn, "Log Out");
+        await this.click(this.selectors.logOutBtn, "Log Out", "Icon");
+    }
 }

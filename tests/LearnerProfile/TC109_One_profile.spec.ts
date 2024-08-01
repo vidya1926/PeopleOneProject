@@ -1,17 +1,21 @@
-import { test } from '../../customFixtures/expertusFixture'
+import { test } from '../../customFixtures/expertusFixture';
 import { FakerData } from '../../utils/fakerUtils';
 import { readDataFromCSV } from '../../utils/csvUtil';
 import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
+let username: string;
 
-const commonUser = FakerData.getUserId();
-const newData = {
-    commonUser: commonUser
-}
-updateFieldsInJSON(newData)
+test.beforeAll(async () => {
+    username = FakerData.getUserId();
+    const newData = {
+        commonUser: username
+    };
+    updateFieldsInJSON(newData);
+});
+
 test(`Creating User for the application`, async ({ adminHome, createUser, learnerHome, profile }) => {
     test.info().annotations.push(
-        { type: 'Author', description: 'Vidya' },
+        { type: 'Author', description: 'Ajay Michael' },
         { type: 'TestCase', description: 'One Profile Training Summary' },
         { type: 'Test Description', description: "Verifying user open One Profile Training Summary" }
     );
@@ -25,11 +29,10 @@ test(`Creating User for the application`, async ({ adminHome, createUser, learne
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
-        await createUser.verifyCreateUserLabel();
         await createUser.clickCreateUser();
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username", commonUser);
+        await createUser.enter("username", username);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.enter("email", FakerData.getEmail());
         await createUser.enter("user-phone", FakerData.getMobileNumber());
@@ -42,22 +45,27 @@ test(`Creating User for the application`, async ({ adminHome, createUser, learne
         await createUser.enter("user-city", city);
         await createUser.enter("user-zipcode", zipcode);
         await createUser.enter("user-mobile", FakerData.getMobileNumber());
-        await createUser.enter("user-employee-id", FakerData.getEmployeeid())
-        await createUser.selectLanguage("English")
+        await createUser.enter("user-employee-id", FakerData.getEmployeeid());
+        await createUser.selectLanguage("English");
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
-        await createUser.verifyUserCreationSuccessMessage();       
-        await learnerHome.learnerLogin("COMMONUSER", "Portal");
-        await profile.clickProfile();
-        await profile.oneProfile();
-        await profile.verifyprofileInfo("Employee Id")
-        await profile.verifyprofileInfo("Division")
-        await profile.verifyprofileInfo("Email")
-        await profile.verifyprofileInfo("Phone")
-        
+        await createUser.verifyUserCreationSuccessMessage();
+        await createUser.clickLogOutButton();
     }
+});
 
-})
+test(`Verifying user open One Profile Training Summary`, async ({ learnerHome, profile }) => {
+    test.info().annotations.push(
+        { type: 'Author', description: 'Ajay Michael' },
+        { type: 'TestCase', description: 'One Profile Training Summary' },
+        { type: 'Test Description', description: "Verifying user open One Profile Training Summary" }
+    );
 
-
-
+    await learnerHome.basicLogin(username, "Portal");
+    await profile.clickProfile();
+    await profile.oneProfile();
+    await profile.verifyprofileInfo("Employee Id");
+    await profile.verifyprofileInfo("Division");
+    await profile.verifyprofileInfo("Email");
+    await profile.verifyprofileInfo("Phone");
+});
