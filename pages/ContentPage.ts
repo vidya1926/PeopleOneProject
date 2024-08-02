@@ -80,13 +80,8 @@ export class ContentHomePage extends AdminHomePage {
             "doc", "Document", "Presentation", "PPT", "PPS", "Presention",
             "xls", "EXCEL", "pdf", "Pdf", "png", "jpg", "jpeg", "gif",
             "mp4", "mpg", "mp3", "XAPI", "SCORM", "AICC"
-        ];
-        
-        if (fileTypes.includes(fileName)) {
-            expect(text).toContain(fileName);
-        } else {
-           console.log("File Does not match")
-        }
+        ];        
+        expect(fileName).toContain(text);
         }
 
         public async getContentStorage(){
