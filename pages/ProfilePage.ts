@@ -53,7 +53,7 @@ export class ProfilePage extends LearnerHomePage {
         PreferenceDetailsPageInput: "//label[text()='Details page view']/following::input[1]",
         PreferenceDetailsPageOption: (Option: string) => `//span[text()='${Option}']`,
         ceuType: `//div[@id='wrapper-ceu_type']`,
-        ceuOption: (Option: string) => `//span[text()='${Option}']`,
+        ceuOption: "//div[@id='wrapper-ceu_type']//li",
         PreferenceCreditPeriod: "//label[text()='Credit Period']/following::div[@id='wrapper-credit_period']",
         PreferenceCreditPeriodOption: (Option: string) => `(//span[text()='${Option}'])[1]`,
         CreditScore: "//label[text()='Target Credit']/following::input[1]",
@@ -67,8 +67,7 @@ export class ProfilePage extends LearnerHomePage {
         PreferenceDepartmentInput: "//label[text()='Department']/following::input[1]",
         PreferenceDepartmentOption: (Option: string) => `//span[text()='${Option}']`,
         PreferenceEmployeeId: "//label[text()='Employee Id']/following::input[@id='target_credit']",
-        PreferenceEmployeeType: "//label[text()='Employee Type']/following::div[@id='wrapper-employee_type']",
-
+        PreferenceEmployeeType: "(//label[text()='Employee Type']/parent::div//button)[1]",
         PreferenceEmployeeTypeInput: "//label[text()='Employee Type']/following::input[1]",
         PreferenceEmployeeTypeOptions: (Option: string) => `//span[text()='${Option}']`,
         PreferenceJobRole: "//label[text()='Job Role']/following::div[@id='wrapper-job_role']",
@@ -95,7 +94,7 @@ export class ProfilePage extends LearnerHomePage {
         date: " //select[@id='date_format']/option",
         Details: "//select[@id='details_page']/option",
         Department: "//select[@id='department']/option",
-        EmployeeType: "//select[@id='employee_type']/option",
+        EmployeeType: "//div[@id='wrapper-employee_type']//li/a",
         JobRole: "//select[@id='job_role']/option",
         JobTitle: "//select[@id='job_title']/option",
         Organization: "//select[@id='organization']/option",
@@ -172,9 +171,10 @@ export class ProfilePage extends LearnerHomePage {
         //await this.waitForSelector(this.selectors.timezoneOptions(timezone))
         await this.click(this.selectors.timezoneOptions(timezone), "dropdownOptions", "button")
     }
-    async selectLanguage(language: string) {
+    async selectLanguage() {
+        let language = "English"
         await this.click(this.selectors.PreferenceLanguagesWrapper, "Language", "Field");
-        await this.type(this.selectors.PreferenceLanguageInput, "Language", "English")
+        await this.type(this.selectors.PreferenceLanguageInput, "Language", language)
         await this.mouseHover(this.selectors.PreferenceLanguage(language), language);
         await this.click(this.selectors.PreferenceLanguage(language), language, "Button");
 
@@ -227,17 +227,17 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.PreferenceStateOption(trimmedRandomOption), trimmedRandomOption, "Button");
 
     }
-    async city(City: string) {
-        await this.type(this.selectors.City, "City", City)
+    async city() {
+        await this.type(this.selectors.City, "City", FakerData.randomCityName())
     }
-    async address1(address: string) {
-        await this.type(this.selectors.PreferenceAddress1, "Address1", address);
+    async address1() {
+        await this.type(this.selectors.PreferenceAddress1, "Address1", FakerData.getAddress());
     }
-    async address2(address: string) {
-        await this.type(this.selectors.PreferenceAddress2, "Address2", address);
+    async address2() {
+        await this.type(this.selectors.PreferenceAddress2, "Address2", FakerData.getAddress());
     }
-    async zipcode(zipcode: string) {
-        await this.type(this.selectors.PreferenceZipcode, "Zipcode", zipcode);
+    async zipcode() {
+        await this.type(this.selectors.PreferenceZipcode, "Zipcode", FakerData.getPinCode());
     }
     async mobile() {
         await this.type(this.selectors.PreferenceMobile, "Mobile", FakerData.getMobileNumber());
@@ -344,15 +344,12 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.PreferenceDepartmentOption(trimmedRandomOption), trimmedRandomOption, "Button");
     }
     async selectEmployeeType() {
-        const EmployeeType = await this.page.$$(this.selectors.EmployeeType);
-        const randomIndex = Math.floor(Math.random() * EmployeeType.length);
-        const randomElement = EmployeeType[randomIndex].textContent();
-        const randomOptions = await randomElement
-        const trimmedRandomOption: string = randomOptions?.trim() || '';
         await this.click(this.selectors.PreferenceEmployeeType, "Employee Type", "Field");
-        await this.type(this.selectors.PreferenceEmployeeTypeInput, "Input Field", trimmedRandomOption);
-        await this.mouseHover(this.selectors.PreferenceEmployeeTypeOptions(trimmedRandomOption), trimmedRandomOption);
-        await this.click(this.selectors.PreferenceEmployeeTypeOptions(trimmedRandomOption), trimmedRandomOption, "Button");
+        const EmployeeCount = await this.page.locator(this.selectors.EmployeeType).count()
+        const randomIndex = Math.floor(Math.random() * EmployeeCount + 1);
+        await this.click(`(${this.selectors.EmployeeType})[${randomIndex}]`, "EmployeeType", "Dropdown");
+
+
     }
     async selectJobRole() {
         const JobRole = await this.page.$$(this.selectors.JobRole);
@@ -400,10 +397,11 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.PreferenceUserTypeOptions(trimmedRandomOption), trimmedRandomOption, "Button");
     }
 
-    async ceuType(data: string) {
-        await this.click(this.selectors.ceuType, "CEUTYPE", "dropdown")
-        await this.mouseHover(this.selectors.ceuOption(data), data);
-        await this.click(this.selectors.PreferenceCreditPeriodOption(data), "CEUType", "option")
+    async ceuType() {
+        await this.click(this.selectors.ceuType, "CEUTYPE", "dropdown");
+        let count = await this.page.locator(this.selectors.ceuOption).count();
+        let rNum = Math.floor(Math.random() * count) + 1
+        await this.click(`(${this.selectors.ceuOption})[${rNum}]`, "CEUType", "option")
     }
 
     async creditPeriod(month: string) {

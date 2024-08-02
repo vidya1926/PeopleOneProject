@@ -51,6 +51,7 @@ export class LearnerLogin extends PlaywrightWrapper {
             await signIn();
             await this.type(usernameSelector, "Username", username);
             await this.type(passwordSelector, "Password", password);
+            await this.wait('minWait');
             await this.click(signInButtonLocator, "Sign In button", "Button");
             await this.page.waitForLoadState('domcontentloaded');
             await this.waitForSelector(logoutButtonLocator);

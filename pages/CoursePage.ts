@@ -1,6 +1,7 @@
 import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData, getCurrentDateFormatted, getFutureDate, getnextMonthFormatted, getPastDate, getRandomLocation, getRandomSeat, gettomorrowDateFormatted } from "../utils/fakerUtils";
+import { FakerData, getCurrentDateFormatted, getFutureDate, getnextMonthFormatted, getPastDate, getRandomLocation, getRandomSeat, gettomorrowDateFormatted, score } from "../utils/fakerUtils";
+import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 
 
 export class CoursePage extends AdminHomePage {
@@ -161,7 +162,18 @@ export class CoursePage extends AdminHomePage {
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
         assessmentLabel: "//div[text()='Assessment']",
         enforceSequence: `//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`,
-        learnerGroup: "div[id$='learner-group-list'] button div[class='filter-option-inner-inner']"
+        learnerGroup: "div[id$='learner-group-list'] button div[class='filter-option-inner-inner']",
+        ceuLink: "//button[text()='CEU']",
+        ceuProviderName: "(//label[text()='CEU Provider Name']/following-sibling::div//button)[1]",
+        ceuProviderInnerValue: "div[id$='ceu-providers'] button div[class='filter-option-inner-inner']",
+        ceuType: "(//label[text()='CEU type']/following-sibling::div//button)[1]",
+        ceuTypeOption: (data: string) => `//div[@id='wrapper-course-ceu-type']//span[text()='${data}']`,
+        ceuProviderOption: (data: string) => `//div[@id='wrapper-course-ceu-providers']//span[text()='${data}']`,
+        ceuTypeInnerValue: "div[id$='ceu-type'] button div[class='filter-option-inner-inner']",
+        unitInput: "//label[text()='Unit']/following-sibling::input",
+        addCEUBtn: "//button[text()='Add CEU']",
+        addedCEUData: "div[class='lms-ceu-wrapper'] div[class$='lms-scroll-pre']"
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -242,7 +254,51 @@ export class CoursePage extends AdminHomePage {
 
     }
 
+    async clickCEULink() {
+        await this.validateElementVisibility(this.selectors.ceuLink, "CEU");
+        await this.wait('minWait');
+        await this.click(this.selectors.ceuLink, "CEU", "Link");
+    }
 
+    async fillCEUProviderType() {
+        //let data = getRandomItemFromFile("../data/peopleCEUProviderData.json");
+        await this.click(this.selectors.ceuProviderName, "Provider Name", "Drop down");
+        let option = "//div[@id='wrapper-course-ceu-providers']//li"
+        await this.wait('minWait');
+        let count = await this.page.locator(option).count();
+        const rNum = Math.floor(Math.random() * (count) + 1)
+        await this.click(`(${option})[${rNum}]`, "Provider Name", "Drop down");
+        const ceuProviderValue = await this.getInnerText(this.selectors.ceuProviderInnerValue)
+        return ceuProviderValue
+
+    }
+
+    async fillUnit() {
+        await this.type(this.selectors.unitInput, "Unit", score());
+    }
+
+    async fillCEUType() {
+        // let data = getRandomItemFromFile("../data/peopleCEUData.json");
+        await this.click(this.selectors.ceuType, "Provider Name", "Drop down");
+        await this.wait('minWait');
+        let option = "//div[@id='wrapper-course-ceu-type']//li/a"
+        let count = await this.page.locator(option).count();
+        const rNum = Math.floor(Math.random() * (count) + 1)
+        await this.click(`(${option})[${rNum}]`, "Provider Name", "Drop down");
+        const ceuValue = await this.getInnerText(this.selectors.ceuTypeInnerValue)
+        return ceuValue
+
+    }
+
+    async clickAddCEUButton() {
+        await this.validateElementVisibility(this.selectors.addCEUBtn, "Add CEU");
+        await this.click(this.selectors.addCEUBtn, "Add CEU", "Button");
+        await this.wait('mediumWait');
+        let text = this.page.locator(this.selectors.addedCEUData).allTextContents();
+        console.log(await text);
+        await this.wait('minWait');
+
+    }
 
     async selectLanguage(language: string) {
         await this.click(this.selectors.courseLanguagesWrapper, "Language", "Field");
@@ -259,7 +315,7 @@ export class CoursePage extends AdminHomePage {
 
     async uploadVideoThroughLink() {
         await this.mouseHover(this.selectors.httpsInput, "https input");
-        await this.keyboardType(this.selectors.httpsInput,"https://www.youtube.com/watch?v=K4TOrB7at0Y");
+        await this.keyboardType(this.selectors.httpsInput, "https://www.youtube.com/watch?v=K4TOrB7at0Y");
         await this.wait('minWait');
         await this.click(this.selectors.addURLBtn, "Add URL", "Button");
         await this.wait('maxWait');
@@ -277,6 +333,12 @@ export class CoursePage extends AdminHomePage {
     async modifyTheAccess() {
         await this.mouseHover(this.selectors.modifyTheAccessBtn, "No, Modify The Access");
         await this.click(this.selectors.modifyTheAccessBtn, "No, Modify The Access", "Button");
+        await this.spinnerDisappear();
+        const closeButton = this.page.locator(this.selectors.closeBtn);
+        await this.wait('mediumWait');
+        if (await closeButton.isVisible()) {
+            await closeButton.click({ force: true })
+        }
     }
     async clickCancel() {
         await this.click(this.selectors.cancelBtn, "Cancel", "image");

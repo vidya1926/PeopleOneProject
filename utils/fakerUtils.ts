@@ -37,6 +37,10 @@ export class FakerData {
         return faker.location.streetAddress();
     }
 
+    static getPinCode(){
+        return faker.location.zipCode('######');
+    }
+
     static addressName(): string {
         return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`;
     }
@@ -116,8 +120,8 @@ export class FakerData {
         return description;
     }
     static getCategory(): string {
-        const category = faker.company.buzzVerb() + " " + faker.company.buzzNoun()
-        return capitalizeFirstLetter(category);
+        const category = capitalizeFirstLetter(faker.company.buzzVerb()) + " " + capitalizeFirstLetter(faker.company.buzzNoun())
+        return category;
     }
     static getMaxseats() {
         return faker.number.int({ min: 20 })
