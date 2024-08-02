@@ -25,9 +25,9 @@ export class AnnouncementPage extends AdminHomePage {
     }
 
     public async dateFromTo(){
-         await this.keyboardType(this.selectors.dateFromInput, getCurrentDateFormatted())
+         await this.keyboardType(this.selectors.dateFromInput,getCurrentDateFormatted())
          await this .wait("minWait")
-         await this.keyboardType(this.selectors.dateToInput, getCurrentDateFormatted())
+         await this.keyboardType(this.selectors.dateToInput,getCurrentDateFormatted())
     }
 
 }

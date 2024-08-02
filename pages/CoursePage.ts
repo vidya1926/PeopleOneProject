@@ -259,7 +259,7 @@ export class CoursePage extends AdminHomePage {
 
     async uploadVideoThroughLink() {
         await this.mouseHover(this.selectors.httpsInput, "https input");
-        await this.keyboardType(this.selectors.httpsInput, "https://www.youtube.com/watch?v=K4TOrB7at0Y");
+        await this.keyboardType(this.selectors.httpsInput,"https://www.youtube.com/watch?v=K4TOrB7at0Y");
         await this.wait('minWait');
         await this.click(this.selectors.addURLBtn, "Add URL", "Button");
         await this.wait('maxWait');

@@ -21,7 +21,7 @@ test(`TC110_Adding Preference Details`, async ({ learnerHome, profile, createUse
     for (const row of data) {
         const { country, state, timezone, currency, city, zipcode } = row;
         {
-            await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
+            await learnerHome.learnerLogin("COMMONUSER", "Portal");
             await profile.clickProfile();
             await profile.preferenceTab();
             await profile.preferenceTimeZone("GMT");

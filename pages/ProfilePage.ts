@@ -476,9 +476,6 @@ export class ProfilePage extends LearnerHomePage {
     }
 
 
-
-
-
     async chooseLanguage() {
         const options = this.selectors.languageDropdown;
         const optionsCount = await options.count();
