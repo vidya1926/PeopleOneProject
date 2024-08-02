@@ -1,8 +1,9 @@
 import data from "../data/adminGroupsData.json"
 
-const managerName:any=(data.managerName).toString();
-const commonUser:any=(data.commonUser).toString();
+const managerName: any = data.managerName
+const commonUser: any = data.commonUser
 export let credentials = {
+
     CUSTOMERADMIN: {
         username: "customadmin",
         password: "Welcome1@"
@@ -27,28 +28,32 @@ export let credentials = {
         username: "commerceadmin",
         password: "Welcome1@"
     },
-    SUPERADMIN:{
-        username:"admin",
-        password:"Welcome1@"
+    SUPERADMIN: {
+        username: "admin",
+        password: "Welcome1@"
     },
-    PEOPLEADMIN:{
-        username:'peopleadmin',
-        password:'Welcome1@'
+    PEOPLEADMIN: {
+        username: 'peopleadmin',
+        password: 'Welcome1@'
     },
-    LEARNERPORTAL_User:{
-        username:'johnMathew',
-        password:'Welcome1@'
+    LEARNERPORTAL_User: {
+        username: 'johnMathew',
+        password: 'Welcome1@'
     },
-    LEARNERPORTAL_2User:{
-        username:'Retta44@gmail.com',
-        password:'Welcome1@',
+    LEARNERPORTAL_2User: {
+        username: 'Retta44@gmail.com',
+        password: 'Welcome1@',
     },
-    COMMONUSER:{
-        username:commonUser,
-        password:"Welcome1@"
+    COMMONUSER: {
+        username: commonUser,
+        password: "Welcome1@"
     },
-    ENROLLADMIN:{
-        username:"enrollAdmin",
-        password:"Welcome1@"
+    ENROLLADMIN: {
+        username: "enrollAdmin",
+        password: "Welcome1@"
+    },
+    NEWCUSTOMERADMIN: {
+        username: "newcustomadmin",
+        password: "Welcome1@"
     },
 };

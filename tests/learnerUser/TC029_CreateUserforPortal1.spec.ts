@@ -14,7 +14,7 @@ test(`TC029_Create user for portal 1`, async ({ adminHome, createUser ,createCou
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
-        await createUser.verifyCreateUserLabel("CREATE USER");
+        await createUser.verifyCreateUserLabel();
         await createUser.clickCreateUser();        
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());

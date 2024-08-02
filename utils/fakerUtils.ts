@@ -16,13 +16,13 @@ export class FakerData {
         return faker.person.lastName();
     }
 
-    static getOrganizationName(){
+    static getOrganizationName() {
         return faker.company.buzzNoun()
 
     }
 
-    static getcurrentYear(){
-        return `${faker.date.anytime().getFullYear() -2}`;
+    static getcurrentYear() {
+        return `${faker.date.anytime().getFullYear() - 2}`;
     }
 
     static getMobileNumber(): string {
@@ -41,10 +41,10 @@ export class FakerData {
         return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`;
     }
 
-    static getAwardName(){
-        const awardName=faker.helpers.arrayElement(["Excellency Award", "Leadership Award", "Trailblazer Award","Pioneer Award"])
+    static getAwardName() {
+        const awardName = faker.helpers.arrayElement(["Excellency Award", "Leadership Award", "Trailblazer Award", "Pioneer Award"])
         return awardName
-        }
+    }
 
     static jobRole(): string {
         return faker.person.jobTitle();
@@ -72,7 +72,7 @@ export class FakerData {
     static getCourseName(): string {
         const adjective = faker.hacker.adjective();
         const noun = faker.hacker.noun();
-        const verb = faker.hacker.verb(); 
+        const verb = faker.hacker.verb();
         return `${capitalizeFirstLetter(adjective)} ${capitalizeFirstLetter(noun)} ${capitalizeFirstLetter(verb)}`;
     }
     static getUserId(): string {
@@ -82,14 +82,14 @@ export class FakerData {
         const user = faker.internet.email({ firstName: fName })
         return user;
     }
-    static getEmployeeid():string{
+    static getEmployeeid(): string {
         const employeeId = faker.string.numeric({ length: 4 });
         const formattedEmployeeId = `EMP-${employeeId}`;
 
         return formattedEmployeeId;
     }
 
-    static getCertificationNumber():string{
+    static getCertificationNumber(): string {
         const employeeId = faker.string.numeric({ length: 4 });
         const formattedEmployeeId = `CER-${employeeId}`;
 
@@ -127,26 +127,27 @@ export class FakerData {
         return faker.commerce.price()
     }
 
-    static getQualification(){
+    static getQualification() {
         const qualification = {
             degree: faker.helpers.arrayElement(['Bachelor', 'Master', 'PhD', 'Certificate', 'Diploma']),
             fieldOfStudy: faker.helpers.arrayElement(['Computer Science', 'Engineering', 'Business', 'Arts', 'Science']),
             institution: faker.company.name(),
             graduationDate: faker.date.past(10).toLocaleDateString(),
             grade: faker.helpers.arrayElement(['A', 'B', 'C', 'D', 'E']),
-          };
+        };
 
-          return qualification;
-          
+        return qualification;
+
     }
 
-       
+
+
     static getMeetingUrl(): string {
         return faker.internet.url();
 
     }
     static getRandomTitle() {
-    
+
         return (faker.hacker.noun() + " " + faker.hacker.noun());
     }
 }
@@ -164,10 +165,10 @@ function capitalizeFirstLetter(string) {
 
 
 function getPhoneNumber(): string {
-    // const startDigit = Math.floor(Math.random() * 3) + 7;
-    // const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
-    // return `${startDigit}${restDigits}`;
-    return faker.phone.number();
+    const startDigit = Math.floor(Math.random() * 3) + 7;
+    const restDigits = Array.from({ length: 9 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${startDigit}${restDigits}`;
+
 }
 export function getCVV(): string {
     // const startDigit = Math.floor(Math.random() * 1) + 12;
@@ -191,7 +192,7 @@ export function generateCreditScore(): number {
     const minCreditScore = 300;
     const maxCreditScore = 850;
     return faker.number.int({ min: minCreditScore, max: maxCreditScore });
-  }
+}
 
 export async function getRandomSeat() {
     const num = 100;
@@ -218,8 +219,15 @@ export function getRandomLocation(): DataItem | any {
         return null;
     }
 }
-export function
-    gettomorrowDateFormatted(): string {
+export function gettomorrowDateFormatted(): string {
+    const date = new Date();
+    const month = String(date.getMonth() + 1)
+    const day = String(date.getDate() + 1);
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+}
+
+export function getCurrentDateFormatted(): string {
     const date = new Date();
     const month = String(date.getMonth() + 1)
     const day = String(date.getDate())
@@ -227,31 +235,26 @@ export function
     return `${month}/${day}/${year}`;
 }
 
-export function  getCurrentDateFormatted(): string {
-    const date = new Date();
-    const month = String(date.getMonth() + 1)
-    const day = String(date.getDate())
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-}
 
 export function getPastDate(): string {
+
     const date = new Date();
     date.setDate(date.getDate() - 5);
     date.setMonth(date.getMonth() - 2);
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
     const day = String(date.getDate()).padStart(2, '0');
-    const year = String(date.getFullYear()-4);
+    const year = String(date.getFullYear() - 4);
     return `${month}/${day}/${year}`;
 }
 
 export function getFutureDate(): string {
+
     const date = new Date();
     date.setDate(date.getDate() + 3);
     date.setMonth(date.getMonth() + 7);
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
     const day = String(date.getDate()).padStart(2, '0');
-    const year = String(date.getFullYear()+3);
+    const year = String(date.getFullYear() + 3);
     return `${month}/${day}/${year}`;
 }
 
@@ -263,9 +266,9 @@ export function getFutureyear(): string {
     date.setMonth(date.getMonth() - 2);
     const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() is zero-based
     const day = String(date.getDate()).padStart(2, '0');
-    const year = String(date.getFullYear()+4);
+    const year = String(date.getFullYear() + 4);
     return `${month}/${day}/${year}`;
-  }
+}
 
 
 export function getnextMonthFormatted(): string {

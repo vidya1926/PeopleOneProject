@@ -19,6 +19,7 @@ export class LearnerDashboardPage extends LearnerHomePage {
     }
 
     async clickLearningPath_And_Certification() {
+        await this.wait('minWait');
         await this.validateElementVisibility(this.selectors.learningPathAndCertification, "LearningPath and Certification");
         await this.wait('minWait');
         await this.click(this.selectors.learningPathAndCertification, "LearningPath and Certification", "Button");
@@ -39,6 +40,7 @@ export class LearnerDashboardPage extends LearnerHomePage {
 
     async searchCertification(data: string) {
         await this.validateElementVisibility(this.selectors.certificationInput, "Search Field");
+        await this.wait('mediumWait');
         await this.typeAndEnter(this.selectors.certificationInput, "Search Field", data);
     }
 

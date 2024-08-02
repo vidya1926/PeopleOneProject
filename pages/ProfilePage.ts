@@ -8,6 +8,8 @@ import { FakerData, generateCreditScore, getCurrentDateFormatted, getFutureDate,
 import { getDayOfYear } from "date-fns/fp/getDayOfYear";
 import { getYear } from "date-fns";
 
+
+
 export class ProfilePage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
@@ -33,7 +35,7 @@ export class ProfilePage extends LearnerHomePage {
         timezoneOptions: (option: string) => `(//span[contains(text(),'${option}')])[1]`,
         PreferenceLanguagesWrapper: "//label[text()='Language']/following::div[@id='wrapper-lnr_languages']",
         PreferenceLanguageInput: `//label[text()='Language']/following::input[1]`,
-        PreferenceLanguage: (language:string)=>`//label[text()='Language']//following::span[text()='${language}']`,
+        PreferenceLanguage: (language: string) => `//label[text()='Language']//following::span[text()='${language}']`,
         PreferenceCurrency: "//label[text()='Currency']/following::div[@id='wrapper-lnr_currency']",
         PreferenceCurrencyInput: "//label[text()='Currency']/following::input[1]",
         PreferenceCurrencyOption: (Option: string) => `//span[text()='${Option}']`,
@@ -50,7 +52,7 @@ export class ProfilePage extends LearnerHomePage {
         PreferenceDetailsPage: "//label[text()='Details page view']/following::div[@id='wrapper-details_page']",
         PreferenceDetailsPageInput: "//label[text()='Details page view']/following::input[1]",
         PreferenceDetailsPageOption: (Option: string) => `//span[text()='${Option}']`,
-        ceuType:`//div[@id='wrapper-ceu_type']`,
+        ceuType: `//div[@id='wrapper-ceu_type']`,
         ceuOption: (Option: string) => `//span[text()='${Option}']`,
         PreferenceCreditPeriod: "//label[text()='Credit Period']/following::div[@id='wrapper-credit_period']",
         PreferenceCreditPeriodOption: (Option: string) => `(//span[text()='${Option}'])[1]`,
@@ -85,7 +87,7 @@ export class ProfilePage extends LearnerHomePage {
         saveButton: "//button[text()='Save']",
         education: "(//h5[text()='Education']/following-sibling::i)[1]",
         addEducation: "//span[text()='Add']/preceding-sibling::i",
-        verifyChanges:`//span[text()='Your changes have been saved']`,
+        verifyChanges: `//span[text()='Your changes have been saved']`,
         Language: "//select[@id='lnr_languages']/option",
         Currency: " //select[@id='lnr_currency']/option",
         Country: " //select[@id='lnr_country']/option",
@@ -98,14 +100,14 @@ export class ProfilePage extends LearnerHomePage {
         JobTitle: "//select[@id='job_title']/option",
         Organization: "//select[@id='organization']/option",
         UserType: "//select[@id='user_type']/option",
-        oneProfileInfo: (data:string)=> `(//div[contains(@class,'start justify-content-start')]//div[contains(text(),'${data}: ')])[1]`,
+        oneProfileInfo: (data: string) => `(//div[contains(text(),'${data}')]//parent::div)[1]`,
         editAwards: "(//h5[text()='Awards']/following-sibling::i[contains(@class, 'fa-pencil')])[1]",
         awardYear: "//input[@id='userawardyear-input']",
         awardName: "//input[@id='userawardname']",
         company: "//input[@id='userawardcompany']",
         location: "//input[@id='userawardlocation']",
         upload: "//label[text()='Upload Certificate ']",
-       // saveAwards: "//button[text()='Save']",
+        // saveAwards: "//button[text()='Save']",
         fromDate: "//input[@id='education_from_date-input']",
         toDate: "//input[@id='education_to_date-input']",
         qualification: "//input[@id='qualification']",
@@ -119,17 +121,17 @@ export class ProfilePage extends LearnerHomePage {
         companyName: "//label[text()='Company']//following-sibling::input",
         locationName: "//label[text()='Location']//following-sibling::input",
         interests: "(//h5[text()='Interests']/following-sibling::i)[1]",
-        interestsTitle:"//input[@id='interests']",
-        interestTitleOption:(index:number)=>`(//input[@id='interests'])[${index}]`, 
-        addInterest: "(//label[text()='Interests']/following::i)[1]",   
+        interestsTitle: "//input[@id='interests']",
+        interestTitleOption: (index: number) => `(//input[@id='interests'])[${index}]`,
+        addInterest: "(//label[text()='Interests']/following::i)[1]",
         externalTraining: "(//h5[text()='External Training']/following-sibling::i)[1]",
         verifyCertificate: "//span[text()='Verify Certificate By']",
-      //  selectVerification: "//select[@id='selectedVerificationBy']",
-        verifyBy:`//div[@id='wrapper-verify_by']`,
-        selectManger: (userType:string)=>`//div[@id='wrapper-verify_by']//span[text()='${userType}']`,
-        managerName:`//div[text()='Select']`,
+        //  selectVerification: "//select[@id='selectedVerificationBy']",
+        verifyBy: `//div[@id='wrapper-verify_by']`,
+        selectManger: (userType: string) => `//div[@id='wrapper-verify_by']//span[text()='${userType}']`,
+        managerName: `//div[text()='Select']`,
         name: "//input[@id='trainingUserName']",
-        othersName:`//input[@id='other_user_name']`,
+        othersName: `//input[@id='other_user_name']`,
         titleField: "(//input[@id='title'])[1]",
         issuedBy: "(//input[@id='company'])[1]",
         certificateNumber: "(//input[@id='certificate_number'])[1]",
@@ -139,15 +141,17 @@ export class ProfilePage extends LearnerHomePage {
         validityFrom: "//input[@id='valid_from-input']",
         //validityTo: "//div[@id='validity_to']//button",
         validityTo: "//input[@id='valid_to-input']",
-        uploadCert:`//span[text()='Upload Certificate']`,
-        emailId:`//input[@id='email']`,
+        uploadCert: `//span[text()='Upload Certificate']`,
+        emailId: `//input[@id='email']`,
     }
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
     }
     async clickProfile() {
         await this.validateElementVisibility(this.selectors.profileSettings, "profile")
-        await this.click(this.selectors.profileSettings, "ProfileIMG", "IMG")
+        await this.wait('minWait');
+        await this.click(this.selectors.profileSettings, "ProfileIMG", "IMG");
+        await this.wait('mediumWait');
     }
     async detailsTab() {
         await this.click(this.selectors.profileDetailsTab, "details", "tab")
@@ -158,8 +162,8 @@ export class ProfilePage extends LearnerHomePage {
 
 
 
-    
-    
+
+
     async preferenceTimeZone(timezone: string) {
 
         await this.click(this.selectors.preferenceTimeZone, "timezone", "dropdown")
@@ -168,13 +172,13 @@ export class ProfilePage extends LearnerHomePage {
         //await this.waitForSelector(this.selectors.timezoneOptions(timezone))
         await this.click(this.selectors.timezoneOptions(timezone), "dropdownOptions", "button")
     }
-    async selectLanguage(language:string) {
-        await this.click(this.selectors.PreferenceLanguagesWrapper, "Language", "Field");  
-        await this.type(this.selectors.PreferenceLanguageInput,"Language","English")
+    async selectLanguage(language: string) {
+        await this.click(this.selectors.PreferenceLanguagesWrapper, "Language", "Field");
+        await this.type(this.selectors.PreferenceLanguageInput, "Language", "English")
         await this.mouseHover(this.selectors.PreferenceLanguage(language), language);
         await this.click(this.selectors.PreferenceLanguage(language), language, "Button");
 
-    
+
         // const Language = await this.page.$$(this.selectors.Language);
         // const count= Language.length;
         // const randomIndex = Math.floor(Math.random() *count)+1;
@@ -273,20 +277,20 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.editAwards, "Edit", "Icon");
         await this.click(this.selectors.addIcon, "Add", "Icon");
         await this.keyboardType(this.selectors.awardYear, FakerData.getcurrentYear());
-        await this.type(this.selectors.awardName, "Awards Name",FakerData.getAwardName() );
+        await this.type(this.selectors.awardName, "Awards Name", FakerData.getAwardName());
         await this.type(this.selectors.company, "Company", FakerData.getOrganizationName());
         await this.type(this.selectors.location, "Location", FakerData.getLocationName());
         await this.uploadFile(this.selectors.upload, "../data/sample.pdf");
         await this.click(this.selectors.showToAllSkills, "Show to All", "Link");
-      
+
     }
-    
+
     async addInterests() {
         await this.click(this.selectors.interests, "Interests", "Icon");
         await this.click(this.selectors.addIcon, "Add", "Icon");
         await this.type(this.selectors.interestTitleOption(1), "Enter Interest", FakerData.jobRole());
         await this.click(this.selectors.addInterest, "Add", "Icon");
-        await this.type(this.selectors.interestTitleOption(2), "Enter Interest",FakerData.jobRole());
+        await this.type(this.selectors.interestTitleOption(2), "Enter Interest", FakerData.jobRole());
         await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
@@ -295,15 +299,15 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.addIcon, "Add", "Icon");
         await this.type(this.selectors.titleField, "Title", FakerData.getcertificationTitle());
         await this.type(this.selectors.issuedBy, "Issued By", FakerData.getOrganizationName());
-        await this.type(this.selectors.certificateNumber, "Certificate Number",FakerData.getCertificationNumber() );
+        await this.type(this.selectors.certificateNumber, "Certificate Number", FakerData.getCertificationNumber());
         await this.typeAndEnter(this.selectors.completedOn, "Completed On", getCurrentDateFormatted());
         await this.typeAndEnter(this.selectors.validityFrom, "Valid From", getCurrentDateFormatted());
         await this.typeAndEnter(this.selectors.validityTo, "Validity To", getFutureDate());
         await this.uploadFile(this.selectors.uploadCert, "../data/sample.pdf");
-        await this.click(this.selectors.verifyCertificate, "Verify Certificate By", "Checkbox");        
-        await this.click(this.selectors.verifyBy,"Manager/Other","Dropdown")
+        await this.click(this.selectors.verifyCertificate, "Verify Certificate By", "Checkbox");
+        await this.click(this.selectors.verifyBy, "Manager/Other", "Dropdown")
         //need to addd manager name ..stored values are not populated
-        await this.click(this.selectors.selectManger("Manager"),"Manager","Option")      
+        await this.click(this.selectors.selectManger("Manager"), "Manager", "Option")
         await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
@@ -312,16 +316,16 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.addIcon, "Add", "Icon");
         await this.type(this.selectors.titleField, "Title", FakerData.getcertificationTitle());
         await this.type(this.selectors.issuedBy, "Issued By", FakerData.getOrganizationName());
-        await this.type(this.selectors.certificateNumber, "Certificate Number",FakerData.getCertificationNumber() );
+        await this.type(this.selectors.certificateNumber, "Certificate Number", FakerData.getCertificationNumber());
         await this.typeAndEnter(this.selectors.completedOn, "Completed On", getCurrentDateFormatted());
         await this.typeAndEnter(this.selectors.validityFrom, "Valid From", getCurrentDateFormatted());
         await this.typeAndEnter(this.selectors.validityTo, "Validity To", getFutureDate());
-        await this.uploadFile(this.selectors.uploadCert,"../data/sample.pdf")
+        await this.uploadFile(this.selectors.uploadCert, "../data/sample.pdf")
         await this.click(this.selectors.verifyCertificate, "Verify Certificate By", "Checkbox");
-        await this.click(this.selectors.verifyBy,"Manager/others","Dropdown")
-        await this.click(this.selectors.selectManger("Others"),"Other","Option")
+        await this.click(this.selectors.verifyBy, "Manager/others", "Dropdown")
+        await this.click(this.selectors.selectManger("Others"), "Other", "Option")
         await this.type(this.selectors.othersName, "Name", FakerData.getFirstName());
-        await this.type(this.selectors.emailId,"E-Mail",FakerData.getUserId())
+        await this.type(this.selectors.emailId, "E-Mail", FakerData.getUserId())
         await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
@@ -396,21 +400,21 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.PreferenceUserTypeOptions(trimmedRandomOption), trimmedRandomOption, "Button");
     }
 
-    async ceuType(data:string) {
-        await this.click(this.selectors.ceuType, "CEUTYPE", "dropdown")       
+    async ceuType(data: string) {
+        await this.click(this.selectors.ceuType, "CEUTYPE", "dropdown")
         await this.mouseHover(this.selectors.ceuOption(data), data);
         await this.click(this.selectors.PreferenceCreditPeriodOption(data), "CEUType", "option")
     }
 
     async creditPeriod(month: string) {
         await this.click(this.selectors.PreferenceCreditPeriod, "creditperiod", "dropdown")
-      //  await this.type(this.selectors.PreferenceCreditTypeInput, "Input Field", month);
+        //  await this.type(this.selectors.PreferenceCreditTypeInput, "Input Field", month);
         await this.mouseHover(this.selectors.PreferenceCreditPeriodOption(month), month);
         await this.click(this.selectors.PreferenceCreditPeriodOption(month), "CreditPeriodOptions", "Button")
     }
     async creditScore() {
-        const score:any=generateCreditScore()
-        await this.type(this.selectors.CreditScore, "CreditScore",score.toString() )
+        const score: any = generateCreditScore()
+        await this.type(this.selectors.CreditScore, "CreditScore", score.toString())
     }
 
     async clickSave() {
@@ -441,67 +445,75 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.showToAllSkills, "showToAllSkills", "Checkbox")
     }
     async oneProfile() {
-        await this.click(this.selectors.oneProfile, "one-profile", "button")
+        await this.click(this.selectors.oneProfile, "one-profile", "button");
+        await this.wait('minWait');
         const [newPage] = await Promise.all([
-            this.page.context().waitForEvent('page'), // Wait for the new page event
-            this.click(this.selectors.oneProfileClick, "Click here", "link") // Click the link that opens the new tab
+            this.page.context().waitForEvent('page'),
+            this.click(this.selectors.oneProfileClick, "Click here", "link")
         ]);
-        // Wait for the new page to load
+
         await newPage.waitForLoadState('load');
-        await newPage.waitForSelector(this.selectors.oneProfilePage)
-        const title = await newPage.title()
-        console.log(title)
+        await newPage.waitForSelector(this.selectors.oneProfilePage);
+        const title = await newPage.title();
+        console.log(title);
+
         if (title.includes("ONE")) {
-            console.log("One-profile tab opened")
+            console.log("One-profile tab opened");
+        } else {
+            console.error("One-profile tab not opened");
         }
-        else {
-            console.error("One-profile tab not opened")
-        }
+
+        const verifyText = async (data: string) => {
+            const info = await newPage.locator(this.selectors.oneProfileInfo(data)).allTextContents();
+            await newPage.waitForTimeout(2000);
+            console.log(info);
+        };
+        await newPage.waitForTimeout(5000);
+        await verifyText("Employee Id");
+        await verifyText("Email");
+        await verifyText("Phone");
 
     }
 
 
-     async verifyprofileInfo(data:string){
-        const info=await this.getInnerText(this.selectors.oneProfileInfo(data))
-        return info;
-     }
 
 
-     async chooseLanguage() {
+
+    async chooseLanguage() {
         const options = this.selectors.languageDropdown;
         const optionsCount = await options.count();
-            for (let i = 0; i < optionsCount; i++) {
-                await this.click(this.selectors.language, "Language", "Dropdown");
-                await options.nth(i).click();
-                await this.page.waitForTimeout(1000);
+        for (let i = 0; i < optionsCount; i++) {
+            await this.click(this.selectors.language, "Language", "Dropdown");
+            await options.nth(i).click();
+            await this.page.waitForTimeout(1000);
         }
 
     }
 
-    async timezone(city:string) {
+    async timezone(city: string) {
         await this.click(this.selectors.timezone, "Timezone", "Dropdown");
         await this.type(this.selectors.timezoneSearchbox, "Timezone", city);
     }
 
-    async currency(currency:string) {
+    async currency(currency: string) {
         await this.click(this.selectors.currency, "Currency", "Dropdown");
         await this.type(this.selectors.currencyInput, "Currency", currency);
-        await this.click(`//span[text()='${currency}']`, "Currency", "Dropdown"); 
+        await this.click(`//span[text()='${currency}']`, "Currency", "Dropdown");
     }
 
-    async country(country:string) {
+    async country(country: string) {
         await this.click(this.selectors.country, "United States", "Dropdown");
         await this.type(this.selectors.countryInput, "Country", country);
         await this.click(`//a/span[text()='${country}']`, "Country", "Dropdpwn");
     }
 
-    async state(state:string) {
+    async state(state: string) {
         await this.click(this.selectors.state, "State", "Dropdown");
         await this.type(this.selectors.stateInput, "State", state);
         await this.click(`//a/span[text()='${state}']`, "State", "Dropdown");
     }
 
-    async cityDropdown(city:string) {
+    async cityDropdown(city: string) {
         await this.click(this.selectors.cityInput, "City", "Textbox");
         await this.type(this.selectors.cityInput, "City", city)
     }
@@ -512,27 +524,27 @@ export class ProfilePage extends LearnerHomePage {
 
     }
 
-    async details(data:string) {
+    async details(data: string) {
         await this.click(this.selectors.detailsPageView, "Details Page View", "Dropdown");
         await this.click(`//a/span[text()='${data}']`, "Details Page View", "Dropddown");
     }
 
-    async creditFrom(month:string) {
+    async creditFrom(month: string) {
         await this.click(this.selectors.creditPeriodFrom, "From", "Dropdown");
         await this.click(`(//a/span[text()='${month}'])[1]`, "From", "Dropdown");
     }
 
-    async creditTo(month:string) {
+    async creditTo(month: string) {
         await this.click(this.selectors.creditPeriodTo, "To", "Dropdown");
         await this.click(`//div[@id='wrapper-credit_period1']//span[text()='${month}']`, "To", "Dropdown");
     }
 
-    async targetCredit(target:string) {
+    async targetCredit(target: string) {
         await this.type(this.selectors.targetCredit, "Target Credit", target);
     }
 
-    async otherDetails(address1:string, address2:string, zipcode:string, mobile:string, phone:string, dept:string, id:string, empType:string,
-        jobRole:string, jobTitle:string, organization:string, userType:string
+    async otherDetails(address1: string, address2: string, zipcode: string, mobile: string, phone: string, dept: string, id: string, empType: string,
+        jobRole: string, jobTitle: string, organization: string, userType: string
     ) {
         await this.type(this.selectors.address1, "Address1", address1);
         await this.type(this.selectors.address2, "Address2", address2);
@@ -548,10 +560,10 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(`//span[text()='${empType}']`, "Employee Type", "Dropdown");
         await this.click(this.selectors.jobRole, "Job Role", "Dropdown");
         await this.type(this.selectors.jobRoleInput, "Job Role", jobRole);
-        await this.click(`//span[text()='${jobRole}']`, "Job Role", "Dropdown");        
+        await this.click(`//span[text()='${jobRole}']`, "Job Role", "Dropdown");
         await this.click(this.selectors.jobTitle, "Job Title", "Dropdown");
         await this.type(this.selectors.jobTitleInput, "Job Title", jobTitle);
-        await this.click(`//span[text()='${jobTitle}']`, "Job Title", "Dropdown");        
+        await this.click(`//span[text()='${jobTitle}']`, "Job Title", "Dropdown");
         await this.click(this.selectors.organization, "Organization", "Dropdown");
         await this.type(this.selectors.organizationInput, "Organization", organization);
         await this.click(`//span[text()='${organization}']`, "Organization", "Dropdown");
@@ -564,13 +576,13 @@ export class ProfilePage extends LearnerHomePage {
     async addEducation() {
         await this.click(this.selectors.education, "Education", "Edit Icon");
         await this.click(this.selectors.addEducation, "Add", "Plus Icon");
-        await this.type(this.selectors.fromDate, "From Date",  getPastDate());
-        await this.type(this.selectors.toDate, "To Date",FakerData.getQualification().graduationDate );
+        await this.type(this.selectors.fromDate, "From Date", getPastDate());
+        await this.type(this.selectors.toDate, "To Date", FakerData.getQualification().graduationDate);
         await this.type(this.selectors.qualification, "Qualification", FakerData.getQualification().degree);
         await this.type(this.selectors.specialization, "Specialization", FakerData.getQualification().fieldOfStudy);
         await this.type(this.selectors.school, "School", FakerData.getQualification().institution);
         await this.validateElementVisibility(this.selectors.showToAllSkills, "Show To All");
-        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox" );
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
     async addWorkExperience() {
@@ -581,12 +593,12 @@ export class ProfilePage extends LearnerHomePage {
         await this.type(this.selectors.designation, "Designation", FakerData.jobRole());
         await this.type(this.selectors.companyName, "Company", FakerData.getOrganizationName());
         await this.type(this.selectors.locationName, "Location", FakerData.getLocationName());
-        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox" );
+        await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
-      async verifySavedChanges(){
-           await this.verification(this.selectors.verifyChanges,"Saved")
-      }
+    async verifySavedChanges() {
+        await this.verification(this.selectors.verifyChanges, "Saved")
+    }
 
 
 }
