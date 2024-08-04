@@ -23,7 +23,7 @@ test(`TC029_Create user for portal 1`, async ({ adminHome, createUser, createCou
     await createUser.selectTimeZone("USA", "Pacific Standard");
     await createUser.select("State/Province", "Alaska");
     await createCourse.selectDomainOption("LearnerPortal2")
-    await createUser.selectDepartmentType("");
+    await createUser.selectDepartmentType("department");
     await createUser.clickSave();
     await createUser.clickProceed("Proceed");
     await createUser.verifyUserCreationSuccessMessage();

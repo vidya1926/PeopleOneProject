@@ -1,5 +1,6 @@
 import { BrowserContext, Page } from "@playwright/test";
 import { CatalogPage } from "./CatalogPage";
+import { FakerData } from "../utils/fakerUtils";
 
 export class LearnerCoursePage extends CatalogPage {
 
@@ -10,7 +11,11 @@ export class LearnerCoursePage extends CatalogPage {
         warningMessage: `//div[contains(@class,'align-items-center d-flex')]//span[1]`,
         q1: `//span[text()='1. Pre']/following::i[1]`,
         submitAnswers: `(//span[text()='Submit my Answers'])[2]`,
-        contentProgressStatus: `//span[text()='100%']`
+        contentProgressStatus: `//span[text()='100%']`,
+        reeroll:(index:number)=>`(//button[text()='re-enroll'])[${index}]`,
+        requestClass:`//span[text()='REQUEST CLASS']`,
+        messageTOadmin:`//textarea[@id='reqclsmsg']`,
+        submitButton:`//button[@id='reqcls-btn-submit']`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -49,9 +54,25 @@ export class LearnerCoursePage extends CatalogPage {
             await this.waitForSelector(this.selectors.contentProgressStatus)
         }
     }
-    // async clickSaveLearning() {
-    //     await this.click(this.selectors.saveLearning, "SaveLearning", "Button")
+    async clickReEnroll(index:number) {
+        for (let i=1;i<=index;i++){
+        await this.click(this.selectors.reeroll(i), "ReEnroll", "Button")
+        }
+    }
 
-    // }
+    async verifyRequestClass(){
+        await this.validateElementVisibility(this.selectors.requestClass,"Request Class")        
+    }
+
+    
+    async clickRequestClass(){
+        await this.click(this.selectors.requestClass,"Request Class","Option")
+        await this.validateElementVisibility(this.selectors.messageTOadmin,"Submit")
+        await this.keyboardType(this.selectors.messageTOadmin,FakerData.getDescription())
+        await this.click(this.selectors.submitButton,"Submit","Button")
+        
+    }
+
+
 
 }

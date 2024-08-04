@@ -121,7 +121,6 @@ export abstract class PlaywrightWrapper {
         return await this.page.locator(locator).textContent();
     }
 
-
     async getText(locator: string): Promise<string> {
         return await this.page.locator(locator).inputValue();
 
@@ -376,9 +375,23 @@ export abstract class PlaywrightWrapper {
     async clickCheckbox(locator: string, name: string) {
         await test.step(`Checkbox ${name} is selected`, async () => {
             await this.page.focus(locator)
-            await this.page.check(locator, { force: true });
+            const value=await this.page.isChecked(locator)
+            console.log(value)
+          //  await this.page.check(locator, { force: true });
         })
     }
+
+    // async radioButton(locator: string, name: string) {
+    //     await test.step(`Checkbox ${name} is selected`, async () => {
+        
+    //       if(!await this.page.isChecked(locator)){
+    //         await this.page.focus(locator)
+    //         await this.page.check(locator, { force: true });
+    //       }else{
+    //         console.log("The button is already checked")
+    //       }
+    //     })
+    // }
 
 
 

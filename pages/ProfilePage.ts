@@ -159,11 +159,6 @@ export class ProfilePage extends LearnerHomePage {
     async preferenceTab() {
         await this.click(this.selectors.preference, "preference", "tab")
     }
-
-
-
-
-
     async preferenceTimeZone(timezone: string) {
 
         await this.click(this.selectors.preferenceTimeZone, "timezone", "dropdown")
@@ -474,11 +469,6 @@ export class ProfilePage extends LearnerHomePage {
         await verifyText("Phone");
 
     }
-
-
-
-
-
     async chooseLanguage() {
         const options = this.selectors.languageDropdown;
         const optionsCount = await options.count();

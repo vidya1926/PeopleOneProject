@@ -6,21 +6,15 @@ import { promises } from "readline";
 
 export class FakerData {
 
-
-
     static getFirstName(): string {
         return faker.person.firstName();
     }
-
     static getLastName(): string {
         return faker.person.lastName();
     }
-
     static getOrganizationName() {
         return faker.company.buzzNoun()
-
     }
-
     static getcurrentYear() {
         return `${faker.date.anytime().getFullYear() - 2}`;
     }
@@ -32,7 +26,6 @@ export class FakerData {
     static getEmail(): string {
         return faker.internet.email();
     }
-
     static getAddress(): string {
         return faker.location.streetAddress();
     }
@@ -88,20 +81,15 @@ export class FakerData {
 
         return formattedEmployeeId;
     }
-
     static getCertificationNumber(): string {
         const employeeId = faker.string.numeric({ length: 4 });
         const formattedEmployeeId = `CER-${employeeId}`;
 
         return formattedEmployeeId;
     }
-
-
-
     static getRandomSkill(): string {
         return faker.hacker.adjective();
     }
-
     static randomCityName(): string {
         return faker.person.jobArea();
     }

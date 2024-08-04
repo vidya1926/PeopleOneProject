@@ -1,6 +1,6 @@
 import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
 import { AdminHomePage } from "./AdminHomePage";
-import { BrowserContext, Locator, Page } from "@playwright/test";
+import { BrowserContext, expect, Locator, Page } from "@playwright/test";
 
 export class EditCoursePage extends AdminHomePage {
 
@@ -36,9 +36,12 @@ export class EditCoursePage extends AdminHomePage {
         attendeeUrl:`//label[text()='Attendee URL']/following-sibling::input`,
         presenterUrl:`//label[text()='Presenter URL']/following-sibling::input`,
         addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`,
-        saveAccessBtn:`//button[@id='add-language-btn' and text()='Save']`
+        saveAccessBtn:`//button[@id='add-language-btn' and text()='Save']`,
         //`(//label[text()='session add/delete']/following::div//i)[2]`
- 
+        businessRule:`//span[text()='Business Rule']`,
+        uncheckSingleReg:`(//span[contains(text(),'Uncheck')]/preceding-sibling::i)[1]`, 
+        saveButton:`(//button[text()='Save'])[1]`,
+        verifyChanges:`//span[contains(text(),'Changes')]`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -51,6 +54,8 @@ export class EditCoursePage extends AdminHomePage {
 
     async clickTagMenu() {
         const selector = this.selectors.tagMenu;
+        await this.validateElementVisibility(selector,"Tag tab")
+        await this.wait('mediumWait')
         await this.click(selector, "Tags", "Link");
     }
 
@@ -109,6 +114,27 @@ export class EditCoursePage extends AdminHomePage {
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
+
+    async clickBusinessRule(){
+        await this.validateElementVisibility(this.selectors.businessRule,"Business Rule")
+        await this.click(this.selectors.businessRule,"Business Rule","sub-Menu")
+
+    }
+    async clickUncheckSingReg(){
+        await this.validateElementVisibility(this.selectors.uncheckSingleReg,"Single registration")
+        await this.click(this.selectors.uncheckSingleReg,"Single registration","Radio Button")
+        await this.click(this.selectors.saveButton,"Single registration","Save Button")
+        await this.verification(this.selectors.verifyChanges,"successfully")
+    }
+
+    async verifySingRegchkbox(){
+      const booleanChk=  await this.page.locator(this.selectors.uncheckSingleReg).isChecked();
+      console.log(booleanChk) 
+      expect(booleanChk).toBeTruthy();
+    }
+
+
     
+
        
 }

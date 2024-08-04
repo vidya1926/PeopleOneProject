@@ -17,7 +17,7 @@ export default defineConfig({
   //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   reporter: [['html', { open: 'always' }]],
   use: {
-    trace: 'on',
+    trace: 'off',
     headless: false,
     screenshot: "on",
     video: 'on',

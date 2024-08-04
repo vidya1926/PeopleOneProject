@@ -161,7 +161,8 @@ export class CoursePage extends AdminHomePage {
         // category:(categoryOption:string)=>`//div[@id='new-course-categorys']//following::select[@name='course-categorys-exp-select']/option[text()='${categoryOption}']`,
         assessmentLabel: "//div[text()='Assessment']",
         enforceSequence: `//span[text()='enforce launch sequence']/preceding-sibling::i[contains(@class,'fad fa-square ')]`,
-        learnerGroup: "div[id$='learner-group-list'] button div[class='filter-option-inner-inner']"
+        learnerGroup: "div[id$='learner-group-list'] button div[class='filter-option-inner-inner']",
+       
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -292,6 +293,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async typeAdditionalInfo(additionalInfo: string) {
+        await this.validateElementVisibility(this.selectors.additionalInfoInput, "Additional Information")
         await this.type(this.selectors.additionalInfoInput, "Additional Information", additionalInfo);
     }
 

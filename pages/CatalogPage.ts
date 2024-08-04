@@ -8,6 +8,7 @@ export class CatalogPage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
         searchInput: `//input[@id="exp-searchcatalog-search-field"]`,
+        searchlearningInput: `//input[@id="exp-searchenr-search-field"]`,        
         mostRecentMenuItem: `//div[text()="Most Recent"]`,
         createdCourse: ` //div[text()='Most Recent']/following::li[1]`,
         moreButton: (course: string) => `(//div[text()="${course}"]/following::a/i)[1]`,
@@ -64,6 +65,13 @@ export class CatalogPage extends LearnerHomePage {
         await this.page.waitForTimeout(10000);
 
     }
+    async searchMyLearning(data: string) {
+        const searchSelector = this.selectors.searchlearningInput;
+        await this.type(searchSelector, "Search Field", data);
+        await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
+        await this.page.waitForTimeout(10000);
+
+    }
 
     async mostRecent() {
         await this.validateElementVisibility(this.selectors.mostRecentMenuItem, "Most Recent");
@@ -87,7 +95,6 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.selectCourse(course), "Checkbox", "Button")
     }
     async clickEnroll() {
-
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
         const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");

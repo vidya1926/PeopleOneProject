@@ -7,15 +7,14 @@ test(`TC115TC116_Add_External_Training_Certificate_Manager`,async({profile,learn
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Adding External Training` },
         { type:`Test Description`, description: `Certificate Verification as Manager` }
-    
-        
+           
     );
 
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await profile.clickProfile();
     await profile.detailsTab();
     await profile.certificateVerificationbyManager();
-    //Manage name to be added appln issue
+    //Manager name to be added appln issue
     await profile.clickSave();
     await profile.verifySavedChanges();
 
