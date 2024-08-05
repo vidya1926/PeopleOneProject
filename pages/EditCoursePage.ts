@@ -68,8 +68,8 @@ export class EditCoursePage extends AdminHomePage {
         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
         const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
         const randomTag = tags[randomIndex];
-        await this.type(this.selectors.tagsSearchField, "Type to select tag or add tag", randomTag);
-        await this.keyboardAction(this.selectors.tagsSearchField, "Backspace", "Search Field", randomTag)
+        await this.keyboardType(this.selectors.tagsSearchField,  randomTag);
+        //await this.keyboardAction(this.selectors.tagsSearchField, "Backspace", "Search Field", randomTag)
         await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")
         await this.validateElementVisibility(this.selectors.tagsSuccesfully, "Tags")
         await this.verification(this.selectors.tagsSuccesfully, "Tag has been added successfully.")

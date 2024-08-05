@@ -19,7 +19,7 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.enterFromDate();
     await bannerHome.enterTotodayDate();
     await bannerHome.selectSequence(2);
-    await createCourse.selectDomainOption("LearnPortal");
+    await createCourse.selectDomainOption("LearnerPortal");
     await bannerHome.uploadImage("Qeagle");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();

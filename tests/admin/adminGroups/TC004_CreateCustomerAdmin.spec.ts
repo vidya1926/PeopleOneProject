@@ -5,29 +5,29 @@ import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
 
-const customAdmin:any=FakerData.getUserId()
+const customAdmin: any = FakerData.getUserId()
 const newData = {
     customAdmin: customAdmin
 }
 updateFieldsInJSON(newData)
-test.skip(`TC04_Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC04_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type:`Test Description`, description: `Adding User as Course Admin` }
-        
+        { type: `Test Description`, description: `Adding User as Course Admin` }
+
     );
-    
+
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);
 
     for (const row of data) {
-         const { country, state, timezone, currency, city, zipcode } = row;
+        const { country, state, timezone, currency, city, zipcode } = row;
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
+        //await createUser.clickCreateUser();
         await createUser.verifyCreateUserLabel();
-        await createUser.clickCreateUser();
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
         await createUser.enter("username", customAdmin);
@@ -53,15 +53,15 @@ test.skip(`Create user for admin login  `, async ({ adminHome, createUser }) => 
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type:`Test Description`, description: `Adding User as Course Admin` }
-        
+        { type: `Test Description`, description: `Adding User as Course Admin` }
+
     );
-    
+
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);
 
     for (const row of data) {
-         const { country, state, timezone, currency, city, zipcode } = row;
+        const { country, state, timezone, currency, city, zipcode } = row;
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
@@ -91,14 +91,14 @@ test.skip(`Create user for admin login  `, async ({ adminHome, createUser }) => 
     }
 });
 
-test.skip(`TC004_CreateCustomerAdmin`, async ({ adminHome, adminGroup,createCourse }) => {
+test.skip(`TC004_CreateCustomerAdmin`, async ({ adminHome, adminGroup, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the user to add in SuperAdmin-Customer` },
         { type: `Test Description`, description: `Verify that user is added to SuperAdmin-Customer role` }
 
     );
-   
+
     await adminHome.loadAndLogin("SUPERADMIN")
     await adminHome.menuButton();
     await adminHome.people();

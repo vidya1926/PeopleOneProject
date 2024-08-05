@@ -65,8 +65,12 @@ export class MetaLibraryPage extends AdminHomePage {
         listOfPeopleManager:"div[id='manager'] div[class$='content-start'] span",
 
         listOfPeopleJobtitle: "div[id='jobtitle'] div[class^='lms-cate-data']  span"
+        listOfPeopleJobroles: "div[id='jobroles'] div[class^='lms-cate-data']  span",
+        listOfPeopleJobtitle: "div[id='jobtitle'] div[class^='lms-cate-data']  span",
+        listofCEUType:"div[id='ceu-type'] div[class$='content-start'] span",
+        listofCEUProvider:"div[id='ceu-provider'] div[class$='content-start'] span",
 
-    };
+   };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -147,6 +151,7 @@ export class MetaLibraryPage extends AdminHomePage {
     }
 
     async ceuProviderSearchField(data: string) {
+        await this.retrieveData(this.selectors.listofCEUProvider, '../data/peopleCEUProviderData.json')
         await this.type(this.selectors.ceuProviderSearchField, "Search Field", data);
         await this.keyboardAction(this.selectors.ceuProviderSearchField, "Enter", "Search Field", data);
     }
@@ -167,6 +172,7 @@ export class MetaLibraryPage extends AdminHomePage {
     }
 
     async ceuTypeSearchField(data: string) {
+        await this.retrieveData(this.selectors.listofCEUType, "../data/peopleCEUData.json")
         await this.type(this.selectors.ceuTypeSearchField, "Search Field", data);
         await this.keyboardAction(this.selectors.ceuTypeSearchField, "Enter", "Search Field", data);
     }

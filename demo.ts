@@ -161,9 +161,29 @@ console.log(`${startDigit}${restDigits}`); */
 
 
 
-const date = new Date();
+/* const date = new Date();
     const month = String(date.getMonth() + 1)
     const day = String(date.getDate()+1);
     const year = date.getFullYear();
-    console.log( `${month}/${day}/${year}`);
+    console.log( `${month}/${day}/${year}`); */
+/* for (let index = 0; index < 10; index++) {
+    const min = 50;
+    const max = 100;
+    const step = 5;
+    const range = Math.floor((max - min) / step) + 1;
+    const randomMultiple = Math.floor(Math.random() * range) * step + min;
+    console.log(randomMultiple);
+
+
+} */
+/* for (let index = 0; index < 30; index++) {
+    console.log(Math.floor(Math.random() * (2))+1);
+
     
+} */
+
+let option=1
+let rNum="anv"
+    console.log(`(${option})[${rNum}]`);
+    
+

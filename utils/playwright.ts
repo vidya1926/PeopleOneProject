@@ -68,6 +68,14 @@ export abstract class PlaywrightWrapper {
         });
     }
 
+    async keyboardType(locator: string, data: string) {
+        await test.step(`Textbox filled with data: ${data}`, async () => {
+            await this.page.locator(locator).clear();
+            await this.page.focus(locator);
+            await this.page.keyboard.type(data, { delay: 100 });
+
+        });
+    }
     async typeAndEnter(locator: string,
         name: string,
         data: string) {
@@ -98,12 +106,7 @@ export abstract class PlaywrightWrapper {
         await this.page.context().storageState({ path: path })
     }
 
-    async keyboardType(locator: string, data: string) {
-        await test.step(`Typing the ${data}`, async () => {
-            await this.page.focus(locator);
-            await this.page.keyboard.type(data, { delay: 200 });
-        })
-    }
+
     public async loadApp(url: string) {
         try {
             await this.page.goto(url); // Increased timeout for 60 seconds
