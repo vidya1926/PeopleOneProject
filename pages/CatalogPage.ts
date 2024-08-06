@@ -13,7 +13,8 @@ export class CatalogPage extends LearnerHomePage {
         createdCourse: ` //div[text()='Most Recent']/following::li[1]`,
         moreButton: (course: string) => `(//div[text()="${course}"]/following::a/i)[1]`,
         enrollIcon: `//div[text()='Most Recent']//following::i[contains(@class,'tooltipIcon fa-duotone')][1]`,
-        selectCourse: (course: string) => `//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')][1]`,
+        courseToEnroll:(course: string)=>`//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')]`,
+        selectCourse: (course: string,index:number) => `(//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')])[${index}]`,
         enrollButton: `//span[text()='Enroll']`,
         //launchButton:`//button[text()="Launch Content"]`,
         completedButton: `//a[contains(text(),"Completed")]`,
@@ -92,7 +93,9 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async clickSelectcourse(course: string) {
-        await this.click(this.selectors.selectCourse(course), "Checkbox", "Button")
+        const count=await this.page.locator(this.selectors.courseToEnroll(course)).count();
+        const randomIndex = Math.floor(Math.random() * count)+1
+        await this.click(this.selectors.selectCourse(course,randomIndex), "Checkbox", "Button")
     }
     async clickEnroll() {
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
@@ -188,21 +191,20 @@ export class CatalogPage extends LearnerHomePage {
         await this.verification(this.selectors.expiredContent, "Expired")
     }
 
-    async enterSearchFilter(): Promise<string> {
+    async enterSearchFilter(tagName:string): Promise<string> {
         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
         const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
         const randomTag = tags[randomIndex];
         await this.click(this.selectors.searchButton, "Tagname", "Field")
-        await this.type(this.selectors.selectTagnames, "Tagname", randomTag)
+        await this.type(this.selectors.selectTagnames, "Tagname", tagName)
         console.log(randomTag)
-        return randomTag;
+        return tagName;
     }
 
-    async selectresultantTags() {
-
-        await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
-        await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags")
-        await this.click(this.selectors.reultantTagname(this.enterSearchFilter()), "Tags", "selected")
+    async selectresultantTags(tagName:string) {
+        await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
+        await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
+        await this.click(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags", "selected")
 
     }
 

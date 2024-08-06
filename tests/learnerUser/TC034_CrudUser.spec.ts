@@ -17,8 +17,9 @@ test(`TC034_Create USer for CRUD Operation`, async ({ adminHome, createUser ,cre
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
-        await createUser.verifyCreateUserLabel();
-        await createUser.clickCreateUser();        
+       
+        await createUser.clickCreateUser(); 
+        await createUser.verifyCreateUserLabel();       
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
         await createUser.enter("username",username);

@@ -23,8 +23,8 @@ test.skip(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ admin
     await createCourse.selectdeliveryType("Classroom")
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
-    await createCourse.selectTotalDuration("48");
-    await createCourse.typeAdditionalInfo("Happy Learning!");
+    await createCourse.selectTotalDuration();
+    await createCourse.typeAdditionalInfo();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.modifyTheAccess();

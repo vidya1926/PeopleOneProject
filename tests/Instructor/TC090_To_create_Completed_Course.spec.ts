@@ -28,8 +28,8 @@ test(`TC090_To_create_Completed_Course`,async({adminHome,createCourse,editCourse
     await createCourse.selectdeliveryType("Virtual Class")
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
-    await createCourse.selectTotalDuration("48");
-    await createCourse.typeAdditionalInfo("Happy Learning!");
+    await createCourse.selectTotalDuration();
+    await createCourse.typeAdditionalInfo();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed()

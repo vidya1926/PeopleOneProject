@@ -89,6 +89,7 @@ export class UserPage extends AdminHomePage {
 
 
     async clickCreateUser() {
+        await this.validateElementVisibility(this.selectors.createUserbtn,"CreateButton")
         await this.click(this.selectors.createUserbtn, "Create User", "Button");
     }
 

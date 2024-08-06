@@ -102,6 +102,9 @@ export class FakerData {
         return session
     }
 
+    static getDuration(){
+        return faker.date.future().getHours().toString();
+    }
 
     static getDescription(): string {
         const description = faker.lorem.paragraph(1);

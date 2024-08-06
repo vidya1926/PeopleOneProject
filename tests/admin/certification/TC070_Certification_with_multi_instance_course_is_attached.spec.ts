@@ -26,8 +26,8 @@ test.describe(`TC070_Certification_with_multi_instance_course_is_attached.spec`,
         await createCourse.selectdeliveryType("Classroom")
         await createCourse.handleCategoryADropdown();
         await createCourse.providerDropdown()
-        await createCourse.selectTotalDuration("48");
-        await createCourse.typeAdditionalInfo("Happy Learning!");
+        await createCourse.selectTotalDuration();
+        await createCourse.typeAdditionalInfo();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
         await createCourse.modifyTheAccess();

@@ -30,8 +30,8 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.selectdeliveryType("Virtual Class")
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
-    await createCourse.selectTotalDuration("48");
-    await createCourse.typeAdditionalInfo("Happy Learning!");
+    await createCourse.selectTotalDuration();
+    await createCourse.typeAdditionalInfo();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed()
@@ -53,7 +53,7 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.enterfutureDateValue();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor("arivazhaganp")
-    await createCourse.typeAdditionalInfo(courseName)
+    await createCourse.typeAdditionalInfo()
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();
     await createCourse.typeDescription("Check for instance class for the availed course")

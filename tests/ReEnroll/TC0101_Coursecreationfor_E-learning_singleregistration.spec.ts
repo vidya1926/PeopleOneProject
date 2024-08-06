@@ -57,15 +57,6 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     await learnerCourse.clickReEnroll(2);
     await learnerCourse.verifyRequestClass();
 
-    // await catalog.clickSelectcourse(courseName);
-    // await catalog.clickEnroll();
-    // await catalog.clickLaunchButton();
-    // await catalog.saveLearningStatus();
-    // await catalog.clickMyLearning();
-    // await catalog.clickCompletedButton()
-    // await catalog.verifyCompletedCourse(courseName)
-
-
 })
 
 

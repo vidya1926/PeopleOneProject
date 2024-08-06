@@ -6,13 +6,12 @@ import { FakerData } from "../../utils/fakerUtils";
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription()
 
-test(`TC101_CreateCourseForElearning_Single_Registration`, async ({ adminHome, createCourse,editCourse }) => {
+test(`TC102_CreateCourseForElearning_Recurring_Registration`, async ({ adminHome, createCourse,editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the course as Single Registration` },
         { type: `Test Description`, description: `Verify that course should be created for Single Registration` }
     );
-
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -58,11 +57,12 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
+    await learnerCourse.verifyRequestClass();
+    await learnerCourse.clickRequestClass();
     await catalog.clickMyLearning();
     await catalog.clickCompletedButton()
     await catalog.verifyCompletedCourse(courseName)
-    await learnerCourse.verifyRequestClass();
-    await learnerCourse.clickRequestClass();
+   
 })
 
 

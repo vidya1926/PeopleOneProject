@@ -31,8 +31,8 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     await createCourse.selectCurrency();
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
-    await createCourse.selectTotalDuration("12");
-    await createCourse.typeAdditionalInfo("Happy Learning!");
+    await createCourse.selectTotalDuration();
+    await createCourse.typeAdditionalInfo();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
@@ -46,7 +46,7 @@ test(`Course Creation for Classroom`, async ({ adminHome, createCourse, editCour
     }
     await addinstance("Virtual Class");
     await createCourse.selectMeetingType(instructorName, courseName, 1);
-    await createCourse.typeAdditionalInfo(courseName)
+    await createCourse.typeAdditionalInfo()
     await createCourse.clickaddIcon();
     await createCourse.selectMeetingType(instructorName, courseName, 2);
     await createCourse.setMaxSeat();

@@ -70,12 +70,14 @@ export class EditCoursePage extends AdminHomePage {
         const randomTag = tags[randomIndex];
         await this.keyboardType(this.selectors.tagsSearchField,  randomTag);
         //await this.keyboardAction(this.selectors.tagsSearchField, "Backspace", "Search Field", randomTag)
-        await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")
+        const tagName=this.getInnerText(`//li[text()='${randomTag}']`)
+        await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")        
         await this.validateElementVisibility(this.selectors.tagsSuccesfully, "Tags")
         await this.verification(this.selectors.tagsSuccesfully, "Tag has been added successfully.")
         await this.validateElementVisibility(this.selectors.okBtnTag, "OK");
         await this.mouseHover(this.selectors.okBtnTag, "OK");
         await this.click(this.selectors.okBtnTag, "OK", "Button");
+        return tagName;
     }
 
     async selectCourseCompletionCertificate(certificateName: string) {

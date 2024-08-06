@@ -70,7 +70,6 @@ export class CoursePage extends AdminHomePage {
         instructorDropdownIndex: (index: number) => `(//label[text()='Instructor']/following-sibling::div//input)[${index}]`,
         instructorOption: (instructorName: string) => `//li[contains(text(),'${instructorName}')]`,
         instructorOptionIndex: (instructorName: string, index: number) => `(//li[contains(text(),'${instructorName}')])[${index}]`,
-
         locationSelection: "//label[text()='Select Location']/following-sibling::div//input[1]",
         locationDropdown: "//label[text()='Select Location']/following-sibling::div//input[@placeholder='Search']",
         locationOption: (locationName: string) => `//li[text()='${locationName}']`,
@@ -349,13 +348,13 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.providerOption(provider), "Provider", "Dropdown Value");
     }
 
-    async selectTotalDuration(duration: string) {
-        await this.typeAndEnter(this.selectors.totalDurationInput, "Duration", duration);
+    async selectTotalDuration() {
+        await this.typeAndEnter(this.selectors.totalDurationInput, "Duration", FakerData.getDuration());
     }
 
-    async typeAdditionalInfo(additionalInfo: string) {
+    async typeAdditionalInfo() {
         await this.validateElementVisibility(this.selectors.additionalInfoInput, "Additional Information")
-        await this.type(this.selectors.additionalInfoInput, "Additional Information", additionalInfo);
+        await this.type(this.selectors.additionalInfoInput, "Additional Information", FakerData.getDescription());
     }
 
     async enterPrice(price: string) {
@@ -555,7 +554,8 @@ export class CoursePage extends AdminHomePage {
 
     public async startandEndTime() {
         const pickRandomTime = async () => {
-            const timeElements = await this.page.locator("//div[contains(@class,'timepicker')]//li").count();
+            const timeElements = await this.page.locator("//div[contains(@class,'ui-timepicker-wrapper')]//li[@class='ui-timepicker-selected']").count();
+            console.log(timeElements)
             const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
             return randomIndex;
         };

@@ -14,8 +14,9 @@ test(`TC032_Create Team User1`, async ({ adminHome, createUser ,createCourse}) =
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();
-        await createUser.verifyCreateUserLabel();
         await createUser.clickCreateUser();        
+        
+        await createUser.verifyCreateUserLabel();
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
         await createUser.enter("username",FakerData.getUserId());

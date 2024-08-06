@@ -15,7 +15,8 @@ export class LearnerCoursePage extends CatalogPage {
         reeroll:(index:number)=>`(//button[text()='re-enroll'])[${index}]`,
         requestClass:`//span[text()='REQUEST CLASS']`,
         messageTOadmin:`//textarea[@id='reqclsmsg']`,
-        submitButton:`//button[@id='reqcls-btn-submit']`
+        submitButton:`//button[@id='reqcls-btn-submit']`,
+        closeButton:`//div[contains(@id,'simplemodal')]//i[contains(@class,'fa-duotone fa-times icon')]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -54,6 +55,7 @@ export class LearnerCoursePage extends CatalogPage {
             await this.waitForSelector(this.selectors.contentProgressStatus)
         }
     }
+
     async clickReEnroll(index:number) {
         for (let i=1;i<=index;i++){
         await this.click(this.selectors.reeroll(i), "ReEnroll", "Button")
@@ -62,17 +64,14 @@ export class LearnerCoursePage extends CatalogPage {
 
     async verifyRequestClass(){
         await this.validateElementVisibility(this.selectors.requestClass,"Request Class")        
-    }
+    }    
 
-    
     async clickRequestClass(){
         await this.click(this.selectors.requestClass,"Request Class","Option")
         await this.validateElementVisibility(this.selectors.messageTOadmin,"Submit")
         await this.keyboardType(this.selectors.messageTOadmin,FakerData.getDescription())
         await this.click(this.selectors.submitButton,"Submit","Button")
-        
+        await this.click(this.selectors.closeButton,"close","Button")
+
     }
-
-
-
 }

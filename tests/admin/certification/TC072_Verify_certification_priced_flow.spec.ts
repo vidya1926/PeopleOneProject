@@ -24,8 +24,8 @@ test.describe(`TC072_Verify_certification_priced_flow`, async () => {
         await createCourse.selectdeliveryType("Virtual Class")
         await createCourse.handleCategoryADropdown();
         await createCourse.providerDropdown()
-        await createCourse.selectTotalDuration("48");
-        await createCourse.typeAdditionalInfo(description);
+        await createCourse.selectTotalDuration();
+        await createCourse.typeAdditionalInfo();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
         await createCourse.modifyTheAccess();

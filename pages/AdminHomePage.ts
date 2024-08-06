@@ -182,6 +182,7 @@ export class AdminHomePage extends AdminLogin {
     }
 
     public async user() {
+        await this.validateElementVisibility(this.selectors.userMenu, "User");
         await this.click(this.selectors.userMenu, "USER", "Button");
     }
 
