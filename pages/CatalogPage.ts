@@ -53,6 +53,9 @@ export class CatalogPage extends LearnerHomePage {
         submitSurveyBtn: `div[class^='pagination-wrapper'] span:text-is('submit survey')`,
         doneBtn: `//span[text()='done']`,
         recievedScore: `//span[text()='Score:']//parent::div`,
+        filterDeliverytype:(delivery:string)=>`//span[text()='${delivery}']/preceding-sibling::i[1]`,
+        multiInstancefilter:`(//div[text()='Filters'])[1]`,
+        clickPlayIcon:`(//a[contains(@class,'launch-content')])[1]`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -73,7 +76,10 @@ export class CatalogPage extends LearnerHomePage {
         await this.page.waitForTimeout(10000);
 
     }
-
+    async clicktoPlay(){
+        await this.validateElementVisibility(this.selectors.launchButton,"Play")
+        await this.click(this.selectors.launchButton,"Play","Icon")
+    }
     async mostRecent() {
         await this.validateElementVisibility(this.selectors.mostRecentMenuItem, "Most Recent");
         await this.mouseHover(this.selectors.mostRecentMenuItem, "Most Recent");
@@ -83,7 +89,9 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(this.selectors.moreButton(courseName), "More on Course")
         await this.click(this.selectors.moreButton(courseName), "More on Course", "icon")
     }
-
+    async clickcourseTypeFilter(){
+        await this.click(this.selectors.multiInstancefilter, "Filter Delivery type", "checkbox");
+    }
 
     async clickEnrollButton() {
         await this.mouseHover(this.selectors.createdCourse, "CreatedCourse")
@@ -97,10 +105,12 @@ export class CatalogPage extends LearnerHomePage {
         const randomIndex = Math.floor(Math.random() * count)+1
         await this.click(this.selectors.selectCourse(course,randomIndex), "Checkbox", "Button")
     }
+
     async clickEnroll() {
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
         const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
+        await this.wait('minWait')
 
     }
 
@@ -161,8 +171,25 @@ export class CatalogPage extends LearnerHomePage {
             }
         } catch (error) {
             console.log("Try to launch the button");
+         }
 
-        }
+    }
+
+
+
+    async clicksaveLearningStatus() {
+        await this.click(this.selectors.saveLearningStatus, "save", "button");
+        await this.validateElementVisibility(this.selectors.verificationEnrollment, "button");
+        await this.spinnerDisappear();
+        const completed = this.page.locator(this.selectors.completedVideo);
+        try {
+            if (await completed.isVisible()) {
+                await completed.hover({ force: true });
+                console.log("The Video Has Completed");
+            } 
+        } catch (error) {
+            console.log("Try to launch the button");
+         }
 
     }
 
@@ -182,13 +209,23 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(completedCourseSelector, "Text");
     }
 
+    
+    // async verifytoCompleteCourse(name: string) {
+    //     const completedCourseSelector = this.selectors.completedCourse(name);
+    //     await this.mouseHover(completedCourseSelector, "Text");
+    // }
+
+    
+    async verifyExpiredContent() {
+        await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
+        await this.verification(this.selectors.expiredContent, "Expired")
+    }
     async clickFilter() {
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
 
-    async verifyExpiredContent() {
-        await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
-        await this.verification(this.selectors.expiredContent, "Expired")
+    async clickDeliveryType(typeName:string){
+        await this.click(this.selectors.filterDeliverytype(typeName),"Delivery type ","Filter")
     }
 
     async enterSearchFilter(tagName:string): Promise<string> {
@@ -200,44 +237,34 @@ export class CatalogPage extends LearnerHomePage {
         console.log(randomTag)
         return tagName;
     }
-
     async selectresultantTags(tagName:string) {
         await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
         await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
         await this.click(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags", "selected")
-
     }
-
     async clickApply() {
         await this.mouseHover(this.selectors.applyButton, "Apply")
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
-
     async viewCoursedetails() {
         await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button");
     }
-
-
     async clickViewCertificationDetails() {
         await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn, "View Certification Details");
         await this.click(this.selectors.viewCertificationDetailsBtn, "View Certification Details", "Button");
         await this.page.waitForLoadState('load');
-
     }
-
     async clickViewLearningPathDetails() {
         await this.validateElementVisibility(this.selectors.viewlearningPathDetailsBtn, "View Learning Path Details");
         await this.click(this.selectors.viewlearningPathDetailsBtn, "View Learning Path Details", "Button");
         await this.page.waitForLoadState('load');
     }
-
     async clickOkButton() {
         await this.validateElementVisibility(this.selectors.okBtn, "View Certification Details");
         await this.click(this.selectors.okBtn, "View Certification Details", "Button");
         await this.page.waitForLoadState('load');
 
     }
-
     async verifyAddedToCart() {
         await this.validateElementVisibility(this.selectors.addedToCartBtn, "Added to Cart");
         await this.verification(this.selectors.addedToCartBtn, "Added to Cart")

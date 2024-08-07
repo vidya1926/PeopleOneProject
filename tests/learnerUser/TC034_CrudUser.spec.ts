@@ -32,7 +32,6 @@ test(`TC034_Create USer for CRUD Operation`, async ({ adminHome, createUser ,cre
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
-
     }
 )
 
@@ -57,7 +56,6 @@ test(`TC034_Update User for CRUD Operation`, async ({ adminHome, createUser ,cre
         await createUser.editbtn();    
         const empTypeUpdated= await createUser.selectEmploymentType("emp_type");        
         expect(empType).not.toContain(empTypeUpdated);
-
     }
 )
 
@@ -75,8 +73,7 @@ test(`TC034_Delete User for CRUD Operation`, async ({ adminHome, createUser ,cre
         await adminHome.user();
         await createUser.userSearchField(username);
         await createUser.clickdeleteIcon();
-        await createUser.verifyUserdeleteSuccessMessage()
-       
+        await createUser.verifyUserdeleteSuccessMessage()       
     }
 )
 

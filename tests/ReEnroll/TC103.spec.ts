@@ -1,14 +1,18 @@
+import { expect } from "@playwright/test";
 import { credentialConstants } from "../../constants/credentialConstants";
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData, getRandomSeat } from "../../utils/fakerUtils";
 
 
 const courseName = FakerData.getCourseName();
+const elCourseName = FakerData.getCourseName() + "E-learning";
 const sessionName = FakerData.getSession();
 const description = FakerData.getDescription();
 const maxSeat = getRandomSeat()
 const instructorName = credentialConstants.INSTRUCTORNAME
-let tag:any
+let addInstancepre:any
+let addInstancepost:any
+let tag: any
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`TC103_Multiple Course Creation for Classroom`, async ({ createCourse, adminHome, editCourse }) => {
     test.info().annotations.push(
@@ -16,9 +20,11 @@ test(`TC103_Multiple Course Creation for Classroom`, async ({ createCourse, admi
         { type: `TestCase`, description: `Verify Multiple Course Creation for Classroom ` },
         { type: `Test Description`, description: `Multiple Course Creation for Classroom` }
     );
-
     await adminHome.loadAndLogin("CUSTOMERADMIN")
-    await adminHome.clickMenu("Course");
+    await adminHome.menuButton();
+    await adminHome.clickLearningMenu();
+    await adminHome.clickCourseLink();
+    await createCourse.clickCreateCourse();
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
@@ -28,20 +34,20 @@ test(`TC103_Multiple Course Creation for Classroom`, async ({ createCourse, admi
     await createCourse.providerDropdown()
     await createCourse.selectTotalDuration();
     await createCourse.typeAdditionalInfo();
+    addInstancepre=await createCourse.visiblityOfaddInstance()
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.clickEditCourseTabs()  
+    await createCourse.clickEditCourseTabs()
     await editCourse.clickTagMenu();
-   tag= await editCourse.selectTags();
+    tag = await editCourse.selectTags();
     await editCourse.clickClose();
-    /* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
-    // await editCourse.clickCompletionCertificate();
-    //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
+    addInstancepost=await createCourse.visiblityOfaddInstance()
+    expect(addInstancepost).not.toBe(addInstancepre)
     await createCourse.addInstances();
 
     async function addinstance(deliveryType: string) {
@@ -62,14 +68,14 @@ test(`TC103_Multiple Course Creation for Classroom`, async ({ createCourse, admi
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
     await addinstance("E-Learning");
+    await createCourse.enter("course-title", elCourseName)
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
-
 })
 
-test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome, learnerCourse, catalog }) => {
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
         { type: `TestCase`, description: `Learner Side Re-Enrollment` },
@@ -77,11 +83,22 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await learnerHome.clickCatalog();
-    await catalog.mostRecent();
-    await catalog.searchCatalog(courseName);    
+    // await catalog.clickFilter();
+    // await catalog.enterSearchFilter(tag)
+    // await catalog.selectresultantTags(tag);
+    // await catalog.clickApply()
     await catalog.clickMoreonCourse(courseName);
-    await catalog.clickSelectcourse(courseName);
+    await catalog.clickSelectcourse(elCourseName);
     await catalog.clickEnroll();
+    await catalog.clickMyLearning();
+    await catalog.searchMyLearning(elCourseName)    
+    await catalog.clicktoPlay();
+    await catalog.clickLaunchButton();
+    await catalog.clicksaveLearningStatus();
+    // url redirect issue
+
+   
+   
 })
 
 

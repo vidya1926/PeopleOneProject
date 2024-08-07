@@ -27,7 +27,7 @@ export default defineConfig({
   },
   projects: [
     {
-      name: 'TC089',
+      name: 'Chromium',
       use: {
         ...devices['Desktop Chromium'],
         viewport: null,

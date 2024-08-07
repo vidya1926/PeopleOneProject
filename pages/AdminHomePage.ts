@@ -216,9 +216,6 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.metaGeneralLink, "Learning", "Button");
         await this.spinnerDisappear();
     }
-
-
-
     async enter(name: string, data: string) {
         await this.type(`//input[@id="${name}"]`, name, data);
     }
@@ -226,14 +223,10 @@ export class AdminHomePage extends AdminLogin {
     public async adminGroup() {
         await this.click(this.selectors.adminGroupLink, "AdminGroup", "Link");
     }
-
     
     public async learnerGroup() {
         await this.click(this.selectors.learnerGrouplink, "AdminGroup", "Link");
     }
-
-
-
 
     public async locationLink() {
         await this.click(this.selectors.locationLink, "Location", "Link");

@@ -16,7 +16,8 @@ export class LearnerCoursePage extends CatalogPage {
         requestClass:`//span[text()='REQUEST CLASS']`,
         messageTOadmin:`//textarea[@id='reqclsmsg']`,
         submitButton:`//button[@id='reqcls-btn-submit']`,
-        closeButton:`//div[contains(@id,'simplemodal')]//i[contains(@class,'fa-duotone fa-times icon')]`
+        closeButton:`//div[contains(@id,'simplemodal')]//i[contains(@class,'fa-duotone fa-times icon')]`,
+        reEnrolledCourses:(index:number)=>`//button[text()='re-enroll']/following::span[contains(@class,'field_title')][${index}]`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -74,4 +75,14 @@ export class LearnerCoursePage extends CatalogPage {
         await this.click(this.selectors.closeButton,"close","Button")
 
     }
+
+
+    async reEnrolledcourseCount(){
+       const count = await this.page.locator("//button[text()='re-enroll']/following::span[contains(@class,'field_title')]").count()
+      for(let i=1;i<=count;i++){        
+      return  await this.getInnerText(this.selectors.reEnrolledCourses(i))
+    }
+
+
+}
 }
