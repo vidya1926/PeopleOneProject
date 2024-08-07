@@ -62,6 +62,7 @@ export class CatalogPage extends LearnerHomePage {
         super(page, context);
     }
 
+    
     async searchCatalog(data: string) {
         const searchSelector = this.selectors.searchInput;
         await this.type(searchSelector, "Search Field", data);

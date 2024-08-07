@@ -55,7 +55,7 @@ export class LearningPathPage extends AdminHomePage {
         domainDropdownValue: "//label[text()='Domain']/following-sibling::div//div[contains(@class,'dropdown-menu')]//span[@class='text']",
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
-        codeInput:`//label[text()='CODE']/following-sibling::input`,
+        codeInput: `//label[text()='CODE']/following-sibling::input`,
 
 
     };
@@ -119,12 +119,12 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.proceedBtn, "Proceed Button", "Button");
     }
 
-   /*  async recertificationclickAddCourse() {
-        await this.validateElementVisibility(this.selectors.reCertificationAddCourseBtn, "Add Course Button");
-        await this.mouseHover(this.selectors.reCertificationAddCourseBtn, "Add Course Button");
-        //await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
-        await this.page.locator(this.selectors.reCertificationAddCourseBtn).click({ force: true })
-    } */
+    /*  async recertificationclickAddCourse() {
+         await this.validateElementVisibility(this.selectors.reCertificationAddCourseBtn, "Add Course Button");
+         await this.mouseHover(this.selectors.reCertificationAddCourseBtn, "Add Course Button");
+         //await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
+         await this.page.locator(this.selectors.reCertificationAddCourseBtn).click({ force: true })
+     } */
 
     async clickAddCourse() {
         await this.validateElementVisibility(this.selectors.addCourseBtn, "Add Course Button");
@@ -235,13 +235,45 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.recertificationAddCourse, "Add Course", "Button");
     }
 
-    async getCodeValue(){
-        await this.validateElementVisibility(this.selectors.codeInput,"Code");
+    async getCodeValue() {
+        await this.validateElementVisibility(this.selectors.codeInput, "Code");
         await this.wait('mediumWait');
-        let codeValue =await this.fetchattribute(this.selectors.codeInput,"placeholder");
-        console.log(codeValue);
-        return codeValue
+        const inner =await this.getInnerText("//label[text()='CODE']/parent::div");
+        console.log(inner);
         
+        /*   let codeValue = await this.fetchattribute(this.selectors.codeInput, "placeholder");
+          console.log(codeValue); */
+        //return codeValue
+        /* const locator = '#code';  // Example selector
+
+        // Retrieve and log all attributes
+        const attributes = await this.page.evaluate((selector: string) => {
+            const element = document.querySelector(selector);
+
+            if (element) {
+                // Convert attributes to an object and log it
+                const attrs = Array.from(element.attributes).reduce((acc: any, attr) => {
+                    acc[attr.name] = attr.value;
+                    return acc;
+                }, {});
+                console.log('Element Attributes:', attrs);
+                return attrs;
+            } else {
+                console.log('Element not found.');
+                return {};
+            }
+        }, locator);
+        console.log(attributes); */
+
+       /*  const field = this.page.locator('#code');
+
+        const _attribute = await field.getAttribute('placeholder');
+        const _attributeV = await field.getAttribute('value');
+        console.log(_attribute);
+        console.log(_attributeV); */
+
+
+
     }
 
     async saveRecertification(data: string) {

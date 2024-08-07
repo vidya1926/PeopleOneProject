@@ -54,8 +54,6 @@ export class AdminHomePage extends AdminLogin {
         super(page, context);
         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
        // this.setupPageListeners();
-
-
     }
 
     public async loadAndLogin(role: string) {
