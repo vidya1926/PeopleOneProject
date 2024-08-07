@@ -7,7 +7,7 @@ const description = FakerData.getDescription();
 const sessionName = FakerData.getSession();
 const instructorName = credentialConstants.INSTRUCTORNAME
 //test.use({ storageState: "logins/expertusAdminLog.json" })
-test.skip(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome, createCourse, editCourse }) => {
+test(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `TP Prerequisite Course2- MultiClass-ILT and Elearning` },

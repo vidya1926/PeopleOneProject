@@ -84,6 +84,7 @@ test.describe(`TC_076Verify_Learning_Path__single_instance_with_survey_and_asses
         }
         await assessment();
         await assessment();
+        await catalog.surveyPlayButton();
         await assessment();
     })
 })

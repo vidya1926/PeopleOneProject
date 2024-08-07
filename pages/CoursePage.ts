@@ -556,19 +556,21 @@ export class CoursePage extends AdminHomePage {
         await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", await getRandomSeat());
     }
 
-    public async startandEndTime() {      
-            await this.click(this.selectors.timeInput, "Start Time Input", "Input");
-            await this.wait('minWait');
-            const pickRandomTime = async () => {
-                const timeElements = await this.page.locator("//div[contains(@class,'timepicker')]//li").count();
-                console.log(timeElements);
-                const randomIndex = Math.floor(Math.random() * timeElements) + 1;
-                return randomIndex;
-            };
-            const randomIndex = await pickRandomTime();
-            console.log("Random Index:", randomIndex);
-            await this.click(this.selectors.timeInput, "Start Time", "Button");
-            await this.click(this.selectors.chooseTimeOption(randomIndex), "Option", "Button");   
+  
+
+    public async startandEndTime() {
+        await this.click(this.selectors.timeInput, "Start Time Input", "Input");
+        await this.wait('minWait');
+        const pickRandomTime = async () => {
+            const timeElements = await this.page.locator("//div[contains(@class,'timepicker')]//li").count();
+            console.log(timeElements);
+            const randomIndex = Math.floor(Math.random() * timeElements) + 1;
+            return randomIndex;
+        };
+        const randomIndex = await pickRandomTime();
+        console.log("Random Index:", randomIndex);
+        await this.click(this.selectors.timeInput, "Start Time", "Button");
+        await this.click(this.selectors.chooseTimeOption(randomIndex), "Option", "Button");
     }
     async waitList() {
         await this.type(this.selectors.waitlistInput, "WaitList", "4");

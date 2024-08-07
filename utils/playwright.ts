@@ -134,7 +134,7 @@ export abstract class PlaywrightWrapper {
     }
 
     async waitForSelector(locator: string) {
-        await this.page.waitForSelector('input')
+        await this.page.waitForSelector(locator)
     }
     async fetchattribute(locator: string, attName: string) {
         const eleValue = await this.page.$(locator)

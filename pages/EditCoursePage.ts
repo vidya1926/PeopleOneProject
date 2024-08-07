@@ -29,19 +29,17 @@ export class EditCoursePage extends AdminHomePage {
         timeZone: `//label[text()='Time Zone']/following-sibling::div//input`,
         timeZoneOption: `(//label[text()='Time Zone']/following::div//input[@placeholder='Search'])[1]`,
         indianTimezone: `//li[contains(text(),'Indian Standard Time/Kolkata')]`,
-        startDateInstance:`//label[text()='Start Date']/following-sibling::div/input`,
-        host:`//label[text()='Host']/following-sibling::div`,
-    //    searchHost -->dd is not working in UI -->bug      
-        otherMeeting:`//label[text()='Session Type']/following::div//span[text()='other Meetings']`,
-        attendeeUrl:`//label[text()='Attendee URL']/following-sibling::input`,
-        presenterUrl:`//label[text()='Presenter URL']/following-sibling::input`,
+        startDateInstance: `//label[text()='Start Date']/following-sibling::div/input`,
+        host: `//label[text()='Host']/following-sibling::div`,
+        //    searchHost -->dd is not working in UI -->bug      
+        otherMeeting: `//label[text()='Session Type']/following::div//span[text()='other Meetings']`,
+        attendeeUrl: `//label[text()='Attendee URL']/following-sibling::input`,
+        presenterUrl: `//label[text()='Presenter URL']/following-sibling::input`,
         addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`,
         saveAccessBtn:`//button[@id='add-language-btn' and text()='Save']`,
+       
         //`(//label[text()='session add/delete']/following::div//i)[2]`
-        businessRule:`//span[text()='Business Rule']`,
-        uncheckSingleReg:`(//span[contains(text(),'Uncheck')]/preceding-sibling::i)[1]`, 
-        saveButton:`(//button[text()='Save'])[1]`,
-        verifyChanges:`//span[contains(text(),'Changes')]`,
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -49,7 +47,11 @@ export class EditCoursePage extends AdminHomePage {
     }
 
     async clickClose() {
-        await this.click(this.selectors.closeBtn, "Close", "Button");
+        let closeBtn = this.page.locator(this.selectors.closeBtn);
+        await this.wait('mediumWait');
+        if (await closeBtn.isVisible()) {
+            await this.click(this.selectors.closeBtn, "Close", "Button");
+        }
     }
 
     async clickTagMenu() {
@@ -68,7 +70,7 @@ export class EditCoursePage extends AdminHomePage {
         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
         const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
         const randomTag = tags[randomIndex];
-        await this.keyboardType(this.selectors.tagsSearchField,  randomTag);
+        await this.keyboardType(this.selectors.tagsSearchField, randomTag);
         //await this.keyboardAction(this.selectors.tagsSearchField, "Backspace", "Search Field", randomTag)
         const tagName=this.getInnerText(`//li[text()='${randomTag}']`)
         await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")        
@@ -106,8 +108,8 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.optionalGroup, "Group Access", "dropdown")
         await this.click(this.selectors.setMandatory, "Mandatory", "Option")
     }
-    async saveAccess(){
-        await this.click(this.selectors.saveAccessBtn,"Save","Button")
+    async saveAccess() {
+        await this.click(this.selectors.saveAccessBtn, "Save", "Button")
     }
 
     async selectTimeZone(country: string) {
@@ -117,26 +119,5 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
 
-    async clickBusinessRule(){
-        await this.validateElementVisibility(this.selectors.businessRule,"Business Rule")
-        await this.click(this.selectors.businessRule,"Business Rule","sub-Menu")
 
-    }
-    async clickUncheckSingReg(){
-        await this.validateElementVisibility(this.selectors.uncheckSingleReg,"Single registration")
-        await this.click(this.selectors.uncheckSingleReg,"Single registration","Radio Button")
-        await this.click(this.selectors.saveButton,"Single registration","Save Button")
-        await this.verification(this.selectors.verifyChanges,"successfully")
-    }
-
-    async verifySingRegchkbox(){
-      const booleanChk=  await this.page.locator(this.selectors.uncheckSingleReg).isChecked();
-      console.log(booleanChk) 
-      expect(booleanChk).toBeTruthy();
-    }
-
-
-    
-
-       
 }
