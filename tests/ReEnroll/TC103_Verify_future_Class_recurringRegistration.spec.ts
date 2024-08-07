@@ -14,7 +14,7 @@ let addInstancepre:any
 let addInstancepost:any
 let tag: any
 //test.use({ storageState: "logins/expertusAdminLog.json" })
-test(`TC103_Multiple Course Creation for Classroom`, async ({ createCourse, adminHome, editCourse }) => {
+test(`TC103_Multiple Course Recurring registration for Future date`, async ({ createCourse, adminHome, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Verify Multiple Course Creation for Classroom ` },
