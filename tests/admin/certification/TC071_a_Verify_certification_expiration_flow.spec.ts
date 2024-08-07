@@ -78,11 +78,7 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
 
-
-
-
   })
-
 
 
   test(`Login as a learner`, async ({ learnerHome, catalog }) => {
@@ -116,29 +112,6 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
     );
 
     await updateCronForEnrollment();
-  })
-
-
-  test.skip(`Veriy a certification expiration`, async ({ learnerHome, dashboard, catalog }) => {
-
-    test.info().annotations.push(
-      { type: `Author`, description: `Ajay Michael` },
-      { type: `TestCase`, description: `Veriy a certification expiration` },
-      { type: `Test Description`, description: `Verify from learner side` }
-
-    );
-
-    await learnerHome.learnerLogin("LEARNERUSERNAME","LeanrerPortal");
-    await learnerHome.clickDashboardLink();
-    await dashboard.clickLearningPath_And_Certification();
-    await dashboard.clickCertificationLink();
-    await dashboard.searchCertification(title);
-    await dashboard.clickRecertifyIcon(title);
-    await catalog.verifyExpiredContent();
-
-
-
-
   })
 
 

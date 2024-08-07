@@ -64,6 +64,7 @@ test(`Certification enroll and completion with single instance`, async ({ adminH
     await learningPath.clickUpdateBtn();
     await learningPath.verifySuccessMessage();
     await learningPath.clickEditCertification();
+    await learningPath.getCodeValue();
     await createCourse.clickCompletionCertificate();
     await createCourse.clickCertificateCheckBox();
     await createCourse.clickAdd();

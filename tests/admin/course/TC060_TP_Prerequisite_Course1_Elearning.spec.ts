@@ -3,9 +3,8 @@ import { FakerData } from "../../../utils/fakerUtils";
 
 
 const courseName = FakerData.getCourseName();
-const description= FakerData.getDescription();
-//test.use({ storageState: "logins/expertusAdminLog.json" })
-test.skip(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createCourse}) => {
+const description = FakerData.getDescription();
+test.skip(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `TP Prerequisite Course1 Elearning` },
@@ -27,21 +26,21 @@ test.skip(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createC
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.verifySuccessMessage();
-   
+
 })
 
 
-    // await adminHome.clickLearningPath();
-    // await learningPath.clickCreateLearningPath();
-    // await learningPath.title(courseName);
-    // await learningPath.language("English");
-    // await learningPath.description(description);
-    // await learningPath.clickSave();
-    // await learningPath.clickProceedBtn();
-    // await learningPath.clickAddCourse();
-    // await learningPath.clickCourseCheckBox(courseName);
-    // await learningPath.clickAddSelectCourse();
-    // await learningPath.clickDetailTab();
-    // await learningPath.clickCatalogBtn();
-    // await learningPath.clickUpdateBtn();
-    // await learningPath.verifyLearningPath();
+// await adminHome.clickLearningPath();
+// await learningPath.clickCreateLearningPath();
+// await learningPath.title(courseName);
+// await learningPath.language("English");
+// await learningPath.description(description);
+// await learningPath.clickSave();
+// await learningPath.clickProceedBtn();
+// await learningPath.clickAddCourse();
+// await learningPath.clickCourseCheckBox(courseName);
+// await learningPath.clickAddSelectCourse();
+// await learningPath.clickDetailTab();
+// await learningPath.clickCatalogBtn();
+// await learningPath.clickUpdateBtn();
+// await learningPath.verifyLearningPath();

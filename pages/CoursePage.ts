@@ -553,9 +553,12 @@ export class CoursePage extends AdminHomePage {
     }
 
     public async startandEndTime() {
+        await this.click(this.selectors.timeInput, "Start Time Input", "Input");
+        await this.wait('minWait');
         const pickRandomTime = async () => {
             const timeElements = await this.page.locator("//div[contains(@class,'timepicker')]//li").count();
-            const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
+            console.log(timeElements);
+            const randomIndex = Math.floor(Math.random() * timeElements) + 1;
             return randomIndex;
         };
         const randomIndex = await pickRandomTime();

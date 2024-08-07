@@ -49,8 +49,13 @@ export class CatalogPage extends LearnerHomePage {
         starIcon: `//i[contains(@class,'fa-star icon')]`,
         submitMyAnswerBtn: `div[class^='pagination-wrapper'] span:text-is('Submit my Answers')`,
         submitSurveyBtn: `div[class^='pagination-wrapper'] span:text-is('submit survey')`,
-        doneBtn: `//span[text()='done']`,
-        recievedScore: `//span[text()='Score:']//parent::div`,
+        //doneBtn: `//span[text()='done']`, --> Element has been changed (06/08/2024)
+        //doneBtn: `//button[text()='Done']`,
+        doneBtn: `//i[contains(@class,'fa-circle-check icon')]//following::button[text()='Done']`,
+        //recievedScore: `//span[text()='Score:']//parent::div`, Element has been changed (06/08/2024)
+        //recievedScore: `//div[contains(text(),'Score:')]`
+        recievedScore: `//i[contains(@class,'fa-circle-check icon')]//following::div[contains(text(),'Score:')]`,
+        surveyPlayBtn: "//i[contains(@class,'fa-file-edit')]//parent::div//following-sibling::div//i"
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -275,6 +280,7 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     public async writeContent() {
+        await this.wait('mediumWait');
         let checkBox = this.page.locator(this.selectors.checkBox);
         let checkBoxCount = await checkBox.count();
         let radioIcon = this.page.locator(this.selectors.RadioBtn);
@@ -342,14 +348,16 @@ export class CatalogPage extends LearnerHomePage {
 
         }
     }
-
+    async surveyPlayButton() {
+        await this.click(this.selectors.surveyPlayBtn, "Survey", "Button");
+    }
     async submitMyAnswer() {
         let submitBtn = this.page.locator(this.selectors.submitMyAnswerBtn);
         let surveySubmitBtn = this.page.locator(this.selectors.submitSurveyBtn);
         let scoreVisible = this.page.locator(this.selectors.recievedScore);
         if (await submitBtn.isVisible()) {
             await this.click(this.selectors.submitMyAnswerBtn, "Submit My Answer", "Button");
-            await this.wait(`minWait`);
+            await this.wait(`mediumWait`);
             if (await scoreVisible.isVisible()) {
                 let score = await this.getInnerText(this.selectors.recievedScore)
                 console.log(score);
@@ -360,6 +368,7 @@ export class CatalogPage extends LearnerHomePage {
 
         if (await surveySubmitBtn.isVisible()) {
             await this.click(this.selectors.submitSurveyBtn, "Survey", "Button");
+            await this.wait(`minWait`);
         }
     }
 
