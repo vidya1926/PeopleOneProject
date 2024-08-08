@@ -83,6 +83,7 @@ test(`Verification from learner site`, async ({ learnerHome, learnerCourse, cata
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await learnerHome.clickCatalog();
+    await catalog.searchCatalog(courseName)
     // await catalog.clickFilter();
     // await catalog.enterSearchFilter(tag)
     // await catalog.selectresultantTags(tag);
@@ -94,11 +95,14 @@ test(`Verification from learner site`, async ({ learnerHome, learnerCourse, cata
     await catalog.searchMyLearning(elCourseName)    
     await catalog.clicktoPlay();
     await catalog.clickLaunchButton();
-    await catalog.clicksaveLearningStatus();
-    // url redirect issue
+    await catalog.saveLearningStatus();
+    await catalog.clickMyLearning()
+    await catalog.clickCompletedButton()
+    // await catalog.searchMyLearning(elCourseName)
+    // await catalog.clicktoPlay()
+ //   await learnerCourse.clickReEnroll(2)
 
-   
-   
+    // url redirect issue   
 })
 
 

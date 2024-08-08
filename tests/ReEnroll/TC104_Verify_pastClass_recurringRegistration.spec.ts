@@ -4,12 +4,12 @@ import { FakerData, getRandomSeat } from "../../utils/fakerUtils";
 
 
 const courseName = FakerData.getCourseName();
-const elCourseName=FakerData.getCourseName()+"E-learning";
+const elCourseName = FakerData.getCourseName() + "E-learning";
 const sessionName = FakerData.getSession();
 const description = FakerData.getDescription();
 const maxSeat = getRandomSeat()
 const instructorName = credentialConstants.INSTRUCTORNAME
-let tag:any
+let tag: any
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`TC104_Recurring Registration for past date`, async ({ createCourse, adminHome, editCourse }) => {
     test.info().annotations.push(
@@ -35,27 +35,28 @@ test(`TC104_Recurring Registration for past date`, async ({ createCourse, adminH
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.clickEditCourseTabs()  
+    await createCourse.clickEditCourseTabs()
     await editCourse.clickTagMenu();
-   tag= await editCourse.selectTags();
+    tag = await editCourse.selectTags();
+    await createCourse.typeDescription("Added new Instance")
     await editCourse.clickClose();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
-
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
-    }
+    }    
     await addinstance("Classroom");
     await createCourse.enterSessionName(sessionName);
     await createCourse.setMaxSeat();
     await createCourse.enterpastDateValue();
-    await createCourse.startandEndTime();
     await createCourse.selectInstructor(instructorName);
     await createCourse.selectLocation();
+    await createCourse.startandEndTime();
+    await createCourse.typeDescription("Added new Instance")
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
@@ -63,7 +64,7 @@ test(`TC104_Recurring Registration for past date`, async ({ createCourse, adminH
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
     await addinstance("E-Learning");
-    await createCourse.enter("course-title",elCourseName)   
+    await createCourse.enter("course-title", elCourseName)
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
@@ -71,7 +72,7 @@ test(`TC104_Recurring Registration for past date`, async ({ createCourse, adminH
 
 })
 
-test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome, learnerCourse, catalog }) => {
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
         { type: `TestCase`, description: `Learner Side Re-Enrollment` },
@@ -79,18 +80,21 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await learnerHome.clickCatalog();
-   // await catalog.clickFilter();
+    await catalog.searchCatalog(courseName)
+    // await catalog.clickFilter();
     // await catalog.enterSearchFilter(tag)
     // await catalog.selectresultantTags(tag);
-  //  await catalog.clickApply()
-      await catalog.clickMoreonCourse(courseName);
+    //  await catalog.clickApply()
+    await catalog.clickMoreonCourse(courseName);
     await catalog.clickSelectcourse(elCourseName);
     await catalog.clickEnroll();
-    await catalog.clickMyLearning();
-    await catalog.searchMyLearning(elCourseName)    
-    await catalog.clicktoPlay();
+    // await catalog.clickMyLearning();
+    // await catalog.searchMyLearning(elCourseName)
+    // await catalog.clicktoPlay();
     await catalog.clickLaunchButton();
     await catalog.clicksaveLearningStatus();
+    await catalog.searchMyLearning(elCourseName)
+    await catalog.clicktoPlay();
     //url redirect issue
 })
 
