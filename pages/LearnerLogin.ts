@@ -88,7 +88,6 @@ export class LearnerLogin extends PlaywrightWrapper {
                 default:
                     await this.loadApp(URLConstants.leanerURL);
                     break;
-
             }
             await signIn();
             await this.type(usernameSelector, "Username", username);

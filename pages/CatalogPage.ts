@@ -209,9 +209,6 @@ export class CatalogPage extends LearnerHomePage {
          }
 
     }
-
-
-
     async clickCompletedButton() {
         await this.page.waitForTimeout(10000);
         const name = "Completed Button";
@@ -231,9 +228,7 @@ export class CatalogPage extends LearnerHomePage {
     //     const completedCourseSelector = this.selectors.completedCourse(name);
     //     await this.mouseHover(completedCourseSelector, "Text");
     // }
-
-    
-    async verifyExpiredContent() {
+       async verifyExpiredContent() {
         await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
         await this.verification(this.selectors.expiredContent, "Expired")
     }
