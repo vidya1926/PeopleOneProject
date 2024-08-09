@@ -36,9 +36,9 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
     await editCourse.clickTagMenu();
    tag= await editCourse.selectTags();
     await editCourse.clickClose();
-    /* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
-    // await editCourse.clickCompletionCertificate();
-    //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
+    await createCourse.clickCompletionCertificate();
+    await createCourse.clickCertificateCheckBox();
+    await createCourse.clickAdd();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();

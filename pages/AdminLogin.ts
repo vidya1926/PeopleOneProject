@@ -10,7 +10,6 @@ export class AdminLogin extends PlaywrightWrapper {
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-
     }
     public async adminLogin(role: string) {
         const { username, password } = credentials[role];

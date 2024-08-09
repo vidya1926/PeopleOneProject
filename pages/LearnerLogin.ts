@@ -2,6 +2,7 @@ import { BrowserContext, Page, expect } from "@playwright/test";
 import { URLConstants } from "../constants/urlConstants";
 import { PlaywrightWrapper } from "../utils/playwright";
 import { credentials } from "../constants/credentialData";
+import { setTimeout } from "timers";
 
 const signInLocator = "//span[text()='Sign In']";
 const usernameSelector = "#username";
@@ -16,11 +17,8 @@ export class LearnerLogin extends PlaywrightWrapper {
         super(page, context);
 
     }
-
-
     public async learnerLogin(role: string, url: string) {
         const { username, password } = credentials[role];
-
 
         const signIn = async () => {
             try {
@@ -101,6 +99,7 @@ export class LearnerLogin extends PlaywrightWrapper {
             const logoutButton = this.page.locator(logoutButtonLocator);
             await expect(logoutButton).toBeVisible({ timeout: 20000 });
             console.log(`Login successful`);
+            console.log(await this.getTitle())
         } catch (error) {
             console.error(`Login attempt failed: ${error}`);
             throw error;

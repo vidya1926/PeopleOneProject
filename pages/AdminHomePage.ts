@@ -48,8 +48,6 @@ export class AdminHomePage extends AdminLogin {
 
     };
 
-
-
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
         //this.common(page, context).catch(err => console.error("Error in common setup:", err));

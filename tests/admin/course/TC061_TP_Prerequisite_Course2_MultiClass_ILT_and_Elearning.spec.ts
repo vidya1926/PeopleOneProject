@@ -35,6 +35,9 @@ test(`TP Prerequisite Course2-MultiClass-ILT and Elearning`, async ({ adminHome,
     /* Need to Update the script due to Automation Site issuse (20-6-2024) 15:26 */
     // await editCourse.clickCompletionCertificate();
     //await editCourse.selectCourseCompletionCertificate("Playwright Automation");
+    await createCourse.clickCompletionCertificate(); //to be checked
+    await createCourse.clickCertificateCheckBox();
+    await createCourse.clickAdd();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
