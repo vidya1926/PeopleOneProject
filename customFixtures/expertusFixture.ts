@@ -59,12 +59,12 @@ type expertusFixture = {
     instructorHome:InstructorPage
 }
 export const test = baseTest.extend<expertusFixture>({
-    // adminLogin: async ({ page, context }, use) => {
-    //     const adLogin = new AdminLogin(page, context);
-    //     await adLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD)
-    //     await use(adLogin);
-    //     //console.log("Login is verified"        
-    // },
+   /*  adminLogin: async ({ page, context }, use) => {
+        const adLogin = new AdminLogin(page, context);
+        await adLogin.adminLogin()
+        await use(adLogin);
+        //console.log("Login is verified"        
+    }, */
 
     adminHome: async ({ page, context }, use,) => {
         const adminHome = new AdminHomePage(page, context);

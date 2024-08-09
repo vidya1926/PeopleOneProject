@@ -1,6 +1,8 @@
 import { Page, expect, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
 import { FakerData } from "../utils/fakerUtils";
+import { saveDataToJsonFile } from "../utils/jsonDataHandler";
+import { Certificate } from "crypto";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
 
@@ -55,20 +57,27 @@ export class CatalogPage extends LearnerHomePage {
         //recievedScore: `//span[text()='Score:']//parent::div`, Element has been changed (06/08/2024)
         //recievedScore: `//div[contains(text(),'Score:')]`
         recievedScore: `//i[contains(@class,'fa-circle-check icon')]//following::div[contains(text(),'Score:')]`,
-        surveyPlayBtn: "//i[contains(@class,'fa-file-edit')]//parent::div//following-sibling::div//i"
+        surveyPlayBtn: "//i[contains(@class,'fa-file-edit')]//parent::div//following-sibling::div//i",
+        noCertificate: "//span[text()='Completion certificate not attached to this training.']",
+        certificateCloseIcon: "//i[contains(@class,'pointer ms-auto')]",
+        secondaryCourse: (course: string) => `//div[contains(text(),'${course}')]`,
+        completePreviousContent: "//div[contains(text(),'You need to complete the previous content')]",
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
     }
 
-    
+
     async searchCatalog(data: string) {
         const searchSelector = this.selectors.searchInput;
         await this.type(searchSelector, "Search Field", data);
         await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
         await this.page.waitForTimeout(10000);
+    }
 
+    async cronstoragejson(filepath: string, data: string) {
+        saveDataToJsonFile(filepath, data);
     }
 
     async mostRecent() {
@@ -142,6 +151,18 @@ export class CatalogPage extends LearnerHomePage {
         await this.wait('mediumWait');
     }
 
+    async clickSecondaryCourse(course: string, text?: string) {
+        await this.validateElementVisibility(this.selectors.secondaryCourse(course), course,);
+        await this.wait('minWait');
+        await this.click(this.selectors.secondaryCourse(course), course, "List");
+        await this.wait('mediumWait');
+        if (text === "Verification") {
+            let courseVisible = this.page.locator(this.selectors.completePreviousContent);
+            await expect(courseVisible).toBeVisible()
+            console.error("You need to complete the previous content to launch this content.");
+        }
+    }
+
     async saveLearningStatus() {
         await this.click(this.selectors.saveLearningStatus, "save", "button");
         await this.validateElementVisibility(this.selectors.verificationEnrollment, "button");
@@ -149,7 +170,7 @@ export class CatalogPage extends LearnerHomePage {
         const completed = this.page.locator(this.selectors.completedVideo);
         try {
             if (await completed.isVisible()) {
-                await completed.hover({ force: true });
+                await completed.scrollIntoViewIfNeeded();
                 console.log("The Video Has Completed");
             } else {
                 await this.clickLaunchButton();

@@ -64,8 +64,8 @@ export class MetaLibraryPage extends AdminHomePage {
         listOfPeopleUsertypes: "div[id='usertypes'] div[class$='content-start'] span",
         listOfPeopleJobroles: "div[id='jobroles'] div[class^='lms-cate-data']  span",
         listOfPeopleJobtitle: "div[id='jobtitle'] div[class^='lms-cate-data']  span",
-        listofCEUType:"div[id='ceu-type'] div[class$='content-start'] span",
-        listofCEUProvider:"div[id='ceu-provider'] div[class$='content-start'] span",
+        listofCEUType: "div[id='ceu-type'] div[class$='content-start'] span",
+        listofCEUProvider: "div[id='ceu-provider'] div[class$='content-start'] span",
 
     };
 

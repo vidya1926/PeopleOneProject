@@ -1,6 +1,7 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
+import { updateCronDataJSON } from "../../../utils/jsonDataHandler";
 import { updateCertificationComplianceFlow } from "../DB/DBJobs";
 
 const courseName = FakerData.getCourseName();
@@ -39,7 +40,10 @@ test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
             { type: `TestCase`, description: `TC073_Verify_the_certification_compliance_flow` },
             { type: `Test Description`, description: `compliance flow` }
         );
-
+        const newData = {
+            tc073: title
+        }
+        updateCronDataJSON(newData)
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.menuButton();
         await adminHome.clickLearningMenu();

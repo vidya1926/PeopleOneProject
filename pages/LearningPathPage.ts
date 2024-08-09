@@ -69,6 +69,7 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.createCertification, "Create Certification", "Link")
     }
 
+
     async title(data: string) {
         await this.validateElementVisibility(this.selectors.title, "Title");
         await this.type(this.selectors.title, "Title", data);
@@ -238,9 +239,9 @@ export class LearningPathPage extends AdminHomePage {
     async getCodeValue() {
         await this.validateElementVisibility(this.selectors.codeInput, "Code");
         await this.wait('mediumWait');
-        const inner =await this.getInnerText("//label[text()='CODE']/parent::div");
+        const inner = await this.getInnerText("//label[text()='CODE']/parent::div");
         console.log(inner);
-        
+
         /*   let codeValue = await this.fetchattribute(this.selectors.codeInput, "placeholder");
           console.log(codeValue); */
         //return codeValue
@@ -265,12 +266,12 @@ export class LearningPathPage extends AdminHomePage {
         }, locator);
         console.log(attributes); */
 
-       /*  const field = this.page.locator('#code');
-
-        const _attribute = await field.getAttribute('placeholder');
-        const _attributeV = await field.getAttribute('value');
-        console.log(_attribute);
-        console.log(_attributeV); */
+        /*  const field = this.page.locator('#code');
+ 
+         const _attribute = await field.getAttribute('placeholder');
+         const _attributeV = await field.getAttribute('value');
+         console.log(_attribute);
+         console.log(_attributeV); */
 
 
 
