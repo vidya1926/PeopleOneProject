@@ -50,7 +50,7 @@ test(`TC108_Add Profile_Image to the user`, async ({ adminHome, createUser }) =>
 
 
 
-test.only(`Verify Learner side profile image`, async ({ learnerHome, profile, catalog }) => {
+test(`Verify Learner side profile image`, async ({ learnerHome, profile, catalog }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },

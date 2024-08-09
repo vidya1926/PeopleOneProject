@@ -45,7 +45,7 @@ test.describe(`TC019_Verify_Addition_Functionality_metaLibrary_Learning.spec.ts`
 
 
     const CEU_ProviderName = FakerData.getCategory();
-    test.only(`Verify that a CEU provider can be added under Metadata Library - Learning - CEU Provider`, async ({ adminHome, metadatalibrary }) => {
+    test(`Verify that a CEU provider can be added under Metadata Library - Learning - CEU Provider`, async ({ adminHome, metadatalibrary }) => {
         test.info().annotations.push(
             { type: 'Author', description: 'Ajay Michael' },
             { type: 'TestCase', description: 'Verify that a CEU provider can be added under Metadata Library - Learning - Ceu Provider' },

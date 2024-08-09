@@ -87,7 +87,7 @@ test(`TC091_Enrollment for schedule class`,async({adminHome,enrollHome})=>{
 
 
 
-test.only(`TC093_Instructor role for Scheduled class`,async({adminHome,enrollHome,instructorHome})=>{
+test(`TC093_Instructor role for Scheduled class`,async({adminHome,enrollHome,instructorHome})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
