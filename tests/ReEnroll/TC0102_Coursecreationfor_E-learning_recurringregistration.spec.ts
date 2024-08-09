@@ -57,11 +57,11 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
+    await learnerCourse.verifyRequestClass();
+    await learnerCourse.clickRequestClass();
     await catalog.clickMyLearning();
     await catalog.clickCompletedButton()
     await catalog.verifyCompletedCourse(courseName)
-    await learnerCourse.verifyRequestClass();
-    await learnerCourse.clickRequestClass();
 })
 
 

@@ -811,6 +811,38 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button");
     }
 
+    async selectMeetingTypeforPast(instructorName: string, sessionName: string, index: number) {
+        //  const sessiontype = this.page.locator(this.selectors.selectType);
+        const pickRandomTime = async () => {
+            const timeElements = await this.page.locator(`(//ul[@class='ui-timepicker-list'])[1]/li`).count();
+            const randomIndex = Math.floor(Math.random() * timeElements) + 1; // Random index from 1 to timeElements
+            return randomIndex;
+        };
+        const randomIndex = await pickRandomTime();
+        console.log("Random Index:", randomIndex);
+        const country = "kolkata"
+        const meetingUrl = FakerData.getMeetingUrl()
+        await this.click(this.selectors.sessionTypeIndex(index), "Session Type", "dropdown")
+        await this.click(this.selectors.otherMeetingIndex(index), "other Meeting", "Option")
+        await this.validateElementVisibility(this.selectors.sessionNameIndex(index), "Session Name");
+        await this.mouseHover(this.selectors.sessionNameIndex(index), "Session Name")
+        await this.type(this.selectors.sessionNameIndex(index), "Session Name", sessionName);
+        await this.click(this.selectors.timeZoneIndex(index), "TimeZone", "Text Field")
+        await this.type(this.selectors.timeZoneOption, "Time Zone", country)
+        await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
+        await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
+        await this.typeAndEnter(this.selectors.startDateInstanceIndex(index), "Start Date", getPastDate())
+        await this.click(this.selectors.timeInputIndex(index), "Start Time", "Selected")
+        await this.click(this.selectors.chooseStartTimeIndex(index, randomIndex), "StartTime", "Selected")
+        await this.type(this.selectors.attendeeUrlIndex(index), "Attendee url", meetingUrl)
+        await this.type(this.selectors.presenterUrlIndex(index), "Presenter url", meetingUrl)
+        await this.click(this.selectors.instructorDropdownIndex(index), "Select Instructor", "DropDown");
+        await this.type(this.selectors.instructorInput, "Instructor Name", instructorName);
+        await this.mouseHover(this.selectors.instructorOption(instructorName), "Instructor Name");
+        await this.click(this.selectors.instructorOption(instructorName), "Instructor Name", "Button");
+    }
+
+
     async attendeeUrl() {
         await this.type(this.selectors.attendeeUrlIndex(1), "Attendee url", FakerData.getMeetingUrl());
     }

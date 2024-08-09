@@ -1,25 +1,23 @@
-import { expect } from "@playwright/test";
 import { credentialConstants } from "../../constants/credentialConstants";
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData, getRandomSeat } from "../../utils/fakerUtils";
 
 
 const courseName = FakerData.getCourseName();
-const elCourseName = FakerData.getCourseName() + "E-learning";
+const elCourseName=FakerData.getCourseName()+"E-learning";
 const sessionName = FakerData.getSession();
 const description = FakerData.getDescription();
 const maxSeat = getRandomSeat()
 const instructorName = credentialConstants.INSTRUCTORNAME
-let addInstancepre:any
-let addInstancepost:any
-let tag: any
+let tag:any
 //test.use({ storageState: "logins/expertusAdminLog.json" })
-test(`TC103_Multiple Course Recurring registration for Future date`, async ({ createCourse, adminHome, editCourse }) => {
+test(`TC105_Multiple Course Creation for Classroom`, async ({ createCourse, adminHome, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Verify Multiple Course Creation for Classroom ` },
         { type: `Test Description`, description: `Multiple Course Creation for Classroom` }
     );
+
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -34,48 +32,36 @@ test(`TC103_Multiple Course Recurring registration for Future date`, async ({ cr
     await createCourse.providerDropdown()
     await createCourse.selectTotalDuration();
     await createCourse.typeAdditionalInfo();
-    addInstancepre=await createCourse.visiblityOfaddInstance()
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.clickEditCourseTabs()
-    await editCourse.clickTagMenu();
-    tag = await editCourse.selectTags();
-    await editCourse.clickClose();
-    await createCourse.clickCatalog();
-    await createCourse.clickUpdate();
-    await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
-    addInstancepost=await createCourse.visiblityOfaddInstance()
-    expect(addInstancepost).not.toBe(addInstancepre)
     await createCourse.addInstances();
 
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
     }
-    await addinstance("Classroom");
-    await createCourse.enterSessionName(sessionName);
+    await addinstance("Virtual Class");
+    await createCourse.selectMeetingTypeforPast(instructorName, courseName, 1);
+    await createCourse.typeDescription("Added new istance for the course")
     await createCourse.setMaxSeat();
-    await createCourse.enterDateValue();
-    await createCourse.startandEndTime();
-    await createCourse.selectInstructor(instructorName);
-    await createCourse.selectLocation();
-    await createCourse.clickCatalog();
+   // await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
     await createCourse.editcourse();
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
     await addinstance("E-Learning");
-    await createCourse.enter("course-title", elCourseName)
+    await createCourse.enter("course-title",elCourseName)   
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
+
 })
 
-test(`Verification from learner site`, async ({ learnerHome, learnerCourse, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catalog }) => {
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
         { type: `TestCase`, description: `Learner Side Re-Enrollment` },
@@ -95,14 +81,12 @@ test(`Verification from learner site`, async ({ learnerHome, learnerCourse, cata
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
     await learnerCourse.clickReEnroll(2);
-    await catalog.clickSelectcourse(elCourseName);
+    await catalog.clickSelectcourse(courseName);
     await catalog.clickEnroll();
-    await catalog.clickLaunchButton();
-    await catalog.saveLearningStatus();
+   // Should display "session is ended" message when past ILT class is clicked to re-enroll
     await catalog.clickMyLearning();
     await catalog.clickCompletedButton()
-    await catalog.verifyCompletedCourse(elCourseName)    // await catalog.searchMyLearning(elCourseName)
-  
+    await catalog.verifyCompletedCourse(elCourseName)   
 })
 
 

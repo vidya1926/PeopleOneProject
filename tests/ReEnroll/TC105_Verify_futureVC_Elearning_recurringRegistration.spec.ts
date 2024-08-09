@@ -50,12 +50,9 @@ test(`TC105_Multiple Course Creation for Classroom`, async ({ createCourse, admi
         await createCourse.clickCreateInstance();
     }
     await addinstance("Virtual Class");
-    await createCourse.enterSessionName(sessionName);
+    await createCourse.selectMeetingType(instructorName, courseName, 1);
+    await createCourse.typeAdditionalInfo()
     await createCourse.setMaxSeat();
-    await createCourse.enterpastDateValue();
-    await createCourse.startandEndTime();
-    await createCourse.selectInstructor(instructorName);
-    await createCourse.selectLocation();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
@@ -79,19 +76,21 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await learnerHome.clickCatalog();
-   // await catalog.clickFilter();
+    await catalog.mostRecent();
+    await catalog.searchCatalog(courseName)
+    // await catalog.clickFilter();
     // await catalog.enterSearchFilter(tag)
     // await catalog.selectresultantTags(tag);
-  //  await catalog.clickApply()
-  await catalog.clickMoreonCourse(courseName);
-  await catalog.clickSelectcourse(elCourseName);
-  await catalog.clickEnroll();
-  await catalog.clickMyLearning();
-  await catalog.searchMyLearning(elCourseName)    
-  await catalog.clicktoPlay();
-  await catalog.clickLaunchButton();
-  await catalog.clicksaveLearningStatus();
-  //url redirect
+    // await catalog.clickApply()
+    await catalog.clickMoreonCourse(courseName);
+    await catalog.clickSelectcourse(elCourseName);
+    await catalog.clickEnroll();
+    await catalog.clickLaunchButton();
+    await catalog.saveLearningStatus();
+    await learnerCourse.clickReEnroll(2);
+    await catalog.clickMyLearning();
+    await catalog.clickCompletedButton()
+    await catalog.verifyCompletedCourse(elCourseName)   
 })
 
 

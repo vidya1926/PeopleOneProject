@@ -4,7 +4,7 @@ import { FakerData, getRandomSeat } from "../../utils/fakerUtils";
 
 
 const courseName = FakerData.getCourseName();
-const elCourseName = FakerData.getCourseName() + "E-learning";
+const elCourseName = FakerData.getCourseName() + " E-learning";
 const sessionName = FakerData.getSession();
 const description = FakerData.getDescription();
 const maxSeat = getRandomSeat()
@@ -52,12 +52,12 @@ test(`TC104_Recurring Registration for past date`, async ({ createCourse, adminH
     await addinstance("Classroom");
     await createCourse.enterSessionName(sessionName);
     await createCourse.setMaxSeat();
-    await createCourse.enterpastDateValue();
-    await createCourse.selectInstructor(instructorName);
+    await createCourse.enterpastDateValue(); 
     await createCourse.selectLocation();
     await createCourse.startandEndTime();
-    await createCourse.typeDescription("Added new Instance")
-    await createCourse.clickCatalog();
+    await createCourse.selectInstructor(instructorName);
+    await createCourse.typeDescription("Added Elearning and Classroom instance")
+   // await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
     await createCourse.editcourse();
@@ -80,22 +80,21 @@ test(`Verification from learner site`, async ({ learnerHome, learnerCourse, cata
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await learnerHome.clickCatalog();
+    await catalog.mostRecent();
     await catalog.searchCatalog(courseName)
     // await catalog.clickFilter();
     // await catalog.enterSearchFilter(tag)
     // await catalog.selectresultantTags(tag);
-    //  await catalog.clickApply()
+    // await catalog.clickApply()
     await catalog.clickMoreonCourse(courseName);
     await catalog.clickSelectcourse(elCourseName);
     await catalog.clickEnroll();
-    // await catalog.clickMyLearning();
-    // await catalog.searchMyLearning(elCourseName)
-    // await catalog.clicktoPlay();
     await catalog.clickLaunchButton();
-    await catalog.clicksaveLearningStatus();
-    await catalog.searchMyLearning(elCourseName)
-    await catalog.clicktoPlay();
-    //url redirect issue
+    await catalog.saveLearningStatus();
+    await learnerCourse.clickReEnroll(2);
+    await catalog.clickMyLearning();
+    await catalog.clickCompletedButton()
+    await catalog.verifyCompletedCourse(elCourseName)  
 })
 
 
