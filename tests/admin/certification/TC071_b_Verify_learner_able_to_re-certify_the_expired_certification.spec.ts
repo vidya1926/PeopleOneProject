@@ -2,6 +2,7 @@ import { log } from "console";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 import { updateCronForEnrollment } from "../DB/DBJobs";
+import { updateCronDataJSON } from "../../../utils/jsonDataHandler";
 
 
 
@@ -84,7 +85,10 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
 
     })
 
-
+    const newData = {
+        tc071b: title
+      }
+      updateCronDataJSON(newData)
 
     test(`Login as a learner`, async ({ learnerHome, catalog }) => {
 
@@ -119,26 +123,6 @@ test.describe(`TC071_b_Verify_certification_expiration_flow`, async () => {
         await updateCronForEnrollment();
     })
 
-
-    test.skip(`Recertify the expired certification`, async ({ learnerHome, dashboard, catalog }) => {
-
-        test.info().annotations.push(
-            { type: `Author`, description: `Ajay Michael` },
-            { type: `TestCase`, description: `Veriy a certification expiration` },
-            { type: `Test Description`, description: `Verify from learner side` }
-
-        );
-
-        await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
-        await learnerHome.clickDashboardLink();
-        await dashboard.clickLearningPath_And_Certification();
-        await dashboard.clickCertificationLink();
-        await dashboard.searchCertification(title);
-        await dashboard.clickRecertifyIcon(title);
-        await catalog.clickRecertify();
-       
-
-    })
 
 
 })

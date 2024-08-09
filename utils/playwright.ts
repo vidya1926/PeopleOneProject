@@ -3,6 +3,9 @@ import { Page, test, expect, BrowserContext, Locator } from "@playwright/test";
 import { strict } from "assert";
 import { promises } from "dns";
 import * as path from 'path';
+import fs from 'fs'
+
+
 
 
 declare module '@playwright/test' {
@@ -81,7 +84,7 @@ export abstract class PlaywrightWrapper {
         data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
-            await this.page.keyboard.type(data, { delay: 100 });
+            await this.page.keyboard.type(data, { delay: 400 });
             await this.page.keyboard.press("Enter");
 
         });

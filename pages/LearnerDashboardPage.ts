@@ -1,6 +1,6 @@
 import { FakerData, getCurrentDateFormatted } from "../utils/fakerUtils";
 
-import { BrowserContext, Locator, Page } from "@playwright/test";
+import { BrowserContext, expect, Locator, Page } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
 import { th } from "@faker-js/faker";
 
@@ -14,7 +14,10 @@ export class LearnerDashboardPage extends LearnerHomePage {
         verifyText: (titleName: string) => `//div[text()='${titleName}']`,
         recertifyIcon: (course: string) => `//div[text()='${course}']//following::i[contains(@class,'certificate')]`,
         pendingLabel: "//span[contains(text(),'Pending')]",
-        verifyPendingCourse: (course: string) => `//span[contains(text(),'Pending')]//following::div[contains(text(),'${course}')]`
+        verifyPendingCourse: (course: string) => `//span[contains(text(),'Pending')]//following::div[contains(text(),'${course}')]`,
+        mandatoryText: "//div[text()='Mandatory']",
+        complianceText: "//div[text()='Compliance']",
+        mdtryandcmplText: "//div[text()='Mandatory' or text()='Compliance']"
 
     }
 
@@ -40,8 +43,17 @@ export class LearnerDashboardPage extends LearnerHomePage {
 
     async searchCertification(data: string) {
         await this.validateElementVisibility(this.selectors.certificationInput, "Search Field");
+        await this.page.locator("//span[contains(text(),'To complete')]").scrollIntoViewIfNeeded()
         await this.wait('mediumWait');
         await this.typeAndEnter(this.selectors.certificationInput, "Search Field", data);
+        await this.wait('minWait');
+    }
+
+
+    async verifyComplianceCourse() {
+        await this.wait('minWait');
+        let visibleCompliance = await this.page.locator(this.selectors.mdtryandcmplText).innerText({ timeout: 10000 });
+        expect(visibleCompliance).toBe("Compliance")
     }
 
     async verifyTheEnrolledCertification(data: string) {

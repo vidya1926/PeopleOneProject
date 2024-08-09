@@ -26,7 +26,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await createCourse.enter("course-title", courseName1);
         await createCourse.selectLanguage("English");
         await createCourse.typeDescription("This is a new course by name :" + description);
-        await learningPath.selectSpecificPortal('LearnerPortal');
+        await learningPath.selectSpecificPortal('E1Internal');
         await createCourse.contentLibrary();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
@@ -54,7 +54,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await createCourse.enter("course-title", courseName2);
         await createCourse.selectLanguage("English");
         await createCourse.typeDescription("This is a new course by name :" + description);
-        await learningPath.selectSpecificPortal('LearnerPortal');
+        await learningPath.selectSpecificPortal('E1Internal');
         await createCourse.contentLibrary();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
@@ -79,7 +79,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await learningPath.title(title);
         await learningPath.language();
         await learningPath.description(description);
-        await learningPath.selectSpecificPortal('LearnerPortal');
+        await learningPath.selectSpecificPortal('E1Internal');
         /* await learningPath.clickAndSelectCompliance();
         await learningPath.registractionEnds();
         await learningPath.clickExpiresButton();
@@ -103,26 +103,31 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await createCourse.clickCompletionCertificate();
         await createCourse.clickCertificateCheckBox();
         await createCourse.clickAdd();
+        await createCourse.clickCatalog();
         await createCourse.clickUpdate();
         await createCourse.verifySuccessMessage();
 
     })
 
-    test.skip(`Login as a learner`, async ({ learnerHome, catalog }) => {
+    test(`Login as a learner`, async ({ learnerHome, catalog }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `Login as a learner` },
             { type: `Test Description`, description: `Verify from learner side` }
 
         );
-        await learnerHome.learnerLogin("LEARNERPORTAL_User", "Portal1");
+        await learnerHome.learnerLogin("LEARNERUSERNAME", "DefaultPortal");
         await learnerHome.clickCatalog();
         await catalog.mostRecent();
         await catalog.searchCatalog(title);
         await catalog.clickEnrollButton();
         await catalog.clickViewCertificationDetails();
-       // await catalog.
-        
+        /* await catalog.clickLaunchButton();
+        await catalog.saveLearningStatus();
+        await catalog.clickSecondaryCourse(courseName2);
+        await catalog.clickLaunchButton();
+        await catalog.saveLearningStatus(); */
+        await catalog.clickSecondaryCourse(courseName2, "Verification");
 
     })
 
