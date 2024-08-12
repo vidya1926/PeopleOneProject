@@ -17,7 +17,7 @@ export let credentials = {
         password: "Welcome1@"
     },
     MANAGERNAME: {
-        username: managerName,
+        username: "managerUser",
         password: "Welcome1@"
     },
     LEARNERUSERNAME: {

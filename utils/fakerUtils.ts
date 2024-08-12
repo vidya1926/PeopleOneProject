@@ -287,5 +287,9 @@ export function getPonumber(): string {
     return `${startDigit}${restDigits}`;
 }
 
-
+export function getCCnumber(): string {
+    const startDigit = Math.floor(Math.random() * 3) + 10;
+    const restDigits = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
+    return `${startDigit}${restDigits}`;
+}
 

@@ -201,6 +201,8 @@ export class UserPage extends AdminHomePage {
         await this.click(this.selectors.rolesBtn, "Roles", "Button");
     }
 
+
+
     async editIcon() {
         await this.click(this.selectors.editIcon, "Edit Icon", "Button");
         await this.spinnerDisappear();
@@ -218,6 +220,8 @@ export class UserPage extends AdminHomePage {
         await this.click(this.selectors.updateButton, "Update", "Button");
         await this.wait('minWait');
     }
+
+    
 
     async verifyUserCreationSuccessMessage() {
         await this.verification(this.selectors.successMessage, "successfully");

@@ -63,8 +63,8 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
 test(`Verify the manager user lands in Collaboration hub`,async({learnerHome})=>{
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
-        { type: `TestCase`, description: `Learner Side Re-Enrollment` },
-        { type: `Test Description`, description: `Verify that learner can reenroll the course` }
+        { type: `TestCase`, description: `Learner Site verification` },
+        { type: `Test Description`, description: `Verify that CH is visible in User site` }
     );
     await learnerHome.basicLogin(username, "Portal");
 })
