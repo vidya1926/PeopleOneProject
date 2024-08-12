@@ -1,6 +1,6 @@
 import { Page, expect, BrowserContext } from "@playwright/test";
 import { LearnerHomePage } from "./LearnerHomePage";
-import { FakerData } from "../utils/fakerUtils";
+import { FakerData, getCCnumber, getPonumber } from "../utils/fakerUtils";
 import { saveDataToJsonFile } from "../utils/jsonDataHandler";
 import { Certificate } from "crypto";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
@@ -18,6 +18,10 @@ export class CatalogPage extends LearnerHomePage {
         courseToEnroll:(course: string)=>`//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')]`,
         selectCourse: (course: string,index:number) => `(//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')])[${index}]`,
         enrollButton: `//span[text()='Enroll']`,
+        requestApproval:`//span[text()='Request approval']`,
+        approvalcostcenter:`//input[@id='cc']`,
+        submitRequest:`//button[text()='Submit request']`,
+        closeBtn:`(//button[text()='Close'])[1]`,
         //launchButton:`//button[text()="Launch Content"]`,
         completedButton: `//a[contains(text(),"Completed")]`,
         completedCourse: (name: string) => `(//h5[text()="${name}"])[1]`,
@@ -119,6 +123,18 @@ export class CatalogPage extends LearnerHomePage {
 
     }
 
+
+    async clickRequestapproval(){
+        await this.click(this.selectors.requestApproval, "Request Approval", "Button");
+    }
+
+    async requstcostCenterdetails(){
+        await this.validateElementVisibility(this.selectors.approvalcostcenter,"Approval POPup")
+        await this.type(this.selectors.approvalcostcenter,"Approval POPup",getCCnumber())//const center number of 10 digits
+        await this.click(this.selectors.submitRequest,"Submit Request","Button")
+        await this.click(this.selectors.closeBtn,"Close","Button")
+    }
+
     async clickRecertify() {
         await this.validateElementVisibility(this.selectors.recertifyBtn, "Recertify")
         await this.click(this.selectors.recertifyBtn, "Recertify", "Button");
@@ -192,6 +208,12 @@ export class CatalogPage extends LearnerHomePage {
 
     }
 
+    async searchMyLearning(data:string){
+        const searchSelector = this.selectors.searchlearningInput;
+        await this.type(searchSelector, "Search Field", data);
+        await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
+        await this.page.waitForTimeout(10000);
+    }
 
 
     async clicksaveLearningStatus() {

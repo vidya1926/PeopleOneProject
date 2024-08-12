@@ -23,12 +23,16 @@ export class LearnerHomePage extends LearnerLogin {
         sequenceCounter: `(//div[@class='carousel__viewport']//div[contains(@class,'col pointer')])[1]`,       // Add more selectors as needed
         bannerName: `(//div[contains(@class,'col pointer')]//h1)[1]`,
         announcementIcon: `//div[@id='announcementspopover']`,
-        announcementName: (title: string) => `(//div[@id='announcements']//p[text()='Announcement !!!  ${title}'])[1]`
+        announcementName: (title: string) => `(//div[@id='announcements']//p[text()='Announcement !!!  ${title}'])[1]`,
+        adminmenuIcon:`//i[@id='adminmenu']`,
+        collaborationHub:`//a/span[text()='Collaboration Hub']`,
+        approveTick:(courseName:string)=>`//span[text()='${courseName}']/following::i[contains(@id,'approve')][1]`,
+        proceedBtn:`//button[text()='Proceed']`,
+        verifyOrder:`//div[contains(@class,'information_text ')]`
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
-
     }
 
     public async loadLearner(role: string, url: any) {
@@ -157,5 +161,21 @@ export class LearnerHomePage extends LearnerLogin {
         expect(annocement).toContain(`${title}`)
     }
 
+
+    async selectCollaborationHub(){
+        await this.click(this.selectors.adminmenuIcon,"Admin Menu","Icon")
+        await this.validateElementVisibility(this.selectors.collaborationHub,"CH")
+        await this.click(this.selectors.collaborationHub,"CH", "Option")
+
+    }
+
+    async clickApprove(courseName:string){
+        await this.click(this.selectors.approveTick(courseName),"Approve Course","Icon")
+    }
+
+    async proceedAndVerify(){
+        await this.click(this.selectors.proceedBtn,"Proceed", "Button"),
+        await this.verification(this.selectors.verifyOrder,"Order Placed")
+    }
 
 }

@@ -42,6 +42,13 @@ export class EditCoursePage extends AdminHomePage {
         uncheckSingleReg:`(//span[contains(text(),'Uncheck')]/preceding-sibling::i)[1]`, 
         saveButton:`(//button[text()='Save'])[1]`,
         verifyChanges:`//span[contains(text(),'Changes')]`,
+        manageApproval:`//span[text()='Manager Approval']`,
+        approvalRegistration:`(//span[contains(@class,'h4')]/preceding-sibling::i)[2]`,
+        inheritMessage:`//span[contains(text(),'rule')]`,
+         managerType:(type:string)=>`//span[text()='${type}']`,
+        internalManagertype:(type:string)=>`//input[@id='direct-manager']/following::span[text()='${type}'][1]`,
+        externalManagertype:(type:string)=>`//input[@id='direct-manager1']/following::span[text()='${type}']`,
+
         //`(//label[text()='session add/delete']/following::div//i)[2]`
 
     };
@@ -139,6 +146,47 @@ export class EditCoursePage extends AdminHomePage {
       const booleanChk=  await this.page.locator(this.selectors.uncheckSingleReg).isChecked();
       console.log(booleanChk) 
       expect(booleanChk).toBeTruthy();
+    }
+
+    async clickManagerApproval(){
+        await this.validateElementVisibility(this.selectors.manageApproval,"ManagerApproval")
+        await this.mouseHover(this.selectors.manageApproval,"ManagerApproval")
+        await this.click(this.selectors.manageApproval,"ManagerApproval","sub-Menu")
+        await this.wait('minWait')
+        await this.click(this.selectors.approvalRegistration,"Approval Registraion","checkbox")
+
+    }
+
+    async verifyInheritanceMessage(){        
+        await this.verification(this.selectors.inheritMessage,"inherited")
+        await this.mouseHover(this.selectors.okBtnTag,"Ok ")
+        await this.click(this.selectors.okBtnTag,"Ok ", "Button")
+        await this.wait('minWait')
+    }
+
+     async verifyapprovaluserType(managerType:string){
+        const booleanChk=  await this.page.locator(this.selectors.managerType(managerType)).isChecked();
+        console.log(booleanChk) 
+        expect(booleanChk).toBeTruthy();
+
+    }
+    async verifyinternalManager(managerType:string,){
+        const booleanChk=  await this.page.locator(this.selectors.internalManagertype(managerType)).isChecked();
+        console.log(booleanChk) 
+        expect(booleanChk).toBeTruthy();
+        
+    }
+
+    async verifyexternalManager(managerType:string,){
+        const booleanChk=  await this.page.locator(this.selectors.externalManagertype(managerType)).isChecked();
+        console.log(booleanChk) 
+        expect(booleanChk).toBeTruthy();
+    }
+
+    async saveApproval(){
+        await this.click(this.selectors.saveButton,"Save","Button")
+        await this.verification(this.selectors.verifyChanges,"successfully")
+
     }
 
 }
