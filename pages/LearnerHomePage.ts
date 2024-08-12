@@ -47,6 +47,7 @@ export class LearnerHomePage extends LearnerLogin {
         await this.click(this.selectors.catalogLink, "Catalog", "Link");
         await this.page.waitForLoadState('load');
         await this.mouseHover(this.selectors.catalogLabel, "Catalog Label");
+        await this.wait('minWait');
     }
     public async clickMyLearning() {
         await this.validateElementVisibility(this.selectors.myLearningLink, "Link");

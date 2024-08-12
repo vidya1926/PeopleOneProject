@@ -1,13 +1,15 @@
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { test } from "../../../customFixtures/expertusFixture"
+import { LearnerCoursePage } from "../../../pages/LearnerCoursePage";
 import { FakerData, getRandomSeat } from '../../../utils/fakerUtils';
 
 
 const courseName = FakerData.getCourseName();
 const sessionName = FakerData.getSession();
-const description= FakerData.getDescription();
+const elCourseName = ("Elearning" + " " + courseName);
+const description = FakerData.getDescription();
 const maxSeat = getRandomSeat()
-let tag:any
+let tag: any
 const instructorName = credentialConstants.INSTRUCTORNAME
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse, editCourse }) => {
@@ -31,10 +33,11 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
     await createCourse.typeAdditionalInfo();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
-    await createCourse.modifyTheAccess();
+    await createCourse.clickProceed();
+    await createCourse.editcourse();
     await editCourse.clickClose();
     await editCourse.clickTagMenu();
-   tag= await editCourse.selectTags();
+    tag = await editCourse.selectTags();
     await editCourse.clickClose();
     await createCourse.clickCompletionCertificate();
     await createCourse.clickCertificateCheckBox();
@@ -44,7 +47,7 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
     await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
     await createCourse.addInstances();
-    
+
     async function addinstance(deliveryType: string) {
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
@@ -63,6 +66,7 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
     await addinstance("E-Learning");
+    await createCourse.enter("course-title", elCourseName);
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
@@ -71,21 +75,24 @@ test(`Multiple Course Creation for Classroom`, async ({ adminHome, createCourse,
 
 
 
-test(`TC053_Learner Verification For Single Instance`,async({learnerHome,catalog})=>{
-
+test(`TC053_Learner Verification For Single Instance`, async ({ learnerHome, catalog, learnerCourse }) => {
+    test.info().slow(true)
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `TC053_Learner Side Course verification` },
-        { type:`Test Description`, description: `Verify that course should be created for Multiple instance` }
+        { type: `Test Description`, description: `Verify that course should be created for Multiple instance` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
+    await learnerHome.learnerLogin("LEARNERUSERNAME", "LearnerPortal");
     await learnerHome.clickCatalog();
     await catalog.clickFilter();
     await catalog.selectresultantTags(tag);
-    await catalog.clickApply()
-    await catalog.clickEnroll();
-    await catalog.viewCoursedetails();
-    await catalog.clickSelectcourse(courseName)
+    await catalog.clickApply();
+    await learnerHome.clickCatalog();
+    await catalog.clickMoreonCourse(courseName);
+    await catalog.clickSelectcourse(elCourseName);
     await catalog.clickEnroll()
-    await catalog.verifyCompletedCourse(courseName);
-    })
+    await catalog.verifyCompletedCourse(elCourseName);
+    await catalog.clickLaunchButton();
+    await catalog.saveLearningStatus();
+    await learnerCourse.clickReEnroll();
+})

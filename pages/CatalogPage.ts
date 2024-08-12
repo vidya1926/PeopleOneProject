@@ -238,6 +238,8 @@ export class CatalogPage extends LearnerHomePage {
         await this.verification(this.selectors.expiredContent, "Expired")
     }
     async clickFilter() {
+        await this.validateElementVisibility(this.selectors.filterField, "Filter Search");
+        await this.wait('mediumWait');
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
 
@@ -245,19 +247,24 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.filterDeliverytype(typeName),"Delivery type ","Filter")
     }
 
-    async enterSearchFilter(tagName:string): Promise<string> {
+   /*  async enterSearchFilter(tagName:string): Promise<string> {
         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
         const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
         const randomTag = tags[randomIndex];
         await this.click(this.selectors.searchButton, "Tagname", "Field")
-        await this.type(this.selectors.selectTagnames, "Tagname", tagName)
+        await this.keyboardType(this.selectors.selectTagnames, "Tagname")
         console.log(randomTag)
         return tagName;
-    }
+    } */
     async selectresultantTags(tagName:string) {
-        await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
-        await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
-        await this.click(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags", "selected")
+        await this.wait('mediumWait');
+        await this.click(this.selectors.searchButton, "Tagname", "Field");
+        await this.wait('mediumWait');
+        await this.keyboardType(this.selectors.selectTagnames, tagName);
+        await this.wait('mediumWait');
+        await this.mouseHover(this.selectors.reultantTagname(tagName), "Tags")
+        await this.validateElementVisibility(this.selectors.reultantTagname(tagName), "Tags")
+        await this.click(this.selectors.reultantTagname(tagName), "Tags", "selected")
     }
     async clickApply() {
         await this.mouseHover(this.selectors.applyButton, "Apply")

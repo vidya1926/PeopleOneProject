@@ -1,4 +1,4 @@
-import {test} from "../customFixtures/expertusFixture"
+import { test } from "../customFixtures/expertusFixture"
 import { FakerData } from "../utils/fakerUtils";
 
 
@@ -11,8 +11,8 @@ test(`dummy`, async ({ adminHome, createCourse }) => {
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the course as Single instance` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
-    );   
-    
+    );
+
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -37,7 +37,7 @@ test(`dummy2`, async ({ learnerHome, catalog }) => {
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
         { type: `Test Description`, description: `Verify that course should be created for Single instance` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME");
+    await learnerHome.learnerLogin("LEARNERUSERNAME", "DefaultLearner");
     await learnerHome.clickCatalog();
     await catalog.mostRecent();
     await catalog.searchCatalog(courseName);

@@ -94,7 +94,7 @@ test(`Verification from learner site`, async ({ learnerHome, learnerCourse, cata
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
-    await learnerCourse.clickReEnroll(2);
+    await learnerCourse.clickReEnroll();
     await catalog.clickSelectcourse(elCourseName);
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
