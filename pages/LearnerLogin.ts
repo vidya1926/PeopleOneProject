@@ -56,7 +56,10 @@ export class LearnerLogin extends PlaywrightWrapper {
             const logoutButton = this.page.locator(logoutButtonLocator);
             await expect(logoutButton).toBeVisible({ timeout: 20000 });
             console.log(`Login successful`);
-            await this.wait('maxWait');
+            await this.wait('minWait')
+            console.log(await this.page.title());
+            await this.page.reload({ waitUntil: 'commit' });
+            await this.wait('mediumWait');
         } catch (error) {
             console.error(`Login attempt failed: ${error}`);
             throw error;
