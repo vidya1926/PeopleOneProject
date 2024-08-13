@@ -3,7 +3,7 @@ import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
 
 
-test(`TC029_Create user for portal 1`, async ({ adminHome, createUser, createCourse }) => {
+test(`TC030_Create user for portal 2`, async ({ adminHome, createUser, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create user for portal 1` },

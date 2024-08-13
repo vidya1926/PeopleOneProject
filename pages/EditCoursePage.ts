@@ -7,7 +7,7 @@ export class EditCoursePage extends AdminHomePage {
 
     public selectors = {
         ...this.selectors,
-        closeBtn: "//button[text()='Close']",
+        closeBtn: "(//button[text()='Close'])[1]",
         courseMenu: (menuName: string) => `//span//span[text()='${menuName}']`,
         tagMenu: "//span//span[text()='Tags']",
         completionCertificateMenu: "//span//span[text()='Completion Certificate']",
@@ -122,18 +122,15 @@ export class EditCoursePage extends AdminHomePage {
     async saveAccess() {
         await this.click(this.selectors.saveAccessBtn, "Save", "Button")
     }
-
     async selectTimeZone(country: string) {
         await this.click(this.selectors.timeZone, "TimeZone", "Text Field")
         await this.type(this.selectors.timeZoneOption, "Time Zone", country)
         await this.mouseHover(this.selectors.indianTimezone, "Indian Time zone")
         await this.click(this.selectors.indianTimezone, "Indian Timezone", "Selected")
     }
-
     async clickBusinessRule(){
         await this.validateElementVisibility(this.selectors.businessRule,"Business Rule")
         await this.click(this.selectors.businessRule,"Business Rule","sub-Menu")
-
     }
     async clickUncheckSingReg(){
         await this.validateElementVisibility(this.selectors.uncheckSingleReg,"Single registration")
@@ -141,20 +138,17 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.saveButton,"Single registration","Save Button")
         await this.verification(this.selectors.verifyChanges,"successfully")
     }
-
     async verifySingRegchkbox(){
       const booleanChk=  await this.page.locator(this.selectors.uncheckSingleReg).isChecked();
       console.log(booleanChk) 
       expect(booleanChk).toBeTruthy();
     }
-
     async clickManagerApproval(){
         await this.validateElementVisibility(this.selectors.manageApproval,"ManagerApproval")
         await this.mouseHover(this.selectors.manageApproval,"ManagerApproval")
         await this.click(this.selectors.manageApproval,"ManagerApproval","sub-Menu")
         await this.wait('minWait')
         await this.click(this.selectors.approvalRegistration,"Approval Registraion","checkbox")
-
     }
 
     async verifyInheritanceMessage(){        
@@ -165,22 +159,42 @@ export class EditCoursePage extends AdminHomePage {
     }
 
      async verifyapprovaluserType(managerType:string){
-        const booleanChk=  await this.page.locator(this.selectors.managerType(managerType)).isChecked();
-        console.log(booleanChk) 
-        expect(booleanChk).toBeTruthy();
-
+        const booleanChk=  await this.page.locator(this.selectors.managerType(managerType)).isChecked();   
+        expect(booleanChk).toBeTruthy();       
     }
+
+    async clickapprovaluserType(managerType:string){
+        const booleanChk=  await this.page.locator(this.selectors.managerType(managerType)).isChecked();   
+        if(booleanChk){
+            await this.click(this.selectors.managerType(managerType),`uncheck the ${managerType}`,"Checkbox")
+        }
+    }
+
+
     async verifyinternalManager(managerType:string,){
         const booleanChk=  await this.page.locator(this.selectors.internalManagertype(managerType)).isChecked();
-        console.log(booleanChk) 
         expect(booleanChk).toBeTruthy();
         
+    }
+    
+    async clickinternalManager(managerType:string,){
+        const booleanChk=  await this.page.locator(this.selectors.internalManagertype(managerType)).isChecked();
+        if(!booleanChk){
+            await this.click(this.selectors.internalManagertype(managerType),`${managerType}`,"Checkbox")
+        }
     }
 
     async verifyexternalManager(managerType:string,){
         const booleanChk=  await this.page.locator(this.selectors.externalManagertype(managerType)).isChecked();
         console.log(booleanChk) 
         expect(booleanChk).toBeTruthy();
+    }
+
+    async clickexternalManager(managerType:string,){
+        const booleanChk=  await this.page.locator(this.selectors.externalManagertype(managerType)).isChecked();
+        if(!booleanChk){
+            await this.click(this.selectors.externalManagertype(managerType),`${managerType}`,"Checkbox")
+        }
     }
 
     async saveApproval(){

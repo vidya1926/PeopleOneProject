@@ -883,7 +883,10 @@ export class CoursePage extends AdminHomePage {
         const count = await this.page.locator(this.selectors.certificateCheckboxCount).count();
         console.log(count);
         const randomIndex = Math.floor(Math.random() * (count - 1)) + 2;
-        await this.wait('minWait');
+        await this.wait('mediumWait');
+        await this.page.locator(this.selectors.certificateCheckbox(randomIndex)).innerText()
+        
+      
         await this.mouseHover(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox");
         await this.click(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox", "Checkbox");
     }

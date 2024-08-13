@@ -28,7 +28,8 @@ export class LearnerHomePage extends LearnerLogin {
         collaborationHub:`//a/span[text()='Collaboration Hub']`,
         approveTick:(courseName:string)=>`//span[text()='${courseName}']/following::i[contains(@id,'approve')][1]`,
         proceedBtn:`//button[text()='Proceed']`,
-        verifyOrder:`//div[contains(@class,'information_text ')]`
+        verifyOrder:`//div[contains(@class,'information_text ')]`,
+        searchfield:`//input[@id='exp-searchapproval-search-field']`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -173,8 +174,15 @@ export class LearnerHomePage extends LearnerLogin {
         await this.click(this.selectors.approveTick(courseName),"Approve Course","Icon")
     }
 
+    async searchApprovalCourse(courseName:string){
+        await this.type(this.selectors.searchfield, "Search Field", courseName);
+        await this.keyboardAction(this.selectors.searchfield, "Enter", "Input", "Search Field");
+        await this.wait('mediumWait')  
+    }
+
     async proceedAndVerify(){
         await this.click(this.selectors.proceedBtn,"Proceed", "Button"),
+        await this.wait("mediumWait")
         await this.verification(this.selectors.verifyOrder,"Order Placed")
     }
 

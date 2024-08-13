@@ -56,7 +56,8 @@ export class AdminHomePage extends AdminLogin {
 
     public async loadAndLogin(role: string) {
         console.log("Loading admin home page...");
-        await this.page.goto(AdminLogin.pageUrl);
+        await this.context.clearCookies();
+        await this.page.goto(AdminLogin.pageUrl);       
         await this.adminLogin(role);
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);

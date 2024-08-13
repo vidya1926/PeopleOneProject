@@ -47,6 +47,7 @@ test(`Creating User for the application`, async ({ adminHome, createUser, learne
         await createUser.enter("user-mobile", FakerData.getMobileNumber());
         await createUser.enter("user-employee-id", FakerData.getEmployeeid());
         await createUser.selectLanguage("English");
+        await createUser.organizationType("Internal")
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();

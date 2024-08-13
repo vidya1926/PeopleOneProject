@@ -78,13 +78,13 @@ for (const row of data) {
     await learnerHome.learnerLogin("MANAGERNAME", "DefaultPortal");
     await learnerHome.selectCollaborationHub();
     await learnerHome.clickApprove(courseName);
-    await createUser.enter("first_name", FakerData.getFirstName());
-        await createUser.enter("last_name", FakerData.getLastName());
+    await createUser.enter("firstName", FakerData.getFirstName());
+        await createUser.enter("lastName", FakerData.getLastName());
         await createUser.typeAddress("Address 1", FakerData.getAddress());
         await createUser.select("Country", country);
         await createUser.select("State/Province", state)
-        await createUser.enter("user-city", city);
-        await createUser.enter("user-zipcode", zipcode);
+        await createUser.enter("city", city);
+        await createUser.enter("zip", zipcode);
         await learnerHome.proceedAndVerify();
         await editCourse.clickClose()
 }

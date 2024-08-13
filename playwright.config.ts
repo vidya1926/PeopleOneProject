@@ -30,7 +30,7 @@ export default defineConfig({
       name: 'Chromium',
       use: {
         ...devices['Desktop Chromium'],
-        viewport: null,
+        viewport:null,
         launchOptions: {
           slowMo: 300,
           args: ["--start-maximized"]

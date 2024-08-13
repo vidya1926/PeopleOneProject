@@ -11,6 +11,8 @@ interface Data {
   instructorName?: string;
   commonUser?: string;
   enrollAdmin?: string;
+  internalUser?:string;
+  externalUser?:string;
 }
 
 const fileName = '../data/adminGroupsData.json';
@@ -47,8 +49,6 @@ export function updateFieldsInJSON(newData: Data): void {
   });
 
 }
-
-
 export function saveDataToJsonFile(filename: string, data: any): void {
   const jsonContent = JSON.stringify({ title: data }, null, 2);
   const filePath = path.join(__dirname, filename);

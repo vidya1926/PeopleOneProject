@@ -17,7 +17,8 @@ export class LearnerDashboardPage extends LearnerHomePage {
         verifyPendingCourse: (course: string) => `//span[contains(text(),'Pending')]//following::div[contains(text(),'${course}')]`,
         mandatoryText: "//div[text()='Mandatory']",
         complianceText: "//div[text()='Compliance']",
-        mdtryandcmplText: "//div[text()='Mandatory' or text()='Compliance']"
+        mdtryandcmplText: "//div[text()='Mandatory' or text()='Compliance']",
+        verifyCerificate: (cerTitle: string) => `//span[contains(text(),'To complete')]/following::div[text()='${cerTitle}']`,
 
     }
 
@@ -49,6 +50,9 @@ export class LearnerDashboardPage extends LearnerHomePage {
         await this.wait('minWait');
     }
 
+    async verifyTOCompleteCert(cerTitle: string) {
+        await this.validateElementVisibility(this.selectors.verifyCerificate(cerTitle), "Cerificate")
+    }
 
     async verifyComplianceCourse() {
         await this.wait('minWait');
