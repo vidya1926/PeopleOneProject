@@ -12,12 +12,14 @@ export class LearnerCoursePage extends CatalogPage {
         q1: `//span[text()='1. Pre']/following::i[1]`,
         submitAnswers: `(//span[text()='Submit my Answers'])[2]`,
         contentProgressStatus: `//span[text()='100%']`,
-        reeroll:(index:number)=>`(//button[text()='re-enroll'])[${index}]`,
-        requestClass:`//span[text()='REQUEST CLASS']`,
-        messageTOadmin:`//textarea[@id='reqclsmsg']`,
-        submitButton:`//button[@id='reqcls-btn-submit']`,
-        closeButton:`//div[contains(@id,'simplemodal')]//i[contains(@class,'fa-duotone fa-times icon')]`,
-        reEnrolledCourses:(index:number)=>`//button[text()='re-enroll']/following::span[contains(@class,'field_title')][${index}]`,
+        reEnrollBtn: `//button[text()='re-enroll']`,
+        reEnrollPopUp: `//span[contains(text(),"You've previously been enrolled within the same course")]//parent::div//following-sibling::div/button[text()='re-enroll']`,
+        requestClass: `//span[text()='REQUEST CLASS']`,
+        messageTOadmin: `//textarea[@id='reqclsmsg']`,
+        submitButton: `//button[@id='reqcls-btn-submit']`,
+        closeButton: `//div[contains(@id,'simplemodal')]//i[contains(@class,'fa-duotone fa-times icon')]`,
+        reEnrolledCourses: (index: number) => `//button[text()='re-enroll']/following::span[contains(@class,'field_title')][${index}]`,
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -57,32 +59,34 @@ export class LearnerCoursePage extends CatalogPage {
         }
     }
 
-    async clickReEnroll(index:number) {
-        for (let i=1;i<=index;i++){
-        await this.click(this.selectors.reeroll(i), "ReEnroll", "Button")
+    async clickReEnroll() {
+
+        await this.click(this.selectors.reEnrollBtn, "ReEnroll", "Button");
+        await this.validateElementVisibility(this.selectors.reEnrollPopUp, "ReEnroll");
+        await this.click(this.selectors.reEnrollPopUp, "ReEnroll", "Button");
+
+    }
+
+    async verifyRequestClass() {
+        await this.validateElementVisibility(this.selectors.requestClass, "Request Class")
+    }
+
+    async clickRequestClass() {
+        await this.click(this.selectors.requestClass, "Request Class", "Option")
+        await this.validateElementVisibility(this.selectors.messageTOadmin, "Submit")
+        await this.keyboardType(this.selectors.messageTOadmin, FakerData.getDescription())
+        await this.click(this.selectors.submitButton, "Submit", "Button")
+        await this.click(this.selectors.closeButton, "close", "Button")
+
+    }
+
+
+    async reEnrolledcourseCount() {
+        const count = await this.page.locator("//button[text()='re-enroll']/following::span[contains(@class,'field_title')]").count()
+        for (let i = 1; i <= count; i++) {
+            return await this.getInnerText(this.selectors.reEnrolledCourses(i))
         }
-    }
 
-    async verifyRequestClass(){
-        await this.validateElementVisibility(this.selectors.requestClass,"Request Class")        
-    }    
-
-    async clickRequestClass(){
-        await this.click(this.selectors.requestClass,"Request Class","Option")
-        await this.validateElementVisibility(this.selectors.messageTOadmin,"Submit")
-        await this.keyboardType(this.selectors.messageTOadmin,FakerData.getDescription())
-        await this.click(this.selectors.submitButton,"Submit","Button")
-        await this.click(this.selectors.closeButton,"close","Button")
 
     }
-
-
-    async reEnrolledcourseCount(){
-       const count = await this.page.locator("//button[text()='re-enroll']/following::span[contains(@class,'field_title')]").count()
-      for(let i=1;i<=count;i++){        
-      return  await this.getInnerText(this.selectors.reEnrolledCourses(i))
-    }
-
-
-}
 }

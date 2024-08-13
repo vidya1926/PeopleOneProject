@@ -22,9 +22,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :" + description);
-    await createCourse.uploadvideo();
-    
-    //await createCourse.contentLibrary();
+    await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
@@ -48,6 +46,11 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
+    await catalog.clickMyLearning();
+    await catalog.clickMyLearning();
+    await catalog.clickCompletedButton();
+    await catalog.searchMyLearning(courseName);
+    await catalog.verifyCompletedCourse(courseName);
 })
 
 

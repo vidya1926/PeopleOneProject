@@ -10,18 +10,18 @@ export class CatalogPage extends LearnerHomePage {
     public selectors = {
         ...this.selectors,
         searchInput: `//input[@id="exp-searchcatalog-search-field"]`,
-        searchlearningInput: `//input[@id="exp-searchenr-search-field"]`,        
+        searchlearningInput: `//input[@id="exp-searchenr-search-field"]`,
         mostRecentMenuItem: `//div[text()="Most Recent"]`,
         createdCourse: ` //div[text()='Most Recent']/following::li[1]`,
         moreButton: (course: string) => `(//div[text()="${course}"]/following::a/i)[1]`,
         enrollIcon: `//div[text()='Most Recent']//following::i[contains(@class,'tooltipIcon fa-duotone')][1]`,
-        courseToEnroll:(course: string)=>`//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')]`,
-        selectCourse: (course: string,index:number) => `(//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')])[${index}]`,
+        courseToEnroll: (course: string) => `//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')]`,
+        selectCourse: (course: string, index: number) => `(//span[text()='${course}']//following::i[contains(@class,'fa-circle icon')])[${index}]`,
         enrollButton: `//span[text()='Enroll']`,
-        requestApproval:`//span[text()='Request approval']`,
-        approvalcostcenter:`//input[@id='cc']`,
-        submitRequest:`//button[text()='Submit request']`,
-        closeBtn:`(//button[text()='Close'])[1]`,
+        requestApproval: `//span[text()='Request approval']`,
+        approvalcostcenter: `//input[@id='cc']`,
+        submitRequest: `//button[text()='Submit request']`,
+        closeBtn: `(//button[text()='Close'])[1]`,
         //launchButton:`//button[text()="Launch Content"]`,
         completedButton: `//a[contains(text(),"Completed")]`,
         completedCourse: (name: string) => `(//h5[text()="${name}"])[1]`,
@@ -57,9 +57,9 @@ export class CatalogPage extends LearnerHomePage {
         starIcon: `//i[contains(@class,'fa-star icon')]`,
         submitMyAnswerBtn: `div[class^='pagination-wrapper'] span:text-is('Submit my Answers')`,
         submitSurveyBtn: `div[class^='pagination-wrapper'] span:text-is('submit survey')`,
-        filterDeliverytype:(delivery:string)=>`//span[text()='${delivery}']/preceding-sibling::i[1]`,
-        multiInstancefilter:`(//div[text()='Filters'])[1]`,
-        clickPlayIcon:`(//a[contains(@class,'launch-content')])[1]`,
+        filterDeliverytype: (delivery: string) => `//span[text()='${delivery}']/preceding-sibling::i[1]`,
+        multiInstancefilter: `(//div[text()='Filters'])[1]`,
+        clickPlayIcon: `(//a[contains(@class,'launch-content')])[1]`,
         //doneBtn: `//span[text()='done']`, --> Element has been changed (06/08/2024)
         //doneBtn: `//button[text()='Done']`,
         doneBtn: `//i[contains(@class,'fa-circle-check icon')]//following::button[text()='Done']`,
@@ -98,7 +98,7 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(this.selectors.moreButton(courseName), "More on Course")
         await this.click(this.selectors.moreButton(courseName), "More on Course", "icon")
     }
-    async clickcourseTypeFilter(){
+    async clickcourseTypeFilter() {
         await this.click(this.selectors.multiInstancefilter, "Filter Delivery type", "checkbox");
     }
 
@@ -110,9 +110,9 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async clickSelectcourse(course: string) {
-        const count=await this.page.locator(this.selectors.courseToEnroll(course)).count();
-        const randomIndex = Math.floor(Math.random() * count)+1
-        await this.click(this.selectors.selectCourse(course,randomIndex), "Checkbox", "Button")
+        const count = await this.page.locator(this.selectors.courseToEnroll(course)).count();
+        const randomIndex = Math.floor(Math.random() * count) + 1
+        await this.click(this.selectors.selectCourse(course, randomIndex), "Checkbox", "Button")
     }
 
     async clickEnroll() {
@@ -124,15 +124,15 @@ export class CatalogPage extends LearnerHomePage {
     }
 
 
-    async clickRequestapproval(){
+    async clickRequestapproval() {
         await this.click(this.selectors.requestApproval, "Request Approval", "Button");
     }
 
-    async requstcostCenterdetails(){
-        await this.validateElementVisibility(this.selectors.approvalcostcenter,"Approval POPup")
-        await this.type(this.selectors.approvalcostcenter,"Approval POPup",getCCnumber())//const center number of 10 digits
-        await this.click(this.selectors.submitRequest,"Submit Request","Button")
-        await this.click(this.selectors.closeBtn,"Close","Button")
+    async requstcostCenterdetails() {
+        await this.validateElementVisibility(this.selectors.approvalcostcenter, "Approval POPup")
+        await this.type(this.selectors.approvalcostcenter, "Approval POPup", getCCnumber())//const center number of 10 digits
+        await this.click(this.selectors.submitRequest, "Submit Request", "Button")
+        await this.click(this.selectors.closeBtn, "Close", "Button")
     }
 
     async clickRecertify() {
@@ -204,11 +204,11 @@ export class CatalogPage extends LearnerHomePage {
             }
         } catch (error) {
             console.log("Try to launch the button");
-         }
+        }
 
     }
 
-    async searchMyLearning(data:string){
+    async searchMyLearning(data: string) {
         const searchSelector = this.selectors.searchlearningInput;
         await this.type(searchSelector, "Search Field", data);
         await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
@@ -225,19 +225,20 @@ export class CatalogPage extends LearnerHomePage {
             if (await completed.isVisible()) {
                 await completed.hover({ force: true });
                 console.log("The Video Has Completed");
-            } 
+            }
         } catch (error) {
             console.log("Try to launch the button");
-         }
+        }
 
     }
     async clickCompletedButton() {
-        await this.page.waitForTimeout(10000);
+        await this.wait('mediumWait');
         const name = "Completed Button";
         const completedButtonSelector = this.selectors.completedButton;
         await this.mouseHover(completedButtonSelector, name);
         await this.validateElementVisibility(completedButtonSelector, name);
         await this.click(completedButtonSelector, name, "Button");
+        await this.wait('mediumWait');
     }
 
     async verifyCompletedCourse(name: string) {
@@ -245,36 +246,43 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(completedCourseSelector, "Text");
     }
 
-    
+
     // async verifytoCompleteCourse(name: string) {
     //     const completedCourseSelector = this.selectors.completedCourse(name);
     //     await this.mouseHover(completedCourseSelector, "Text");
     // }
-       async verifyExpiredContent() {
+    async verifyExpiredContent() {
         await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
         await this.verification(this.selectors.expiredContent, "Expired")
     }
     async clickFilter() {
+        await this.validateElementVisibility(this.selectors.filterField, "Filter Search");
+        await this.wait('mediumWait');
         await this.click(this.selectors.filterField, "Filter Search", "clicked")
     }
 
-    async clickDeliveryType(typeName:string){
-        await this.click(this.selectors.filterDeliverytype(typeName),"Delivery type ","Filter")
+    async clickDeliveryType(typeName: string) {
+        await this.click(this.selectors.filterDeliverytype(typeName), "Delivery type ", "Filter")
     }
 
-    async enterSearchFilter(tagName:string): Promise<string> {
-        const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
-        const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
-        const randomTag = tags[randomIndex];
-        await this.click(this.selectors.searchButton, "Tagname", "Field")
-        await this.type(this.selectors.selectTagnames, "Tagname", tagName)
-        console.log(randomTag)
-        return tagName;
-    }
-    async selectresultantTags(tagName:string) {
-        await this.mouseHover(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
-        await this.validateElementVisibility(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags")
-        await this.click(this.selectors.reultantTagname(this.enterSearchFilter(tagName)), "Tags", "selected")
+    /*  async enterSearchFilter(tagName:string): Promise<string> {
+         const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
+         const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
+         const randomTag = tags[randomIndex];
+         await this.click(this.selectors.searchButton, "Tagname", "Field")
+         await this.keyboardType(this.selectors.selectTagnames, "Tagname")
+         console.log(randomTag)
+         return tagName;
+     } */
+    async selectresultantTags(tagName: string) {
+        await this.wait('minWait');
+        await this.click(this.selectors.searchButton, "Tagname", "Field");
+        await this.wait('minWait');
+        await this.keyboardType(this.selectors.selectTagnames, tagName);
+        await this.wait('minWait');
+        await this.mouseHover(this.selectors.reultantTagname(tagName), "Tags")
+        await this.validateElementVisibility(this.selectors.reultantTagname(tagName), "Tags")
+        await this.click(this.selectors.reultantTagname(tagName), "Tags", "selected")
     }
     async clickApply() {
         await this.mouseHover(this.selectors.applyButton, "Apply")

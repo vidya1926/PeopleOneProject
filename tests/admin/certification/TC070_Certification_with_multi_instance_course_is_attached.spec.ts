@@ -30,7 +30,8 @@ test.describe(`TC070_Certification_with_multi_instance_course_is_attached.spec`,
         await createCourse.typeAdditionalInfo();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
-        await createCourse.modifyTheAccess();
+        await createCourse.clickProceed();
+        await createCourse.editcourse();
         await editCourse.clickClose();
         await editCourse.clickTagMenu();
         await editCourse.selectTags();

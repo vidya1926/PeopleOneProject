@@ -6,7 +6,7 @@ import { FakerData } from "../../utils/fakerUtils";
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription()
 
-test(`TC101_CreateCourseForElearning_Single_Registration`, async ({ adminHome, createCourse,editCourse }) => {
+test(`TC101_CreateCourseForElearning_Single_Registration`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the course as Single Registration` },
@@ -31,15 +31,15 @@ test(`TC101_CreateCourseForElearning_Single_Registration`, async ({ adminHome, c
     await editCourse.clickBusinessRule();
     await editCourse.verifySingRegchkbox()
     await editCourse.clickUncheckSingReg()
-    await createCourse.typeDescription("Added Business Rule "+courseName)
-    await createCourse.clickUpdate();    
+    await createCourse.typeDescription("Added Business Rule " + courseName)
+    await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
-   
-    
+
+
 })
 
 
-test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome, learnerCourse, catalog }) => {
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
         { type: `TestCase`, description: `Learner Side Re-Enrollment` },
@@ -54,10 +54,10 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
-    await learnerCourse.clickReEnroll(2);
+    await learnerCourse.clickReEnroll();
     await learnerCourse.verifyRequestClass();
 
 })
 
 
-  
+

@@ -4,12 +4,12 @@ import { FakerData, getRandomSeat } from "../../utils/fakerUtils";
 
 
 const courseName = FakerData.getCourseName();
-const elCourseName=FakerData.getCourseName()+"E-learning";
+const elCourseName = FakerData.getCourseName() + "E-learning";
 const sessionName = FakerData.getSession();
 const description = FakerData.getDescription();
 const maxSeat = getRandomSeat()
 const instructorName = credentialConstants.INSTRUCTORNAME
-let tag:any
+let tag: any
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`TC105_Multiple Course Creation for Classroom`, async ({ createCourse, adminHome, editCourse }) => {
     test.info().annotations.push(
@@ -35,9 +35,9 @@ test(`TC105_Multiple Course Creation for Classroom`, async ({ createCourse, admi
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
-    await createCourse.clickEditCourseTabs()  
+    await createCourse.clickEditCourseTabs()
     await editCourse.clickTagMenu();
-   tag= await editCourse.selectTags();
+    tag = await editCourse.selectTags();
     await editCourse.clickClose();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
@@ -60,7 +60,7 @@ test(`TC105_Multiple Course Creation for Classroom`, async ({ createCourse, admi
     await createCourse.clickinstanceClass();
     await createCourse.addInstances();
     await addinstance("E-Learning");
-    await createCourse.enter("course-title",elCourseName)   
+    await createCourse.enter("course-title", elCourseName)
     await createCourse.contentLibrary();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
@@ -68,7 +68,7 @@ test(`TC105_Multiple Course Creation for Classroom`, async ({ createCourse, admi
 
 })
 
-test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome, learnerCourse, catalog }) => {
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
         { type: `TestCase`, description: `Learner Side Re-Enrollment` },
@@ -87,10 +87,10 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
-    await learnerCourse.clickReEnroll(2);
+    await learnerCourse.clickReEnroll();
     await catalog.clickMyLearning();
     await catalog.clickCompletedButton()
-    await catalog.verifyCompletedCourse(elCourseName)   
+    await catalog.verifyCompletedCourse(elCourseName)
 })
 
 

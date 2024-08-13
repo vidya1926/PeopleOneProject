@@ -52,7 +52,7 @@ test(`Verification from learner site`, async ({ learnerHome,learnerCourse, catal
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
-    await learnerCourse.clickReEnroll(2);
+    await learnerCourse.clickReEnroll();
     await catalog.clickSelectcourse(courseName);
     await catalog.clickEnroll();
     await catalog.clickLaunchButton();
