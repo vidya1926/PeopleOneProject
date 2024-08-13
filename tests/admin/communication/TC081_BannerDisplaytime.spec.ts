@@ -15,7 +15,7 @@ test(`TC081_Verify the  banner in sequence`, async ({ adminHome, bannerHome, cre
     await adminHome.clickCommunicationLink()
     await adminHome.clickBanner();
     await adminHome.clickCreateBanner()
-    await bannerHome.enterBannerTitile("Automated Bannner")
+    await bannerHome.enterBannerTitile(title)
     await bannerHome.enterFromDate();
     await bannerHome.enterTotodayDate();
     await bannerHome.selectSequence(2);
@@ -35,5 +35,5 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `Test Description`, description: `Learner Side Banner sequence verification` }
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
-    await learnerHome.verifyBannerDisplay("Automated Bannner");
+    await learnerHome.verifyBannerDisplay(title);
 })

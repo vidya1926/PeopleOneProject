@@ -11,6 +11,7 @@ export class CoursePage extends AdminHomePage {
         courseDescriptionInput: "//div[@id='course-description']//p",
         uploadDiv: "//div[@id='upload-div']",
         uploadInput: "//div[@id='upload-div']//input[@id='content_upload_file']",
+        clickHereuploadFile:`(//label[text()='Click here'])[1]`,
         attachedContent: (fileName: string) => `//label[text()='Attached Content']/following::span/following-sibling::div[text()='${fileName}']`,
         showInCatalogBtn: "//span[text()='Show in Catalog']",
         modifyTheAccessBtn: "//footer/following::button[text()='No, modify the access']",
@@ -200,10 +201,13 @@ export class CoursePage extends AdminHomePage {
         const path = `../data/${fileName}`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
+        await this.wait('mediumWait')
         await this.validateElementVisibility(this.selectors.progress, "Loading")
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), `${fileName}`);
 
     }
+
+
     async clickCatalog() {
         await this.validateElementVisibility(this.selectors.showInCatalogBtn, "Show in Catalog");
         await this.click(this.selectors.showInCatalogBtn, "Catalog", "Button");
@@ -642,7 +646,8 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.clickContentLibrary, "Content", "button");
         await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string");
         await this.spinnerDisappear();
-        const data = "youtube"
+       // const data = "youtube"
+       const data="AICC"
         await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
         await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
         await this.mouseHover(this.selectors.addContentButton, "addcontent");

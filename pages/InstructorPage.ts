@@ -14,7 +14,10 @@ export class InstructorPage extends EnrollmentPage{
              deliveryTypeOption:`//span[text()='Delivery Type']/following::div[@class='dropdown-menu show']//a`,
               statusDropdown:`//span[text()='Status']/following::div[@id='wrapper-search_course_status']`,
               statusOption:`//span[text()='Status']/following::div[@class='dropdown-menu show']//a`,
-            enrollmentIcon:`(//div[@aria-label="Enrollments"]//i)[1]`,
+            enrollmentIcon:(course:string)=>`//span[text()='${course}']/following::div[@aria-label="Enrollments"]//i`,
+            apply:`//button[text()='Apply']`,
+            searchField: "//input[@id='exp-search-field']",
+            searchResult:`//div[@id='exp-search-lms-scroll-results']//li`,
 
             };
     
@@ -52,8 +55,21 @@ export class InstructorPage extends EnrollmentPage{
             }
         }
 
-        async clickEnrollmentIcon(){
-            await this.click(this.selectors.enrollmentIcon,"Enrollments","Icon")
+        async clickApply(){
+            await this.click(this.selectors.apply,"Apply","Button")
+        }
+
+        async entersearchField(data: string) {
+            await this.type(this.selectors.searchField, "Search Field", data);
+            await this.wait('mediumWait')
+            await this.validateElementVisibility(this.selectors.searchResult,"Course Option")
+            await this.mouseHover(this.selectors.searchResult,"Course Option")
+            await this.click(this.selectors.searchResult,"Course","Option")
+        }
+    
+
+        async clickEnrollmentIcon(data:string){
+            await this.click(this.selectors.enrollmentIcon(data),"Enrollments","Icon")
         }
 
 

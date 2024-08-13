@@ -9,8 +9,10 @@ const courseName = FakerData.getCourseName();
 const instructorName = credentialConstants.INSTRUCTORNAME
 const price = FakerData.getPrice();
 const sessionName = FakerData.getSession();
-let certificate:any
+const description = FakerData.getDescription();
+const title=FakerData.getCourseName() + "-CERT";
 
+test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
 test(`TC088_Course Creation for ManagerApproval for ILT`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -58,16 +60,43 @@ test(`TC088_Course Creation for ManagerApproval for ILT`, async ({ adminHome, cr
     await createCourse.typeDescription("Created new Instance")
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
-    await createCourse.verifySuccessMessage();
-    await createCourse.clickEditCourseTabs();
-    await createCourse.clickCompletionCertificate(); //to be checked
-    await createCourse.clickCertificateCheckBox();
-    await createCourse.clickAdd();
-    await createCourse.typeDescription("Added Completion certificate")
-    await createCourse.clickUpdate()
-    await createCourse.verifySuccessMessage();
-   
+    await createCourse.verifySuccessMessage();   
 })
+
+test(`TC088_TP Cerification`, async ({ learningPath, adminHome, createCourse }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `vidya` },
+        { type: `TestCase`, description: `TC088_TP Cerification` },
+        { type: `Test Description`, description: `Cerification with ILT` }
+    );
+   
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
+    await adminHome.menuButton();
+    await adminHome.clickLearningMenu();
+    await adminHome.clickCertification();
+    await learningPath.clickCreateCertification();
+    await learningPath.title(title);
+    await learningPath.language();
+    await learningPath.description(description);
+    await learningPath.clickAndSelectCompliance();
+    await learningPath.registractionEnds();
+    await learningPath.clickExpiresButton();
+    await learningPath.clickAndSelectCompleteByRule();
+    await learningPath.clickSaveAsDraftBtn();
+    await learningPath.clickSave();
+    await learningPath.clickProceedBtn();
+    await learningPath.clickAddCourse();
+    await learningPath.searchAndClickCourseCheckBox(courseName);
+    await learningPath.clickAddSelectCourse();
+    await learningPath.clickDetailTab();
+    await learningPath.clickCatalogBtn();
+    await learningPath.clickUpdateBtn();
+    await learningPath.verifySuccessMessage();
+    
+})
+
+
+
 
 test("Request Manager Approval from Learner Site",async({learnerHome,catalog})=>{
     test.info().annotations.push(
@@ -112,9 +141,6 @@ for (const row of data) {
         await editCourse.clickClose();
     }
 });
-    
-//doubts in ceritfication verification
-
 test("Learner Site verification",async({learnerHome,catalog,dashboard})=>{
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -127,6 +153,7 @@ test("Learner Site verification",async({learnerHome,catalog,dashboard})=>{
     await catalog.verifyCompletedCourse(courseName);
     await dashboard.clickLearningPath_And_Certification();
     await dashboard.clickCertificationLink();
-    // await dashboard.searchCertification(courseName);//cerifictename
-    // await dashboard.verifyTOCompleteCert(courseName)    
+    await dashboard.searchCertification(title);//Application issue
+    await dashboard.verifyTOCompleteCert(title)    
 });
+})

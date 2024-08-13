@@ -1,3 +1,4 @@
+import { inflateSync } from "zlib";
 import { credentialConstants } from "../../constants/credentialConstants";
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData } from "../../utils/fakerUtils";
@@ -77,29 +78,27 @@ test(`TC091_Enrollment for schedule class`,async({adminHome,enrollHome})=>{
     await adminHome.clickEnrollmentMenu();
     await adminHome.clickEnroll();
     await enrollHome.selectEnroll();
-    await enrollHome.selectCourse(courseName)
+    await enrollHome.selctBycourse(courseName)
     await enrollHome.clickSelectedLearner();
     await enrollHome.enterSearchUser("User")
     await enrollHome.clickEnrollBtn();
     await enrollHome.verifytoastMessage()
 })
 
-
-
-
 test(`TC093_Instructor role for Scheduled class`,async({adminHome,enrollHome,instructorHome})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Enrollment for schedule class` },
-        { type:`Test Description`, description: `Enrollment for schedule class` }
-    
-        
+        { type:`Test Description`, description: `Enrollment for schedule class` }   
     );
     await adminHome.loadAndLogin("INSTRUCTORNAME");
-    await instructorHome.clickEnrollmentIcon(); 
-    await enrollHome.enterSearchUser("User")
-
+    //refactor
+     await instructorHome.entersearchField(courseName) 
+    await instructorHome.clickEnrollmentIcon(courseName); 
+    await enrollHome.selectEnrollOrCancel("Canceled")
+    await enrollHome.enterReasonAndSubmit();
+    await enrollHome.verifytoastMessage()  
 })
 
 

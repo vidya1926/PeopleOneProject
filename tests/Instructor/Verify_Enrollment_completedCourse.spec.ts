@@ -8,7 +8,7 @@ const instructorName = credentialConstants.INSTRUCTORNAME
 const courseName = FakerData.getCourseName();
 
 
-test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCourse }) => {
+test(`TC090_Instructor based course`, async ({ adminHome, createCourse, editCourse }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -26,7 +26,7 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.enter("course-title", courseName)
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :" + courseName);
-    await createCourse.selectdeliveryType("Virtual Class")
+    await createCourse.selectdeliveryType("Classroom")
     await createCourse.handleCategoryADropdown();
     await createCourse.providerDropdown()
     await createCourse.selectTotalDuration();
@@ -77,7 +77,7 @@ test(`TC092_Enrollment for Completed class`,async({adminHome,enrollHome})=>{
     await adminHome.clickEnrollmentMenu();
     await adminHome.clickEnroll();
     await enrollHome.selectEnroll();
-    await enrollHome.selectCourse(courseName)
+    await enrollHome.selctBycourse(courseName)
     await enrollHome.clickSelectedLearner();
     await enrollHome.enterSearchUser("User")
     await enrollHome.clickEnrollBtn();
