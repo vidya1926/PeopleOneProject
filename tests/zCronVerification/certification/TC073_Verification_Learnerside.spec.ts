@@ -16,7 +16,4 @@ test(`Verification_learner_Side_for_the_certification_compliance_flow`, async ({
     await dashboard.clickCertificationLink();
     await dashboard.searchCertification(title);
     await dashboard.verifyComplianceCourse()
-
-
-
 })

@@ -1,6 +1,6 @@
 import DB from "../../../utils/dbUtil";
 import { test } from "../../../customFixtures/expertusFixture"
-import { format, addMinutes, addDays } from 'date-fns';
+import { format, addMinutes, addDays, subDays } from 'date-fns';
 
 
 test('fetch data from database', async () => {
@@ -11,18 +11,15 @@ test('fetch data from database', async () => {
     );
     const dataBase = new DB();
     try {
-        let AutoRegister = await dataBase.executeQuery(` SELECT * FROM iris.cron_master WHERE name = 'Autoregister'`);
-        let retriveAutoRegisterID = String(AutoRegister[0].id);
-        console.log("Retrived registerId is : " + retriveAutoRegisterID);
-        await dataBase.executeQuery(`UPDATE iris.cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
-
-        let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM iris.cron_details WHERE name = 'LearningPlan and Certification AutoRegister' AND portal_id = 1;`);
-        let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
-        console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
-        let updatedResult = await dataBase.executeQuery(`UPDATE iris.cron_details SET current_status = 'waiting', previous_status= '', status= '1' WHERE id = '${retriveLearningPlanId}' ;`);
-        console.log(updatedResult);
-
-
+        const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
+        const currentTimeString = currentTimeResult[0]['NOW()'];
+        const currentTime = new Date(currentTimeString);
+        /* const pastDate = currentTime.setDate(currentTime.getDate());
+        const formattedPreviousDate = format(pastDate, 'yyyy-MM-dd HH:mm:ss');
+        console.log(formattedPreviousDate); */
+        const newTime = new Date(currentTime.getTime() - 15 * 60 * 1000);
+        const formattedNewTime = format(newTime, 'yyyy-MM-dd HH:mm:ss');
+        console.log('Formatted New Time (15 mins subtracted):', formattedNewTime);
     } catch (error) {
         console.log("Not executed " + error);
     }

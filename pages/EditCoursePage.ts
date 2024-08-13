@@ -3,7 +3,7 @@ import { AdminHomePage } from "./AdminHomePage";
 import { BrowserContext, expect, Locator, Page } from "@playwright/test";
 
 export class EditCoursePage extends AdminHomePage {
-    
+
 
     public selectors = {
         ...this.selectors,
@@ -23,7 +23,7 @@ export class EditCoursePage extends AdminHomePage {
         learnerGroup: `(//div[@id='wrapper-course-group-access-learner-group-list']//button)[1]`,
         learnerGroupOption: `//footer/following::a[1]`,
         accessSetting: `//span[@id='crs-accset-attr']//span[text()='Access Setting']`,
-        optionalGroup: `(//div[@id='lms-scroll-learner-list']//following::div[@class='filter-option-inner'])[1]`,
+        optionalGroup: `#wrapper-admin_leanr_head button:first-child`,
         setMandatory: `//footer/following::span[text()='Mandatory']`,
         registrationEnd: `//input[@id='registration-ends-input']`,
         learnerGropSearch: `//div[@class='dropdown-menu show']//input`,
@@ -37,17 +37,17 @@ export class EditCoursePage extends AdminHomePage {
         attendeeUrl: `//label[text()='Attendee URL']/following-sibling::input`,
         presenterUrl: `//label[text()='Presenter URL']/following-sibling::input`,
         addDeleteIcon: `//label[text()='session add/delete']/following::i[contains(@class,'fad fa-plus')]`,
-        saveAccessBtn:`//button[@id='add-language-btn' and text()='Save']`,
-        businessRule:`//span[text()='Business Rule']`,
-        uncheckSingleReg:`(//span[contains(text(),'Uncheck')]/preceding-sibling::i)[1]`, 
-        saveButton:`(//button[text()='Save'])[1]`,
-        verifyChanges:`//span[contains(text(),'Changes')]`,
-        manageApproval:`//span[text()='Manager Approval']`,
-        approvalRegistration:`(//span[contains(@class,'h4')]/preceding-sibling::i)[2]`,
-        inheritMessage:`//span[contains(text(),'rule')]`,
-         managerType:(type:string)=>`//span[text()='${type}']`,
-        internalManagertype:(type:string)=>`//input[@id='direct-manager']/following::span[text()='${type}'][1]`,
-        externalManagertype:(type:string)=>`//input[@id='direct-manager1']/following::span[text()='${type}']`,
+        saveAccessBtn: `//button[@id='add-language-btn' and text()='Save']`,
+        businessRule: `//span[text()='Business Rule']`,
+        uncheckSingleReg: `(//span[contains(text(),'Uncheck')]/preceding-sibling::i)[1]`,
+        saveButton: `(//button[text()='Save'])[1]`,
+        verifyChanges: `//span[contains(text(),'Changes')]`,
+        manageApproval: `//span[text()='Manager Approval']`,
+        approvalRegistration: `(//span[contains(@class,'h4')]/preceding-sibling::i)[2]`,
+        inheritMessage: `//span[contains(text(),'rule')]`,
+        managerType: (type: string) => `//span[text()='${type}']`,
+        internalManagertype: (type: string) => `//input[@id='direct-manager']/following::span[text()='${type}'][1]`,
+        externalManagertype: (type: string) => `//input[@id='direct-manager1']/following::span[text()='${type}']`,
 
         //`(//label[text()='session add/delete']/following::div//i)[2]`
 
@@ -65,9 +65,9 @@ export class EditCoursePage extends AdminHomePage {
         }
     }
 
-        async clickTagMenu() {
+    async clickTagMenu() {
         const selector = this.selectors.tagMenu;
-        await this.validateElementVisibility(selector,"Tag tab")
+        await this.validateElementVisibility(selector, "Tag tab")
         await this.wait('mediumWait')
         await this.click(selector, "Tags", "Link");
     }
@@ -83,8 +83,8 @@ export class EditCoursePage extends AdminHomePage {
         const randomTag = tags[randomIndex];
         await this.keyboardType(this.selectors.tagsSearchField, randomTag);
         //await this.keyboardAction(this.selectors.tagsSearchField, "Backspace", "Search Field", randomTag)
-        const tagName=this.getInnerText(`//li[text()='${randomTag}']`)
-        await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")        
+        const tagName = this.getInnerText(`//li[text()='${randomTag}']`)
+        await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")
         await this.validateElementVisibility(this.selectors.tagsSuccesfully, "Tags")
         await this.verification(this.selectors.tagsSuccesfully, "Tag has been added successfully.")
         await this.validateElementVisibility(this.selectors.okBtnTag, "OK");
@@ -106,9 +106,9 @@ export class EditCoursePage extends AdminHomePage {
         await this.wait("minWait")
         await this.click(this.selectors.accessTab, "Access", "Button")
     }
-    async addLearnerGroup() {
+    async addLearnerGroup(data: string) {
         await this.click(this.selectors.learnerGroup, "LearnerGroup", "Dropdown")
-        await this.type(this.selectors.learnerGropSearch, "LG", "Learner")
+        await this.type(this.selectors.learnerGropSearch, "LG", data)
         await this.click(this.selectors.learnerGroupOption, "LG", "Option")
         await this.click(this.selectors.closeBtn, "Close", "Button")
     }
@@ -116,8 +116,11 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.accessSetting, "Access Setting", "Button")
     }
     async setCourseMandatory() {
-        await this.click(this.selectors.optionalGroup, "Group Access", "dropdown")
-        await this.click(this.selectors.setMandatory, "Mandatory", "Option")
+
+        await this.click(this.selectors.optionalGroup, "Group Access", "dropdown");
+        await this.page.locator(this.selectors.setMandatory).click({ force: true });
+        //await this.click(this.selectors.setMandatory, "Mandatory", "Option")
+
     }
     async saveAccess() {
         await this.click(this.selectors.saveAccessBtn, "Save", "Button")
@@ -132,11 +135,11 @@ export class EditCoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.businessRule,"Business Rule")
         await this.click(this.selectors.businessRule,"Business Rule","sub-Menu")
     }
-    async clickUncheckSingReg(){
-        await this.validateElementVisibility(this.selectors.uncheckSingleReg,"Single registration")
-        await this.click(this.selectors.uncheckSingleReg,"Single registration","Radio Button")
-        await this.click(this.selectors.saveButton,"Single registration","Save Button")
-        await this.verification(this.selectors.verifyChanges,"successfully")
+    async clickUncheckSingReg() {
+        await this.validateElementVisibility(this.selectors.uncheckSingleReg, "Single registration")
+        await this.click(this.selectors.uncheckSingleReg, "Single registration", "Radio Button")
+        await this.click(this.selectors.saveButton, "Single registration", "Save Button")
+        await this.verification(this.selectors.verifyChanges, "successfully")
     }
     async verifySingRegchkbox(){
       const booleanChk=  await this.page.locator(this.selectors.uncheckSingleReg).isChecked();
@@ -151,10 +154,10 @@ export class EditCoursePage extends AdminHomePage {
         await this.click(this.selectors.approvalRegistration,"Approval Registraion","checkbox")
     }
 
-    async verifyInheritanceMessage(){        
-        await this.verification(this.selectors.inheritMessage,"inherited")
-        await this.mouseHover(this.selectors.okBtnTag,"Ok ")
-        await this.click(this.selectors.okBtnTag,"Ok ", "Button")
+    async verifyInheritanceMessage() {
+        await this.verification(this.selectors.inheritMessage, "inherited")
+        await this.mouseHover(this.selectors.okBtnTag, "Ok ")
+        await this.click(this.selectors.okBtnTag, "Ok ", "Button")
         await this.wait('minWait')
     }
 
@@ -174,7 +177,7 @@ export class EditCoursePage extends AdminHomePage {
     async verifyinternalManager(managerType:string,){
         const booleanChk=  await this.page.locator(this.selectors.internalManagertype(managerType)).isChecked();
         expect(booleanChk).toBeTruthy();
-        
+
     }
     
     async clickinternalManager(managerType:string,){

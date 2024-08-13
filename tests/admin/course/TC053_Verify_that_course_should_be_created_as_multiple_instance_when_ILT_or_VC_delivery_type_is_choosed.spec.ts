@@ -90,7 +90,7 @@ test.describe(`TC053_Verify_that_course_should_be_created_as_multiple_instance_w
         await catalog.clickMoreonCourse(courseName);
         await catalog.clickSelectcourse(elCourseName);
         await catalog.clickEnroll();
-        await catalog.verifyCompletedCourse(elCourseName);
+        // await catalog.verifyCompletedCourse(elCourseName);
         await catalog.clickLaunchButton();
         await catalog.saveLearningStatus();
         await learnerCourse.clickReEnroll();

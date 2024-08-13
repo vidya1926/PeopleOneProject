@@ -31,8 +31,10 @@ export class CoursePage extends AdminHomePage {
         //okBtn: "//button[text()='OK']",
         okBtn: "//span[contains(text(),'created successfully')]/following::button[text()='OK']",
         cancelBtn: "//label[text()='Category']/following::span[contains(@class,'lms-cat-cancel')]",
-        providerDropdown: "(//label[text()='Provider']/following::button)[1]",
+        providerDropdown: "//label[text()='Provider']//following-sibling::div",
+        providerDropdownValue: "//label[text()='Provider']//following-sibling::div//div//a",
         providerOption: (provider: string) => `//a/span[text()='${provider}']`,
+        providerIndexBase: (index: string) => `(//label[text()='Provider']//following-sibling::div//a)[${index}]`,
         totalDurationInput: "(//label[text()='Total Duration']/following::input)[1]",
         additionalInfoInput: "//div[@id='additional_information_description_id']//p",
         priceInput: "//label[text()='Price']/following::input[1]",
@@ -153,9 +155,9 @@ export class CoursePage extends AdminHomePage {
         certificateCheckbox: (index: string) => `(//div[contains(@id,'scroll-certificat')]//i[contains(@class,'fa-duotone fa-circle icon')])[${index}]`,
         addBtn: "//button[text()='Add']",
         certificationVerifyMessage: "//span[text()='Completion Certificate has been created successfully.']",
-        accessBtn: "//span[text()='Access']",
-        accessCloseIcon: "(//i[contains(@class,'fa-swap-opacity icon')])",
-        MultiaccessCloseIcon: "(//i[contains(@class,'fa-swap-opacity icon')])[2]",
+        accessBtn: "//span[text()='Access']//parent::button",//span[text()='Access'] -->lot of text has been created(12/8/2024)
+        accessCloseIcon: "//label[text()='Learner Group']/parent::div//following-sibling::div[2]//div//i",
+        MultiaccessCloseIcon: "(//label[text()='Learner Group']/parent::div//following-sibling::div[2]//div//i)[2]",
         accessUserInput: "//label[text()='User']/parent::div/following-sibling::div//input",
         saveAccessBtn: "//button[text()='Save Access']",
         enforceSequencingCheckbox: "//span[text()='Enforce Sequencing']/preceding-sibling::i[@class='fa-duotone fa-square']",
@@ -349,6 +351,7 @@ export class CoursePage extends AdminHomePage {
 
     async selectProvider(provider: string) {
         await this.click(this.selectors.providerDropdown, "Default Provider", "Dropdown Field");
+        await this.wait('minWait');
         await this.click(this.selectors.providerOption(provider), "Provider", "Dropdown Value");
     }
 
@@ -475,9 +478,9 @@ export class CoursePage extends AdminHomePage {
     //     await this.click(this.selectors.locationOption(locationName), "Location Option","Selected");
 
     // }
- async visiblityOfaddInstance(){
-    return await this.page.locator(this.selectors.addInstancesBtn).isDisabled();
-  }
+    async visiblityOfaddInstance() {
+        return await this.page.locator(this.selectors.addInstancesBtn).isDisabled();
+    }
 
     async addInstances() {
         await this.validateElementVisibility(this.selectors.addInstancesBtn, "Add Instances");
@@ -560,7 +563,7 @@ export class CoursePage extends AdminHomePage {
         await this.typeAndEnter(this.selectors.seatMaxInput, "Instance Max Seat", await getRandomSeat());
     }
 
-  
+
 
     public async startandEndTime() {
         await this.click(this.selectors.timeInput, "Start Time Input", "Input");
@@ -736,13 +739,11 @@ export class CoursePage extends AdminHomePage {
     }
 
     async providerDropdown() {
-
-        const providerElements = await this.page.$$(this.selectors.providerOptions);
-        const randomIndex = Math.floor(Math.random() * providerElements.length);
-        const randomElement = providerElements[randomIndex].textContent();
-        const randomOptions = await randomElement
         await this.click(this.selectors.providerDropdown, "dropdown", "button")
-        await this.click(this.selectors.provider(randomOptions), "option", "button")
+        const providerElements = this.page.locator(this.selectors.providerDropdownValue);
+        const randomIndex = Math.floor(Math.random() * await providerElements.count());
+        // await this.click(this.selectors.providerDropdown, "dropdown", "button")
+        await this.click(this.selectors.providerIndexBase(randomIndex), "option", "button")
 
     }
 
@@ -913,19 +914,27 @@ export class CoursePage extends AdminHomePage {
         await this.wait('mediumWait');
     }
 
-    async addSingleLearnerGroup(data: any) {
+    async addSingleLearnerGroup(data?: any) {
+        await this.wait('mediumWait');
         const closeIcon = this.page.locator(this.selectors.accessCloseIcon);
         const count = await closeIcon.count();
+        console.log(count);
         console.log("learner groups : " + count);
         for (let i = 1; i < count; i++) {
             await this.mouseHover(this.selectors.MultiaccessCloseIcon, "close Icon");
             await this.page.locator(this.selectors.MultiaccessCloseIcon).click({ force: true });
             await this.wait('mediumWait');
         }
-        let learnerGroupValue = await this.getInnerText(this.selectors.learnerGroup)
-        console.log(learnerGroupValue);
-        await this.type(this.selectors.accessUserInput, "User", data);
-        await this.click(`//li[text()='${data}']`, "User", "List");
+        if (!data) {
+            console.log("No data");
+            return;
+        } else {
+            let learnerGroupValue = await this.getInnerText(this.selectors.learnerGroup)
+            console.log(learnerGroupValue);
+            await this.type(this.selectors.accessUserInput, "User", data);
+            await this.click(`//li[text()='${data}']`, "User", "List");
+        }
+
     }
 
     async saveAccessButton() {

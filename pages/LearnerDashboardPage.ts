@@ -55,8 +55,8 @@ export class LearnerDashboardPage extends LearnerHomePage {
     }
 
     async verifyComplianceCourse() {
-        await this.wait('minWait');
-        let visibleCompliance = await this.page.locator(this.selectors.mdtryandcmplText).innerText({ timeout: 10000 });
+        await this.wait('mediumWait');
+        let visibleCompliance = await this.page.locator(this.selectors.mdtryandcmplText).nth(0).innerText({ timeout: 10000 });
         expect(visibleCompliance).toBe("Compliance")
     }
 

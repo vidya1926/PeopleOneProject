@@ -182,8 +182,19 @@ console.log(`${startDigit}${restDigits}`); */
     
 } */
 
-let option=1
+/* let option=1
 let rNum="anv"
-    console.log(`(${option})[${rNum}]`);
-    
+    console.log(`(${option})[${rNum}]`); */
+/* 
+let a = ["Ajay", "Ajay", "Ajay", "Ajay"];
+let count = a.filter(item => item === "Ajay").length;
+console.log(count); // Output: 4
+ */
+// Add a count method to the Array prototype
+Array.prototype.count = function (value) {
+    return this.filter(item => item === value).length;
+};
 
+// Example usage
+let a = ["Ajay", "Ajay", "Ajay", "Ajay"];
+console.log(a.count()); // Output: 4
