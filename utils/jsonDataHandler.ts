@@ -76,6 +76,8 @@ interface tcData {
   tc071a?: string
   tc071b?: string
   tc073?: string
+  tc056?: string
+  tc057?: string
 }
 const cronFile = '../data/cronjob.json';
 
