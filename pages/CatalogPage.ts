@@ -103,7 +103,7 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async clickEnrollButton() {
-        await this.mouseHover(this.selectors.createdCourse, "CreatedCourse")
+        await this.page.locator(this.selectors.createdCourse).scrollIntoViewIfNeeded();
         const enrollButtonSelector = this.selectors.enrollIcon;
         await this.validateElementVisibility(enrollButtonSelector, "Course");
         await this.click(enrollButtonSelector, "Enrolling Course", "Button");
@@ -118,8 +118,9 @@ export class CatalogPage extends LearnerHomePage {
     async clickEnroll() {
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
         const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
+        await this.wait('mediumWait');
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
-        await this.wait('minWait')
+
 
     }
 
@@ -290,11 +291,13 @@ export class CatalogPage extends LearnerHomePage {
     }
     async viewCoursedetails() {
         await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button");
+        await this.wait('mediumWait');
     }
     async clickViewCertificationDetails() {
         await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn, "View Certification Details");
         await this.click(this.selectors.viewCertificationDetailsBtn, "View Certification Details", "Button");
         await this.page.waitForLoadState('load');
+        await this.wait('mediumWait');
     }
     async clickViewLearningPathDetails() {
         await this.validateElementVisibility(this.selectors.viewlearningPathDetailsBtn, "View Learning Path Details");

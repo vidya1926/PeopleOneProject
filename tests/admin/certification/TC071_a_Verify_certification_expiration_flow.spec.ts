@@ -47,7 +47,10 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
       { type: `TestCase`, description: `Certification enroll and completion with single instance` },
       { type: `Test Description`, description: `Verify Certification enroll and completion with single instance` }
     );
-
+    const newData = {
+      tc071a: title
+    }
+    updateCronDataJSON(newData)
 
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
@@ -81,10 +84,7 @@ test.describe(`TC071_a_Verify_certification_expiration_flow`, async () => {
 
   })
 
-  const newData = {
-    tc071a: title
-  }
-  updateCronDataJSON(newData)
+
   test(`Login as a learner`, async ({ learnerHome, catalog }) => {
 
     test.info().annotations.push(

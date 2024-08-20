@@ -3,6 +3,14 @@ import DB from "../../../utils/dbUtil";
 import { format, addMinutes, addDays, subDays } from 'date-fns';
 
 const dataBase = new DB();
+
+async function autoRegister() {
+    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM cron_master WHERE name = 'Autoregister'`);
+    let retriveAutoRegisterID = String(AutoRegister[0].id);
+    console.log("Retrived registerId is : " + retriveAutoRegisterID);
+    await dataBase.executeQuery(`UPDATE cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
+
+}
 async function updateCronForEnrollment() {
     try {
         //Query to Retrive the Current Time
@@ -97,11 +105,7 @@ async function updatetableForAnnoncement() {
 }
 
 async function updateCertificationComplianceFlow() {
-    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM cron_master WHERE name = 'Autoregister'`);
-    let retriveAutoRegisterID = String(AutoRegister[0].id);
-    console.log("Retrived registerId is : " + retriveAutoRegisterID);
-    await dataBase.executeQuery(`UPDATE cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
-
+    await autoRegister();
     let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM cron_details WHERE name = 'LearningPlan and Certification AutoRegister' AND portal_id = 1;`);
     let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
     console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
@@ -122,15 +126,10 @@ async function updateCertificationComplianceFlow() {
 
 
 async function updateSingleInstanceAutoRegister() {
-    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM cron_master WHERE name = 'Autoregister'`);
-    let retriveAutoRegisterID = String(AutoRegister[0].id);
-    console.log("Retrived registerId is : " + retriveAutoRegisterID);
-    await dataBase.executeQuery(`UPDATE cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
-
+    await autoRegister();
     let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM cron_details WHERE name = 'Course Autoregister' AND portal_id = 1;`);
     let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
     console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
-
     const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
     const currentTimeString = currentTimeResult[0]['NOW()'];
     const currentTime = new Date(currentTimeString);
@@ -146,4 +145,28 @@ async function updateSingleInstanceAutoRegister() {
 }
 
 
-export { updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement, updateCertificationComplianceFlow, updateSingleInstanceAutoRegister }
+async function courseEnrollmentCron() {
+    await autoRegister();
+    const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
+    const currentTimeString = currentTimeResult[0]['NOW()'];
+    const currentTime = new Date(currentTimeString);
+    console.log(currentTime);
+    const newTime = (subDays(currentTime, 1));
+    const previousDate = format(newTime, 'yyyy-MM-dd');
+    console.log(previousDate);
+    let lastRecord = await dataBase.executeQuery(`SELECT * FROM catalog_compliance ORDER BY id DESC LIMIT 1;`);
+    console.log(lastRecord[0].id);
+    await dataBase.executeQuery(`UPDATE catalog_compliance SET complete_date=('${previousDate}') WHERE  id='${lastRecord}';`);
+    await dataBase.executeQuery(`UPDATE cron_master SET status=1 WHERE name='Enrollment Updates' AND tenant_id=1 ;`);
+    const cronRunTime = new Date(currentTime.getTime() - 15 * 60 * 1000);
+    const subTime = format(cronRunTime, 'yyyy-MM-dd HH:mm:ss');
+    console.log('Formatted New Time (15 mins subtracted):', subTime);
+    console.log(
+        await dataBase.executeQuery(`UPDATE cron_details SET next_run='${subTime}',current_status='waiting',previous_status='processing' where name='Course Enrollment Update' and tenant_id=1;`)
+        );
+
+
+}
+
+
+export { courseEnrollmentCron, updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement, updateCertificationComplianceFlow, updateSingleInstanceAutoRegister }

@@ -931,6 +931,7 @@ export class CoursePage extends AdminHomePage {
 
     async saveAccessButton() {
         await this.click(this.selectors.saveAccessBtn, "Save Access", "Button");
+        await this.wait('minWait');
     }
 
 
