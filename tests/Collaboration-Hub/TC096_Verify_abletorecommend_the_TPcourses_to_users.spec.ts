@@ -27,6 +27,42 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 })
 
 
+
+const title = FakerData.getCourseName();
+    test(`Certification enroll and completion with single instance`, async ({ adminHome, learningPath, createCourse }) => {
+        test.info().annotations.push(
+            { type: `Author`, description: `Vidya` },
+            { type: `TestCase`, description: `Certification enroll and completion with single instance` },
+            { type: `Test Description`, description: `Verify Certification enroll and completion with single instance` }
+        );
+
+        await adminHome.loadAndLogin("CUSTOMERADMIN")
+        await adminHome.menuButton();
+        await adminHome.clickLearningMenu();
+        await adminHome.clickCertification();
+        await learningPath.clickCreateCertification();
+        await learningPath.title(title);
+        await learningPath.description(description);
+        await learningPath.language();
+        await learningPath.clickSave();
+        await learningPath.clickProceedBtn();
+        await learningPath.clickAddCourse();
+        await learningPath.searchAndClickCourseCheckBox(courseName);
+        await learningPath.clickAddSelectCourse();
+        await learningPath.clickDetailTab();
+        await learningPath.clickCatalogBtn();
+        await learningPath.clickUpdateBtn();
+        await learningPath.verifySuccessMessage();
+        await learningPath.clickEditCertification();
+        // await learningPath.getCodeValue();
+        await createCourse.clickCompletionCertificate();
+        await createCourse.clickCertificateCheckBox();
+        await createCourse.clickAdd();
+        await createCourse.clickCatalog();
+        await createCourse.clickUpdate();
+        await createCourse.verifySuccessMessage();
+    })
+
 test(`Verify the manager can recommend the course to user`,async({learnerHome,managerHome})=>{
     test.info().annotations.push(
         { type: `Author`, description: `vidya` },
@@ -37,8 +73,8 @@ test(`Verify the manager can recommend the course to user`,async({learnerHome,ma
     await learnerHome.selectCollaborationHub();
     await managerHome.enterSearchCourse(courseName);
     await managerHome.clickrecommendIcon(courseName)
-    await managerHome.verifydirectandIndirect("Direct Report")
-    await managerHome.verifydirectandIndirect("Virtual Report")
+    await managerHome.selectTeam()
+    await managerHome.selectTeamUser("User2 Test")
     await managerHome.enterAdditionalInfo()
     await managerHome.clickSendMeCopy()
     await managerHome.clickRecommendLearning()
@@ -55,6 +91,7 @@ test("Learner Site verification",async({learnerHome,catalog,dashboard})=>{
     await learnerHome.learnerLogin("LEARNERUSERNAME", "DefaultPortal");
     await learnerHome.clickCatalog()
     await catalog.clickRecommendation()
+    
     await catalog.verifyCourserecommemnded(courseName);
     
 

@@ -13,6 +13,8 @@ interface Data {
   enrollAdmin?: string;
   internalUser?:string;
   externalUser?:string;
+  teamUser1?:string;
+  teamUser2?:string;
 }
 
 const fileName = '../data/adminGroupsData.json';
