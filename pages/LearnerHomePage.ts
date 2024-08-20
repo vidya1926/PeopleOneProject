@@ -24,12 +24,12 @@ export class LearnerHomePage extends LearnerLogin {
         bannerName: `(//div[contains(@class,'col pointer')]//h1)[1]`,
         announcementIcon: `//div[@id='announcementspopover']`,
         announcementName: (title: string) => `(//div[@id='announcements']//p[text()='Announcement !!!  ${title}'])[1]`,
-        adminmenuIcon:`//i[@id='adminmenu']`,
-        collaborationHub:`//a/span[text()='Collaboration Hub']`,
-        approveTick:(courseName:string)=>`//span[text()='${courseName}']/following::i[contains(@id,'approve')][1]`,
-        proceedBtn:`//button[text()='Proceed']`,
-        verifyOrder:`//div[contains(@class,'information_text ')]`,
-        searchfield:`//input[@id='exp-searchapproval-search-field']`
+        adminmenuIcon: `//i[@id='adminmenu']`,
+        collaborationHub: `//a/span[text()='Collaboration Hub']`,
+        approveTick: (courseName: string) => `//span[text()='${courseName}']/following::i[contains(@id,'approve')][1]`,
+        proceedBtn: `//button[text()='Proceed']`,
+        verifyOrder: `//div[contains(@class,'information_text ')]`,
+        searchfield: `//input[@id='exp-searchapproval-search-field']`
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -164,27 +164,27 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
 
-    async selectCollaborationHub(){
-        await this.click(this.selectors.adminmenuIcon,"Admin Menu","Icon")
-        await this.validateElementVisibility(this.selectors.collaborationHub,"CH")
-        await this.click(this.selectors.collaborationHub,"CH", "Option")
+    async selectCollaborationHub() {
+        await this.click(this.selectors.adminmenuIcon, "Admin Menu", "Icon")
+        await this.validateElementVisibility(this.selectors.collaborationHub, "CH")
+        await this.click(this.selectors.collaborationHub, "CH", "Option")
 
     }
 
-    async clickApprove(courseName:string){
-        await this.click(this.selectors.approveTick(courseName),"Approve Course","Icon")
+    async clickApprove(courseName: string) {
+        await this.click(this.selectors.approveTick(courseName), "Approve Course", "Icon")
     }
 
-    async searchApprovalCourse(courseName:string){
+    async searchApprovalCourse(courseName: string) {
         await this.type(this.selectors.searchfield, "Search Field", courseName);
         await this.keyboardAction(this.selectors.searchfield, "Enter", "Input", "Search Field");
-        await this.wait('mediumWait')  
+        await this.wait('mediumWait')
     }
 
-    async proceedAndVerify(){
-        await this.click(this.selectors.proceedBtn,"Proceed", "Button"),
-        await this.wait("mediumWait")
-        await this.verification(this.selectors.verifyOrder,"Order Placed")
+    async proceedAndVerify() {
+        await this.click(this.selectors.proceedBtn, "Proceed", "Button"),
+            await this.wait("mediumWait")
+        await this.verification(this.selectors.verifyOrder, "Order Placed")
     }
 
 }

@@ -14,12 +14,8 @@ test('fetch data from database', async () => {
         const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
         const currentTimeString = currentTimeResult[0]['NOW()'];
         const currentTime = new Date(currentTimeString);
-        /* const pastDate = currentTime.setDate(currentTime.getDate());
-        const formattedPreviousDate = format(pastDate, 'yyyy-MM-dd HH:mm:ss');
-        console.log(formattedPreviousDate); */
         const newTime = new Date(currentTime.getTime() - 15 * 60 * 1000);
-        const formattedNewTime = format(newTime, 'yyyy-MM-dd HH:mm:ss');
-        console.log('Formatted New Time (15 mins subtracted):', formattedNewTime);
+        console.log(newTime);
     } catch (error) {
         console.log("Not executed " + error);
     }

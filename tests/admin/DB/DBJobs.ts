@@ -3,6 +3,16 @@ import DB from "../../../utils/dbUtil";
 import { format, addMinutes, addDays, subDays } from 'date-fns';
 
 const dataBase = new DB();
+
+async function autoRegister() {
+    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM cron_master WHERE name = 'Autoregister' and portal_id='1'`);
+    let retriveAutoRegisterID = String(AutoRegister[0].id);
+    console.log("Retrived registerId is : " + retriveAutoRegisterID);
+    let updatedAutoRegister = await dataBase.executeQuery(`UPDATE cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
+    console.log(updatedAutoRegister);
+
+
+}
 async function updateCronForEnrollment() {
     try {
         //Query to Retrive the Current Time
@@ -97,11 +107,7 @@ async function updatetableForAnnoncement() {
 }
 
 async function updateCertificationComplianceFlow() {
-    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM cron_master WHERE name = 'Autoregister'`);
-    let retriveAutoRegisterID = String(AutoRegister[0].id);
-    console.log("Retrived registerId is : " + retriveAutoRegisterID);
-    await dataBase.executeQuery(`UPDATE cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
-
+    await autoRegister();
     let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM cron_details WHERE name = 'LearningPlan and Certification AutoRegister' AND portal_id = 1;`);
     let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
     console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
@@ -122,15 +128,10 @@ async function updateCertificationComplianceFlow() {
 
 
 async function updateSingleInstanceAutoRegister() {
-    let AutoRegister = await dataBase.executeQuery(` SELECT * FROM cron_master WHERE name = 'Autoregister'`);
-    let retriveAutoRegisterID = String(AutoRegister[0].id);
-    console.log("Retrived registerId is : " + retriveAutoRegisterID);
-    await dataBase.executeQuery(`UPDATE cron_master SET status='1' WHERE id ='${retriveAutoRegisterID}'`);
-
+    await autoRegister();
     let learningPlanAndCertification = await dataBase.executeQuery(`SELECT * FROM cron_details WHERE name = 'Course Autoregister' AND portal_id = 1;`);
     let retriveLearningPlanId = String(learningPlanAndCertification[0].id);
     console.log("Retrived learningPlanId is : " + retriveLearningPlanId);
-
     const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
     const currentTimeString = currentTimeResult[0]['NOW()'];
     const currentTime = new Date(currentTimeString);
@@ -146,4 +147,28 @@ async function updateSingleInstanceAutoRegister() {
 }
 
 
-export { updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement, updateCertificationComplianceFlow, updateSingleInstanceAutoRegister }
+async function courseEnrollmentCron() {
+    await autoRegister();
+    const currentTimeResult = await dataBase.executeQuery("SELECT NOW()");
+    const currentTimeString = currentTimeResult[0]['NOW()'];
+    const currentTime = new Date(currentTimeString);
+    console.log("Current Time : " + currentTime);
+    const newTime = (subDays(currentTime, 1));
+    const previousDate = format(newTime, 'yyyy-MM-dd');
+    console.log("Previous Date :" + previousDate);
+    let lastRecord = await dataBase.executeQuery(`SELECT * FROM catalog_compliance ORDER BY id DESC LIMIT 1;`);
+    let latestId = lastRecord[0].id;
+    console.log(latestId);
+    await dataBase.executeQuery(`UPDATE catalog_compliance SET complete_date=('${previousDate}') WHERE  id='${latestId}';`);
+    await dataBase.executeQuery(`UPDATE cron_master SET status=1 WHERE name='Enrollment Updates';`);
+    const cronRunTime = new Date(currentTime.getTime() - 15 * 60 * 1000);
+    const subTime = format(cronRunTime, 'yyyy-MM-dd HH:mm:ss');
+    console.log('Formatted New Time (15 mins subtracted):', subTime);
+    let enrollmentUpdate = await dataBase.executeQuery(`UPDATE cron_details SET next_run='${subTime}',current_status='waiting',previous_status='processing' where name='Course Enrollment Update'`);
+    console.log(enrollmentUpdate);
+
+
+}
+
+
+export { courseEnrollmentCron, updateCronForEnrollment, updatecronForBanner, updatetableForAnnoncement, updateCertificationComplianceFlow, updateSingleInstanceAutoRegister }

@@ -3,6 +3,7 @@ import { LearnerHomePage } from "./LearnerHomePage";
 import { FakerData, getCCnumber, getPonumber } from "../utils/fakerUtils";
 import { saveDataToJsonFile } from "../utils/jsonDataHandler";
 import { Certificate } from "crypto";
+import { th } from "@faker-js/faker";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
 
@@ -72,7 +73,8 @@ export class CatalogPage extends LearnerHomePage {
         secondaryCourse: (course: string) => `//div[contains(text(),'${course}')]`,
         completePreviousContent: "//div[contains(text(),'You need to complete the previous content')]",
         recommendationLink:`//a[text()='Recommendations']`,
-        verifyRecommendCourse:(course:string)=>`//div[text()='${course}']`        
+        verifyRecommendCourse:(course:string)=>`//div[text()='${course}']`,     
+        overDueText:"//span[text()='Overdue']",
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -103,6 +105,14 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(this.selectors.mostRecentMenuItem, "Most Recent");
     }
 
+    async verifyOverdue(data:string){
+        await this.click(this.selectors.completedCourse(data),"To Complete","Link");
+        await this.wait('mediumWait');
+        await this.validateElementVisibility(this.selectors.overDueText,"Overdue");
+        await this.verification(this.selectors.overDueText,"Overdue")
+        
+    }
+
     async clickMoreonCourse(courseName: string) {
         await this.mouseHover(this.selectors.moreButton(courseName), "More on Course")
         await this.click(this.selectors.moreButton(courseName), "More on Course", "icon")
@@ -112,7 +122,7 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async clickEnrollButton() {
-        await this.mouseHover(this.selectors.createdCourse, "CreatedCourse")
+        await this.page.locator(this.selectors.createdCourse).scrollIntoViewIfNeeded();
         const enrollButtonSelector = this.selectors.enrollIcon;
         await this.validateElementVisibility(enrollButtonSelector, "Course");
         await this.click(enrollButtonSelector, "Enrolling Course", "Button");
@@ -127,8 +137,11 @@ export class CatalogPage extends LearnerHomePage {
     async clickEnroll() {
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
         const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
+        await this.wait('mediumWait');
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
         await this.wait('minWait')
+
+
     }
     async clickRequestapproval() {
         await this.click(this.selectors.requestApproval, "Request Approval", "Button");
@@ -251,11 +264,6 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(completedCourseSelector, "Text");
     }
 
-
-    // async verifytoCompleteCourse(name: string) {
-    //     const completedCourseSelector = this.selectors.completedCourse(name);
-    //     await this.mouseHover(completedCourseSelector, "Text");
-    // }
     async verifyExpiredContent() {
         await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
         await this.verification(this.selectors.expiredContent, "Expired")
@@ -295,11 +303,13 @@ export class CatalogPage extends LearnerHomePage {
     }
     async viewCoursedetails() {
         await this.click(this.selectors.viewCourseDetails, "Coursedetails", "Button");
+        await this.wait('mediumWait');
     }
     async clickViewCertificationDetails() {
         await this.validateElementVisibility(this.selectors.viewCertificationDetailsBtn, "View Certification Details");
         await this.click(this.selectors.viewCertificationDetailsBtn, "View Certification Details", "Button");
         await this.page.waitForLoadState('load');
+        await this.wait('mediumWait');
     }
     async clickViewLearningPathDetails() {
         await this.validateElementVisibility(this.selectors.viewlearningPathDetailsBtn, "View Learning Path Details");

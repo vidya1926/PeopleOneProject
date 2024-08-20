@@ -400,42 +400,46 @@ export class ProfilePage extends LearnerHomePage {
     }
 
     async creditPeriod(month: string) {
-        await this.click(this.selectors.PreferenceCreditPeriod, "creditperiod", "dropdown")
+        await this.click(this.selectors.PreferenceCreditPeriod, "creditperiod", "dropdown");
         //  await this.type(this.selectors.PreferenceCreditTypeInput, "Input Field", month);
         await this.mouseHover(this.selectors.PreferenceCreditPeriodOption(month), month);
-        await this.click(this.selectors.PreferenceCreditPeriodOption(month), "CreditPeriodOptions", "Button")
+        await this.click(this.selectors.PreferenceCreditPeriodOption(month), "CreditPeriodOptions", "Button");
     }
     async creditScore() {
-        const score: any = generateCreditScore()
-        await this.type(this.selectors.CreditScore, "CreditScore", score.toString())
+        const score: any = generateCreditScore();
+        await this.type(this.selectors.CreditScore, "CreditScore", score.toString());
     }
 
     async clickSave() {
         //await this.waitForl(this.selectors.clickSave)
-        await this.validateElementVisibility(this.selectors.saveButton, "save")
-        await this.click(this.selectors.saveButton, "save", "button")
+        await this.validateElementVisibility(this.selectors.saveButton, "save");
+        await this.click(this.selectors.saveButton, "save", "button");
+        await this.wait('mediumWait');
+        //console.log(await this.getInnerText("label:text-is('Name') + div"));
+
 
     }
 
-    async addSkills(Proficiency: string) {
-        await this.click(this.selectors.skillTab, "skills", "button")
-        await this.validateElementVisibility(this.selectors.addIcon, "skillNameField")
-        await this.click(this.selectors.addIcon, "addskill", "button")
-        await this.validateElementVisibility(this.selectors.skillNameField, "skillNameField")
-        await this.type(this.selectors.skillNameField, "skillNameField", FakerData.getRandomSkill())
-        await this.type(this.selectors.proficiencyField, "proficiencyField", Proficiency)
-        await this.click(this.selectors.showToAllSkills, "showToAllSkills", "Checkbox")
-        await this.click(this.selectors.saveButton, "Saveskills", "button")
-        await this.validateElementVisibility(this.selectors.verifySkills, "verification message")
+    async addSkills() {
+        await this.click(this.selectors.skillTab, "skills", "button");
+        await this.validateElementVisibility(this.selectors.addIcon, "skillNameField");
+        await this.click(this.selectors.addIcon, "addskill", "button");
+        await this.validateElementVisibility(this.selectors.skillNameField, "skillNameField");
+        await this.type(this.selectors.skillNameField, "skillNameField", FakerData.getRandomSkill());
+        await this.type(this.selectors.proficiencyField, "proficiencyField", FakerData.getRandomSkill());
+        await this.click(this.selectors.showToAllSkills, "showToAllSkills", "Checkbox");
+        await this.click(this.selectors.saveButton, "Saveskills", "button");
+        await this.wait('minWait');
+        await this.validateElementVisibility(this.selectors.verifySkills, "verification message");
 
     }
     async addImg() {
         const path = "../data/Profilepic.jpg"
-        await this.click(this.selectors.nameDetails, "nameoption", "button")
-        await this.uploadFile(this.selectors.imgUpload, path)
-        await this.validateElementVisibility(this.selectors.confirmUpload, "Upload")
-        await this.click(this.selectors.confirmUpload, "Upload", "button")
-        await this.click(this.selectors.showToAllSkills, "showToAllSkills", "Checkbox")
+        await this.click(this.selectors.nameDetails, "nameoption", "button");
+        await this.uploadFile(this.selectors.imgUpload, path);
+        await this.validateElementVisibility(this.selectors.confirmUpload, "Upload");
+        await this.click(this.selectors.confirmUpload, "Upload", "button");
+        await this.click(this.selectors.showToAllSkills, "showToAllSkills", "Checkbox");
     }
     async oneProfile() {
         await this.click(this.selectors.oneProfile, "one-profile", "button");

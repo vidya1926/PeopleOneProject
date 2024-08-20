@@ -11,7 +11,7 @@ export class CoursePage extends AdminHomePage {
         courseDescriptionInput: "//div[@id='course-description']//p",
         uploadDiv: "//div[@id='upload-div']",
         uploadInput: "//div[@id='upload-div']//input[@id='content_upload_file']",
-        clickHereuploadFile:`(//label[text()='Click here'])[1]`,
+        clickHereuploadFile: `(//label[text()='Click here'])[1]`,
         attachedContent: (fileName: string) => `//label[text()='Attached Content']/following::span/following-sibling::div[text()='${fileName}']`,
         showInCatalogBtn: "//span[text()='Show in Catalog']",
         modifyTheAccessBtn: "//footer/following::button[text()='No, modify the access']",
@@ -49,6 +49,7 @@ export class CoursePage extends AdminHomePage {
         validityDateInput: "input[@id='validity_date-input']",
         validityDaysInput: "//input[@id='validity_days']",
         completeByField: "//div[@id='wrapper-course-complete-by']",
+        completeByDateInput: "#complete_by_date-input",
         completeByDaysInput: "//input[@id='complete_days']",
         completeByRule: `(//div[@id='wrapper-course-complete-by-rule']//button)[1]`,
         completeByRuleOption: `//footer/following-sibling::div//span[text()='Yes']`,
@@ -425,6 +426,7 @@ export class CoursePage extends AdminHomePage {
         await this.type(this.selectors.completeByDaysInput, "ComplebyDays", days);
     }
 
+
     async selectPostCompletebyOverDue() {
         await this.click(this.selectors.postCompleteByStatusField, "Default Incomplete", "dropdown");
         await this.click(this.selectors.postCompleteByOption, "Overdue", "Option");
@@ -451,6 +453,9 @@ export class CoursePage extends AdminHomePage {
 
     async clickEditCourseTabs() {
         await this.click(this.selectors.editCourseTabLink, "Edit Course", "Button");
+    }
+    async typeCompleteByDate() {
+        await this.typeAndEnter(this.selectors.completeByDateInput, "Completed Date", gettomorrowDateFormatted());
     }
 
     async selectCompleteByDate() {
@@ -642,22 +647,37 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.instance_Class, "Edit Instance Class", "Button");
     }
 
-    async contentLibrary() {
+    async contentLibrary(content?: string) {
         await this.spinnerDisappear();
         await this.validateElementVisibility(this.selectors.clickContentLibrary, "Content");
         await this.mouseHover(this.selectors.clickContentLibrary, "Content");
         await this.click(this.selectors.clickContentLibrary, "Content", "button");
         await this.waitForElementHidden("//span[text()='Counting backwards from Infinity']", "string");
         await this.spinnerDisappear();
-       // const data = "youtube"
-       const data="AICC"
-        await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
-        await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
-        await this.mouseHover(this.selectors.addContentButton, "addcontent");
-        await this.click(this.selectors.addContentButton, "addcontent", "button");
-        await this.wait('maxWait');
-        await this.mouseHover(this.selectors.attachedContentLabel, "button");
-        await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
+        if (content == "AICC") {
+            const data = "AICC"
+            this.page.on('console', msg => {
+                console.log(`Console Log: ${msg.text()}`);
+            });
+            await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
+            await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
+            await this.wait('minWait');
+            await this.mouseHover(this.selectors.addContentButton, "addcontent");
+            await this.click(this.selectors.addContentButton, "addcontent", "button");
+            await this.wait('maxWait');
+            await this.page.locator(this.selectors.attachedContentLabel).scrollIntoViewIfNeeded();
+            await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
+        } else {
+            const data = "youtube"
+            await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
+            await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
+            await this.mouseHover(this.selectors.addContentButton, "addcontent");
+            await this.click(this.selectors.addContentButton, "addcontent", "button");
+            await this.wait('maxWait');
+            await this.mouseHover(this.selectors.attachedContentLabel, "button");
+            await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
+        }
+
     }
 
     async multipleContent() {
@@ -891,8 +911,8 @@ export class CoursePage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() * (count - 1)) + 2;
         await this.wait('mediumWait');
         await this.page.locator(this.selectors.certificateCheckbox(randomIndex)).innerText()
-        
-      
+
+
         await this.mouseHover(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox");
         await this.click(this.selectors.certificateCheckbox(randomIndex), "Certificate CheckBox", "Checkbox");
     }
@@ -939,6 +959,7 @@ export class CoursePage extends AdminHomePage {
 
     async saveAccessButton() {
         await this.click(this.selectors.saveAccessBtn, "Save Access", "Button");
+        await this.wait('minWait');
     }
 
 

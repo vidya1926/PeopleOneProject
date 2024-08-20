@@ -14,29 +14,6 @@ test(`TC107_Add_Skills`,async({profile,learnerHome})=>{
     await learnerHome.learnerLogin("LEARNERUSERNAME","Portal");
     await profile.clickProfile();
     await profile.detailsTab();
-    await profile.addSkills("test");
-
-    
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    await profile.addSkills();
 
 })
