@@ -2,8 +2,10 @@ import { expect } from "@playwright/test";
 import { test } from "../../../customFixtures/expertusFixture"
 import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from "../../../utils/fakerUtils";
+import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 const username: any = ("people" + FakerData.getUserId());
+
 test.describe(`People Module TC035,TC036,TC037 and TC039 `, async () => {
     test(`TC035_Verify that a user can be created and a profile picture uploaded`, async ({ adminHome, createUser }) => {
 

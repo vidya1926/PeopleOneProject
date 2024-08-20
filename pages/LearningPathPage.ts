@@ -56,7 +56,7 @@ export class LearningPathPage extends AdminHomePage {
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         codeInput: `//label[text()='CODE']/following-sibling::input`,
-
+        
 
     };
     async clickCreateLearningPath() {

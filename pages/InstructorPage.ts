@@ -12,9 +12,12 @@ export class InstructorPage extends EnrollmentPage{
              instFilter:`//button[@id='admin-filters-trigger']`,
              deliveryTypedropdown:`//span[text()='Delivery Type']/following::div[@id='wrapper-search_deliveryType']`,
              deliveryTypeOption:`//span[text()='Delivery Type']/following::div[@class='dropdown-menu show']//a`,
-              statusDropdown:`//span[text()='Status']/following::div[@id='wrapper-search_course_status']`,
-              statusOption:`//span[text()='Status']/following::div[@class='dropdown-menu show']//a`,
-            enrollmentIcon:`(//div[@aria-label="Enrollments"]//i)[1]`,
+            statusDropdown:`//span[text()='Status']/following::div[@id='wrapper-search_course_status']`,
+            statusOption:`//span[text()='Status']/following::div[@class='dropdown-menu show']//a`,
+            enrollmentIcon:(course:string)=>`//span[text()='${course}']/following::div[@aria-label="Enrollments"]//i`,
+            apply:`//button[text()='Apply']`,
+            searchField: "//input[@id='exp-search-field']",
+            searchResult:`//div[@id='exp-search-lms-scroll-results']//li`,
 
             };
     
@@ -31,29 +34,46 @@ export class InstructorPage extends EnrollmentPage{
     }
     
 
-    async selectDeliveryType(deliveryType: string) {
-        await this.click(this.selectors.deliveryTypedropdown, "DeliveryType", "dropdown");
-        for (const options of await this.page.locator(this.selectors.deliveryTypeOption).all()) {
-            const value = await options.innerText();
-            console.log(value)
-            if (value !== deliveryType) {
-                await this.click(`//span[@class='text' and text()='${value}']`, "DeliveryType", "Dropdown");
+    async selectDeliveryType() {
+        const deliveryType=["Classroom","Virtual Class"]
+        await this.click(this.selectors.deliveryTypedropdown, "DeliveryType", "dropdown");      
+        for(const type of deliveryType){
+                     const status= await this.page.locator(`//span[@class='text' and text()='${type}']`).getAttribute("aria-selected")
+        if(!status){
+            console.log(`${type} Element Selected`)            
+            }else{
+                await this.click(`//span[@class='text' and text()='${type}']`,"DeliveryType","Option")
             }
-        }}
+        }  await this.click(this.selectors.deliveryTypedropdown, "DeliveryType", "dropdown");     
 
+        }
+        
         async selectStatus(statusType: string) {
-            await this.click(this.selectors.statusDropdown, "DeliveryType", "dropdown");
-            for (const options of await this.page.locator(this.selectors.statusOption).all()) {
-                const value = await options.innerText();
-                console.log(value)
-                if (value !== statusType) {
-                    await this.click(`//span[@class='text' and text()='${value}']`, "DeliveryType", "Dropdown");
-                }
+           
+            await this.click(this.selectors.statusDropdown, "status", "dropdown");
+            const status= await this.page.locator(`//span[@class='text' and text()='${statusType}']`).getAttribute("aria-selected")
+            if(!status){
+               console.log(`${statusType} Selected`)
+            }else{
+                await this.click(`//span[@class='text' and text()='${statusType}']`,"status","Option")
             }
+            await this.click(this.selectors.statusDropdown, "status", "dropdown");
+        }
+        
+        async clickApply(){
+            await this.click(this.selectors.apply,"Apply","Button")
         }
 
-        async clickEnrollmentIcon(){
-            await this.click(this.selectors.enrollmentIcon,"Enrollments","Icon")
+        async entersearchField(data: string) {
+            await this.type(this.selectors.searchField, "Search Field", data);
+            await this.wait('mediumWait')
+            await this.validateElementVisibility(this.selectors.searchResult,"Course Option")
+            await this.mouseHover(this.selectors.searchResult,"Course Option")
+            await this.click(this.selectors.searchResult,"Course","Option")
+        }    
+
+        async clickEnrollmentIcon(data:string){
+            await this.click(this.selectors.enrollmentIcon(data),"Enrollments","Icon")
         }
 
 

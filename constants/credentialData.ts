@@ -2,6 +2,8 @@ import data from "../data/adminGroupsData.json"
 
 const managerName: any = data.managerName
 const commonUser: any = data.commonUser
+const internalUser:any=data.internalUser
+const externalUser:any=data.externalUser
 export let credentials = {
 
     CUSTOMERADMIN: {
@@ -54,6 +56,14 @@ export let credentials = {
     },
     NEWCUSTOMERADMIN: {
         username: "newcustomadmin",
+        password: "Welcome1@"
+    },
+    INTERNALUSER: {
+        username:internalUser ,
+        password: "Welcome1@"
+    },
+    EXTERNALUSER: {
+        username:externalUser,
         password: "Welcome1@"
     },
 };

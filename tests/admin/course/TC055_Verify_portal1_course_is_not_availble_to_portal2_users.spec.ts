@@ -47,6 +47,7 @@ test(`Verify using learner login`, async({learnerHome,catalog})=>{
     console.log(courseName)
     await catalog.searchCatalog(courseName);  
     await catalog.verifyCourse(courseName);
+   
 
 })
 
