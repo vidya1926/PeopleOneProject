@@ -6,7 +6,7 @@ import { updateCronDataJSON } from "../../../utils/jsonDataHandler";
 import { updateSingleInstanceAutoRegister } from "../DB/DBJobs";
 
 
-let courseName = "Cron " + FakerData.getCourseName();
+let courseName = ("Cron " + FakerData.getCourseName());
 const user = credentialConstants.LEARNERUSERNAME
 test(`Course Creation for  E-Learning work flow`, async ({ adminHome, createCourse, editCourse }) => {
     test.info().annotations.push(

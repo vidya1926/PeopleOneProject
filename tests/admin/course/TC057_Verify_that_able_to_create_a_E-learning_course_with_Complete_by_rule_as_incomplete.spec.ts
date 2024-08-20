@@ -6,9 +6,8 @@ import { updateSingleInstanceAutoRegister } from "../DB/DBJobs";
 
 
 
-const courseName = "Cron " + FakerData.getCourseName();
+const courseName = ("Cron " + FakerData.getCourseName());
 const user = credentialConstants.LEARNERUSERNAME
-//test.use({ storageState: "logins/expertusAdminLog.json"})
 test(`TC057_E-learning course with Complete by rule`, async ({ adminHome, createCourse, editCourse, createUser }) => {
 
     test.info().annotations.push(
@@ -21,8 +20,8 @@ test(`TC057_E-learning course with Complete by rule`, async ({ adminHome, create
     const newData = {
         tc057: courseName
     }
-    updateCronDataJSON(newData)
-    await adminHome.loadAndLogin("CUSTOMERADMIN")
+    updateCronDataJSON(newData);
+    await adminHome.loadAndLogin("CUSTOMERADMIN");
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
     await adminHome.clickCourseLink();
@@ -46,7 +45,7 @@ test(`TC057_E-learning course with Complete by rule`, async ({ adminHome, create
     await editCourse.clickClose();
     await editCourse.clickAccessSetting();
     await editCourse.setCourseMandatory();
-    await editCourse.clickSaveButton();
+    await createCourse.clickSave();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage()

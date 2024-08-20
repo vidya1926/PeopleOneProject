@@ -11,8 +11,8 @@ interface Data {
   instructorName?: string;
   commonUser?: string;
   enrollAdmin?: string;
-  internalUser?:string;
-  externalUser?:string;
+  internalUser?: string;
+  externalUser?: string;
 }
 
 const fileName = '../data/adminGroupsData.json';
@@ -78,6 +78,7 @@ interface tcData {
   tc073?: string
   tc056?: string
   tc057?: string
+  tc058?: string
 }
 const cronFile = '../data/cronjob.json';
 

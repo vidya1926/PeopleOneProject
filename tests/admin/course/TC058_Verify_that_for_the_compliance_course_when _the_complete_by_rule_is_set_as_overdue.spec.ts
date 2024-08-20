@@ -1,14 +1,18 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
+import { updateCronDataJSON } from "../../../utils/jsonDataHandler";
 import { courseEnrollmentCron } from "../DB/DBJobs";
 
 
-const courseName = FakerData.getCourseName();
+const courseName = ("Cron" + FakerData.getCourseName());
 test.describe(`TC058_Verify_that_for_the_compliance_course_when _the_complete_by_rule_is_set_as_overdue.spec.ts`, async () => {
     test(`TC058_Verify_that_for_the_compliance_course_set_as_overdue`, async ({ adminHome, createCourse }) => {
-
+        const newData = {
+            tc058: courseName
+        }
+        updateCronDataJSON(newData)
         test.info().annotations.push(
-            { type: `Author`, description: `Vidya` },
+            { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `E-learning course with Complete by rule for Overdue` },
             { type: `Test Description`, description: `Verify that E-learning course with Complete by rule` }
 
@@ -48,7 +52,7 @@ test.describe(`TC058_Verify_that_for_the_compliance_course_when _the_complete_by
         await catalog.searchCatalog(courseName);
         await catalog.clickEnrollButton();
         await catalog.viewCoursedetails();
-       
+
 
     })
 

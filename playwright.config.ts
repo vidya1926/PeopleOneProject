@@ -1,5 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { format } from 'date-fns';
+import { promiseHooks } from 'v8';
 
 /* const timestamp = format(new Date(), 'MM/dd/yyyy');
 const reportDir = `./reporter/playwright-reports-${timestamp}`; */
@@ -30,8 +31,8 @@ export default defineConfig({
       name: 'Chromium',
       use: {
         ...devices['Desktop Chromium'],
-        headless:false,
-        viewport:null,
+        headless: false,
+        viewport: null,
         launchOptions: {
           slowMo: 300,
           args: ["--start-maximized"]
@@ -39,6 +40,22 @@ export default defineConfig({
 
       }
     },
+    ...(
+      false ? [{
+        name: 'Verification',
+        testDir: './zCronVerification',
+        use: {
+          headless: false,
+          ...devices['Desktop Chromium'],
+          viewport: null,
+          launchOptions: {
+            slowMo: 300,
+            args: ["--start-maximized"]
+          }
+
+        }
+      },] : []
+    ),
 
     /* {
         name: 'firefox',
@@ -48,5 +65,5 @@ export default defineConfig({
       }},
       } */
   ],
-  
+
 });

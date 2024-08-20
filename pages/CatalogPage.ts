@@ -3,6 +3,7 @@ import { LearnerHomePage } from "./LearnerHomePage";
 import { FakerData, getCCnumber, getPonumber } from "../utils/fakerUtils";
 import { saveDataToJsonFile } from "../utils/jsonDataHandler";
 import { Certificate } from "crypto";
+import { th } from "@faker-js/faker";
 //import { VideoPlayer } from "../utils/videoplayerUtils";
 //import { playAndForwardVideo } from "../utils/videoplayerUtils";
 
@@ -71,6 +72,7 @@ export class CatalogPage extends LearnerHomePage {
         certificateCloseIcon: "//i[contains(@class,'pointer ms-auto')]",
         secondaryCourse: (course: string) => `//div[contains(text(),'${course}')]`,
         completePreviousContent: "//div[contains(text(),'You need to complete the previous content')]",
+        overDueText:"//span[text()='Overdue']",
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -92,6 +94,14 @@ export class CatalogPage extends LearnerHomePage {
     async mostRecent() {
         await this.validateElementVisibility(this.selectors.mostRecentMenuItem, "Most Recent");
         await this.mouseHover(this.selectors.mostRecentMenuItem, "Most Recent");
+    }
+
+    async verifyOverdue(data:string){
+        await this.click(this.selectors.completedCourse(data),"To Complete","Link");
+        await this.wait('mediumWait');
+        await this.validateElementVisibility(this.selectors.overDueText,"Overdue");
+        await this.verification(this.selectors.overDueText,"Overdue")
+        
     }
 
     async clickMoreonCourse(courseName: string) {
@@ -247,11 +257,6 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(completedCourseSelector, "Text");
     }
 
-
-    // async verifytoCompleteCourse(name: string) {
-    //     const completedCourseSelector = this.selectors.completedCourse(name);
-    //     await this.mouseHover(completedCourseSelector, "Text");
-    // }
     async verifyExpiredContent() {
         await this.validateElementVisibility(this.selectors.expiredContent, "Expired");
         await this.verification(this.selectors.expiredContent, "Expired")

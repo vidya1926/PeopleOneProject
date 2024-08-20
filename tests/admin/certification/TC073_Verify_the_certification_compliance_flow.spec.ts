@@ -33,7 +33,7 @@ test.describe(`TC073_Verify_the_certification_compliance_flow`, async () => {
     })
 
 
-    const title = FakerData.getCourseName();
+    const title = ("Cron" + FakerData.getCourseName());
     test(`TC073_Verify_the_certification_compliance_flow`, async ({ learningPath, adminHome, createCourse }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael S` },
