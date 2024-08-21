@@ -18,13 +18,22 @@ export class ManagerPage extends LearnerHomePage {
        okButton:`(//span[text()='Recommended successfully']/following::button)[1]`,
        selectDropdown:`//input[@id='select-team-filter-field']`,
        searchUser:`//input[@id='select-team']`,
-       teamUseroption:(user:string)=>`//li[text()='${user}']`,
-       filter:`//h2[text()='My Team']/following::div[text()='Filters']`,
+       closebutton:`//div[contains(@id,'simplemodal')]//i[contains(@class,'fa-duotone fa-times')]`,
+       teamUseroption:(user:string)=>`//li[contains(text(),'${user}')]`,
+       filter:`(//h2[text()='My Team']/following::div[text()='Filters'])[1]`,
        selectReportee:(data:string)=>`(//span[text()='${data}']/preceding-sibling::i)[2]`,
-       reportee:(reportee:string)=>`(//span[text()='${reportee}'])[1]`
+       search:`//input[@id='exp-searchmyteam-lnrsearch-field']`,       
+       searchResult:`//div[@class='lms-scroll-results']//li`,
+       reportee:(data:string)=>`(//div[@class='text-uppercase icontxt']/span[text()='${data} Reportee'])[1]`,
+       userData:`(//div[@class='h2_inactive text-capitalize pointer'])[1]`,
+       applyButton: `//button[text()='Apply']`,
+       viewLearning:(user:string)=>`(//div[text()='${user}']/following::i)[1]`,
+       allCertandTP:(courseType:string)=>`//a[text()='${courseType}']`,
+       allCourses:`//h5[contains(@class,'text-truncate text-truncate field')]`,
+      
 
     }
-////span[text()='Direct Reportee']/preceding::div[@class='h2_inactive text-capitalize pointer']
+
     async enterSearchCourse(data:string){
         await this.keyboardType(this.selectors.searchCourse,data)
     }
@@ -55,24 +64,68 @@ export class ManagerPage extends LearnerHomePage {
         await this.validateElementVisibility(this.selectors.okButton,"Ok Button")
         await this.click(this.selectors.okButton,"OK", "button")
         }
+
         async selectTeam(){
            await this.click(this.selectors.selectTeamMember,"Team Memeber","Checkbox")
+           await this.wait('mediumWait')
             
           }
 
         async selectTeamUser(data:string){
             await this.click(this.selectors.selectDropdown,"Team User","dropdown")
+            await this.wait('mediumWait')
             await this.keyboardType(this.selectors.searchUser,data)
+            await this.wait('maxWait')
             await this.mouseHover(this.selectors.teamUseroption(data),"Team user Dropdown")
             await this.click(this.selectors.teamUseroption(data),"Team user ","Dropdown")
-        }     
-
+        //     }
+        //     catch{
+        //     await this.click(this.selectors.closebutton,"Close","Icon")
+        //     await this.page.reload();
+        //     this.clickrecommendIcon(courseName);
+        //     this.selectTeam();
+        //     await this.click(this.selectors.selectDropdown,"Team User","dropdown")
+        //     await this.keyboardType(this.selectors.searchUser,data)
+        //     await this.mouseHover(this.selectors.teamUseroption(data),"Team user Dropdown")           
+        // }       
+        // await this.click(this.selectors.teamUseroption(data),"Team user ","Dropdown")
+    }              
         
-        
-        async verifyReportee(reportee:string){
-            await this.validateElementVisibility(this.selectors.reportee(reportee),"Reportee")
-            await this.verification(this.selectors.reportee(reportee),"Reportee")    
-
+        async clickFilter(reportee:string){
+            await this.click(this.selectors.filter,"Filter" ,"Search box")
+            await this.click(this.selectors. selectReportee(reportee),"Select reportee","dropdown")
+            await this.click(this.selectors.applyButton,"Apply","Button")
         }
+        async verifyReportee(user:string,reportee:string){
+
+            await this.validateElementVisibility(this.selectors.reportee(reportee),reportee)
+            await this.verification(this.selectors.userData,user)
+            //other method
+            // const searchUser=this.selectors.search;
+            // await this.type(searchUser,"Textfield",user)
+            // await this.mouseHover(this.selectors.searchResult,"Select User")
+            // await this.click(this.selectors.searchResult,"Select User","dropdown")
+            // await this.wait("minWait")
+            // await this.validateElementVisibility(this.selectors.reportee(reportee),reportee)           
+           }
+
+           //div[text()='Learner user']/following::i)[1]
+           async clickViewLearning(user:string){
+          
+            await this.validateElementVisibility(this.selectors.viewLearning(user),"View Learning")
+            await this.mouseHover(this.selectors.viewLearning(user),"View Learning")
+            await this.click(this.selectors.viewLearning(user),"View Learning","Icon")
+           }
+
+           async verifyallCourses(courseType:string){
+              await this.click(this.selectors.allCertandTP(courseType),`${courseType}`,"Tab")
+              await this.wait('mediumWait')             
+              const allCourse =await this.page.locator(this.selectors.allCourses).all()
+                    for(const course of allCourse){
+                      //  console.log(await course.innerText())
+                        expect(course).toBeVisible();
+            }
+            }
+
 
 }

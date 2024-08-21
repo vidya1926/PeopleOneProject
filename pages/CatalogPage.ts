@@ -91,9 +91,9 @@ export class CatalogPage extends LearnerHomePage {
     await this.click(this.selectors.recommendationLink,"Recommendations","Link")
    }
 
-   async verifyCourserecommemnded(course:string){
+   async verifyCourserecommemnded(course:string){  
+    this.validateElementVisibility(this.selectors.verifyRecommendCourse(course), "course")
     await this.mouseHover(this.selectors.verifyRecommendCourse(course), "Text");
-    
    }
 
     async cronstoragejson(filepath: string, data: string) {
