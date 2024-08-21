@@ -24,11 +24,24 @@ export class AdminLogin extends PlaywrightWrapper {
             this.page.locator("//button[contains(text(),'SIGN')]").click(),
             this.wait('minWait')
         ]);
-     /*    const logoutButton = this.page.locator("//div[@class='logout']");
-
-        //console.log("Storing state...");
-        //await this.storeState("./logins/expertusAdminLog.json"); */
+        /*    const logoutButton = this.page.locator("//div[@class='logout']");
+   
+           //console.log("Storing state...");
+           //await this.storeState("./logins/expertusAdminLog.json"); */
     }
+
+    public async singleLogin(username: string, password?: string) {
+
+        console.log("Starting admin login process...");
+        await this.clearAndType("#username", "Username", username);
+        await this.clearAndType("#password", "Password", credentialConstants.PASSWORD);
+        console.log("Clicking Sign In button...");
+        await Promise.all([
+            this.page.locator("//button[contains(text(),'SIGN')]").click(),
+            this.wait('minWait')
+        ]);
+    }
+
 
     private async clearAndType(selector: string, fieldName: string, value: string) {
         console.log(`Clearing and typing into ${fieldName}...`);

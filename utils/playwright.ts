@@ -253,11 +253,11 @@ export abstract class PlaywrightWrapper {
         })
     }
 
-    async draganddrop(sourceLocator: string, targetLocator: string, sourceElement: string, targetElement: string) {
-        await test.step(`The ${sourceElement} dragged  to ${targetElement} Succesfully`, async () => {
-            const sourceElement = this.page.locator(sourceLocator)
-            const targetElement = this.page.locator(targetLocator)
-            await sourceElement.dragTo(targetElement)
+    async draganddrop(sourceLocator: string, targetLocator: string) {
+        await test.step(`The sourceElement dragged  to targetElement Succesfully`, async () => {
+            const sourceElement = this.page.locator(sourceLocator);
+            const targetElement = this.page.locator(targetLocator);
+            await sourceElement.dragTo(targetElement);
         })
     }
 
@@ -378,18 +378,21 @@ export abstract class PlaywrightWrapper {
         });
     }
 
-    async clickCheckbox(locator: string, name: string) {
+    async isCheckboxClicked(locator: string, name: string) {
         await test.step(`Checkbox ${name} is selected`, async () => {
-            await this.page.focus(locator)
-            const value=await this.page.isChecked(locator)
-            console.log(value)
-          //  await this.page.check(locator, { force: true });
+            await this.page.focus(locator);
+            await this.page.check(locator,{force:true});
+            let value = await this.page.isChecked(locator);
+            if (value == false) {
+                console.log("The CheckBox is not Clicked");
+            }
+            
         })
     }
 
     // async radioButton(locator: string, name: string) {
     //     await test.step(`Checkbox ${name} is selected`, async () => {
-        
+
     //       if(!await this.page.isChecked(locator)){
     //         await this.page.focus(locator)
     //         await this.page.check(locator, { force: true });
