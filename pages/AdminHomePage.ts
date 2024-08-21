@@ -9,7 +9,7 @@ export class AdminHomePage extends AdminLogin {
 
     public selectors = {
         signOutLink: "//div[@class='logout']/a",
-        dragableMenu: (menu: string) =>`//div[text()='${menu}']/following::div[text()="Create"][1]`,
+        dragableMenu: (menu: string) => `//div[text()='${menu}']/following::div[text()="Create"][1]`,
         menu: "//div[text()='Menu']",
         peopleMenu: "//span[text()='People']",
         learningMenu: "//span[text()='Learning']",
@@ -24,7 +24,7 @@ export class AdminHomePage extends AdminLogin {
         metaECommerceLink: "//a[text()='E-Commerce']",
         metaGeneralLink: "//a[text()='General']",
         adminGroupLink: "//a[text()='Admin Group']",
-        learnerGrouplink:`//a[text()='Learner Group']`,
+        learnerGrouplink: `//a[text()='Learner Group']`,
         locationLink: "//a[text()='Location']",
         commerceMenu: `//span[text()='Commerce']`,
         learningPathLink: "//a[text()='Learning Path']",
@@ -43,21 +43,29 @@ export class AdminHomePage extends AdminLogin {
         assessmentMenu: `//span[text()='Assessment']`,
         assessmentQuestionLink: `//span[text()='Assessment']//parent::div/following-sibling::ul//a[text()='Questions']`,
         assessmentLink: "//a[text()='Assessment']",
-        enrollMenu:`//span[text()='Enrollments']`,
-        enrollLink:`//a[text()='Enroll']`
+        enrollMenu: `//span[text()='Enrollments']`,
+        enrollLink: `//a[text()='Enroll']`,
+        quickAccessIcon: `#dd-icon-wrapper i`,
+        quickAccessDD: `button div:text-is('Select Quick Access Buttons To Add Below')`,
+        quickAccessValue: `//div[@class='dropdown-menu show'] //a`,
+        tickIcon: `i[aria-label="Click here to save"]`,
+        deleteIcon: `//div[contains(@class,'mandatory pointer')]//i`,
+        yesBtn: `//button[text()='Yes']`,
+        quickAccessModules: `//div[contains(@class,'mandatory')]/following-sibling::div`,
+
 
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
         //this.common(page, context).catch(err => console.error("Error in common setup:", err));
-       // this.setupPageListeners();
+        // this.setupPageListeners();
     }
 
     public async loadAndLogin(role: string) {
         console.log("Loading admin home page...");
         await this.context.clearCookies();
-        await this.page.goto(AdminLogin.pageUrl);       
+        await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
@@ -74,32 +82,21 @@ export class AdminHomePage extends AdminLogin {
 
     }
 
-/* 
-    private setupPageListeners() {
-        this.page.on('load', async () => {
-            try {
-                console.log("Page loaded. Executing common method...");
-                await this.executeAfterLoad();
-            } catch (err) {
-                console.error("Error executing common method after load:", err);
-                throw err;
-            }
-        });
-    }
-    private async executeAfterLoad() {
-        try {
-            const logoutButton = this.page.locator("//div[@class='logout']");
-            const title = await this.page.title();
-            if (title == " 500 Internal Server Error") {
-                await this.page.reload();
-            } else {
-                await expect(logoutButton, { message: "Successfully Logged In" }).toBeVisible();
-            }
-        } catch (err) {
-            console.error("Error executing common method after load:", err);
-            throw err;
+    public async singleUserLogin(username: string) {
+        console.log("Loading admin home page...");
+        await this.context.clearCookies();
+        await this.page.goto(AdminLogin.pageUrl);
+        await this.singleLogin(username);
+        let pageTitle = await this.getTitle();
+        console.log("Page Title:", pageTitle);
+        if (pageTitle.toLowerCase().includes("signin")) {
+            console.log("Sign-in page detected. Performing login...");
+            await this.singleLogin(username);
+            await this.wait('mediumWait');
+            pageTitle = await this.getTitle();
+            console.log("Page Title after login:", pageTitle);
         }
-    } */
+    }
 
     public async isSignOut() {
         await this.validateElementVisibility(this.selectors.signOutLink, "Sign Out");
@@ -145,6 +142,56 @@ export class AdminHomePage extends AdminLogin {
     public async clickOnAssessmentLink() {
         await this.validateElementVisibility(this.selectors.assessmentLink, "Assessment");
         await this.click(this.selectors.assessmentLink, "Assessment", "Link");
+    }
+
+    public async clickQuickAccess() {
+        await this.validateElementVisibility(this.selectors.quickAccessIcon, "QuickAccess Icon");
+        await this.click(this.selectors.quickAccessIcon, "QuickAccess Icon", "Icon");
+        await this.click(this.selectors.quickAccessDD, "QuickAccess DropDown", "Drop Down");
+        await this.wait('minWait');
+    }
+
+    public async selectingQuickAccessValue() {
+        let count = await this.page.locator(this.selectors.quickAccessValue).count() / 2;
+        console.log(count);
+        for (let i = 0; i < count; i++) {
+            await this.click(`(${this.selectors.quickAccessValue})[1]`, "Access Module", "DropDown");
+            await this.page.waitForTimeout(500);
+        }
+        await this.click(this.selectors.tickIcon, "Tick Icon", "Icon");
+        await this.spinnerDisappear();
+    }
+
+    public async removeQuickAccessModule() {
+        await this.validateElementVisibility(this.selectors.quickAccessIcon, "QuickAccess Icon");
+        await this.click(this.selectors.quickAccessIcon, "QuickAccess Icon", "Icon");
+        await this.wait('mediumWait');
+        for (let index = 0; index < 5; index++) {
+            let count = await this.page.locator(this.selectors.deleteIcon).count();
+            let randomNumber = Math.floor(Math.random() * (count / 3)) + 1;
+            await this.click(`(${this.selectors.deleteIcon})[${randomNumber}]`, "Delete Icon", "Icon");
+            await this.wait('minWait');
+            await this.click(this.selectors.yesBtn, "Yes", "Button");
+        }
+        await this.click(this.selectors.tickIcon, "Tick Icon", "Icon");
+        await this.spinnerDisappear();
+
+    }
+
+    public async dragTheModule() {
+        await this.validateElementVisibility(this.selectors.quickAccessIcon, "QuickAccess Icon");
+        await this.click(this.selectors.quickAccessIcon, "QuickAccess Icon", "Icon");
+        await this.wait('mediumWait');
+        let count = await this.page.locator(this.selectors.quickAccessModules).count();
+        console.log(count);
+        for (let index = 0; index < 4; index++) {
+            let randomNumber = Math.floor(Math.random() * count / 2) + 1
+            await this.draganddrop(`(${this.selectors.quickAccessModules})[${randomNumber}]`, `(${this.selectors.quickAccessModules})[${count}]`)
+            await this.wait('minWait');
+        }
+        await this.click(this.selectors.tickIcon, "Tick Icon", "Icon");
+        await this.spinnerDisappear();
+
     }
 
     public async clickOnSurveyQuestionLink() {
@@ -220,7 +267,7 @@ export class AdminHomePage extends AdminLogin {
     public async adminGroup() {
         await this.click(this.selectors.adminGroupLink, "AdminGroup", "Link");
     }
-    
+
     public async learnerGroup() {
         await this.click(this.selectors.learnerGrouplink, "AdminGroup", "Link");
     }
@@ -272,16 +319,16 @@ export class AdminHomePage extends AdminLogin {
 
     }
 
-    public async clickEnrollmentMenu(){
-        await this.click(this.selectors.enrollMenu,"Enrollment","Link")
+    public async clickEnrollmentMenu() {
+        await this.click(this.selectors.enrollMenu, "Enrollment", "Link")
     }
 
-    public async clickEnroll(){
-        await this.click(this.selectors.enrollLink,"Enrollment","Link")
+    public async clickEnroll() {
+        await this.click(this.selectors.enrollLink, "Enrollment", "Link")
     }
 
 
-    
+
 
 }
 

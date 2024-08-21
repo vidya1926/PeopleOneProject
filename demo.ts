@@ -191,10 +191,15 @@ let count = a.filter(item => item === "Ajay").length;
 console.log(count); // Output: 4
  */
 // Add a count method to the Array prototype
-Array.prototype.count = function (value) {
-    return this.filter(item => item === value).length;
-};
 
 // Example usage
-let a = ["Ajay", "Ajay", "Ajay", "Ajay"];
-console.log(a.count()); // Output: 4
+/* let a = ["Ajay", "Ajay", "Ajay", "Ajay"];
+console.log(a.length); // Output: 4
+ */
+for (let index = 0; index < 10; index++) {
+    let count = 22;
+    let randomNumber = Math.floor(Math.random() * (count / 3))+1;
+    console.log(randomNumber);
+
+}
+

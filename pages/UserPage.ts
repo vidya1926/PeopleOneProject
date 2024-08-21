@@ -161,6 +161,7 @@ export class UserPage extends AdminHomePage {
     }
 
     async selectLanguage(language: string) {
+        await this.page.locator(this.selectors.language).scrollIntoViewIfNeeded();
         await this.click(this.selectors.language, "Language", "Field");
         await this.type(this.selectors.searchLanguage, "Input Field", language);
         await this.mouseHover(this.selectors.courseLanguageLink(language), language);

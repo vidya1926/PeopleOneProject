@@ -13,7 +13,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
   retries: 0,
-  workers: 1,
+  workers: 2,
   repeatEach: 0,
   //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   reporter: [['html', { open: 'always' }]],
