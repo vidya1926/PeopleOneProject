@@ -1,7 +1,14 @@
 import { test } from '../../customFixtures/expertusFixture';
 import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
+import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
+
+const username = FakerData.getUserId();
+const newData = {
+    teamUser1: username
+};
+updateFieldsInJSON(newData)
 
 test(`TC032_Create Team User1`, async ({ adminHome, createUser ,createCourse}) => {
     test.info().annotations.push(
@@ -19,7 +26,7 @@ test(`TC032_Create Team User1`, async ({ adminHome, createUser ,createCourse}) =
         await createUser.verifyCreateUserLabel();
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username",FakerData.getUserId());
+        await createUser.enter("username",username);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.selectLanguage("English")
         await createUser.selectManager("manager");

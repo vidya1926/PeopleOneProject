@@ -72,20 +72,29 @@ export class CatalogPage extends LearnerHomePage {
         certificateCloseIcon: "//i[contains(@class,'pointer ms-auto')]",
         secondaryCourse: (course: string) => `//div[contains(text(),'${course}')]`,
         completePreviousContent: "//div[contains(text(),'You need to complete the previous content')]",
+        recommendationLink:`//a[text()='Recommendations']`,
+        verifyRecommendCourse:(course:string)=>`//div[text()='${course}']`,     
         overDueText:"//span[text()='Overdue']",
     };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
     }
-
-
     async searchCatalog(data: string) {
         const searchSelector = this.selectors.searchInput;
         await this.type(searchSelector, "Search Field", data);
         await this.keyboardAction(searchSelector, "Enter", "Input", "Search Field");
         await this.page.waitForTimeout(10000);
     }
+
+   async clickRecommendation(){
+    await this.click(this.selectors.recommendationLink,"Recommendations","Link")
+   }
+
+   async verifyCourserecommemnded(course:string){
+    await this.mouseHover(this.selectors.verifyRecommendCourse(course), "Text");
+    
+   }
 
     async cronstoragejson(filepath: string, data: string) {
         saveDataToJsonFile(filepath, data);
@@ -130,15 +139,13 @@ export class CatalogPage extends LearnerHomePage {
         const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
         await this.wait('mediumWait');
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
+        await this.wait('minWait')
 
 
     }
-
-
     async clickRequestapproval() {
         await this.click(this.selectors.requestApproval, "Request Approval", "Button");
     }
-
     async requstcostCenterdetails() {
         await this.validateElementVisibility(this.selectors.approvalcostcenter, "Approval POPup")
         await this.type(this.selectors.approvalcostcenter, "Approval POPup", getCCnumber())//const center number of 10 digits

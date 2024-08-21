@@ -1,7 +1,7 @@
 import { test } from '../../customFixtures/expertusFixture'
 import { FakerData } from '../../utils/fakerUtils';``
 //test.use({ storageState: "logins/expertusAdminLog.json"})
-test(`TC115TC116_Add_External_Training_Certificate_Manager`,async({profile,learnerHome})=>{
+test(`TC115_Add_External_Training_Certificate_Manager`,async({profile,learnerHome})=>{
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -13,10 +13,7 @@ test(`TC115TC116_Add_External_Training_Certificate_Manager`,async({profile,learn
     await learnerHome.learnerLogin("LEARNERUSERNAME", "Portal");
     await profile.clickProfile();
     await profile.detailsTab();
-    await profile.certificateVerificationbyManager();
-    //Manager name to be added appln issue
+    await profile.certificateVerificationbyManager("Manager User");
     await profile.clickSave();
     await profile.verifySavedChanges();
-
-
 })

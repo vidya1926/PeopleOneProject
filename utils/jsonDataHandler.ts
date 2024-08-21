@@ -11,8 +11,10 @@ interface Data {
   instructorName?: string;
   commonUser?: string;
   enrollAdmin?: string;
-  internalUser?: string;
-  externalUser?: string;
+  internalUser?:string;
+  externalUser?:string;
+  teamUser1?:string;
+  teamUser2?:string;
 }
 
 const fileName = '../data/adminGroupsData.json';

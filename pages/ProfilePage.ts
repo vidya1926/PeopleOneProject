@@ -126,7 +126,8 @@ export class ProfilePage extends LearnerHomePage {
         //  selectVerification: "//select[@id='selectedVerificationBy']",
         verifyBy: `//div[@id='wrapper-verify_by']`,
         selectManger: (userType: string) => `//div[@id='wrapper-verify_by']//span[text()='${userType}']`,
-        managerName: `//div[text()='Select']`,
+        managerOption: `//div[@id='wrapper-selectManager']`,
+        managerOpt:(manager:string)=>`//span[ @class='text' and contains(text(),'${manager}')]`,
         name: "//input[@id='trainingUserName']",
         othersName: `//input[@id='other_user_name']`,
         titleField: "(//input[@id='title'])[1]",
@@ -287,7 +288,7 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
-    async certificateVerificationbyManager() {
+    async certificateVerificationbyManager(managerUser:string) {
         await this.click(this.selectors.externalTraining, "External Training", "Icon");
         await this.click(this.selectors.addIcon, "Add", "Icon");
         await this.type(this.selectors.titleField, "Title", FakerData.getcertificationTitle());
@@ -299,8 +300,9 @@ export class ProfilePage extends LearnerHomePage {
         await this.uploadFile(this.selectors.uploadCert, "../data/sample.pdf");
         await this.click(this.selectors.verifyCertificate, "Verify Certificate By", "Checkbox");
         await this.click(this.selectors.verifyBy, "Manager/Other", "Dropdown")
-        //need to addd manager name ..stored values are not populated
-        await this.click(this.selectors.selectManger("Manager"), "Manager", "Option")
+        await this.click(this.selectors.selectManger("Manager"), "Manager", "Option") 
+        await this.click(this.selectors.managerOption,"Manager option","Dropdown")     
+        await this.click(this.selectors.managerOpt(managerUser),"Manager","Option")  
         await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 
