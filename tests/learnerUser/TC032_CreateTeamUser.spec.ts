@@ -33,6 +33,4 @@ test(`TC032_Create Team User1`, async ({ adminHome, createUser ,createCourse}) =
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
-
-
 })
