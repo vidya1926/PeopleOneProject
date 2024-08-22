@@ -72,9 +72,9 @@ export class CatalogPage extends LearnerHomePage {
         certificateCloseIcon: "//i[contains(@class,'pointer ms-auto')]",
         secondaryCourse: (course: string) => `//div[contains(text(),'${course}')]`,
         completePreviousContent: "//div[contains(text(),'You need to complete the previous content')]",
-        recommendationLink:`//a[text()='Recommendations']`,
-        verifyRecommendCourse:(course:string)=>`//div[text()='${course}']`,     
-        overDueText:"//span[text()='Overdue']",
+        recommendationLink: `//a[text()='Recommendations']`,
+        verifyRecommendCourse: (course: string) => `//div[text()='${course}']`,
+        overDueText: "//span[text()='Overdue']",
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -87,9 +87,9 @@ export class CatalogPage extends LearnerHomePage {
         await this.page.waitForTimeout(10000);
     }
 
-   async clickRecommendation(){
-    await this.click(this.selectors.recommendationLink,"Recommendations","Link")
-   }
+    async clickRecommendation() {
+        await this.click(this.selectors.recommendationLink, "Recommendations", "Link")
+    }
 
    async verifyCourserecommemnded(course:string){  
     this.validateElementVisibility(this.selectors.verifyRecommendCourse(course), "course")
@@ -105,12 +105,12 @@ export class CatalogPage extends LearnerHomePage {
         await this.mouseHover(this.selectors.mostRecentMenuItem, "Most Recent");
     }
 
-    async verifyOverdue(data:string){
-        await this.click(this.selectors.completedCourse(data),"To Complete","Link");
+    async verifyOverdue(data: string) {
+        await this.click(this.selectors.completedCourse(data), "To Complete", "Link");
         await this.wait('mediumWait');
-        await this.validateElementVisibility(this.selectors.overDueText,"Overdue");
-        await this.verification(this.selectors.overDueText,"Overdue")
-        
+        await this.validateElementVisibility(this.selectors.overDueText, "Overdue");
+        await this.verification(this.selectors.overDueText, "Overdue")
+
     }
 
     async clickMoreonCourse(courseName: string) {
@@ -140,6 +140,9 @@ export class CatalogPage extends LearnerHomePage {
         await this.wait('mediumWait');
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
         await this.wait('minWait')
+        this.page.on('console', msg => {
+            console.log(`Console Log: ${msg.text()}`);
+        });
 
 
     }

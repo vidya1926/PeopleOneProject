@@ -24,7 +24,7 @@ test(`Create User and assigning Group to the User`, async ({ adminHome, createCo
     await adminHome.people();
     await adminHome.adminGroup();
     await adminGroup.searchAdmin("DemoAdmin");
-    await adminGroup.clickAdminGroup("DemoAdmin");
+    await adminGroup.clickGroup("DemoAdmin");
     await adminGroup.searchUser(customAdmin)
     await adminGroup.clickuserCheckbox(customAdmin)
     await adminGroup.clickSelelctUsers();

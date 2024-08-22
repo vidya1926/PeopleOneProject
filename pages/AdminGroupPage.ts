@@ -28,7 +28,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
         await this.type(this.selectors.searchCustomerAdmin, "Search Admin", admin)
         await this.mouseHoverandClick(this.selectors.selectPopup, this.selectors.selectPopup, "POP up ", "option");
     }
-    public async clickAdminGroup(data:string) {
+    public async clickGroup(data:string) {
         await this.click(this.selectors.clickAdminGroup(data), "Customer Admin", "Button");
     }
 

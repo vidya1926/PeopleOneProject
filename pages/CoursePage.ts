@@ -195,6 +195,9 @@ export class CoursePage extends AdminHomePage {
         const path = `../data/samplevideo2.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
         await this.uploadFile(this.selectors.uploadInput, path);
+        this.page.on('console', msg => {
+            console.log(`Console Log: ${msg.text()}`);
+        });
         await this.validateElementVisibility(this.selectors.progress, "Loading")
         await this.validateElementVisibility(this.selectors.attachedContent("video1"), "video1");
     }
