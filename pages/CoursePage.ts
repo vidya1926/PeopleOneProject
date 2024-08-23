@@ -2,6 +2,7 @@ import { Page, BrowserContext } from "@playwright/test";
 import { AdminHomePage } from "./AdminHomePage";
 import { FakerData, getCurrentDateFormatted, getFutureDate, getnextMonthFormatted, getPastDate, getRandomLocation, getRandomSeat, gettomorrowDateFormatted, score } from "../utils/fakerUtils";
 import { getRandomItemFromFile } from "../utils/jsonDataHandler";
+import { vi } from "date-fns/locale/vi";
 
 
 export class CoursePage extends AdminHomePage {
@@ -192,14 +193,22 @@ export class CoursePage extends AdminHomePage {
     }
 
     async uploadvideo() {
-        const path = `../data/samplevideo2.mp4`
+        let videoContent = `testVideo1`
+        const path = `../data/${videoContent}.mp4`
         await this.mouseHover(this.selectors.uploadDiv, "upload");
+        await this.wait('maxWait');
         await this.uploadFile(this.selectors.uploadInput, path);
-        this.page.on('console', msg => {
-            console.log(`Console Log: ${msg.text()}`);
-        });
+        /*  this.page.on('console', msg => {
+             console.log(`Console Log: ${msg.text()}`);
+         }); */
+        /*   this.page.on('response', async response => {
+              console.log(`Response received from: ${response.url()}`);
+              console.log(`Response status: ${response.status()}`);
+              console.log(`Response headers: ${JSON.stringify(response.headers())}`);
+              console.log(`Response body: ${await response.text()}`);
+          }); */
         await this.validateElementVisibility(this.selectors.progress, "Loading")
-        await this.validateElementVisibility(this.selectors.attachedContent("video1"), "video1");
+        await this.validateElementVisibility(this.selectors.attachedContent(videoContent), videoContent);
     }
 
 

@@ -330,6 +330,7 @@ export abstract class PlaywrightWrapper {
         } else {
             console.error('Input element not found');
         }
+        await this.wait('maxWait');
     }
 
     async wait(waitType: 'minWait' | 'mediumWait' | 'maxWait') {
@@ -381,12 +382,12 @@ export abstract class PlaywrightWrapper {
     async isCheckboxClicked(locator: string, name: string) {
         await test.step(`Checkbox ${name} is selected`, async () => {
             await this.page.focus(locator);
-            await this.page.check(locator,{force:true});
+            await this.page.check(locator, { force: true });
             let value = await this.page.isChecked(locator);
             if (value == false) {
                 console.log("The CheckBox is not Clicked");
             }
-            
+
         })
     }
 
