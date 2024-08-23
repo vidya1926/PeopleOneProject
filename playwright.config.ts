@@ -23,7 +23,7 @@ export default defineConfig({
     screenshot: "on",
     video: 'on',
     ignoreHTTPSErrors: true,
-
+    // testMatch: '**/TC001.spec.ts'
     //slowMo:2000,
   },
   projects: [
@@ -41,7 +41,7 @@ export default defineConfig({
       }
     },
     ...(
-      false ? [{
+      true ? [{
         name: 'Verification',
         testDir: './zCronVerification',
         use: {

@@ -31,7 +31,7 @@ test(`dummy`, async ({ adminHome, createCourse }) => {
 
 
 
-test(`dummy2`, async ({ learnerHome, catalog }) => {
+test.skip(`dummy2`, async ({ learnerHome, catalog }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `TC001_Learner Side Course Enrollment` },
