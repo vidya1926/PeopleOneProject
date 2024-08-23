@@ -8,9 +8,9 @@ const description = FakerData.getDescription()
 
 test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     test.info().annotations.push(
-        { type: `Author`, description: `Ajay Michael` },
+        { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the course as Single instance` },
-        { type: `Test Description`, description: `Verify that course should be created for Single instance` }
+        { type: `Test Description`, description: `Verify that course should be created for AICC content` }
     );
 
     await adminHome.loadAndLogin("CUSTOMERADMIN")

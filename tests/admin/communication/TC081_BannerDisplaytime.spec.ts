@@ -19,7 +19,7 @@ test(`TC081_Verify the  banner in sequence`, async ({ adminHome, bannerHome, cre
     await bannerHome.enterFromDate();
     await bannerHome.enterTotodayDate();
     await bannerHome.selectSequence(2);
-    await createCourse.selectPortalOption();
+    await createCourse.selectDomainOption("E1Internal");
     await bannerHome.uploadImage("Qeagle");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
