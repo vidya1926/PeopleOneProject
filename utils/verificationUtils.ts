@@ -1,40 +1,14 @@
-import { expect } from '@playwright/test';
+import { AxiosResponse } from 'axios';
 
-/**
- * Utility class for verification and assertion functions related to API responses.
- */
-class VerificationUtils {
-
-    /**
-     * Asserts that the response status code matches the expected status code.
-     * @param {Response} response - The API response object.
-     * @param {number} expectedStatusCode - The expected HTTP status code.
-     */
-    assertResponseStatusCode(response, expectedStatusCode) {
-        console.log(`Asserts that Response Status code is '${expectedStatusCode}'.`)
-        expect(response.status()).toBe(expectedStatusCode)
+export async function assertResponse(response: AxiosResponse<any>, expectedStatus: number, expectedField?: string) {
+    let status = response.status
+    if (status !== expectedStatus) {
+        throw new Error(`Expected status ${expectedStatus} but received ${response.status}`);
     }
 
-    /**
-     * Asserts that the response body contains the specified key.
-     * @param {Object} responseBody - The JSON response body.
-     * @param {string} expectedKeyName - The expected key in the response body.
-     */
-    assertResponseBodyKeyPresent(responseBody, expectedKeyName) {
-        console.log(`Asserts that Response Body has property: '${expectedKeyName}'.`)
-        expect(responseBody).toHaveProperty(expectedKeyName);
+    if (expectedField && !response.data[expectedField]) {
+        throw new Error(`Expected field "${expectedField}" not found in response`);
     }
-
-    /**
-     * Asserts that the response body key has the expected value.
-     * @param {Object} responseBody - The JSON response body.
-     * @param {string} expectedKeyName - The expected key in the response body.
-     * @param {any} expectedValue - The expected value for the specified key.
-     */
-    assertResponseBodyKeyValue(responseBody, expectedKeyName, expectedValue) {
-        console.log(`Asserts that Response Body has key: '${expectedKeyName}' with value: '${expectedValue}'.`);
-        expect(responseBody[expectedKeyName]).toBe(expectedValue);
-    }
+    throw new Error('Assertion passed: Response is as expected');
+    //console.log('Assertion passed: Response is as expected');
 }
-
-export default new VerificationUtils;
