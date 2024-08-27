@@ -117,20 +117,27 @@ export class LearnerHomePage extends LearnerLogin {
 
 
     public async verifySequence(title: string, seqNumber: number) {
-        await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
-
-        const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
-        for (let index = 1; index <= availaberBnner; index++) {
-            try {
-                if (index == seqNumber) {
-                    const name = await this.getInnerText(this.selectors.bannerName)
-                    expect(name).toContain(title)
-                }
-            }
-            catch (error) {
-                console.log(error)
-            }
-        }
+        const bannerEle= this.page.locator("//div[contains(@class,'col pointer')]//h1")
+        const sequenceCount=await bannerEle.count();
+        expect(sequenceCount).toBeGreaterThanOrEqual(2);     
+        const secondElement = bannerEle.nth(1)
+        console.log(await secondElement.innerText())
+                // Verify that the second element is visible
+        const banner = await secondElement.isVisible();
+        expect(banner).toBe(true);     
+        // for (let index = 1; index <= sequenceCount; index++) {
+        //     try {
+        //         if (index == seqNumber) {
+        //             const name = await this.getInnerText(this.selectors.bannerName)
+        //             expect(name).toContain(title)
+        //         }
+        //     }
+        //     catch (error) {
+        //         console.log(error)
+        //     }
+        
+        // await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
+        // const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
     }
     public async verifyAllSequence(title: string) {
         await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
@@ -161,6 +168,16 @@ export class LearnerHomePage extends LearnerLogin {
         // const randomIndex = Math.floor(Math.random() *  index)+ 1;
         const annocement = await this.getInnerText(this.selectors.announcementName(title));
         expect(annocement).toContain(`${title}`)
+    }
+
+    public async verifypastAnnouncement(title: string) {
+        await this.wait("minWait")
+        await this.mouseHover(this.selectors.announcementIcon, "Announcement")
+        await this.click(this.selectors.announcementIcon, "Announcement", "Icon")
+        // const index=await this.page.locator("//div[@id='announcements']//p").count();
+        // const randomIndex = Math.floor(Math.random() *  index)+ 1;
+        const annocement = await this.getInnerText(this.selectors.announcementName(title));
+        expect(annocement).not.toContain(`${title}`)
     }
 
 

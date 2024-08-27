@@ -1,5 +1,4 @@
 import { test } from '../../customFixtures/expertusFixture';
-import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
 import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
@@ -34,7 +33,4 @@ test(`TC032_Create Team User1`, async ({ adminHome, createUser ,createCourse}) =
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
-    }
-)
-
-
+})

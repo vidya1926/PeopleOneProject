@@ -73,9 +73,9 @@ test(`Verify the manager can recommend the course to user`,async({learnerHome,ma
     await learnerHome.selectCollaborationHub();
     await managerHome.enterSearchCourse(courseName);
     await managerHome.clickrecommendIcon(courseName)
-    await managerHome.selectTeam()
-    await managerHome.selectTeamUser("User2 Test")
     await managerHome.enterAdditionalInfo()
+    await managerHome.selectTeam()
+    await managerHome.selectTeamUser("user") //not populating the search results-application issue
     await managerHome.clickSendMeCopy()
     await managerHome.clickRecommendLearning()
     await managerHome.verifytoastmsg()
@@ -88,11 +88,10 @@ test("Learner Site verification",async({learnerHome,catalog,dashboard})=>{
         { type: `TestCase`, description: `Learner site verification for manager appproval` },
         { type: `Test Description`, description: `verify the manager appproval for E-learning` }
     );    
-    await learnerHome.learnerLogin("LEARNERUSERNAME", "DefaultPortal");
+    await learnerHome.learnerLogin("TEAMUSER2", "DefaultPortal");
     await learnerHome.clickCatalog()
-    await catalog.clickRecommendation()
-    
-    await catalog.verifyCourserecommemnded(courseName);
-    
+    await catalog.clickRecommendation()  
+    await catalog.searchCatalog(courseName)  
+    await catalog.verifyCourserecommemnded(courseName); 
 
 })

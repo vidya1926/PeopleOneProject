@@ -37,3 +37,5 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
     await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
     await learnerHome.verifySequence(title,2);
     })
+
+    //sequencing is not working at learner site

@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 
+
 export async function assertResponse(response: AxiosResponse<any>, expectedStatus: number, expectedField?: string) {
     let status = response.status
     if (status !== expectedStatus) {
@@ -8,7 +9,6 @@ export async function assertResponse(response: AxiosResponse<any>, expectedStatu
 
     if (expectedField && !response.data[expectedField]) {
         throw new Error(`Expected field "${expectedField}" not found in response`);
+
     }
-    throw new Error('Assertion passed: Response is as expected');
-    //console.log('Assertion passed: Response is as expected');
 }
