@@ -10,9 +10,9 @@ class VerificationUtils {
      * @param {Response} response - The API response object.
      * @param {number} expectedStatusCode - The expected HTTP status code.
      */
-    assertResponseStatusCode(response, expectedStatusCode) {
+    assertResponseStatusCode(response: Response, expectedStatusCode: number) {
         console.log(`Asserts that Response Status code is '${expectedStatusCode}'.`)
-        expect(response.status()).toBe(expectedStatusCode)
+        expect(response.status).toBe(expectedStatusCode)
     }
 
     /**
@@ -20,7 +20,7 @@ class VerificationUtils {
      * @param {Object} responseBody - The JSON response body.
      * @param {string} expectedKeyName - The expected key in the response body.
      */
-    assertResponseBodyKeyPresent(responseBody, expectedKeyName) {
+    assertResponseBodyKeyPresent(responseBody: object, expectedKeyName: string) {
         console.log(`Asserts that Response Body has property: '${expectedKeyName}'.`)
         expect(responseBody).toHaveProperty(expectedKeyName);
     }
@@ -31,7 +31,7 @@ class VerificationUtils {
      * @param {string} expectedKeyName - The expected key in the response body.
      * @param {any} expectedValue - The expected value for the specified key.
      */
-    assertResponseBodyKeyValue(responseBody, expectedKeyName, expectedValue) {
+    assertResponseBodyKeyValue(responseBody: object, expectedKeyName: string, expectedValue: any) {
         console.log(`Asserts that Response Body has key: '${expectedKeyName}' with value: '${expectedValue}'.`);
         expect(responseBody[expectedKeyName]).toBe(expectedValue);
     }

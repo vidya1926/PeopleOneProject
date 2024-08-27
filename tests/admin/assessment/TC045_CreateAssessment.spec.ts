@@ -18,6 +18,4 @@ test(`TC045_Verify_able_to_create_assessment_questions`,async({ adminHome,Survey
     await SurveyAssessment.selectLanguage();
     await SurveyAssessment.selectingType();
     await SurveyAssessment.clickSave();
-
-
 })

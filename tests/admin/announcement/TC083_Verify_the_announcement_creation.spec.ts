@@ -2,7 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 const title = FakerData.getRandomTitle();
 
-test(`TC_082_Verify the  announcement is created`, async ({ adminHome, announcementHome, bannerHome, createCourse }) => {
+test(`TC_083_Verify the  announcement is created`, async ({ adminHome, announcementHome, bannerHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Verify Annoucement is created` },

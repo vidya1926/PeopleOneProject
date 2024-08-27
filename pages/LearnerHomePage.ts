@@ -170,6 +170,16 @@ export class LearnerHomePage extends LearnerLogin {
         expect(annocement).toContain(`${title}`)
     }
 
+    public async verifypastAnnouncement(title: string) {
+        await this.wait("minWait")
+        await this.mouseHover(this.selectors.announcementIcon, "Announcement")
+        await this.click(this.selectors.announcementIcon, "Announcement", "Icon")
+        // const index=await this.page.locator("//div[@id='announcements']//p").count();
+        // const randomIndex = Math.floor(Math.random() *  index)+ 1;
+        const annocement = await this.getInnerText(this.selectors.announcementName(title));
+        expect(annocement).not.toContain(`${title}`)
+    }
+
 
     async selectCollaborationHub() {
         await this.click(this.selectors.adminmenuIcon, "Admin Menu", "Icon")
