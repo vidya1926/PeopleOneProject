@@ -43,6 +43,12 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.clickMoreonCourse(courseName);
     await catalog.clickSelectcourse(courseName);
     await catalog.clickEnroll();
+    await catalog.contentRead();
+    // await catalog.saveLearningStatus();
+    // await catalog.clickMyLearning();
+    // await catalog.clickCompletedButton();
+    // await catalog.searchMyLearning(courseName);
+    // await catalog.verifyCompletedCourse(courseName);
    })
 
 

@@ -75,6 +75,9 @@ export class CatalogPage extends LearnerHomePage {
         recommendationLink: `//a[text()='Recommendations']`,
         verifyRecommendCourse: (course: string) => `//div[text()='${course}']`,
         overDueText: "//span[text()='Overdue']",
+        contentframeEle:`//frame[@name='scormdriver_content']`,
+        contextNextbutton:`//div[text()='NEXT']`,
+        verifyThakyou:`//li[contains(@class,'open visited') and text()='Thank you!']`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -462,5 +465,10 @@ export class CatalogPage extends LearnerHomePage {
             await this.wait(`minWait`);
         }
     }
+     async contentRead(){
+        await this.wait("minWait")
+         await this.clickEleinFrame(this.selectors.contentframeEle,this.selectors.verifyThakyou,"Thank you Link")
+     }
+
 
 }
