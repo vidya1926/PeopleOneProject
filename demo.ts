@@ -196,10 +196,16 @@ console.log(count); // Output: 4
 /* let a = ["Ajay", "Ajay", "Ajay", "Ajay"];
 console.log(a.length); // Output: 4
  */
-for (let index = 0; index < 10; index++) {
+/* for (let index = 0; index < 10; index++) {
     let count = 22;
     let randomNumber = Math.floor(Math.random() * (count / 3))+1;
     console.log(randomNumber);
 
-}
+} */
+let access_token = "nsjkvnk";
+
+// Format the authorization header as a string with single quotes around the token
+let authorization = `Authorization: '${access_token}'`;
+
+console.log(authorization);
 

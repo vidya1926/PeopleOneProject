@@ -1,0 +1,4 @@
+{
+    "endPointURL": "https://automation.expertusoneqa.in/api/v1/admin/rest",
+    "learnerEndPointURL": "https://automation.expertusoneqa.in/api/v1/learner/e1internal/rest"
+}
