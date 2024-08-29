@@ -10,6 +10,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
         { type: `TestCase`, description: `Create the course as Single instance` },
         { type: `Test Description`, description: `Verify that course should be created for AICC content` }
     );
+
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();
@@ -25,7 +26,6 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.clickProceed();
     await createCourse.verifySuccessMessage();
 })
-
 
 test(`Verification from learner site`, async ({ learnerHome, catalog,readContentHome }) => {
     test.info().annotations.push(
