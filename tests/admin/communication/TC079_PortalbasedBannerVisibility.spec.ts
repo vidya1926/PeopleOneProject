@@ -34,6 +34,5 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
-        //Need to create multitenant
 
     })

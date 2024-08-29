@@ -7,8 +7,7 @@ test(`Create Content`, async ({ adminHome ,contentHome,bannerHome,createCourse})
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
-    );
-    
+    );    
     await adminHome.loadAndLogin("LEARNERADMIN");
     await adminHome.menuButton();
     await adminHome.clickLearningMenu();

@@ -47,7 +47,6 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.clickLaunchButton();
     await catalog.saveLearningStatus();
     await catalog.clickMyLearning();
-    await catalog.clickMyLearning();
     await catalog.clickCompletedButton();
     await catalog.searchMyLearning(courseName);
     await catalog.verifyCompletedCourse(courseName);

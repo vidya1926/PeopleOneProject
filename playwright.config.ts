@@ -55,6 +55,21 @@ export default defineConfig({
 
         }
       },] : []
+    ), ...(
+      true ? [{
+        name: 'API Testing',
+        testDir: './api/apiTests',
+        use: {
+          headless: false,
+          ...devices['Desktop Chromium'],
+          viewport: null,
+          launchOptions: {
+            slowMo: 300,
+            args: ["--start-maximized"]
+          }
+
+        }
+      },] : []
     ),
 
     /* {

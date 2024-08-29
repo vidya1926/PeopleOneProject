@@ -1,16 +1,16 @@
-import { AxiosResponse } from 'axios';
 
 
-export async function assertResponse(receivedStatus: number, expectedStatus?: number) {
-    if (receivedStatus !== expectedStatus) {
-        throw new Error(`Expected status ${expectedStatus} but received ${receivedStatus}`);
+
+export async function assertResponse(receivedResponse: any, expectedResponse?: any) {
+    if (receivedResponse !== expectedResponse) {
+        throw new Error(`Expected status ${expectedResponse} but received ${receivedResponse}`);
     }
 }
 
-export async function name() {
-
+export async function assertStatus(receivedStatus: any, expectedStatus?: any) {
+    if (receivedStatus !== expectedStatus) {
+        throw new Error(`Expected status ${expectedStatus} but received ${receivedStatus}`);
+    } else {
+        console.log(`Got expected status: ${expectedStatus}`);
+    }
 }
-/* if (expectedField && !response.data[expectedField]) {
-    throw new Error(`Expected field "${expectedField}" not found in response`);
-
-} */
