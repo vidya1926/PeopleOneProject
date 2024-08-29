@@ -21,7 +21,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.verifyCreateUserLabel("CREATE COURSE");
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
-    await createCourse.typeDescription("This is a new course by name :" + description);    
+    await createCourse.typeDescription("This is a new course by name :" + description);
     await createCourse.contentLibrary("AICC")
     await createCourse.clickCatalog();
     await createCourse.clickSave();
@@ -30,7 +30,7 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
 })
 
 
-test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
+test(`Verification from learner site`, async ({ learnerHome, catalog ,readContentHome}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `TC052_Learner Side Course Enrollment` },
@@ -43,6 +43,12 @@ test(`Verification from learner site`, async ({ learnerHome, catalog }) => {
     await catalog.clickMoreonCourse(courseName);
     await catalog.clickSelectcourse(courseName);
     await catalog.clickEnroll();
-   })
+    await readContentHome.readPPtContent();
+    await readContentHome.saveLearningAICC();
+    await catalog.clickMyLearning();
+    await catalog.clickCompletedButton();
+    await catalog.searchMyLearning(courseName);
+    await catalog.verifyCompletedCourse(courseName);
+})
 
 

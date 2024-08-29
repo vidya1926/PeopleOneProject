@@ -22,7 +22,7 @@ export class LearnerLogin extends PlaywrightWrapper {
 
         const signIn = async () => {
             try {
-                await this.waitForSelector(signInLocator);
+                await this.waitSelector(signInLocator);
                 await this.wait('mediumWait');
                 await this.click(signInLocator, "Sign In button", "Button");
             } catch (error) {
@@ -52,7 +52,7 @@ export class LearnerLogin extends PlaywrightWrapper {
             await this.wait('minWait');
             await this.click(signInButtonLocator, "Sign In button", "Button");
             await this.page.waitForLoadState('domcontentloaded');
-            await this.waitForSelector(logoutButtonLocator);
+            await this.waitSelector(logoutButtonLocator);
             const logoutButton = this.page.locator(logoutButtonLocator);
             await expect(logoutButton).toBeVisible({ timeout: 20000 });
             console.log(`Login successful`);
@@ -70,7 +70,7 @@ export class LearnerLogin extends PlaywrightWrapper {
     public async basicLogin(username: string, url: string) {
         const signIn = async () => {
             try {
-                await this.waitForSelector(signInLocator);
+                await this.waitSelector(signInLocator);
                 await this.wait('mediumWait');
                 await this.click(signInLocator, "Sign In button", "Button");
             } catch (error) {
@@ -98,7 +98,7 @@ export class LearnerLogin extends PlaywrightWrapper {
             await this.type(passwordSelector, "Password", "Welcome1@");
             await this.click(signInButtonLocator, "Sign In button", "Button");
             await this.page.waitForLoadState('domcontentloaded');
-            await this.waitForSelector(logoutButtonLocator);
+            await this.waitSelector(logoutButtonLocator);
             const logoutButton = this.page.locator(logoutButtonLocator);
             await expect(logoutButton).toBeVisible({ timeout: 20000 });
             console.log(`Login successful`);

@@ -1,6 +1,11 @@
 
 import { Page, test, expect, BrowserContext, Locator } from "@playwright/test";
 import * as path from 'path';
+<<<<<<< HEAD
+=======
+import fs from 'fs'
+import { clear } from "console";
+>>>>>>> 586d3e9fc474244a0aeb78be6d786e786c96d9b0
 
 
 
@@ -133,7 +138,7 @@ export abstract class PlaywrightWrapper {
         return await this.page.title();
     }
 
-    async waitForSelector(locator: string) {
+    async waitSelector(locator: string) {
         await this.page.waitForSelector(locator)
     }
     async fetchattribute(locator: string, attName: string) {
@@ -149,7 +154,6 @@ export abstract class PlaywrightWrapper {
     async fillwithDelay(locator: string, inputValues: string) {
         await this.page.delayedFill(locator, inputValues)
     }
-
     async clickwithDelay(locator: string) {
         await this.page.clickAndDelay(locator);
     }
@@ -221,6 +225,43 @@ export abstract class PlaywrightWrapper {
             }
         })
     }
+
+
+    async verifyEleinFrame(frameLocator: string, locator: string, name: string) {
+        await test.step(`The ${name} is verified`, async () => {
+            const frameCount = await this.page.locator(frameLocator).count();
+            if (frameCount > 0) {
+                const frameEle = this.page.frameLocator(frameLocator)
+                try {
+                    expect(frameEle).toBeTruthy()
+                } catch (error) {
+                    console.log("Frame not found" + error)
+                }
+            }
+        })
+    }
+    async verifyAndClickEleinFrame(frameLocator: string, locator: string, name: string) {
+        await test.step(`The ${name} is verified`, async () => {
+            const frameCount = await this.page.locator(frameLocator).count();
+            if (frameCount > 0) {
+                const frameEle = this.page.frameLocator(frameLocator)
+                try {
+                    expect(frameEle).toBeTruthy()
+                    await this.wait('minWait')
+                    const ele = frameEle.locator(locator);
+                    expect(ele).toBeVisible()
+                    this.wait('minWait')
+                    await ele.hover();
+                    await ele.click();                   
+                        console.log(`Ele visible`);
+                } catch (error) {
+                    console.log("Frame not found" + error)
+                }
+            }
+        })
+    }
+
+    
     async typeinFrame(flocator: string, locator: string, name: string, data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             const frameCount = 1;

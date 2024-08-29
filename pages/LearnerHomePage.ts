@@ -185,7 +185,6 @@ export class LearnerHomePage extends LearnerLogin {
         await this.click(this.selectors.adminmenuIcon, "Admin Menu", "Icon")
         await this.validateElementVisibility(this.selectors.collaborationHub, "CH")
         await this.click(this.selectors.collaborationHub, "CH", "Option")
-
     }
 
     async clickApprove(courseName: string) {

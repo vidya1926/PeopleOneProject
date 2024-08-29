@@ -2,7 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 const title=FakerData.getRandomTitle();
 
-test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCourse }) => {
+test(`TC082_Portal Based verification`, async ({ adminHome, bannerHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Verify banner in sequence` },
@@ -33,6 +33,6 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `TestCase`, description: `TC81_Learner Side Banner sequence verification` },
         { type: `Test Description`, description: `Learner Side Banner sequence verification` }
     );
-    await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal2");
-    await learnerHome.verifySequence(title,2);
+    await learnerHome.learnerLogin("LEARNERUSERNAME","Portal2");
+    await learnerHome.verifyBannerDisplay(title)
 })
