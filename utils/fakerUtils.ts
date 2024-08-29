@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import path from "path";
 import fs from 'fs'
-import { promises } from "readline";
+
 
 
 export class FakerData {
