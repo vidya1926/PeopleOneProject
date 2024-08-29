@@ -3,33 +3,28 @@ import url from "../data/apiData/url.json"
 import { postRequest } from "../utils/requestUtils";
 import { assertResponse } from "../utils/verificationUtils";
 import { generateOauthToken } from "./accessToken"
-
-let access_token = generateOauthToken()
-let authorization: any = `Authorization: '${access_token}'`;
-async function userCreation() {
-
+let access_token: any
+const authorization: any = `Authorization: '${access_token}'`;
+async () => {
+    access_token = (await generateOauthToken()).accessToken;
+}
+export async function userCreation() {
     try {
-        // let un = userCreationData.username
+        let un = userCreationData.username
         let response = await postRequest(userCreationData, url.endPointURL, authorization);
-        console.log(response.status);
-        await assertResponse(response.status, 200, "success")
-        return response.user_id
+        console.log(response);
+        await assertResponse(response.status, 200);
+        return response.data.user_id
     } catch (error) {
-        console.error("Failed to generate OAuth token:", error);
+        console.error("Failed to execute", error);
         throw error;
     }
 }
 
+export async function getUserDetail() {
+    let retrivied_user = await userCreation();
+    let response = await postRequest(getLearnerUser(retrivied_user), url.learnerEndPointURL, authorization);
+    await assertResponse(response.status, 200);
+    console.log("User Data:", response.data.data.user_data);
 
-async function getUserDetail() {
-    const response = await userCreation();
-    await postRequest(getLearnerUser(response), url.learnerEndPointURL, authorization)
 }
-
-getUserDetail()
-    .then(response => {
-        console.log("Received response:", response);
-    })
-    .catch(error => {
-        console.error("Error occurred:", error);
-    });

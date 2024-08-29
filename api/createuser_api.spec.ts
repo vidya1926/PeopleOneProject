@@ -1,6 +1,7 @@
-/* import test from "@playwright/test"
-import postRequest from "../utils/requestUtils"
-test(`Test`, async (){
-    postRequest()
-})
- */
+import { test } from "@playwright/test";
+import { getUserDetail } from "./createUser";
+
+test(`Creating User and Retriving Data from Learner Site`, async () => {
+    await getUserDetail();
+});
+

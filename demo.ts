@@ -5,6 +5,12 @@
 // }
 // import { FakerData } from "./utils/fakerUtils";
 
+import { customAdminOuthData, userCreationData } from "./data/apiData/outhData";
+import { postRequest } from "./utils/requestUtils";
+import { assertResponse } from "./utils/verificationUtils";
+import url from "./data/apiData/url.json"
+import { generateOauthToken } from "./api/accessToken";
+
 
 // // }
 
@@ -202,10 +208,46 @@ console.log(a.length); // Output: 4
     console.log(randomNumber);
 
 } */
-let access_token = "nsjkvnk";
+/* let access_token = "nsjkvnk";
 
 // Format the authorization header as a string with single quotes around the token
 let authorization = `Authorization: '${access_token}'`;
 
 console.log(authorization);
+ */
+async function generateOauth() {
+    try {
+        const [response, status] = await postRequest(customAdminOuthData, url.endPointURL);
+        return ["Bearer " + response.access_token, status];
 
+    } catch (error) {
+        console.error("Failed to generate OAuth token:", error);
+        throw error;
+    }
+}
+generateOauth()
+    .then(response => {
+        console.log("Received response:", response);
+    })
+    .catch(error => {
+        console.error("Error occurred:", error);
+    });
+let access_token =generateOauth()[1]
+console.log(access_token);
+let authorization: any = `Authorization: '${access_token}'`;
+async function userCreation() {
+
+    try {
+        // let un = userCreationData.username
+        let [response, status] = await postRequest(userCreationData, url.endPointURL, authorization);
+        console.log(status);
+        await assertResponse(status, 200)
+        return response.user_id
+    } catch (error) {
+        console.error("Failed to generate OAuth token:", error);
+        throw error;
+    }
+}
+async () => {
+    await userCreation()
+}

@@ -25,7 +25,7 @@ export let userCreationData = {
     response_fields: ["result", "UserId"]
 };
 
-export const getLearnerUser = (userId?: string) => ({
+export const getLearnerUser = (userId?: any) => ({
     user_id: userId,
     api_name: "getUserDetails",
     status: "Active",
