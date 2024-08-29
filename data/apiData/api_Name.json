@@ -1,3 +1,5 @@
 {
-    "createUser": "createUser"
+    "createUser": "createUser",
+    "updateUser": "updateUser",
+    "getUserDetail":"getUserDetails"
 }

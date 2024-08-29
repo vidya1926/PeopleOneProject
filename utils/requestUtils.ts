@@ -1,10 +1,11 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import { assertResponse } from "./verificationUtils";
 
 export async function postRequest(
     userData: Record<string, any>,
     endPoint: string,
     customHeaders?: Record<string, string>,
-    additionalConfig?: AxiosRequestConfig
+    additionalConfig?: AxiosRequestConfig,
 ): Promise<any> {
 
     const formData = new FormData();
@@ -24,8 +25,10 @@ export async function postRequest(
             headers,
             ...additionalConfig
         });
-        console.log(response.data);
-        return [response.data,response.status];
+        return {
+            data: response.data,
+            status: response.status
+        }
 
     } catch (error) {
         console.error("Error making POST request:", error);
@@ -41,11 +44,10 @@ export async function getRequest(
     additionalConfig?: AxiosRequestConfig
 ): Promise<any> {
     try {
-        // Convert userData to query parameters
         const queryParams = new URLSearchParams(userData).toString();
 
         const headers = {
-            "Content-Type": "application/json", // Update based on actual use
+            "Content-Type": "application/json",
             "Connection": "keep-alive",
             ...customHeaders
         };
