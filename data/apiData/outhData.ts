@@ -1,6 +1,7 @@
 import { FakerData } from "../../utils/fakerUtils";
 import userId from "./outh_UserId.json"
 import apiName from "./api_Name.json"
+import { faker } from "@faker-js/faker";
 
 
 
@@ -32,17 +33,12 @@ export const getLearnerUser = (userId?: any) => ({
     response_fields: ["Status", "Company", "FirstName", "LastName", "Username", "Password", "PhoneNumber", "MobileNumber", "Picture"]
 });
 
-export const updateUserData = (userName?: any) => ({
+export const updateUserData = (userID: any, userName: any) => ({
     api_name: apiName.updateUser,
-    alias: "cuser",
-    type: "user",
-    graphql_type: "mutation",
-    category: "AdminAPI",
-    description: "User Updation",
-    title: "User Updation",
-    user_id: userId.customAdminUserID.id,
+    user_id: userID,
     first_name: FakerData.getFirstName(),
     last_name: FakerData.getLastName(),
     username: userName,
-    email: FakerData.getEmail()
+    email: FakerData.getEmail(),
+    response_fields: ["result", "UserId"]
 });
