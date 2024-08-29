@@ -679,7 +679,21 @@ export class CoursePage extends AdminHomePage {
             await this.wait('maxWait');
             await this.page.locator(this.selectors.attachedContentLabel).scrollIntoViewIfNeeded();
             await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
-        } else {
+        }else if (content == "AICC&SCORM") {
+            const data = "AICC&SCORM"
+            this.page.on('console', msg => {
+                console.log(`Console Log: ${msg.text()}`);
+            });
+            await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
+            await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
+            await this.wait('minWait');
+            await this.mouseHover(this.selectors.addContentButton, "addcontent");
+            await this.click(this.selectors.addContentButton, "addcontent", "button");
+            await this.wait('maxWait');
+            await this.page.locator(this.selectors.attachedContentLabel).scrollIntoViewIfNeeded();
+            await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
+        }
+         else {
             const data = "youtube"
             await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
             await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");

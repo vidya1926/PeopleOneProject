@@ -75,9 +75,7 @@ export class CatalogPage extends LearnerHomePage {
         recommendationLink: `//a[text()='Recommendations']`,
         verifyRecommendCourse: (course: string) => `//div[text()='${course}']`,
         overDueText: "//span[text()='Overdue']",
-        contentframeEle:`//frame[@name='scormdriver_content']`,
-        contextNextbutton:`//div[text()='NEXT']`,
-        verifyThakyou:`//li[contains(@class,'open visited') and text()='Thank you!']`,
+
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -94,10 +92,10 @@ export class CatalogPage extends LearnerHomePage {
         await this.click(this.selectors.recommendationLink, "Recommendations", "Link")
     }
 
-   async verifyCourserecommemnded(course:string){  
-    this.validateElementVisibility(this.selectors.verifyRecommendCourse(course), "course")
-    await this.mouseHover(this.selectors.verifyRecommendCourse(course), "Text");
-   }
+    async verifyCourserecommemnded(course: string) {
+        this.validateElementVisibility(this.selectors.verifyRecommendCourse(course), "course")
+        await this.mouseHover(this.selectors.verifyRecommendCourse(course), "Text");
+    }
 
     async cronstoragejson(filepath: string, data: string) {
         saveDataToJsonFile(filepath, data);
@@ -229,8 +227,9 @@ export class CatalogPage extends LearnerHomePage {
         } catch (error) {
             console.log("Try to launch the button");
         }
-
     }
+    
+
 
     async searchMyLearning(data: string) {
         const searchSelector = this.selectors.searchlearningInput;
@@ -465,10 +464,6 @@ export class CatalogPage extends LearnerHomePage {
             await this.wait(`minWait`);
         }
     }
-     async contentRead(){
-        await this.wait("minWait")
-         await this.clickEleinFrame(this.selectors.contentframeEle,this.selectors.verifyThakyou,"Thank you Link")
-     }
-
+    
 
 }
