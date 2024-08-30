@@ -29,6 +29,7 @@ import { EnrollmentPage } from '../pages/EnrollmentPage'
 import { InstructorPage } from '../pages/InstructorPage'
 import { ManagerPage } from '../pages/ManagerPage'
 import { ReadContentPage } from '../pages/ReadContentPage'
+import { AdminRolePage } from '../pages/AdminRole'
 
 
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
@@ -62,6 +63,7 @@ type expertusFixture = {
     instructorHome:InstructorPage
     managerHome:ManagerPage
     readContentHome:ReadContentPage
+    adminRoleHome:AdminRolePage
 }
 export const test = baseTest.extend<expertusFixture>({
    /*  adminLogin: async ({ page, context }, use) => {
@@ -195,6 +197,12 @@ export const test = baseTest.extend<expertusFixture>({
         await use(readContentHome);
     },
 
+    adminRoleHome: async ({ page, context }, use) => {
+        const  adminRoleHome  = new AdminRolePage(page, context);
+        await use(adminRoleHome);
+    },
+
+    
     
 
 

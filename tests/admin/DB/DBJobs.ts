@@ -98,7 +98,7 @@ async function updatetableForAnnoncement() {
         console.log(banner);
         const idString = String(banner[0].id);
         console.log("Retrived Id = " + idString);
-        const updateBanner = await dataBase.executeQuery(`update banner set date_activate='${formattedNewTime}',date_deactivate='${formattedNewTime}' where id=${idString};`);
+        const updateBanner = await dataBase.executeQuery(`update announcement set from_date='${formattedNewTime}',to_date='${formattedNewTime}' where id=${idString};`);
         console.log(updateBanner);
     } catch (error) {
         console.log("Not executed " + error);
