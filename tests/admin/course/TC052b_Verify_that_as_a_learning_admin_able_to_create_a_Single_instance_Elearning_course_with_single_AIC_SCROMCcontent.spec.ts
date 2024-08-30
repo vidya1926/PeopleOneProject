@@ -1,7 +1,7 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
 
-const courseName = FakerData.getCourseName();
+let courseName = FakerData.getCourseName();
 const description = FakerData.getDescription()
 
 test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
@@ -26,7 +26,6 @@ test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse }) => {
     await createCourse.clickProceed();
     await createCourse.verifySuccessMessage();
 })
-
 test(`Verification from learner site`, async ({ learnerHome, catalog,readContentHome }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
@@ -40,7 +39,7 @@ test(`Verification from learner site`, async ({ learnerHome, catalog,readContent
     await catalog.clickMoreonCourse(courseName);
     await catalog.clickSelectcourse(courseName);
     await catalog.clickEnroll();
-  await readContentHome.readContent();
+    await readContentHome.readContent();
     // await catalog.saveLearning();
     // await catalog.clickMyLearning();
     // await catalog.clickCompletedButton();

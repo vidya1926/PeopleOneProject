@@ -9,12 +9,11 @@ const newData = {
     enrollAdmin: enrollAdmin
 }
 updateFieldsInJSON(newData)
-test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC013_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type:`Test Description`, description: `Adding User as Course Admin` }
-        
+        { type:`Test Description`, description: `Adding User as Course Admin` }        
     );
     
     const csvFilePath = './data/User.csv';
@@ -48,4 +47,24 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
         await createUser.verifyUserCreationSuccessMessage();
     }
 });
+
+test(`TC013 _Add user to Learning Admin `, async ({ adminHome, adminGroup,createCourse }) => {
+    test.info().annotations.push(
+        { type: `Author`, description: `Vidya` },
+        { type: `TestCase`, description: `Create the user to add in enrollment group` },
+        { type: `Test Description`, description: `Verify that user is added to Enrollment admin role` }
+
+    );
+    await adminHome.loadAndLogin("CUSTOMERADMIN")
+    await adminHome.menuButton();
+    await adminHome.people();
+    await adminHome.adminGroup();
+    await adminGroup.searchAdmin("Enrollment admin");
+    await adminGroup.clickGroup("Enrollment admin")
+    await adminGroup.searchUser(enrollAdmin)
+    await adminGroup.clickuserCheckbox(enrollAdmin)
+    await adminGroup.clickSelelctUsers();
+    await adminGroup.clickUpdate();   
+    await createCourse.verifySuccessMessage();
+})
 

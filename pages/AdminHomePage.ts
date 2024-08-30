@@ -52,7 +52,8 @@ export class AdminHomePage extends AdminLogin {
         deleteIcon: `//div[contains(@class,'mandatory pointer')]//i`,
         yesBtn: `//button[text()='Yes']`,
         quickAccessModules: `//div[contains(@class,'mandatory')]/following-sibling::div`,
-
+        adminRolemenu:`//a[text()='Admin Role']`,
+        addAdminrole:`//button[text()='ADD ADMIN ROLE']`
 
     };
 
@@ -326,7 +327,15 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.enrollLink, "Enrollment", "Link")
     }
 
+    public async clickAdminRole(){
+        await this.click(this.selectors.adminRolemenu, "AdminRole", "Link")
 
+    }
+
+
+    public async clickAddAdminRole(){
+        await this.click(this.selectors.addAdminrole, "Add AdminRole", "Button")
+    }
 
 
 }

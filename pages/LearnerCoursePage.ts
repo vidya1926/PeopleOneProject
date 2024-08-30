@@ -55,7 +55,7 @@ export class LearnerCoursePage extends CatalogPage {
         const randomIndex = Math.floor(Math.random() * length) + 1;
         for (let index = 2; index <= randomIndex; index++) {
             await this.click(this.selectors.conentSeqOption(index), "All contents", "Checkbox")
-            await this.waitForSelector(this.selectors.contentProgressStatus)
+            await this.waitSelector(this.selectors.contentProgressStatus)
         }
     }
 

@@ -1,6 +1,7 @@
 import { FakerData } from "../../utils/fakerUtils";
 import userId from "./outh_UserId.json"
 import apiName from "./api_Name.json"
+import { faker } from "@faker-js/faker";
 
 
 
@@ -25,9 +26,19 @@ export let userCreationData = {
     response_fields: ["result", "UserId"]
 };
 
-export const getLearnerUser = (userId?: string) => ({
+export const getLearnerUser = (userId?: any) => ({
     user_id: userId,
-    api_name: "getUserDetails",
+    api_name: apiName.getUserDetail,
     status: "Active",
     response_fields: ["Status", "Company", "FirstName", "LastName", "Username", "Password", "PhoneNumber", "MobileNumber", "Picture"]
+});
+
+export const updateUserData = (userID: any, userName: any) => ({
+    api_name: apiName.updateUser,
+    user_id: userID,
+    first_name: FakerData.getFirstName(),
+    last_name: FakerData.getLastName(),
+    username: userName,
+    email: FakerData.getEmail(),
+    response_fields: ["result", "UserId"]
 });

@@ -11,7 +11,7 @@ const newData = {
     peopleAdmin: peopleAdmin
 }
 updateFieldsInJSON(newData)
-test.skip(`Create user as  People Admin `, async ({ adminHome, createUser }) => {
+test(`Create user as  People Admin `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -63,9 +63,11 @@ test(`TC011 _Add user to People Admin `, async ({ adminHome, adminGroup,createCo
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminGroup.searchAdmin("People");
-    await adminGroup.clickPeopleAdmin();
+    await adminGroup.searchAdmin("People admin");
+    await adminGroup.clickGroup("People admin")
     await adminGroup.searchUser(peopleAdmin);
+    await adminGroup.clickuserCheckbox(peopleAdmin)
+    await adminGroup.clickSelelctUsers();
     await adminGroup.clickUpdate();
     await createCourse.verifySuccessMessage();
     

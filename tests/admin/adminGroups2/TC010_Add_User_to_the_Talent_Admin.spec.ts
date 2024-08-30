@@ -4,12 +4,12 @@ import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-const courseAdmin: any = FakerData.getUserId()
+const talentAdmin: any = FakerData.getUserId()
 const newData = {
-    courseAdmin: courseAdmin
+   talentAdmin: talentAdmin
 }
 updateFieldsInJSON(newData)
-test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC010_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -29,7 +29,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
 
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username", courseAdmin);
+        await createUser.enter("username", talentAdmin);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.enter("email", FakerData.getEmail());
         await createUser.enter("user-phone", FakerData.getMobileNumber());
@@ -48,7 +48,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
     }
 });
 
-test.skip(`Add user to the Course Admin`, async ({ adminHome, adminGroup, createCourse }) => {
+test(`TC010_Add user to the Talent Admin`, async ({ adminHome, adminGroup, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -59,11 +59,11 @@ test.skip(`Add user to the Course Admin`, async ({ adminHome, adminGroup, create
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminGroup.searchUser("Talent");
+    await adminGroup.searchAdmin("Talent admin");
     await adminGroup.clickGroup("Talent admin");
-    await adminGroup.searchUser(courseAdmin)
-    await adminGroup.clickCourseAdmin();
-    await adminGroup.searchUser(courseAdmin);
+    await adminGroup.searchUser(talentAdmin);
+    await adminGroup.clickuserCheckbox(talentAdmin)
+    await adminGroup.clickSelelctUsers();
     await adminGroup.clickUpdate();
     await createCourse.verifySuccessMessage();
 })

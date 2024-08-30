@@ -9,7 +9,7 @@ const newData = {
     courseAdmin: courseAdmin
 }
 updateFieldsInJSON(newData)
-test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC008_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -25,8 +25,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
 
         await adminHome.loadAndLogin("CUSTOMERADMIN")
         await adminHome.clickMenu("User");
-        await createUser.verifyCreateUserLabel();
-        
+        await createUser.verifyCreateUserLabel();        
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
         await createUser.enter("username", courseAdmin);
@@ -49,7 +48,7 @@ test.skip(`Create user in admin login `, async ({ adminHome, createUser }) => {
     }
 });
 
-test.skip(`Add user to the Course Admin`, async ({ adminHome, adminGroup,createCourse }) => {
+test(`TC008_Add user to the Course Admin`, async ({ adminHome, adminGroup,createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
@@ -60,11 +59,11 @@ test.skip(`Add user to the Course Admin`, async ({ adminHome, adminGroup,createC
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminGroup.searchUser("LEARNING ADMIN");
-    await adminGroup.clickLearningAdmin();
+    await adminGroup.searchAdmin("Course creator admin");
+    await adminGroup.clickGroup("Course creator admin");
     await adminGroup.searchUser(courseAdmin)
-    await adminGroup.clickCourseAdmin();
-    await adminGroup.searchUser(courseAdmin);
+    await adminGroup.clickuserCheckbox(courseAdmin);
+    await adminGroup.clickSelelctUsers();
     await adminGroup.clickUpdate();
     await createCourse.verifySuccessMessage();
 })
