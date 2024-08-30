@@ -11,11 +11,11 @@ const newData = {
     peopleAdmin: peopleAdmin
 }
 updateFieldsInJSON(newData)
-test(`Create user as  People Admin `, async ({ adminHome, createUser }) => {
+test(`TC011_Create user as  People Admin `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type:`Test Description`, description: `Adding User as Course Admin` }
+        { type: `TestCase`, description: `Add user to the People Admin` },
+        { type:`Test Description`, description: `Adding User as People Admin` }
         
     );
     

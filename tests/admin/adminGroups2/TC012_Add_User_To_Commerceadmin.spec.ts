@@ -9,11 +9,11 @@ const newData = {
     commerceAdmin: commerceAdmin
 }
 updateFieldsInJSON(newData)
-test(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC012_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type:`Test Description`, description: `Adding User as Course Admin` }
+        { type: `TestCase`, description: `Add user to the Commerce Admin` },
+        { type:`Test Description`, description: `Adding User as Commerce Admin` }
         
     );
     
@@ -54,8 +54,8 @@ test(`Create user in admin login `, async ({ adminHome, createUser }) => {
 test(`TC012 _Add user to Commerce Admin `, async ({ adminHome, adminGroup }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create the user to add in commerce` },
-        { type: `Test Description`, description: `Verify that user is added to commerce role` }
+        { type: `TestCase`, description: `Create the user to add in commerce admin` },
+        { type: `Test Description`, description: `Verify that user is added to commerce admin` }
 
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN")

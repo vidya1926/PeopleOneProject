@@ -12,8 +12,8 @@ updateFieldsInJSON(newData)
 test(`TC010_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type: `Test Description`, description: `Adding User as Course Admin` }
+        { type: `TestCase`, description: `Add user to the Talent Admin` },
+        { type: `Test Description`, description: `Adding User as Talent Admin` }
 
     );
 
@@ -51,8 +51,8 @@ test(`TC010_Create user in admin login `, async ({ adminHome, createUser }) => {
 test(`TC010_Add user to the Talent Admin`, async ({ adminHome, adminGroup, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type: `Test Description`, description: `Adding User as Course Admin` }
+        { type: `TestCase`, description: `Add user to the Talent Admin` },
+        { type: `Test Description`, description: `Adding User as Talent Admin` }
 
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN")

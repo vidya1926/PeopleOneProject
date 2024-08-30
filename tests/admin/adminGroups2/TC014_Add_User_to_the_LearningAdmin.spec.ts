@@ -9,11 +9,11 @@ const newData = {
     learnerAdmin: leanerAdmin
 }
 updateFieldsInJSON(newData)
-test(`Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC014_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course Admin` },
-        { type:`Test Description`, description: `Adding User as Course Admin` }
+        { type: `TestCase`, description: `Add user to the Learning Admin` },
+        { type:`Test Description`, description: `Adding User as Learning Admin` }
         
     );
     
@@ -49,7 +49,7 @@ test(`Create user in admin login `, async ({ adminHome, createUser }) => {
     }
 });
 
-test(`TC013 _Add user to Learning Admin `, async ({ adminHome, adminGroup,createCourse }) => {
+test(`TC014 _Add user to Learning Admin `, async ({ adminHome, adminGroup,createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create the user to add in commerce` },
@@ -69,4 +69,3 @@ test(`TC013 _Add user to Learning Admin `, async ({ adminHome, adminGroup,create
     await createCourse.verifySuccessMessage();  
 })
 
-//Customadmin dont have the access to add user to learneradmin
