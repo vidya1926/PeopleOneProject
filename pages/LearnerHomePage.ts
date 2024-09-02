@@ -23,6 +23,7 @@ export class LearnerHomePage extends LearnerLogin {
         sequenceCounter: `(//div[@class='carousel__viewport']//div[contains(@class,'col pointer')])[1]`,       // Add more selectors as needed
         bannerName: `(//div[contains(@class,'col pointer')]//h1)[1]`,
         announcementIcon: `//div[@id='announcementspopover']`,
+        announceNotify: `div[class^='announcement'] p`,
         announcementName: (title: string) => `(//div[@id='announcements']//p[text()='Announcement !!!  ${title}'])[1]`,
         adminmenuIcon: `//i[@id='adminmenu']`,
         collaborationHub: `//a/span[text()='Collaboration Hub']`,
@@ -117,14 +118,14 @@ export class LearnerHomePage extends LearnerLogin {
 
 
     public async verifySequence(title: string, seqNumber: number) {
-        const bannerEle= this.page.locator("//div[contains(@class,'col pointer')]//h1")
-        const sequenceCount=await bannerEle.count();
-        expect(sequenceCount).toBeGreaterThanOrEqual(2);     
+        const bannerEle = this.page.locator("//div[contains(@class,'col pointer')]//h1")
+        const sequenceCount = await bannerEle.count();
+        expect(sequenceCount).toBeGreaterThanOrEqual(2);
         const secondElement = bannerEle.nth(1)
         console.log(await secondElement.innerText())
-                // Verify that the second element is visible
+        // Verify that the second element is visible
         const banner = await secondElement.isVisible();
-        expect(banner).toBe(true);     
+        expect(banner).toBe(true);
         // for (let index = 1; index <= sequenceCount; index++) {
         //     try {
         //         if (index == seqNumber) {
@@ -135,7 +136,7 @@ export class LearnerHomePage extends LearnerLogin {
         //     catch (error) {
         //         console.log(error)
         //     }
-        
+
         // await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
         // const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
     }
@@ -160,25 +161,30 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
 
-    public async verifyAnnouncement(title: string) {
+    async verifyAnnouncement(title: string) {
         await this.wait("minWait")
         await this.mouseHover(this.selectors.announcementIcon, "Announcement")
         await this.click(this.selectors.announcementIcon, "Announcement", "Icon")
-        // const index=await this.page.locator("//div[@id='announcements']//p").count();
-        // const randomIndex = Math.floor(Math.random() *  index)+ 1;
-        const annocement = await this.getInnerText(this.selectors.announcementName(title));
+        const annocement = await this.page.locator(this.selectors.announcementName(title)).textContent();
         expect(annocement).toContain(`${title}`)
     }
+    async verifyPastAnnouncement(title: string) {
+        await this.wait("minWait");
+        await this.mouseHover(this.selectors.announcementIcon, "Announcement");
+        await this.click(this.selectors.announcementIcon, "Announcement", "Icon");
+        await this.wait('mediumWait');
+        const annocement = await this.page.locator(this.selectors.announceNotify).allTextContents();
+        expect(annocement).not.toContain(title);
 
-    public async verifypastAnnouncement(title: string) {
+    }
+
+    /* async verifypastAnnouncement(title: string) {
         await this.wait("minWait")
         await this.mouseHover(this.selectors.announcementIcon, "Announcement")
         await this.click(this.selectors.announcementIcon, "Announcement", "Icon")
-        // const index=await this.page.locator("//div[@id='announcements']//p").count();
-        // const randomIndex = Math.floor(Math.random() *  index)+ 1;
         const annocement = await this.getInnerText(this.selectors.announcementName(title));
         expect(annocement).not.toContain(`${title}`)
-    }
+    } */
 
 
     async selectCollaborationHub() {

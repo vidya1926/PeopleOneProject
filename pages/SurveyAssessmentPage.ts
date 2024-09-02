@@ -42,7 +42,10 @@ export class SurveyAssessmentPage extends AdminHomePage {
     passPercentage: `//input[@id='pass_percentage']`,
     randomizedropdown: `(//label[text()='Randomize']/following::button)[1]`,
     randomizeOption: (option: string) => `(//a/span[text()='${option}'])`,
-    noOfAttempts: `//input[@id='attempts']`
+    noOfAttempts: `//input[@id='attempts']`,
+    randomizeDD:`(//label[text()='Randomize']//following::button)[1]`,
+    noBtn:`//span[text()='No']`,
+
 
   }
   constructor(page: Page, context: BrowserContext) {
@@ -64,6 +67,11 @@ export class SurveyAssessmentPage extends AdminHomePage {
 
   async enterQuestions() {
     await this.type(this.selectors.questionsInput, "Input", FakerData.generateQuestion());
+  }
+
+  async selectRandomize(){
+    await this.click(this.selectors.randomizeDD,"Randomize","Dropdown");
+    await this.click(this.selectors.noBtn,"No","List");
   }
 
   async selectLanguage() {

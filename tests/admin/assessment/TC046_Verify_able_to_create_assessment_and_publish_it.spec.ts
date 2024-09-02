@@ -17,7 +17,7 @@ test(`TC044_Verify_able_to_create_survey_and_publish_it`,async({ adminHome,Surve
     await SurveyAssessment.selectLanguage();
     await SurveyAssessment.fillDescription();
     await SurveyAssessment.enterPasspercentage("50")
-    await SurveyAssessment.selectRandomizeOption("Both")
+    await SurveyAssessment.selectRandomizeOption("No")
     await SurveyAssessment.enterNofAttempts("2")
     await SurveyAssessment.clickSaveDraft();
     await SurveyAssessment.clickProceed();

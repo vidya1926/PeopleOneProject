@@ -1,14 +1,14 @@
 import { CatalogPage } from "./CatalogPage";
 
-export class ReadContentPage extends CatalogPage{
+export class ReadContentPage extends CatalogPage {
 
     public selectors = {
         ...this.selectors,
         contentframeEle: `//frame[@name='scormdriver_content']`,
         contentNextbutton: `//div[text()='NEXT']`,
         contentPage: `//li[contains(@class,'open visited')]`,
-        contentFrame:`//iframe[contains(@class,'url-content-frame')]`,
-        playForwardButton:`//div[@id='playbar']//*[@title='Forward']`,
+        contentFrame: `//iframe[contains(@class,'url-content-frame')]`,
+        playForwardButton: `//div[@id='playbar']//*[@title='Forward']`,
 
     };
     async readPPtContent() {
@@ -21,9 +21,9 @@ export class ReadContentPage extends CatalogPage{
         }
     }
 
-    async readContent(){
-             
-      await this.verifyAndClickEleinFrame(this.selectors.playForwardButton,this.selectors.playForwardButton,"ForwardButton")    
+    async readContent() {
+        await this.page.pause()
+        await this.verifyAndClickEleinFrame(this.selectors.playForwardButton, this.selectors.playForwardButton, "ForwardButton")
 
     }
 
@@ -39,8 +39,8 @@ export class ReadContentPage extends CatalogPage{
             await this.saveLearningAICC()
         }
     }
-    
-  
+
+
 
 
 
