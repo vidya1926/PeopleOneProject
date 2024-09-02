@@ -165,11 +165,7 @@ export class LearnerHomePage extends LearnerLogin {
         await this.wait("minWait")
         await this.mouseHover(this.selectors.announcementIcon, "Announcement")
         await this.click(this.selectors.announcementIcon, "Announcement", "Icon")
-<<<<<<< HEAD
         const annocement = await this.page.locator(this.selectors.announcementName(title)).textContent();
-=======
-        const annocement = await this.getInnerText(this.selectors.announcementName(title));
->>>>>>> 2b600ab0d809c7ca8181bcdd6c2ec32dd0de69d3
         expect(annocement).toContain(`${title}`)
     }
     async verifyPastAnnouncement(title: string) {
