@@ -4,16 +4,16 @@ import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-const commerceAdmin:any=FakerData.getUserId()
+const leanerAdmin:any=FakerData.getUserId()
 const newData = {
-    commerceAdmin: commerceAdmin
+    learnerAdmin: leanerAdmin
 }
 updateFieldsInJSON(newData)
-test(`TC012_Create user in admin login `, async ({ adminHome, createUser }) => {
+test(`TC014_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Commerce Admin` },
-        { type:`Test Description`, description: `Adding User as Commerce Admin` }
+        { type: `TestCase`, description: `Add user to the Learning Admin` },
+        { type:`Test Description`, description: `Adding User as Learning Admin` }
         
     );
     
@@ -29,7 +29,7 @@ test(`TC012_Create user in admin login `, async ({ adminHome, createUser }) => {
         
         await createUser.enter("first_name", FakerData.getFirstName());
         await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username", commerceAdmin);
+        await createUser.enter("username", leanerAdmin);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.enter("email", FakerData.getEmail());
         await createUser.enter("user-phone", FakerData.getMobileNumber());
@@ -49,23 +49,23 @@ test(`TC012_Create user in admin login `, async ({ adminHome, createUser }) => {
     }
 });
 
-
-
-test(`TC012 _Add user to Commerce Admin `, async ({ adminHome, adminGroup }) => {
+test(`TC014 _Add user to Learning Admin `, async ({ adminHome, adminGroup,createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create the user to add in commerce admin` },
-        { type: `Test Description`, description: `Verify that user is added to commerce admin` }
+        { type: `TestCase`, description: `Create the user to add in commerce` },
+        { type: `Test Description`, description: `Verify that user is added to commerce role` }
 
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.people();
     await adminHome.adminGroup();
-    await adminGroup.searchAdmin("Commerce admin");
-    await adminGroup.clickGroup("Commerce admin")
-    await adminGroup.searchUser(commerceAdmin)
-    await adminGroup.clickuserCheckbox(commerceAdmin)
+    await adminGroup.searchAdmin("Learning admin");
+    await adminGroup.clickGroup("Learning admin")
+    await adminGroup.searchUser(leanerAdmin)
+    await adminGroup.clickuserCheckbox(leanerAdmin)
     await adminGroup.clickSelelctUsers();
-    await adminGroup.clickUpdate();    
+    await adminGroup.clickUpdate();  
+    await createCourse.verifySuccessMessage();  
 })
+

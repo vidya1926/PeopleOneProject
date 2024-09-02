@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "managerName": "Brenna.Harris19@yahoo.com",
   "adminName": "Jane Smith",
   "learnerAdmin": "Alice Johnson",
@@ -6,11 +7,25 @@
   "customAdmin": "Patsy10@yahoo.com",
   "peopleAdmin": "Mustafa.Lueilwitz@hotmail.com",
   "commerceAdmin": "Zander.Carter74@hotmail.com",
+=======
+  "managerName": "Jocelyn_Abernathy78@gmail.com",
+  "adminName": "Jane Smith",
+  "learnerAdmin": "Tyrell_Denesik@yahoo.com",
+  "courseAdmin": "Nella.Ritchie@gmail.com",
+  "talentAdmin": "Reed_Becker80@hotmail.com",
+  "customAdmin": "Alana_Schuster@gmail.com",
+  "peopleAdmin": "Kailey_Douglas@hotmail.com",
+  "commerceAdmin": "Richmond_Tremblay71@gmail.com",
+>>>>>>> 2b600ab0d809c7ca8181bcdd6c2ec32dd0de69d3
   "commonUser": "peopleEnos60@yahoo.com",
-  "enrollAdmin": "Neva9@hotmail.com",
+  "enrollAdmin": "Eli53@hotmail.com",
   "internalUser": "Turner50@gmail.com",
   "externalUser": "Jean91@yahoo.com",
   "teamUser1": "Mafalda91@hotmail.com",
   "teamUser2": "Jaylin33@gmail.com",
+<<<<<<< HEAD
   "instructorName": "Andrew_Bernier22@yahoo.com"
+=======
+  "instructorName": "Patsy.Feeney16@yahoo.com"
+>>>>>>> 2b600ab0d809c7ca8181bcdd6c2ec32dd0de69d3
 }

@@ -1,6 +1,7 @@
 
 import { Page, test, expect, BrowserContext, Locator } from "@playwright/test";
 import * as path from 'path';
+import fs from 'fs'
 
 declare module '@playwright/test' {
     interface Page {

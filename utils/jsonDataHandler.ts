@@ -5,8 +5,10 @@ interface Data {
   managerName?: string;
   adminName?: string;
   courseAdmin?: string;
+  talentAdmin?:string;
   peopleAdmin?: string
   commerceAdmin?: string;
+  learnerAdmin?:string;
   customAdmin?: string;
   instructorName?: string;
   commonUser?: string;
@@ -15,6 +17,7 @@ interface Data {
   externalUser?:string;
   teamUser1?:string;
   teamUser2?:string;
+
 }
 
 const fileName = '../data/adminGroupsData.json';

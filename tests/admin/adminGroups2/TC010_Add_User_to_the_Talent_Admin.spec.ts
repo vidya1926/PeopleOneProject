@@ -4,9 +4,9 @@ import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-const courseAdmin: any = FakerData.getUserId()
+const talentAdmin: any = FakerData.getUserId()
 const newData = {
-    courseAdmin: courseAdmin
+   talentAdmin: talentAdmin
 }
 updateFieldsInJSON(newData)
 test.describe(`TC010_Add_user_to_the_ourse Admin`, async () => {
@@ -30,7 +30,7 @@ test.describe(`TC010_Add_user_to_the_ourse Admin`, async () => {
 
             await createUser.enter("first_name", FakerData.getFirstName());
             await createUser.enter("last_name", FakerData.getLastName());
-            await createUser.enter("username", courseAdmin);
+            await createUser.enter("username", talentAdmin);
             await createUser.enter("user-password", "Welcome1@");
             await createUser.enter("email", FakerData.getEmail());
             await createUser.enter("user-phone", FakerData.getMobileNumber());
@@ -62,9 +62,9 @@ test.describe(`TC010_Add_user_to_the_ourse Admin`, async () => {
         await adminHome.adminGroup();
         await adminGroup.searchUser("Talent");
         await adminGroup.clickGroup("Talent admin");
-        await adminGroup.searchUser(courseAdmin)
+        await adminGroup.searchUser(talentAdmin)
         await adminGroup.clickCourseAdmin();
-        await adminGroup.searchUser(courseAdmin);
+        await adminGroup.searchUser(talentAdmin);
         await adminGroup.clickUpdate();
         await createCourse.verifySuccessMessage();
     })
