@@ -94,12 +94,12 @@ async function updatetableForAnnoncement() {
         const newTime = addMinutes(subDays(currentTime, 1), 15);
         const formattedNewTime = format(newTime, 'yyyy-MM-dd HH:mm:ss');
         console.log('Formatted New Time (after 15 minutes):', formattedNewTime);
-        const banner = await dataBase.executeQuery(`SELECT * FROM announcement ORDER BY id DESC LIMIT 10;`);
-        console.log(banner);
-        const idString = String(banner[0].id);
+        const announcement = await dataBase.executeQuery(`SELECT * FROM announcement ORDER BY id DESC LIMIT 1;`);
+        console.log(announcement);
+        const idString = String(announcement[0].id);
         console.log("Retrived Id = " + idString);
-        const updateBanner = await dataBase.executeQuery(`update announcement set from_date='${formattedNewTime}',to_date='${formattedNewTime}' where id=${idString};`);
-        console.log(updateBanner);
+        const updateAnnouncement = await dataBase.executeQuery(`UPDATE announcement SET from_date='${formattedNewTime}',to_date='${formattedNewTime}' WHERE id=${idString};`);
+        console.log(updateAnnouncement);
     } catch (error) {
         console.log("Not executed " + error);
     }

@@ -39,40 +39,40 @@ export class AdminGroupPage extends PlaywrightWrapper {
     }
 
 
-    // public async clickCommerceAdmin() {
-    //     await this.click(this.selectors.clickAdminGroup("Commerce admin"), "Commerce Admin", "Button");
-    //   
-    // }
+    public async clickCommerceAdmin() {
+        await this.click(this.selectors.clickAdminGroup("Commerce admin"), "Commerce Admin", "Button");
+      
+    }
 
-    // public async clickLearningAdmin() {
-    //     await this.click(this.selectors.clickAdminGroup("Learning admin"), "Learning Admin", "Button");
-    // }
-
-
-    // public async clickPeopleAdmin() {
-    //     await this.click(this.selectors.clickAdminGroup("People admin"), "People Admin", "Button");
-    // }
+    public async clickLearningAdmin() {
+        await this.click(this.selectors.clickAdminGroup("Learning admin"), "Learning Admin", "Button");
+    }
 
 
-    // public async clickEnrollAdmin() {
-    //     await this.click(this.selectors.clickAdminGroup("Enrollment admin"), "People Admin", "Button");
-    // }
+    public async clickPeopleAdmin() {
+        await this.click(this.selectors.clickAdminGroup("People admin"), "People Admin", "Button");
+    }
 
 
-    // public async clickCourseAdmin() {
-    //     await this.click(this.selectors.clickAdminGroup("Course creator admin"), "Course Admin", "Button");
-    // }
+    public async clickEnrollAdmin() {
+        await this.click(this.selectors.clickAdminGroup("Enrollment admin"), "People Admin", "Button");
+    }
 
 
-    // public async adminPopup(admintype:string){
-    //     const adminGroup = [
-    //         "Customer Admin", "Course creator admin", "Enrollment admin",
-    //          "People admin", "Learning admin", "Commerce admin", "Talent admin",           
-    //     ];   
-    //     for(let name of adminGroup){     
-    //         if(name.includes(admintype))
-    //         await this.click(this.selectors.clickAdminGroup(`${name}`), `${name}`, "Button");
-    //     }}
+    public async clickCourseAdmin() {
+        await this.click(this.selectors.clickAdminGroup("Course creator admin"), "Course Admin", "Button");
+    }
+
+
+    public async adminPopup(admintype:string){
+        const adminGroup = [
+            "Customer Admin", "Course creator admin", "Enrollment admin",
+             "People admin", "Learning admin", "Commerce admin", "Talent admin",           
+        ];   
+        for(let name of adminGroup){     
+            if(name.includes(admintype))
+            await this.click(this.selectors.clickAdminGroup(`${name}`), `${name}`, "Button");
+        }}
 
         
     public async searchUser(data: string) {

@@ -1,11 +1,11 @@
-import {test} from"../../../customFixtures/expertusFixture"
+import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
-test(`TC045_Verify_able_to_create_assessment_questions`,async({ adminHome,SurveyAssessment})=>{
+test(`TC045_Verify_able_to_create_assessment_questions`, async ({ adminHome, SurveyAssessment }) => {
     test.info().annotations.push(
         { type: 'Author', description: 'Ajay Michael' },
         { type: 'TestCase', description: 'Verify_able_to_create_Assessment_questions' },
-        { type:'Test Description', description:"Creating a question for Assessment"}
+        { type: 'Test Description', description: "Creating a question for Assessment" }
     );
     await adminHome.loadAndLogin("LEARNERADMIN")
     await adminHome.isSignOut();

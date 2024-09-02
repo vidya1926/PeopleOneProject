@@ -1,6 +1,4 @@
 import { defineConfig, devices } from '@playwright/test';
-import { format } from 'date-fns';
-import { promiseHooks } from 'v8';
 
 /* const timestamp = format(new Date(), 'MM/dd/yyyy');
 const reportDir = `./reporter/playwright-reports-${timestamp}`; */
@@ -13,7 +11,7 @@ export default defineConfig({
   testDir: './tests',
   fullyParallel: false,
   retries: 0,
-  workers: 2,
+  workers: 1,
   repeatEach: 0,
   //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   reporter: [['html', { open: 'always' }]],
@@ -58,7 +56,8 @@ export default defineConfig({
     ), ...(
       true ? [{
         name: 'API Testing',
-        testDir: './api/apiTests',
+        testDir: './api/apiTestIntegration',
+
         use: {
           headless: false,
           ...devices['Desktop Chromium'],

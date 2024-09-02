@@ -3,10 +3,6 @@ import { Page, test, expect, BrowserContext, Locator } from "@playwright/test";
 import * as path from 'path';
 import fs from 'fs'
 
-
-
-
-
 declare module '@playwright/test' {
     interface Page {
         delayedFill: (selector: string, value: string) => Promise<void>;
@@ -249,8 +245,8 @@ export abstract class PlaywrightWrapper {
                     expect(ele).toBeVisible()
                     this.wait('minWait')
                     await ele.hover();
-                    await ele.click();                   
-                        console.log(`Ele visible`);
+                    await ele.click();
+                    console.log(`Ele visible`);
                 } catch (error) {
                     console.log("Frame not found" + error)
                 }
@@ -258,7 +254,7 @@ export abstract class PlaywrightWrapper {
         })
     }
 
-    
+
     async typeinFrame(flocator: string, locator: string, name: string, data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             const frameCount = 1;

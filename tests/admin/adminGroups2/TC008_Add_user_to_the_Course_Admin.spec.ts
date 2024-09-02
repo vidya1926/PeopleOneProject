@@ -4,66 +4,70 @@ import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-const courseAdmin:any=FakerData.getUserId()
+const courseAdmin: any = FakerData.getUserId()
 const newData = {
     courseAdmin: courseAdmin
 }
 updateFieldsInJSON(newData)
-test(`TC008_Create user in admin login `, async ({ adminHome, createUser }) => {
-    test.info().annotations.push(
-        { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course creator Admin` },
-        { type:`Test Description`, description: `Adding User as Course creator Admin` }
-        
-    );
-    
-    const csvFilePath = './data/User.csv';
-    const data = await readDataFromCSV(csvFilePath);
+test.describe(`TC008_Add user to the Course Admin`, async () => {
+    test(`Create user in admin login `, async ({ adminHome, createUser }) => {
+        test.info().annotations.push(
+            { type: `Author`, description: `Ajay Michael` },
+            { type: `TestCase`, description: `Add user to the Course Admin` },
+            { type: `Test Description`, description: `Adding User as Course Admin` }
 
-    for (const row of data) {
-         const { country, state, timezone, currency, city, zipcode } = row;
+        );
 
+        const csvFilePath = './data/User.csv';
+        const data = await readDataFromCSV(csvFilePath);
+
+        for (const row of data) {
+            const { country, state, timezone, currency, city, zipcode } = row;
+
+            await adminHome.loadAndLogin("CUSTOMERADMIN")
+            await adminHome.clickMenu("User");
+            await createUser.verifyCreateUserLabel();
+
+            await createUser.enter("first_name", FakerData.getFirstName());
+            await createUser.enter("last_name", FakerData.getLastName());
+            await createUser.enter("username", courseAdmin);
+            await createUser.enter("user-password", "Welcome1@");
+            await createUser.enter("email", FakerData.getEmail());
+            await createUser.enter("user-phone", FakerData.getMobileNumber());
+            await createUser.typeAddress("Address 1", FakerData.getAddress());
+            await createUser.typeAddress("Address 2", FakerData.getAddress());
+            await createUser.select("Country", country);
+            await createUser.select("State/Province", state);
+            await createUser.select("Time Zone", timezone);
+            await createUser.select("Currency", currency);
+            await createUser.enter("user-city", city);
+            await createUser.enter("user-zipcode", zipcode);
+            await createUser.enter("user-mobile", FakerData.getMobileNumber());
+            await createUser.clickRolesButton("Manager")
+            await createUser.clickSave();
+            await createUser.clickProceed("Proceed");
+            await createUser.verifyUserCreationSuccessMessage();
+        }
+    });
+
+    test(`Add user to the Course Admin`, async ({ adminHome, adminGroup, createCourse }) => {
+        test.info().annotations.push(
+            { type: `Author`, description: `Ajay Michael` },
+            { type: `TestCase`, description: `Add user to the Course Admin` },
+            { type: `Test Description`, description: `Adding User as Course Admin` }
+
+        );
         await adminHome.loadAndLogin("CUSTOMERADMIN")
-        await adminHome.clickMenu("User");
-        await createUser.verifyCreateUserLabel();        
-        await createUser.enter("first_name", FakerData.getFirstName());
-        await createUser.enter("last_name", FakerData.getLastName());
-        await createUser.enter("username", courseAdmin);
-        await createUser.enter("user-password", "Welcome1@");
-        await createUser.enter("email", FakerData.getEmail());
-        await createUser.enter("user-phone", FakerData.getMobileNumber());
-        await createUser.typeAddress("Address 1", FakerData.getAddress());
-        await createUser.typeAddress("Address 2", FakerData.getAddress());
-        await createUser.select("Country", country);
-        await createUser.select("State/Province", state);
-        await createUser.select("Time Zone", timezone);
-        await createUser.select("Currency", currency);
-        await createUser.enter("user-city", city);
-        await createUser.enter("user-zipcode", zipcode);
-        await createUser.enter("user-mobile", FakerData.getMobileNumber());
-        await createUser.clickRolesButton("Manager")
-        await createUser.clickSave();
-        await createUser.clickProceed("Proceed");
-        await createUser.verifyUserCreationSuccessMessage();
-    }
-});
+        await adminHome.menuButton();
+        await adminHome.people();
+        await adminHome.adminGroup();
+        await adminGroup.searchUser("LEARNING ADMIN");
+        await adminGroup.clickLearningAdmin();
+        await adminGroup.searchUser(courseAdmin)
+        await adminGroup.clickCourseAdmin();
+        await adminGroup.searchUser(courseAdmin);
+        await adminGroup.clickUpdate();
+        await createCourse.verifySuccessMessage();
+    })
 
-test(`TC008_Add user to the Course Admin`, async ({ adminHome, adminGroup,createCourse }) => {
-    test.info().annotations.push(
-        { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course creator Admin` },
-        { type:`Test Description`, description: `Adding User as Course creator Admin` }
-        
-    );
-    await adminHome.loadAndLogin("CUSTOMERADMIN")
-    await adminHome.menuButton();
-    await adminHome.people();
-    await adminHome.adminGroup();
-    await adminGroup.searchAdmin("Course creator admin");
-    await adminGroup.clickGroup("Course creator admin");
-    await adminGroup.searchUser(courseAdmin)
-    await adminGroup.clickuserCheckbox(courseAdmin);
-    await adminGroup.clickSelelctUsers();
-    await adminGroup.clickUpdate();
-    await createCourse.verifySuccessMessage();
 })
