@@ -15,6 +15,7 @@ export class AdminRolePage extends AdminHomePage {
         additonalModuleName: (index: number) => `(//span[@class='text-truncate'])[${index}]`,
         deleteIcon: (module: string) => `(//label[@for='${module}-delete']//i)[2]`,
         saveButton:`#role-meta-data-save`,
+        createdRole:`//div[contains(@id,'role_name')]/span`
 
     };
     constructor(page: Page, context: BrowserContext) {
@@ -25,8 +26,8 @@ export class AdminRolePage extends AdminHomePage {
         await this.click(this.selectors.addAdminrole, "Add AdminRole", "Button")
     }
 
-    public async enterName() {
-        await this.type(this.selectors.adminroleName, "Admin Role Name", FakerData.getFirstName()+" Admin")
+    public async enterName(roleName:string) {
+        await this.type(this.selectors.adminroleName, "Admin Role Name",roleName)
     }
 
     public async clickAllPriveileges() {
@@ -58,6 +59,16 @@ export class AdminRolePage extends AdminHomePage {
             }
         }
     }
+
+        public async clickSave(){
+                await this.click(this.selectors.saveButton,"Save","Button")
+        }
+
+        public async verifyRole(roleName:string){
+            await this.verification(this.selectors.createdRole,roleName)
+        }
+
+
 }
 
 
