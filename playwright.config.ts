@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
 const reportDir = `./reporter/playwright-reports-${timestamp}`; */
 export default defineConfig({
   //globalTimeout: 450000,
-  timeout: 450000,
+  timeout: 300000,
   expect: {
     timeout: 20000
   },
@@ -16,7 +16,7 @@ export default defineConfig({
   //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   reporter: [['html', { open: 'always' }]],
   use: {
-    trace: 'off',
+    trace: 'on',
     headless: false,
     screenshot: "on",
     video: 'on',

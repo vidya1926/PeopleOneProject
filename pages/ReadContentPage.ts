@@ -12,7 +12,7 @@ export class ReadContentPage extends CatalogPage {
 
     };
     async readPPtContent() {
-        await this.wait("minWait")
+        await this.wait("maxWait")
         await this.verifyEleinFrame(this.selectors.contentframeEle, this.selectors.contentPage, "Thank you Link")
         const count = await this.page.locator(this.selectors.contentPage).count()
         for (let index = 1; index <= count; index++) {
