@@ -85,8 +85,7 @@ export class EditCoursePage extends AdminHomePage {
         const tags = getRandomItemFromFile("../data/peopleDepartmentData.json");
         const randomTag = tags;
         await this.keyboardType(this.selectors.tagsSearchField, randomTag);
-        //await this.keyboardAction(this.selectors.tagsSearchField, "Backspace", "Search Field", randomTag)
-        const tagName = this.getInnerText(`//li[text()='${randomTag}']`)
+        const tagName = this.getInnerText(`//li[text()='${randomTag}']`);
         await this.click(`//li[text()='${randomTag}']`, randomTag, "Button")
         await this.validateElementVisibility(this.selectors.tagsSuccesfully, "Tags")
         await this.verification(this.selectors.tagsSuccesfully, "Tag has been added successfully.")
