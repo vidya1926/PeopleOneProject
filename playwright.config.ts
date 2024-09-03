@@ -30,6 +30,8 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chromium'],
         headless: false,
+        video: 'on',
+        screenshot:"on",
         viewport: null,
         launchOptions: {
           slowMo: 300,
@@ -43,14 +45,14 @@ export default defineConfig({
         name: 'Verification',
         testDir: './zCronVerification',
         use: {
-          headless: false,
+          
+          headless: false,         
           ...devices['Desktop Chromium'],
           viewport: null,
           launchOptions: {
             slowMo: 300,
             args: ["--start-maximized"]
           }
-
         }
       },] : []
     ), ...(

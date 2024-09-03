@@ -8,7 +8,7 @@ const roleName=FakerData.getFirstName()+" Admin"
 test(`TC016 _Verify the Custom role creation with all privileges `, async ({ adminHome,adminRoleHome}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create the ` },
+        { type: `TestCase`, description: `Create the Custom Role` },
         { type: `Test Description`, description: `Verify that Learner Group is created` }
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN")
@@ -19,18 +19,14 @@ test(`TC016 _Verify the Custom role creation with all privileges `, async ({ adm
     await adminRoleHome.enterName(roleName);
     await adminRoleHome.clickAllPriveileges();
     await adminRoleHome.clickSave()
-    await adminRoleHome.verifyRole(roleName)
-        
+    await adminRoleHome.verifyRole(roleName)        
 })
 
-
-
-test(`Add user to the Course Admin`, async ({ adminHome, adminGroup, createCourse ,adminRoleHome}) => {
+test(`TC018_Verify to create a new Custom Admin with Custom role`, async ({ adminHome, adminGroup, createCourse ,adminRoleHome}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
-        { type: `TestCase`, description: `Add user to the Course Admin` },
+        { type: `TestCase`, description: `Add Custom role to Custom Admin group` },
         { type: `Test Description`, description: `Adding User as Course Admin` }
-
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
