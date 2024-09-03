@@ -12,6 +12,7 @@ import url from "./data/apiData/url.json"
 import { generateOauthToken } from "./api/accessToken";
 
 
+import { read } from "fs";
 // // }
 
 // function getCurrentDateFormatted(): string {
@@ -215,7 +216,7 @@ let authorization = `Authorization: '${access_token}'`;
 
 console.log(authorization);
  */
-async function generateOauth() {
+/* async function generateOauth() {
     try {
         const [response, status] = await postRequest(customAdminOuthData, url.endPointURL);
         return ["Bearer " + response.access_token, status];
@@ -250,4 +251,31 @@ async function userCreation() {
 }
 async () => {
     await userCreation()
+} */
+import { chromium, Page } from "playwright";
+
+async function exampleFunction(page: Page) {
+    await page.goto("https://automation.expertusoneqa.in/backdoor");
+    await page.fill("#username", "admin");
+    await page.fill("#password", "Welcome1@");
+    await page.click("//button[contains(text(),'SIGN')]");
+    await page.waitForLoadState('load');
+    await page.click("//div[text()='Menu']");
+    await page.click("//span[text()='Learning']");
+    await page.click("//a[text()='Location']");
+    await page.waitForTimeout(5000);
+    let loc = await page.innerHTML("(//h5[contains(@class,'card-title')])[1]");
+    console.log(loc);
+    await page.click(`//h5[text()='${loc}']`);
+    await page.waitForTimeout(5000);
 }
+
+async function runTest() {
+    const browser = await chromium.launch({ headless: false });
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await exampleFunction(page);
+    await browser.close();
+}
+
+runTest();

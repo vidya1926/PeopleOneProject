@@ -7,7 +7,7 @@ import { assertResponse } from "../utils/verificationUtils";
 async function generateOauthToken() {
     try {
         const response = await postRequest(customAdminOuthData, url.endPointURL);
-        console.log("Response from postRequest:", response);
+        //console.log("Response from postRequest:", response);
         await assertResponse(response.status, 200);
         if (response.data && response.data.access_token) {
             return {

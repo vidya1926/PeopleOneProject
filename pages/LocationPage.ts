@@ -91,7 +91,7 @@ export class LocationPage extends AdminHomePage {
         const count = await locator.count();
         let locations: any = [];
         for (let i = 0; i < count; i++) {
-            const location = await locator.nth(i).innerText();
+            const location = await locator.nth(i).innerHTML();
             await locations.push(location);
         }
         console.log(locations);

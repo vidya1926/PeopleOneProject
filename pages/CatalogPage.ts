@@ -141,9 +141,9 @@ export class CatalogPage extends LearnerHomePage {
         await this.wait('mediumWait');
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
         await this.wait('minWait')
-        this.page.on('console', msg => {
+        /* this.page.on('console', msg => {
             console.log(`Console Log: ${msg.text()}`);
-        });
+        }); */
 
 
     }

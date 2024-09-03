@@ -601,6 +601,7 @@ export class CoursePage extends AdminHomePage {
     }
 
     async clickUpdate() {
+        await this.page.locator(this.selectors.updateBtn).scrollIntoViewIfNeeded();
         await this.click(this.selectors.updateBtn, "update", "field");
         const locator = this.page.locator(this.selectors.willResolveLaterBtn);
         await this.wait('mediumWait');
@@ -668,9 +669,9 @@ export class CoursePage extends AdminHomePage {
         await this.spinnerDisappear();
         if (content == "AICC") {
             const data = "AICC"
-            this.page.on('console', msg => {
-                console.log(`Console Log: ${msg.text()}`);
-            });
+            /*  this.page.on('console', msg => {
+                 console.log(`Console Log: ${msg.text()}`);
+             }); */
             await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
             await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
             await this.wait('minWait');
@@ -679,11 +680,11 @@ export class CoursePage extends AdminHomePage {
             await this.wait('maxWait');
             await this.page.locator(this.selectors.attachedContentLabel).scrollIntoViewIfNeeded();
             await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
-        }else if (content == "AICC&SCORM") {
+        } else if (content == "AICC&SCORM") {
             const data = "AICC&SCORM"
-            this.page.on('console', msg => {
+            /* this.page.on('console', msg => {
                 console.log(`Console Log: ${msg.text()}`);
-            });
+            }); */
             await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
             await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
             await this.wait('minWait');
@@ -693,8 +694,8 @@ export class CoursePage extends AdminHomePage {
             await this.page.locator(this.selectors.attachedContentLabel).scrollIntoViewIfNeeded();
             await this.validateElementVisibility(this.selectors.attachedContentLabel, "button");
         }
-         else {
-            const data = "youtube"
+        else {
+            const data = "Youtube Video Testing"
             await this.typeAndEnter('#exp-content-search-field', "Content Search Field", data);
             await this.click(this.selectors.contentIndex(2), "Contents", "checkbox");
             await this.mouseHover(this.selectors.addContentButton, "addcontent");

@@ -62,14 +62,15 @@ export class MetaLibraryPage extends AdminHomePage {
         listOfPeopleDepartment: "div[id='department'] div[class$='content-start'] span",
         listOfPeopleEmployment: "div[id='employment'] div[class$='content-start'] span",
         listOfPeopleUsertypes: "div[id='usertypes'] div[class$='content-start'] span",
-        listOfPeopleManager:"div[id='manager'] div[class$='content-start'] span",
+        listOfPeopleManager: "div[id='manager'] div[class$='content-start'] span",
         listOfPeopleJobtitle: "div[id='jobtitle'] div[class^='lms-cate-data']  span",
         listOfPeopleJobroles: "div[id='jobroles'] div[class^='lms-cate-data']  span",
         listofCEUType: "div[id='ceu-type'] div[class$='content-start'] span",
+        listOfTags: "div[id='tag'] div[class^='lms-cate-data'] span",
         listofCEUProvider: "div[id='ceu-provider'] div[class$='content-start'] span",
-       
 
-   };
+
+    };
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
@@ -192,6 +193,7 @@ export class MetaLibraryPage extends AdminHomePage {
     }
 
     async tagsSearchField(data: string) {
+        await this.retrieveData(this.selectors.listOfTags, "../data/peopleCEUTags.json")
         await this.type(this.selectors.tagsSearchField, "Search Field", data);
         await this.keyboardAction(this.selectors.tagsSearchField, "Enter", "Search Field", data);
         await this.spinnerDisappear();
@@ -303,7 +305,7 @@ export class MetaLibraryPage extends AdminHomePage {
         const data: string[] = [];
 
         for (let i = 0; i < length; i++) {
-            const personData = await this.page.locator(locator).nth(i).innerText();
+            const personData = await this.page.locator(locator).nth(i).innerHTML();
             if (personData) {
                 data.push(personData.trim());
             }

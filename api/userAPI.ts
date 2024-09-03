@@ -3,14 +3,14 @@ import url from "../data/apiData/url.json"
 import { postRequest } from "../utils/requestUtils";
 import { assertStatus, assertResponse } from "../utils/verificationUtils";
 import { generateOauthToken } from "./accessToken"
-let access_token: any
+/* let access_token: any
 const authorization: any = `Authorization: '${access_token}'`;
 async () => {
     access_token = (await generateOauthToken()).accessToken;
-}
-export async function userCreation() {
+} */
+export async function userCreation(authorization:any) {
     try {
-        //let un = userCreationData.username
+
         let response = await postRequest(userCreationData, url.endPointURL, authorization);
         console.log(response);
         await assertStatus(response.status, 200);
@@ -21,9 +21,8 @@ export async function userCreation() {
         throw error;
     }
 }
-let retrivied_userID: any
-export async function getUserDetail() {
-    retrivied_userID = await userCreation();
+
+export async function getUserDetail(retrivied_userID: any, authorization: any) {
     let response = await postRequest(getLearnerUser(retrivied_userID), url.learnerEndPointURL, authorization);
     await assertStatus(response.status, 200);
     console.log("User Data:", response.data.data.user_data);
@@ -31,13 +30,12 @@ export async function getUserDetail() {
     return response.data.data.user_data.Username
 
 }
-let username: any
-export async function updateUser() {
-    username = await getUserDetail()
+
+export async function updateUser(retrivied_userID: any, username: any, authorization: any) {
     let response = await postRequest(updateUserData(retrivied_userID, username), url.endPointURL, authorization);
     console.log(response);
     await assertStatus(response.status, 200);
-    await assertResponse(response.data.status,"success");
-    await assertResponse(response.data.message,"Request Successful");
+    await assertResponse(response.data.status, "success");
+    await assertResponse(response.data.message, "Request Successful");
 
 }
