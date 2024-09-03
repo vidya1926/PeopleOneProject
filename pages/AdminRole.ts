@@ -1,7 +1,7 @@
-import { Page, BrowserContext, expect } from "@playwright/test";
+import { Page, BrowserContext } from "@playwright/test";
 import { URLConstants } from "../constants/urlConstants";
 import { AdminHomePage } from "./AdminHomePage";
-import { FakerData } from "../utils/fakerUtils";
+
 
 
 export class AdminRolePage extends AdminHomePage {
@@ -15,7 +15,9 @@ export class AdminRolePage extends AdminHomePage {
         additonalModuleName: (index: number) => `(//span[@class='text-truncate'])[${index}]`,
         deleteIcon: (module: string) => `(//label[@for='${module}-delete']//i)[2]`,
         saveButton:`#role-meta-data-save`,
-        createdRole:`//div[contains(@id,'role_name')]/span`
+        createdRole:`//div[contains(@id,'role_name')]/span`,
+        searchField:`//input[contains(@id,'exp-search')]`,
+        selectRole:`//div[contains(@id,'exp-search-lms-scroll-results')]//li`
 
     };
     constructor(page: Page, context: BrowserContext) {
@@ -38,7 +40,7 @@ export class AdminRolePage extends AdminHomePage {
             const modName = text.toLowerCase()
             const textValue = modName.charAt(0).toUpperCase() + modName.slice(1);
             await this.click(this.selectors.deleteIcon(textValue), `${text}`, "Delete Checkbox")
-        }
+             }
         const countMod = await this.page.locator(`//span[@class='text-truncate']`).count()
         console.log(countMod)
         for (let index = 1; index <= countMod; index++) {
@@ -62,13 +64,18 @@ export class AdminRolePage extends AdminHomePage {
 
         public async clickSave(){
                 await this.click(this.selectors.saveButton,"Save","Button")
+                await this.page.reload();
         }
 
-        public async verifyRole(roleName:string){
+        public async roleSearch(roleName:string){
+               await this.type(this.selectors.searchField,"Search Field",roleName)
+               await this.mouseHover(this.selectors.selectRole,"Search Field")
+               await this.click(this.selectors.selectRole,"Search Field", "Option")
+        }
+
+        public async verifyRole(roleName:string){          
             await this.verification(this.selectors.createdRole,roleName)
         }
-
-
 }
 
 
