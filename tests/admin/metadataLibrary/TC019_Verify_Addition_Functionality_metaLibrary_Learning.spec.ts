@@ -88,7 +88,7 @@ test.describe(`TC019_Verify_Addition_Functionality_metaLibrary_Learning.spec.ts`
     })
 
     const tagName = FakerData.getCategory();
-    test.only(`Verify that a tags can be added under Metadata Library - Learning - Tags`, async ({ adminHome, metadatalibrary }) => {
+    test(`Verify that a tags can be added under Metadata Library - Learning - Tags`, async ({ adminHome, metadatalibrary }) => {
         test.info().annotations.push(
             { type: 'Author', description: 'Ajay Michael' },
             { type: 'TestCase', description: 'Verify that a tags can be added under Metadata Library - Learning - Tags' },
