@@ -252,7 +252,7 @@ async function userCreation() {
 async () => {
     await userCreation()
 } */
-import { chromium, Page } from "playwright";
+/* import { chromium, Page } from "playwright";
 
 async function exampleFunction(page: Page) {
     await page.goto("https://automation.expertusoneqa.in/backdoor");
@@ -279,3 +279,21 @@ async function runTest() {
 }
 
 runTest();
+ */
+
+
+/* const currentMilliseconds = Date.now();
+const randomNumber = Math.floor(Math.random() * 3);
+const lastThreeDigits = (Number((currentMilliseconds.toString()).slice(7)))+randomNumber;
+const result = lastThreeDigits + randomNumber;
+console.log(lastThreeDigits);
+ */
+/* 
+function login(username:any,lastname:any,address1?:any,adrress2?:any){
+   let a = username,b = lastname,c =address1 , d =adrress2
+   console.log(a,b,c,d);
+   
+}
+
+login("","")
+ */

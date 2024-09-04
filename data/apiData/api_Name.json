@@ -1,5 +1,8 @@
 {
     "createUser": "createUser",
     "updateUser": "updateUser",
-    "getUserDetail":"getUserDetails"
+    "getUserDetail":"getUserDetails",
+    "createCEUType":"createCEUType",
+    "getCeuTypeLists":"getCeuTypeLists",
+    "deleteCEUType":"deleteCEUType"
 }

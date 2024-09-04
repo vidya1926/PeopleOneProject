@@ -1,15 +1,15 @@
 import { test } from "@playwright/test";
 import { getUserDetail, updateUser, userCreation } from "../../userAPI";
 import { generateOauthToken } from "../../accessToken";
+import { userCreationData } from "../../../data/apiData/outhData";
+import { FakerData } from "../../../utils/fakerUtils";
 
+let username = FakerData.getUserId()
 test('Creating User and Updating User', async () => {
     const access_token = await generateOauthToken();
-    console.log(access_token.accessToken);
-    let userID = await userCreation(access_token.accessToken);
-    console.log(userID);
-    let userName = await getUserDetail(userID, access_token);
-    console.log(userName);
-    let updatedUser = await updateUser(userID, userName, access_token);
+    let userID = await userCreation(userCreationData(username), access_token);
+    let retrivedUserName = await getUserDetail(userID, access_token);
+    let updatedUser = await updateUser(userID, retrivedUserName, access_token);
     console.log(updatedUser);
 
 });
