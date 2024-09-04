@@ -15,7 +15,7 @@ export class AdminRolePage extends AdminHomePage {
         additonalModuleName: (index: number) => `(//span[@class='text-truncate'])[${index}]`,
         deleteIcon: (module: string) => `(//label[@for='${module}-delete']//i)[2]`,
         saveButton: `#role-meta-data-save`,
-        createdRole: `//div[contains(@id,'role_names')]/span`,
+        createdRole: `//div[contains(@id,'role_name')]/span`,
         searchField: `//input[contains(@id,'exp-search')]`,
         selectRole: `//div[contains(@id,'exp-search-lms-scroll-results')]//li`
 

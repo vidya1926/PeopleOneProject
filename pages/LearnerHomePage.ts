@@ -93,7 +93,7 @@ export class LearnerHomePage extends LearnerLogin {
     }
 
     public async verifyBannerDisplay(title: string) {
-        const banner = this.page.locator(`(//div/h1[text()="${title}"]/ancestor::div/img)[1]`)
+        const banner = this.page.locator(`(//div/h1[text()="${title}"]/ancestor::div/img)`)
         await this.wait("minWait")
         if (await banner.isVisible()) {
             const name = await this.getInnerText(this.selectors.bannerName)

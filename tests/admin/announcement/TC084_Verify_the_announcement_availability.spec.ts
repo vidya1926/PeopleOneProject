@@ -36,7 +36,6 @@ test.describe(`TC_084_Verify the  announcement is created `, async () => {
         );
         await learnerHome.learnerLogin("LEARNERUSERNAME", "LearnerPortal");
         await learnerHome.verifyPastAnnouncement(title);
-        //verifyAnnouncement(title);
     })
 
 })

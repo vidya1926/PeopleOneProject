@@ -4,48 +4,36 @@ import { PlaywrightWrapper } from "../utils/playwright"
 
 
 export class AdminGroupPage extends PlaywrightWrapper {
-
     static pageUrl = URLConstants.adminURL;
 
     public selectors = {
         clickAdminGroup: (user: string) => `//div[text()='${user}']`,
         searchUser: "#includeLearner-filter-field",
-        chooseUser: (user: string) => `//li[text()='${user}']`,
+        chooseUser: (user: string) => `//li[text()=${user}]`,
         //(username:string)=>`//span[text()=${username}]/following::i[contains(@class,'fa-square icon')][1]
         //selectUser:`(//div[contains(@class,'custom-control custom-chkbox')])[2]`,
         selectUser: `(//div[contains(@class,'chkbox')]//i[contains(@class,'fa-square icon')])[2]`,
         clickSelectUser: `//button[text()='Select Users']`,
         selectUpdate: `//button[text()='Update']`,
         searchCustomerAdmin: `//button[text()='CREATE GROUP']/following::input[1]`,
-        // selectPopup: `//li[text()='Super admin - Customer']`,
-        // commerceAdmin: `//div[text()='Commerce admin']`      
-        createGroupButton: `#admin-view-btn-primary`,
-        groupTitle: `#title`,
-        adminRoledropdown: `//button[@data-id='admin_roles']`,
-        selectRole: (roleName: string) => `//a[@class='dropdown-item']//span[text()='${roleName}']`,
-        saveAdminGroup: `#lrnSaveUpdate`,
-        proceedButton: `//button[contains(text(),'Yes, Proceed')]`
+        selectPopup: `//li[text()='Super admin - Customer']`,
+        commerceAdmin: `//div[text()='Commerce admin']`
     }
 
     constructor(page: Page, context: BrowserContext) {
         super(page, context);
     }
 
-
     public async searchAdmin(admin: string) {
         await this.type(this.selectors.searchCustomerAdmin, "Search Admin", admin)
-        await this.mouseHover(this.selectors.chooseUser(admin), "POP up ");
-        await this.click(this.selectors.chooseUser(admin), "Pop up", "Clicked");
-
+        await this.mouseHoverandClick(this.selectors.selectPopup, this.selectors.selectPopup, "POP up ", "option");
     }
-    public async clickGroup(data: string) {
+    public async clickGroup(data:string) {
         await this.click(this.selectors.clickAdminGroup(data), "Customer Admin", "Button");
     }
 
-
     public async clickCommerceAdmin() {
-        await this.click(this.selectors.clickAdminGroup("Commerce admin"), "Commerce Admin", "Button");
-
+        await this.click(this.selectors.commerceAdmin, "Commerce Admin", "Button");
     }
 
     public async clickLearningAdmin() {
@@ -58,25 +46,9 @@ export class AdminGroupPage extends PlaywrightWrapper {
     }
 
 
-    public async clickEnrollAdmin() {
-        await this.click(this.selectors.clickAdminGroup("Enrollment admin"), "People Admin", "Button");
-    }
-
-
     public async clickCourseAdmin() {
         await this.click(this.selectors.clickAdminGroup("Course creator admin"), "Course Admin", "Button");
     }
-
-
-    // public async adminPopup(admintype:string){
-    //     const adminGroup = [
-    //         "Customer Admin", "Course creator admin", "Enrollment admin",
-    //          "People admin", "Learning admin", "Commerce admin", "Talent admin",           
-    //     ];   
-    //     for(let name of adminGroup){     
-    //         if(name.includes(admintype))
-    //         await this.click(this.selectors.clickAdminGroup(`${name}`), `${name}`, "Button");
-    //     }}
 
 
     public async searchUser(data: string) {
@@ -98,27 +70,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
         await this.wait('minWait');
         await this.click(this.selectors.selectUpdate, "Update", "Button");
     }
-    public async clickCreateGroup() {
-        await this.click(this.selectors.createGroupButton, "Create Group", "Button")
-    }
 
-    public async enterGroupTitle(title: string) {
-        await this.type(this.selectors.groupTitle, "Custome Group title", title)
 
-    }
-
-    public async selectroleAdmin(roleName: string) {
-        await this.click(this.selectors.adminRoledropdown, "Admin Role", "Dropdown")
-        await this.click(this.selectors.selectRole(roleName), "Custom Admin Role", "Option")
-    }
-
-    public async clickSave() {
-        await this.click(this.selectors.saveAdminGroup, "Custom Group Save ", "button")
-    }
-
-    public async clickProceed() {
-        await this.click(this.selectors.proceedButton, "Proceed", "button")
-
-    }
 
 }
