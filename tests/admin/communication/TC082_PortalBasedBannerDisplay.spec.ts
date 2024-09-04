@@ -1,4 +1,6 @@
 import { test } from "../../../customFixtures/expertusFixture";
+import { updateJiraIssue } from "../../../jira/jira-integration";
+import { logADefectInJira } from "../../../jira/log-a-defect";
 import { FakerData } from "../../../utils/fakerUtils";
 const title=FakerData.getRandomTitle();
 
@@ -36,3 +38,13 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
     await learnerHome.learnerLogin("LEARNERUSERNAME","Portal2");
     await learnerHome.verifyBannerDisplay(title)
 })
+let jiraIssueKey: string | undefined; // Declare jiraIssueKey at the top level
+
+test.afterEach(async ({}, testInfo) => {
+    jiraIssueKey = await logADefectInJira(testInfo);
+});
+ test.afterAll(async () => {
+        if (jiraIssueKey) {
+            await updateJiraIssue(jiraIssueKey, 'C:/New folder(2)/ExpertusOne/test-results'); // Replace with the actual folder path
+        }
+    });

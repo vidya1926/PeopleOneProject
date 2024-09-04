@@ -200,6 +200,7 @@ export class AdminHomePage extends AdminLogin {
     public async assessmentMenu() {
         await this.validateElementVisibility(this.selectors.assessmentMenu, "Assessment");
         await this.click(this.selectors.assessmentMenu, "Assessment", "Button");
+        await this.page.locator("").innerHTML()
     }
 
 
