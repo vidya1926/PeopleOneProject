@@ -1,3 +1,4 @@
+import { URLConstants } from "../../../constants/urlConstants";
 import { test } from "../../../customFixtures/expertusFixture";
 import { updateJiraIssue } from "../../../jira/jira-integration";
 import { logADefectInJira } from "../../../jira/log-a-defect";
@@ -21,7 +22,7 @@ test(`TC082_Portal Based verification`, async ({ adminHome, bannerHome, createCo
     await bannerHome.enterFromDate();
     await bannerHome.enterTotodayDate();
     await bannerHome.selectSequence(2);
-    await createCourse.selectDomainOption("LearnerPortal");
+    await createCourse.selectDomainOption(URLConstants.portal2);
     await bannerHome.uploadImage("Qeagle");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();

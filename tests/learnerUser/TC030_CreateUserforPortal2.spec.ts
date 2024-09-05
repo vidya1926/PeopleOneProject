@@ -1,3 +1,4 @@
+import { URLConstants } from '../../constants/urlConstants';
 import { test } from '../../customFixtures/expertusFixture';
 import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
@@ -22,7 +23,7 @@ test(`TC030_Create user for portal 2`, async ({ adminHome, createUser, createCou
     await createUser.enter("user-password", "Welcome1@");
     await createUser.selectTimeZone("USA", "Pacific Standard");
     await createUser.select("State/Province", "Alaska");
-    await createCourse.selectDomainOption("LearnerPortal2")
+    await createCourse.selectDomainOption(URLConstants.portal3)
     await createUser.selectDepartmentType("department");
     await createUser.clickSave();
     await createUser.clickProceed("Proceed");

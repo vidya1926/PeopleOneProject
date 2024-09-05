@@ -4,6 +4,7 @@ import { FakerData } from "../../../utils/fakerUtils"
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { updateCronDataJSON } from "../../../utils/jsonDataHandler";
 import { updateSingleInstanceAutoRegister } from "../DB/DBJobs";
+import { URLConstants } from "../../../constants/urlConstants";
 
 
 let courseName = ("Cron " + FakerData.getCourseName());
@@ -28,7 +29,7 @@ test(`Course Creation for  E-Learning work flow`, async ({ adminHome, createCour
     await createCourse.enter("course-title", courseName);
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription("This is a new course by name :" + courseName);
-    await createCourse.selectDomainOption("E1Internal");
+    await createCourse.selectDomainOption(URLConstants.portal1);
     await createCourse.providerDropdown();
     await createCourse.clickregistrationEnds();
     await createCourse.selectCompliance();

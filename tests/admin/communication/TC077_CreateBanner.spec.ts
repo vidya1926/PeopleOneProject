@@ -1,3 +1,4 @@
+import { URLConstants } from "../../../constants/urlConstants";
 import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
@@ -18,7 +19,7 @@ test(`Create banner in sequence
     await bannerHome.enterFromDate();
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(1);
-    await createCourse.selectDomainOption("LearnerPortal");
+    await createCourse.selectDomainOption(URLConstants.portal2);
     await bannerHome.uploadImage("Profilepic");
     await bannerHome.enterbannerUrl();
     await bannerHome.clickPublish();
