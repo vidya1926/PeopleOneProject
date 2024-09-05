@@ -142,8 +142,7 @@ export class FakerData {
 
     }
     static getRandomTitle() {
-
-        return (faker.hacker.noun() + " " + faker.hacker.noun());
+        return (capitalizeFirstLetter(faker.hacker.noun()) + " " + capitalizeFirstLetter(faker.hacker.noun()));
     }
 }
 

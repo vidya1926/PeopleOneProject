@@ -115,30 +115,18 @@ export class LearnerHomePage extends LearnerLogin {
             }
         }
     }
-
-
     public async verifySequence(title: string, seqNumber: number) {
-        const bannerEle = this.page.locator("//div[contains(@class,'col pointer')]//h1")
+        await this.wait('mediumWait')
+        const bannerEle = this.page.locator(`//div[contains(@class,'col pointer')]//h1`)
         const sequenceCount = await bannerEle.count();
-        expect(sequenceCount).toBeGreaterThanOrEqual(2);
-        const secondElement = bannerEle.nth(1)
-        console.log(await secondElement.innerText())
+        expect(sequenceCount).toBeGreaterThanOrEqual(1);
+        await this.click(this.selectors.bannerSlider, "banner", "Slider")
+        const secondElement = bannerEle.nth(1);
+        const text=await secondElement.innerText();
         // Verify that the second element is visible
         const banner = await secondElement.isVisible();
-        expect(banner).toBe(true);
-        // for (let index = 1; index <= sequenceCount; index++) {
-        //     try {
-        //         if (index == seqNumber) {
-        //             const name = await this.getInnerText(this.selectors.bannerName)
-        //             expect(name).toContain(title)
-        //         }
-        //     }
-        //     catch (error) {
-        //         console.log(error)
-        //     }
-
-        // await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
-        // const availaberBnner = await this.page.locator(this.selectors.sequenceCounter).count();
+        expect(text).toContain(title);
+        expect(banner).toBeTruthy();
     }
     public async verifyAllSequence(title: string) {
         await this.validateElementVisibility(this.selectors.sequenceCounter, "banner")
@@ -175,7 +163,6 @@ export class LearnerHomePage extends LearnerLogin {
         await this.wait('mediumWait');
         const annocement = await this.page.locator(this.selectors.announceNotify).allTextContents();
         expect(annocement).not.toContain(title);
-
     }
 
     /* async verifypastAnnouncement(title: string) {

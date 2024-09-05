@@ -2,14 +2,12 @@ import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 import { updatecronForBanner } from "../DB/DBJobs";
 const title = FakerData.getRandomTitle();
-
 test(`TC081_Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Verify banner in sequence` },
         { type: `Test Description`, description: `Verify that banner is created` }
     );
-
     await adminHome.loadAndLogin("CUSTOMERADMIN")
     await adminHome.menuButton();
     await adminHome.clickCommunicationLink()
@@ -26,7 +24,6 @@ test(`TC081_Verify the  banner in sequence`, async ({ adminHome, bannerHome, cre
     await createCourse.clickProceed();
     await createCourse.verifySuccessMessage()
     await updatecronForBanner();
-
 })
 test(`Verification from learner site`, async ({ learnerHome }) => {
     test.info().annotations.push(

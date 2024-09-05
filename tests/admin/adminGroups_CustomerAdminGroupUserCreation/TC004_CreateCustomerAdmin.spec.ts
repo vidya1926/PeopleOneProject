@@ -3,8 +3,6 @@ import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
-
-
 const customAdmin: any = FakerData.getUserId()
 const newData = {
     customAdmin: customAdmin
