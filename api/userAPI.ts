@@ -8,13 +8,13 @@ const authorization: any = `Authorization: '${access_token}'`;
 async () => {
     access_token = (await generateOauthToken()).accessToken;
 } */
-export async function userCreation(authorization:any) {
+export async function userCreation(userData: any, authorization: any) {
     try {
 
-        let response = await postRequest(userCreationData, url.endPointURL, authorization);
+        let response = await postRequest(userData, url.endPointURL, authorization);
         console.log(response);
         await assertStatus(response.status, 200);
-        await assertResponse(response.data.result, "success")
+        await assertResponse(response.data.result, "success");
         return response.data.user_id
     } catch (error) {
         console.error("Failed to execute", error);

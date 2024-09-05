@@ -3,7 +3,9 @@
 
 export async function assertResponse(receivedResponse: any, expectedResponse?: any) {
     if (receivedResponse !== expectedResponse) {
-        throw new Error(`Expected status ${expectedResponse} but received ${receivedResponse}`);
+        throw new Error(`Expected Response ${expectedResponse} but received ${receivedResponse}`);
+    }else {
+        console.log(`Got expected Response: ${expectedResponse}`);
     }
 }
 

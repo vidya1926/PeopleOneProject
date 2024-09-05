@@ -10,9 +10,7 @@ async function generateOauthToken() {
         //console.log("Response from postRequest:", response);
         await assertResponse(response.status, 200);
         if (response.data && response.data.access_token) {
-            return {
-                accessToken: "Bearer " + response.data.access_token,
-            };
+            return "Bearer " + response.data.access_token
         } else {
             throw new Error("Access token not found in response");
         }
