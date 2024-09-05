@@ -8,11 +8,10 @@ import { TestInfo } from "@playwright/test";
  */
 export async function logADefectInJira(testInfo: TestInfo): Promise<string | undefined> {
     // Check if the test has failed
-    if (testInfo.status === "failed") {
+    if (testInfo.status === "failed" || testInfo.status==="timedOut") {
         // Create a summary and description for the Jira issue
         const summary = `Test failed: ${testInfo.title}`;
-        const description = `Here is the error: ${testInfo.error?.message}`;
-        
+        const description = `Here is the error: ${testInfo.error?.message}`;        
         // Create a Jira issue and get the issue key
         const issueKey = await createJiraIssue(summary, description);
         
