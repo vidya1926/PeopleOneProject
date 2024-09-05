@@ -2,6 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 import { credentialConstants } from "../../../constants/credentialConstants";
 import { CoursePage } from "../../../pages/CoursePage";
+import { URLConstants } from "../../../constants/urlConstants";
 
 
 let courseName1 = FakerData.getCourseName();
@@ -26,7 +27,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await createCourse.enter("course-title", courseName1);
         await createCourse.selectLanguage("English");
         await createCourse.typeDescription("This is a new course by name :" + description);
-        await learningPath.selectSpecificPortal('E1Internal');
+        await learningPath.selectSpecificPortal(URLConstants.portal1);
         await createCourse.contentLibrary();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
@@ -54,7 +55,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await createCourse.enter("course-title", courseName2);
         await createCourse.selectLanguage("English");
         await createCourse.typeDescription("This is a new course by name :" + description);
-        await learningPath.selectSpecificPortal('E1Internal');
+        await learningPath.selectSpecificPortal(URLConstants.portal1);
         await createCourse.contentLibrary();
         await createCourse.clickCatalog();
         await createCourse.clickSave();
@@ -79,7 +80,7 @@ test.describe(`TC074_Verify_the_Enforce_Sequence_flow`, async () => {
         await learningPath.title(title);
         await learningPath.language();
         await learningPath.description(description);
-        await learningPath.selectSpecificPortal('E1Internal');
+        await learningPath.selectSpecificPortal(URLConstants.portal1);
         /* await learningPath.clickAndSelectCompliance();
         await learningPath.registractionEnds();
         await learningPath.clickExpiresButton();

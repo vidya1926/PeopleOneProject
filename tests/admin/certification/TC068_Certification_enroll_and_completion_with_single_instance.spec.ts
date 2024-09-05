@@ -1,7 +1,5 @@
-import { verify } from "crypto";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
-import { credentialConstants } from "../../../constants/credentialConstants";
 
 let courseName = FakerData.getCourseName();
 let description = FakerData.getDescription();

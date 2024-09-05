@@ -37,14 +37,14 @@ export class SurveyAssessmentPage extends AdminHomePage {
     importQuestionBtn: "//button[text()='Import Questions']",
     publishBtn: "//button[text()='Publish']",
     successfullMessage: "//div[@id='lms-overall-container']//h3",
-    createAssessment:`//button[text()='CREATE ASSESSMENT']`,
+    createAssessment: `//button[text()='CREATE ASSESSMENT']`,
     assessmentTitle: `//label[text()='Assessment Title']//following-sibling::input`,
     passPercentage: `//input[@id='pass_percentage']`,
     randomizedropdown: `(//label[text()='Randomize']/following::button)[1]`,
     randomizeOption: (option: string) => `(//a/span[text()='${option}'])`,
     noOfAttempts: `//input[@id='attempts']`,
-    randomizeDD:`(//label[text()='Randomize']//following::button)[1]`,
-    noBtn:`//span[text()='No']`,
+    randomizeDD: `(//label[text()='Randomize']//following::button)[1]`,
+    noBtn: `//span[text()='No']`,
 
 
   }
@@ -69,9 +69,9 @@ export class SurveyAssessmentPage extends AdminHomePage {
     await this.type(this.selectors.questionsInput, "Input", FakerData.generateQuestion());
   }
 
-  async selectRandomize(){
-    await this.click(this.selectors.randomizeDD,"Randomize","Dropdown");
-    await this.click(this.selectors.noBtn,"No","List");
+  async selectRandomize() {
+    await this.click(this.selectors.randomizeDD, "Randomize", "Dropdown");
+    await this.click(this.selectors.noBtn, "No", "List");
   }
 
   async selectLanguage() {
@@ -162,13 +162,13 @@ export class SurveyAssessmentPage extends AdminHomePage {
           await this.type(this.selectors.scoreInput, "Score", await score());
           //const radioCount = await this.page.locator(this.selectors.radioBtn).count();
           const radioBtn = this.page.locator(`(${this.selectors.radioBtn})[${1}]`);
-
           const count = await this.page.locator(this.selectors.imageInput).count();
           for (let index = 0; index <= count; index++) {
             const qa = "../data/Q1.jpg"
             await this.uploadFile(this.selectors.imageInput, qa);
             await this.wait('mediumWait');
           }
+          await radioBtn.click();
 
         }
         break;

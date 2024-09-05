@@ -1,3 +1,4 @@
+import { URLConstants } from "../constants/urlConstants";
 import { FakerData, getCurrentDateFormatted, gettomorrowDateFormatted } from "../utils/fakerUtils";
 import { getRandomItemFromFile } from "../utils/jsonDataHandler";
 import { AdminHomePage } from "./AdminHomePage";
@@ -315,7 +316,7 @@ export class UserPage extends AdminHomePage {
     }
 
     public async fillImpersonateForm() {
-        let option = "E1Internal"
+        let option = URLConstants.portal1
         await this.validateElementVisibility(this.selectors.impersonateLabel, "Impersonate Label");
         await this.click(this.selectors.impersonateOptionDD, "Select Domain you want ?", "Drop Down");
         await this.click(this.selectors.impersonateDomainValue(option), "Select Domain you want ?", "Option");

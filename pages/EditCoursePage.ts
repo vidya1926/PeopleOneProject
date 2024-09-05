@@ -82,7 +82,7 @@ export class EditCoursePage extends AdminHomePage {
         //const tags = ["Empower", "Facilitate", "card", "matrix", "Testing", "Evolve schemas"];
         //const randomIndex = Math.floor(Math.random() * tags.length); // Corrected random index generation
         //const randomTag = tags[randomIndex];
-        const tags = getRandomItemFromFile("../data/peopleDepartmentData.json");
+        const tags = getRandomItemFromFile("../data/peopleCEUTags.json");
         const randomTag = tags;
         await this.keyboardType(this.selectors.tagsSearchField, randomTag);
         const tagName = this.getInnerText(`//li[text()='${randomTag}']`);

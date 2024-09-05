@@ -140,6 +140,7 @@ export class AdminHomePage extends AdminLogin {
     public async clickOnAssessmentLink() {
         await this.validateElementVisibility(this.selectors.assessmentLink, "Assessment");
         await this.click(this.selectors.assessmentLink, "Assessment", "Link");
+        await this.spinnerDisappear();
     }
 
     public async clickQuickAccess() {
@@ -200,7 +201,7 @@ export class AdminHomePage extends AdminLogin {
     public async assessmentMenu() {
         await this.validateElementVisibility(this.selectors.assessmentMenu, "Assessment");
         await this.click(this.selectors.assessmentMenu, "Assessment", "Button");
-        await this.page.locator("").innerHTML()
+        // await this.page.locator("").innerHTML()
     }
 
 

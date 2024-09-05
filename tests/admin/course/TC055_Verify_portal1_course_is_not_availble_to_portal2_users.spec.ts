@@ -1,6 +1,7 @@
 import { create } from "domain";
 import {test} from "../../../customFixtures/expertusFixture"
 import { FakerData } from '../../../utils/fakerUtils';
+import { URLConstants } from "../../../constants/urlConstants";
 
 const courseName  =FakerData.getCourseName();
 const description= FakerData.getDescription();
@@ -23,7 +24,7 @@ test(`TC001_CreateCourseFor Single Instance`,async({adminHome,createCourse,learn
     await createCourse.getCourse();
     await createCourse.selectLanguage("English");
     await createCourse.typeDescription(description);
-    await createCourse.selectDomainOption("LearnerPortal2");
+    await createCourse.selectDomainOption(URLConstants.portal3);
     await createCourse.contentLibrary();
     await createCourse.clickHere();
     await createCourse.selectImage();

@@ -125,6 +125,7 @@ export class CatalogPage extends LearnerHomePage {
     async clickEnrollButton() {
         await this.page.locator(this.selectors.createdCourse).scrollIntoViewIfNeeded();
         const enrollButtonSelector = this.selectors.enrollIcon;
+        await this.page.locator(enrollButtonSelector).scrollIntoViewIfNeeded();
         await this.validateElementVisibility(enrollButtonSelector, "Course");
         await this.click(enrollButtonSelector, "Enrolling Course", "Button");
     }
@@ -192,9 +193,9 @@ export class CatalogPage extends LearnerHomePage {
          myElement.addEventListener("click", (event) => {
              myElement.click()
            }); */
-        await this.mouseHover(playButton, "Play Button")
+        await this.page.locator(playButton).scrollIntoViewIfNeeded({ timeout: 5000 });
         await this.page.focus(playButton, { strict: true });
-        await this.page.click(playButton, { force: true })
+        await this.page.click(playButton, { force: true });
         await this.wait('maxWait');
         await this.wait('mediumWait');
     }
@@ -228,7 +229,7 @@ export class CatalogPage extends LearnerHomePage {
             console.log("Try to launch the button");
         }
     }
-    
+
 
 
     async searchMyLearning(data: string) {
@@ -464,6 +465,6 @@ export class CatalogPage extends LearnerHomePage {
             await this.wait(`minWait`);
         }
     }
-    
+
 
 }
