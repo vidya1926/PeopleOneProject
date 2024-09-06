@@ -16,8 +16,8 @@ export class BannerPage extends AdminHomePage {
         sequenceOption: `//a[@class='dropdown-item']`,
         sequenceOptionIndex: (index: number) => `(//a[@class='dropdown-item'])[${index}]`,
         clickheretoUpload: `//span[text()='Click here']`,
-        uploadFile: `//input[@id='banner_upload_file']`,
-        publishButton: `//button[text()='Publish']`,
+        uploadFile: `//span[text()='Click here']/following::input[@type='file']`,
+        publishButton: `//button[@id='banner-btn-publish']`,
         bannerUrl: `//input[@id='banner_link']`,
         editBanner: `//a[text()='Edit Banner']`,
         bannerListing: `//a[text()='Go to Listing']`,
@@ -62,11 +62,6 @@ export class BannerPage extends AdminHomePage {
 
     public async selectSequence(indexNumber: number) {
         await this.click(this.selectors.sequenceSelect, "Sequence", "dropdown")
-        const selector = this.page.locator(this.selectors.sequenceOption);
-        await this.validateElementVisibility(selector,"SequenceOption")
-        // const sequenceCount = await selector.count();
-        // const randomIndex p0: string= Math.floor(Math.random() * sequenceCount);
-       // await this.mouseHover(this.selectors.sequenceOptionIndex(indexNumber), "SequenceOption");
         await this.click(this.selectors.sequenceOptionIndex(indexNumber), "SequenceOption", "Option");
    
     }
@@ -78,16 +73,20 @@ export class BannerPage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() * sequenceCount);
         await this.click(this.selectors.selectsequenceIndex(indexNumber), "SequenceOption", "Option");
     }
-    public async uploadImage(fileName:string) {
-      
+    public async uploadImage(fileName:string) {      
         const path = `../data/${fileName}.jpg`;
         await this.uploadFile(this.selectors.uploadFile, path);
+        await this.wait('minWait')
     }
-    public async clickPublish() {
+    public async clickPublish() {       
+       
+        await this.validateElementVisibility(this.selectors.publishButton, "Publish")
         await this.click(this.selectors.publishButton, "Publish", "Button")
+        
     }
     public async enterbannerUrl() {         
-        await this.type(this.selectors.bannerUrl, "Banner Url ",await this.getTitle())
+        const url = this.page.url()
+        await this.type(this.selectors.bannerUrl, "Banner Url ",url)
     }
     public async clickEditIcon(title:string) {     
        // await this.validateElementVisibility(this.selectors.editIcon(title),"EditIcon")

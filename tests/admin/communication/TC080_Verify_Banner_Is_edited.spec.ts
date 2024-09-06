@@ -2,7 +2,7 @@ import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 
 const title = FakerData.getRandomTitle();
-test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCourse }) => {
+test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCourse,adminGroup }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Verify banner in sequence` },
@@ -18,12 +18,12 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.enterFromDate();
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(2);
-    await createCourse.selectPortal();
-    await bannerHome.uploadImage("Profilepic");
+    await createCourse.selectDomainOption("E1Internal");
     await bannerHome.enterbannerUrl();
+    await bannerHome.uploadImage("Profilepic");   
     await bannerHome.clickPublish();
-    await createCourse.clickProceed();
-    await createCourse.verifySuccessMessage()   
+    await adminGroup.clickProceed()
+        await createCourse.verifySuccessMessage()   
 
 })
 

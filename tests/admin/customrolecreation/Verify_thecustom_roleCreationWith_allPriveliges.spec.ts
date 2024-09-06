@@ -5,6 +5,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 
  const roleName=FakerData.getFirstName()+" Admin"
 
+ let jiraIssueKey: string | undefined; // Declare jiraIssueKey at the top level
 
 test(`TC016 _Verify the Custom role creation with all privileges `, async ({ adminHome, adminGroup,adminRoleHome}) => {
     test.info().annotations.push(
@@ -37,3 +38,15 @@ test.skip(`TC017 _Verify Role Search functionality`, async ({ adminHome,adminRol
     await adminRoleHome.roleSearch(roleName)
     await adminRoleHome.verifyRole(roleName)        
 })
+
+test.afterEach(async ({}, testInfo) => {
+    jiraIssueKey = await logADefectInJira(testInfo);
+});
+
+
+ test.afterAll(async ({},testInfo) => {
+   // jiraIssueKey = await logADefectInJira(testInfo);
+        if (!jiraIssueKey) {
+            await updateJiraIssue(jiraIssueKey, 'C:/New folder(2)/ExpertusOne/test-results/*.png'); // Replace with the actual folder path
+        }
+    });
