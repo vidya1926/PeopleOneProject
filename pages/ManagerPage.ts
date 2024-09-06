@@ -72,12 +72,12 @@ export class ManagerPage extends LearnerHomePage {
           }
 
         async selectTeamUser(data:string){
-            await this.click(this.selectors.selectDropdown,"Team User","dropdown")
+            await this.click(this.selectors.selectDropdown,"Team User","dropdown");
             await this.wait('mediumWait')
-            await this.keyboardType(this.selectors.searchUser,data)
+            await this.keyboardType(this.selectors.searchUser,data);
             await this.wait('maxWait')
-            await this.mouseHover(this.selectors.teamUseroption(data),"Team user Dropdown")
-            await this.click(this.selectors.teamUseroption(data),"Team user ","Dropdown")
+            await this.mouseHover(this.selectors.teamUseroption(data),"Team user Dropdown");
+            await this.click(this.selectors.teamUseroption(data),"Team user ","Dropdown");
         //     }
         //     catch{
         //     await this.click(this.selectors.closebutton,"Close","Icon")

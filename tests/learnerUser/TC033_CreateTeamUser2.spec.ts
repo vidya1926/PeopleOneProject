@@ -1,6 +1,6 @@
+import { credentials } from '../../constants/credentialData';
 import { URLConstants } from '../../constants/urlConstants';
 import { test } from '../../customFixtures/expertusFixture';
-import { readDataFromCSV } from '../../utils/csvUtil';
 import { FakerData } from '../../utils/fakerUtils';
 import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
@@ -18,7 +18,7 @@ test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) =
         { type: `Test Description`, description: `Verify that user is created as Team User2` }
     );   
 
-        await adminHome.loadAndLogin("PEOPLEADMIN");
+        await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.user();      
@@ -29,7 +29,7 @@ test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) =
         await createUser.enter("username",username);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.selectLanguage("English")
-        await createUser.selectOtherManager();
+        await createUser.selectSpecificManager(credentials.MANAGERNAME.username);
         await createCourse.selectDomainOption(URLConstants.portal2)
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");

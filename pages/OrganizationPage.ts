@@ -46,6 +46,7 @@ export class OrganizationPage extends AdminHomePage {
     }
 
     public async createOrganization() {
+        await this.validateElementVisibility(this.selectors.create, "Create Organization");
         await this.click(this.selectors.create, "Create Organization", "Button");
     }
 

@@ -1,5 +1,6 @@
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData } from "../../utils/fakerUtils";
+import data from "../../data/adminGroupsData.json"
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription()
 
@@ -71,18 +72,18 @@ test(`Verify the manager can recommend the course to user`,async({learnerHome,ma
     );
     await learnerHome.learnerLogin("MANAGERNAME", "DefaultPortal");
     await learnerHome.selectCollaborationHub();
-    await managerHome.enterSearchCourse(courseName);
-    await managerHome.clickrecommendIcon(courseName)
+    await managerHome.enterSearchCourse(title);
+    await managerHome.clickrecommendIcon(title)
     await managerHome.enterAdditionalInfo()
     await managerHome.selectTeam()
-    await managerHome.selectTeamUser("user") //not populating the search results-application issue
+    await managerHome.selectTeamUser(data.teamUser2) 
     await managerHome.clickSendMeCopy()
     await managerHome.clickRecommendLearning()
     await managerHome.verifytoastmsg()
 })
 
 
-test("Learner Site verification",async({learnerHome,catalog,dashboard})=>{
+test("Learner Site verification",async({learnerHome,catalog})=>{
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Learner site verification for manager appproval` },
@@ -91,7 +92,7 @@ test("Learner Site verification",async({learnerHome,catalog,dashboard})=>{
     await learnerHome.learnerLogin("TEAMUSER2", "DefaultPortal");
     await learnerHome.clickCatalog()
     await catalog.clickRecommendation()  
-    await catalog.searchCatalog(courseName)  
-    await catalog.verifyCourserecommemnded(courseName); 
+    await catalog.searchCatalog(title)  
+    await catalog.verifyCourserecommemnded(title); 
 
 })
