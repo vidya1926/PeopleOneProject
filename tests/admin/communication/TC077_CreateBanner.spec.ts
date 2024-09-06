@@ -3,8 +3,7 @@ import { test } from "../../../customFixtures/expertusFixture"
 import { FakerData } from "../../../utils/fakerUtils";
 
 const title = FakerData.getRandomTitle();
-test(`Create banner in sequence
-    `, async ({ adminHome, bannerHome, createCourse }) => {
+test(`Create banner in sequence`, async ({ adminHome, bannerHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create banner in sequence` },

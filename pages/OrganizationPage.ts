@@ -93,7 +93,8 @@ export class OrganizationPage extends AdminHomePage {
 
     }
     public async enterContactName() {
-        await this.type(this.selectors.contactName, "ContactName", FakerData.getFirstName())
+        await this.validateElementVisibility(this.selectors.contactName, "ContactName");
+        await this.type(this.selectors.contactName, "ContactName", FakerData.getFirstName());
     }
     public async clickUpdate() {
         await this.click(this.selectors.updateBtn, "Update", "Button")
