@@ -23,14 +23,14 @@ test(`TC025_Create Verigy the Organization is created`, async ({ adminHome,creat
     await organization.clickSave();
     await CompletionCertification.clickProceed();
     await contentHome.gotoListing()
-    const org:any=await organization.childOrgCount("Qeagle");
+    const org:any=await organization.childOrgCount(OrgName);
     await organization.clickEditIcon(); 
-    await organization.enterParentOrg("Qeagle");
+    await organization.enterParentOrg(OrgName);
     await organization.enterContactName();
     await organization.clickUpdate();
     await createCourse.verifySuccessMessage();
     await contentHome.gotoListing()
-    const org2:any=await organization.childOrgCount("Qeagle");
+    const org2:any=await organization.childOrgCount(OrgName);
     expect(org).toBeLessThan(org2)
   
 }

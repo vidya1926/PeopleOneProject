@@ -90,9 +90,9 @@ test("Learner Site verification",async({learnerHome,catalog})=>{
         { type: `Test Description`, description: `verify the manager appproval for E-learning` }
     );    
     await learnerHome.learnerLogin("TEAMUSER2", "DefaultPortal");
-    await learnerHome.clickCatalog()
-    await catalog.clickRecommendation()  
-    await catalog.searchCatalog(title)  
+    await learnerHome.clickCatalog();
+    await catalog.clickRecommendation();  
+    await catalog.searchCatalog(title);  
     await catalog.verifyCourserecommemnded(title); 
 
 })

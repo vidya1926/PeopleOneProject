@@ -38,7 +38,7 @@ export default defineConfig({
         screenshot: "on",
         viewport: null,
         launchOptions: {
-          slowMo: 300,
+          slowMo: 1000,
           args: ["--start-maximized"]
         }
 

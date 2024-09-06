@@ -302,7 +302,7 @@ export class ProfilePage extends LearnerHomePage {
         await this.click(this.selectors.verifyBy, "Manager/Other", "Dropdown")
         await this.click(this.selectors.selectManger("Manager"), "Manager", "Option") 
         await this.click(this.selectors.managerOption,"Manager option","Dropdown")     
-        await this.click(this.selectors.managerOpt(managerUser),"Manager","Option")  
+        //await this.click(this.selectors.managerOpt(managerUser),"Manager","Option")  
         await this.click(this.selectors.showToAllSkills, "Show To All", "Checkbox");
     }
 

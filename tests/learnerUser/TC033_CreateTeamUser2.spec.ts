@@ -30,7 +30,7 @@ test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) =
         await createUser.enter("user-password", "Welcome1@");
         await createUser.selectLanguage("English")
         await createUser.selectSpecificManager(credentials.MANAGERNAME.username);
-        await createCourse.selectDomainOption(URLConstants.portal2)
+        // await createCourse.selectDomainOption(URLConstants.portal2)
         await createUser.clickSave();               
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
