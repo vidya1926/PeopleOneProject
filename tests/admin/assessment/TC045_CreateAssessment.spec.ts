@@ -16,6 +16,7 @@ test(`TC045_Verify_able_to_create_assessment_questions`, async ({ adminHome, Sur
     await SurveyAssessment.enterQuestions();
     await SurveyAssessment.displayOption();
     await SurveyAssessment.selectLanguage();
+    //selectingType --> "Radio button","Dropdown","Checkbox","Image - Radio Button","Image - Checkbox"
     await SurveyAssessment.selectingType();
     await SurveyAssessment.clickSave();
 })

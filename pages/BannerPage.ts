@@ -76,11 +76,11 @@ export class BannerPage extends AdminHomePage {
     public async uploadImage(fileName:string) {      
         const path = `../data/${fileName}.jpg`;
         await this.uploadFile(this.selectors.uploadFile, path);
-        await this.wait('minWait')
     }
     public async clickPublish() {       
        
-        await this.validateElementVisibility(this.selectors.publishButton, "Publish")
+        await this.validateElementVisibility(this.selectors.publishButton, "Publish");
+        await this.page.locator(this.selectors.publishButton).scrollIntoViewIfNeeded();
         await this.click(this.selectors.publishButton, "Publish", "Button")
         
     }

@@ -8,10 +8,7 @@ import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 const instructorName: any = FakerData.getUserId();
 const firstName = FakerData.getFirstName();
 const lastName = FakerData.getLastName();
-const newData = {
-    instructorName: instructorName
-}
-updateFieldsInJSON(newData)
+
 test(`Add_user_to_the_Instructor_Group`, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -19,7 +16,10 @@ test(`Add_user_to_the_Instructor_Group`, async ({ adminHome, createUser }) => {
         { type: `Test Description`, description: `Create User as Manager` }
 
     );
-
+    const newData = {
+        instructorName: instructorName
+    }
+    updateFieldsInJSON(newData)
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);
 

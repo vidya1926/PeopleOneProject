@@ -16,7 +16,7 @@ test(`Verify the manager can recommend the course to user ${data.user}`,async({l
     );
     await learnerHome.learnerLogin("MANAGERNAME", "DefaultPortal");
     await learnerHome.selectCollaborationHub();
-    await managerHome.clickFilter(data.reportee)
+    await managerHome.clickFilter(data.reportee);
     await managerHome.verifyReportee(data.user,data.reportee) 
     })
     }

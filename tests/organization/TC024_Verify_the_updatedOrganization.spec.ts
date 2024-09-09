@@ -1,7 +1,5 @@
 import { test } from '../../customFixtures/expertusFixture';
 
-
-
 test(`TC024_Update the Organization`, async ({ adminHome,organization,createCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },

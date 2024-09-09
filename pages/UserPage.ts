@@ -36,8 +36,9 @@ export class UserPage extends AdminHomePage {
         jobtitle: `//input[@id='user-jobtitle-filter-field']`,
         manager: `//input[@id='user-manager-filter-field']`,
         othermanager: `//input[@id='user-other-managers-filter-field']`,
-        searchOtherManager: `//div[@id='user-other-managers']`,
+        searchOtherManager: `//input[@id='user-other-managers']`,
         otherMgrOption: (index: number) => `(//div[@id='user-other-managers']/following::li)[${index}]`,
+        specificManager: (managerName: string) => `//div[contains(text(),'${managerName}')]`,
         language: `//label[contains(text(),'Language')]/following::div[@id='wrapper-user-language']`,
         searchLanguage: `//footer/following::div/input`,
         courseLanguageLink: (language: string) => `//label[text()='Language']//following::span[text()='${language}']`,
@@ -90,7 +91,7 @@ export class UserPage extends AdminHomePage {
 
 
     async clickCreateUser() {
-        await this.validateElementVisibility(this.selectors.createUserbtn,"CreateButton")
+        await this.validateElementVisibility(this.selectors.createUserbtn, "CreateButton")
         await this.click(this.selectors.createUserbtn, "Create User", "Button");
     }
 
@@ -155,6 +156,19 @@ export class UserPage extends AdminHomePage {
         const randomIndex = Math.floor(Math.random() * count) + 1;
         await this.mouseHover(this.selectors.otherMgrOption(randomIndex), "OtherManager");
         await this.click(this.selectors.otherMgrOption(randomIndex), "OtherManager", "List");
+    }
+
+    async selectSpecificManager(data: string) {
+        //  let data =getRandomItemFromFile("../data/peopleOtherManager.json");
+        await this.click(this.selectors.othermanager, "OtherManager", "input field")
+        await this.typeAndEnter(this.selectors.searchOtherManager, "OtherManagers", data)
+        // const count = await this.page.locator("//div[@id='user-other-managers']/following::li").count();
+        // const randomIndex = Math.floor(Math.random() * count) + 1;
+        /* await this.mouseHover(this.selectors.specificManager(data), "OtherManager");
+        await this.click(this.selectors.specificManager(data), "OtherManager", "List"); */
+        let manager = ("div[id^='user-other-managersresu'] li");
+        await this.wait('minWait');
+        await this.click(manager, "manager", "Dropdown")
     }
 
     async removeUserRole() {
@@ -223,7 +237,7 @@ export class UserPage extends AdminHomePage {
         await this.wait('minWait');
     }
 
-    
+
 
     async verifyUserCreationSuccessMessage() {
         await this.verification(this.selectors.successMessage, "successfully");

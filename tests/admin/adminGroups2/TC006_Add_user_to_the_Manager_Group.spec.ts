@@ -5,33 +5,33 @@ import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
-const managerName:any=FakerData.getUserId();
-const firstName=FakerData.getFirstName();
-const lastName=FakerData.getLastName();
-const newData = {
-    managerName: managerName
-}
-updateFieldsInJSON(newData)
+const managerName: any = FakerData.getUserId();
+const firstName = FakerData.getFirstName();
+const lastName = FakerData.getLastName();
+
 test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add_user_to_the_Manager_Group` },
-        { type:`Test Description`, description: `Create User as Manager` }
-        
+        { type: `Test Description`, description: `Create User as Manager` }
+
     );
-    
+    const newData = {
+        managerName: managerName
+    }
+    updateFieldsInJSON(newData)
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);
 
     for (const row of data) {
-         const { country, state, timezone, currency, city, zipcode } = row;
+        const { country, state, timezone, currency, city, zipcode } = row;
 
         await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.clickMenu("User");
         await createUser.verifyCreateUserLabel();
-        await createUser.enter("first_name",firstName);
-        await createUser.enter("last_name",lastName);
-        await createUser.enter("username",managerName);
+        await createUser.enter("first_name", firstName);
+        await createUser.enter("last_name", lastName);
+        await createUser.enter("username", managerName);
         await createUser.enter("user-password", "Welcome1@");
         await createUser.enter("email", managerName);
         await createUser.enter("user-phone", FakerData.getMobileNumber());
@@ -48,6 +48,6 @@ test(`Add_user_to_the_Manager_Group`, async ({ adminHome, createUser }) => {
         await createUser.clickSave();
         await createUser.clickProceed("Proceed");
         await createUser.verifyUserCreationSuccessMessage();
-    }  
-  
+    }
+
 });

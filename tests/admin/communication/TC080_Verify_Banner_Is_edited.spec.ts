@@ -1,3 +1,4 @@
+import { URLConstants } from "../../../constants/urlConstants";
 import { test } from "../../../customFixtures/expertusFixture";
 import { FakerData } from "../../../utils/fakerUtils";
 
@@ -18,7 +19,7 @@ test(`Verify the  banner in sequence`, async ({ adminHome, bannerHome, createCou
     await bannerHome.enterFromDate();
     await bannerHome.enterToDate();
     await bannerHome.selectSequence(2);
-    await createCourse.selectDomainOption("E1Internal");
+    await createCourse.selectDomainOption(URLConstants.portal1);
     await bannerHome.enterbannerUrl();
     await bannerHome.uploadImage("Profilepic");   
     await bannerHome.clickPublish();
@@ -35,7 +36,7 @@ test(`Verification from learner site`, async ({ learnerHome }) => {
         { type: `Test Description`, description: `Learner Side Banner verification` }
     );
     await learnerHome.learnerLogin("LEARNERUSERNAME","LearnerPortal");
-    await learnerHome.verifySequence(title,2);
+    await learnerHome.verifySequence(title);
     })
 
     //sequencing is not working at learner site

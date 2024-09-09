@@ -81,29 +81,37 @@ export class SurveyAssessmentPage extends AdminHomePage {
   }
 
 
-  async selectingType() {
+  async selectingType(value?: "Image - Checkbox" | "Image - Radio Button" | "Checkbox" | "Dropdown" | "Radio button") {
     await this.click(this.selectors.typeBtn, "Type", "Button")
-    const itemXpath = this.selectors.typeItem;
-    const count = await this.page.locator(itemXpath).count();
-    const randomIndex = Math.floor(Math.random() * count) + 1;
+    if (value !== undefined) {
+      await this.page.click(`//span[text()='${value}']`);
+    } else {
+      const itemXpath = this.selectors.typeItem;
+      const count = await this.page.locator(itemXpath).count();
+      const randomIndex = Math.floor(Math.random() * count) + 1;
+      await this.click(`(${itemXpath})[${randomIndex}]`, "List", "List")
 
-    await this.click(`(${itemXpath})[${randomIndex}]`, "List", "List");
-
-    const typeValue = await this.getInnerText(this.selectors.typeValue);
-    console.log("Select type is " + typeValue);
+    }
+    let typeValue: any;
+    if (value !== undefined) {
+      typeValue = value;
+    } else {
+      typeValue = await this.getInnerText(this.selectors.typeValue);
+      console.log("Select type is " + typeValue);
+    }
     const scoreInput = this.page.locator(this.selectors.scoreInput);
 
     switch (typeValue) {
-      case "Radio Button":
+
+      case "Radio button":
+
         await this.type(this.selectors.option1Input, "Input", FakerData.getRandomTitle());
         await this.type(this.selectors.option2Input, "Input", FakerData.getRandomTitle());
-
         if (await scoreInput.isVisible()) {
-          await this.type(this.selectors.scoreInput, "Score", await score())
+          await this.type(this.selectors.scoreInput, "Score", score())
           const radioBtn = this.page.locator(`(${this.selectors.radioBtn})[${1}]`);
           await radioBtn.click();
         }
-
         break;
 
       case "Checkbox":
@@ -112,7 +120,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
         await this.type(this.selectors.option2Input, "Input", FakerData.getRandomTitle());
 
         if (await scoreInput.isVisible()) {
-          await this.type(this.selectors.scoreInput, "Score", await score());
+          await this.type(this.selectors.scoreInput, "Score", score());
           const checkBoxCount = await this.page.locator(this.selectors.checkBoxBtn).count();
           const checkBoxBtn = this.page.locator(`(${this.selectors.checkBoxBtn})[${1}]`);
           await checkBoxBtn.click();
@@ -125,7 +133,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
         await this.type(this.selectors.option2Input, "Input", FakerData.getRandomTitle());
 
         if (await scoreInput.isVisible()) {
-          await this.type(this.selectors.scoreInput, "Score", await score());
+          await this.type(this.selectors.scoreInput, "Score", score());
           const radioCount = await this.page.locator(this.selectors.radioBtn).count();
           const radioBtn = this.page.locator(`(${this.selectors.radioBtn})[${1}]`);
           await radioBtn.click();
@@ -159,9 +167,10 @@ export class SurveyAssessmentPage extends AdminHomePage {
       case "Image - Radio Button":
 
         if (await scoreInput.isVisible()) {
-          await this.type(this.selectors.scoreInput, "Score", await score());
+          await this.type(this.selectors.scoreInput, "Score", score());
           //const radioCount = await this.page.locator(this.selectors.radioBtn).count();
           const radioBtn = this.page.locator(`(${this.selectors.radioBtn})[${1}]`);
+          await this.page.locator(this.selectors.imageInput).scrollIntoViewIfNeeded();
           const count = await this.page.locator(this.selectors.imageInput).count();
           for (let index = 0; index <= count; index++) {
             const qa = "../data/Q1.jpg"
@@ -285,6 +294,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
   }
 
   async clickSave() {
+    await this.page.pause()
     await this.click(this.selectors.saveBtn, "Save", "Button");
     await this.spinnerDisappear();
   }

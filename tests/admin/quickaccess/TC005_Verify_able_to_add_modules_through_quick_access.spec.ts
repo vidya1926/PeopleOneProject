@@ -33,7 +33,7 @@ test(`Create User and assigning Group to the User`, async ({ adminHome, createCo
 }
 )
 
-test.only(`TC005 Verify able to add modules through quick access `, async ({ adminHome, createCourse, createUser, adminGroup }) => {
+test(`TC005 Verify able to add modules through quick access `, async ({ adminHome, createCourse, createUser, adminGroup }) => {
     test.info().annotations.push(
         { type: 'Author', description: 'Ajay Michael' },
         { type: 'TestCase', description: 'Verify able to add modules through quick access ' },

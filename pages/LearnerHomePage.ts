@@ -115,9 +115,10 @@ export class LearnerHomePage extends LearnerLogin {
             }
         }
     }
-    public async verifySequence(title: string, seqNumber: number) {
+    public async verifySequence(title: string, seqNumber?: number) {
         await this.wait('mediumWait')
-        const bannerEle = this.page.locator(`//div[contains(@class,'col pointer')]//h1`)
+        const bannerEle = this.page.locator(`//div[contains(@class,'col pointer')]//h1`);
+        await this.wait('minWait');
         const sequenceCount = await bannerEle.count();
         expect(sequenceCount).toBeGreaterThanOrEqual(1);
         await this.click(this.selectors.bannerSlider, "banner", "Slider")
