@@ -6,18 +6,16 @@ import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
 
 const username = FakerData.getUserId();
-const newData = {
-    teamUser2: username
-};
-updateFieldsInJSON(newData)
-
 test(`TC033_Create Team User2`, async ({ adminHome, createUser ,createCourse}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Create Team User2` },
         { type: `Test Description`, description: `Verify that user is created as Team User2` }
     );   
-
+    const newData = {
+        teamUser2: username
+    };
+    updateFieldsInJSON(newData)
         await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.people();
