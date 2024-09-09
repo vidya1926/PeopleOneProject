@@ -5,16 +5,17 @@ import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
 const enrollAdmin:any=FakerData.getUserId()
-const newData = {
-    enrollAdmin: enrollAdmin
-}
-updateFieldsInJSON(newData)
+
 test(`TC013_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Add user to the Course Admin` },
         { type:`Test Description`, description: `Adding User as Course Admin` }        
     );
+    const newData = {
+        enrollAdmin: enrollAdmin
+    }
+    updateFieldsInJSON(newData)
     
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);

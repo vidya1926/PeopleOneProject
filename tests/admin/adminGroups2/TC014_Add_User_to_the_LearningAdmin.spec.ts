@@ -5,10 +5,7 @@ import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
 
 const leanerAdmin:any=FakerData.getUserId()
-const newData = {
-    learnerAdmin: leanerAdmin
-}
-updateFieldsInJSON(newData)
+
 test(`TC014_Create user in admin login `, async ({ adminHome, createUser }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -17,6 +14,10 @@ test(`TC014_Create user in admin login `, async ({ adminHome, createUser }) => {
         
     );
     
+    const newData = {
+        learnerAdmin: leanerAdmin
+    }
+    updateFieldsInJSON(newData)
     const csvFilePath = './data/User.csv';
     const data = await readDataFromCSV(csvFilePath);
 
