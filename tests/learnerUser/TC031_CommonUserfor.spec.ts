@@ -6,10 +6,7 @@ import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
 
 const username = FakerData.getUserId();
-const newData = {
-    internalUser: username
-};
-updateFieldsInJSON(newData)
+
 
 test(`TC031a_Common User Ceation with Internal User type`, async ({ adminHome, createUser ,createCourse}) => {
     test.info().annotations.push(
@@ -17,7 +14,10 @@ test(`TC031a_Common User Ceation with Internal User type`, async ({ adminHome, c
         { type: `TestCase`, description: `Create user for all portals` },
         { type: `Test Description`, description: `Verify that user is created for all portals` }
     );   
-
+    const newData = {
+        internalUser: username
+    };
+    updateFieldsInJSON(newData)
         await adminHome.loadAndLogin("CUSTOMERADMIN");
         await adminHome.menuButton();
         await adminHome.people();
