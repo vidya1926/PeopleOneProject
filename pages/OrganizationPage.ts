@@ -21,7 +21,7 @@ export class OrganizationPage extends AdminHomePage {
         orgeditIcon: `(//i[contains(@class,'fa-duotone fa-pen ')])[1]`,
         parentOrg: `//input[@id='ParentOrg-filter-field']`,
         selectParentOrg: `(//div[@id='ParentOrg-filter-results-container']//li)[1]`,
-        childCount: (fieldName: string) => `//div[text()='${fieldName}.com']/following::span[contains(text(),'Child Organizations')][1]`,
+        childCount: (fieldName: string) => `//div[contains(text(),'${fieldName}')]/following::span[contains(text(),'Child Organizations')][1]`,
         loadMore: `//button[text()='Load More']`,
     };
 
@@ -50,7 +50,7 @@ export class OrganizationPage extends AdminHomePage {
     }
 
     public async enterName(orgName: string) {
-        await this.typeAndEnter(this.selectors.enterName, "Name", orgName + "Co");
+        await this.typeAndEnter(this.selectors.enterName, "Name", orgName);
     }
 
     public async typeDropdown() {
@@ -70,24 +70,21 @@ export class OrganizationPage extends AdminHomePage {
 
     public async clickEditOrg() {
         await this.click(this.selectors.editOrganization, "Edit ", "Button")
-
     }
     public async clickEditIcon() {
         await this.click(this.selectors.orgeditIcon, "Edit ", "Icon")
-
     }
-
     public async childOrgCount(fdname: string) {
         for (let i = 0; i <= 1; i++) {
-            await this.click(this.selectors.loadMore, "LoadMore", "Button")
-        }
+        await this.click(this.selectors.loadMore, "LoadMore", "Button")       
+     }
         const org = await this.getInnerText(this.selectors.childCount(fdname));
         console.log(org)
-        const orgName = org.split(":")
-        return parseInt(orgName[1])
+        let orgName= org.split(":").at(1)
+       return parseInt(orgName)
     }
     public async enterParentOrg(orgName: string) {
-        await this.type(this.selectors.parentOrg, "ParentOrg", orgName)
+        await this.keyboardType(this.selectors.parentOrg, orgName)
         await this.validateElementVisibility(this.selectors.selectParentOrg, "parentOrgName")
         await this.click(this.selectors.selectParentOrg, "parentOrgName", "Option")
 
@@ -98,8 +95,4 @@ export class OrganizationPage extends AdminHomePage {
     public async clickUpdate() {
         await this.click(this.selectors.updateBtn, "Update", "Button")
     }
-
-
-
-
 }

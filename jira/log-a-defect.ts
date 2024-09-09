@@ -14,17 +14,9 @@ export async function logADefectInJira(testInfo: TestInfo): Promise<string | und
         const description = `Here is the error: ${testInfo.error?.message}`;        
         // Create a Jira issue and get the issue key
         const issueKey = await createJiraIssue(summary, description);
-        
-        // Attach the Jira issue key to the test info for reference
-        // testInfo.attachments.push({
-        //     // name: 'jira-issue-key',
-        //     // path: issueKey,
-        //     // contentType: 'text/plain' // Add contentType property
-        // });
-
-        // Return the issue key
-        return issueKey;
+               return issueKey;
     }
-    // Return undefined if the test didn't fail
     return undefined;
 }
+
+export { createJiraIssue };

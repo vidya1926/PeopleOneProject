@@ -24,7 +24,7 @@ export class CoursePage extends AdminHomePage {
         closeBtn: "//button[text()='Close']",
         courseLanguagesWrapper: "//label[contains(text(),'Language')]/following::div[@id='wrapper-course-languages']",
         courseLanguageInput: "//label[text()='Language']/following::input[1]",
-        courseLanguageLink: (language: string) => `//label[text()='Language']//following::span[text()='${language}']`,
+        courseLanguageLink: (language: string) => `(//label[text()='Language']//following::span[text()='${language}'])[1]`,
         selectCategoryBtn: "//div[@id='new-course-categorys']//div[text()='Select']",
         categoryOption: (category: string) => `//span[text()='${category}']`,
         addCategoryBtn: "//div[text()='Add Category']",

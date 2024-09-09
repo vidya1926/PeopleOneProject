@@ -7,7 +7,7 @@ let jiraIssueKeys: string[] = [];
 const reportDir = `./reporter/playwright-reports-${timestamp}`; */
 export default defineConfig({
   //globalTimeout: 450000,
- // timeout: 300000,
+ timeout: 300000,
   expect: {
     timeout: 20000
   },
