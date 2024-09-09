@@ -1,3 +1,4 @@
+import { credentials } from '../../constants/credentialData';
 import { URLConstants } from '../../constants/urlConstants';
 import { test } from '../../customFixtures/expertusFixture';
 import { FakerData } from '../../utils/fakerUtils';
@@ -29,7 +30,7 @@ test(`TC032_Create Team User1`, async ({ adminHome, createUser, createCourse }) 
     await createUser.enter("username", username);
     await createUser.enter("user-password", "Welcome1@");
     await createUser.selectLanguage("English")
-    await createUser.selectManager("manager");
+    await createUser.selectManager(credentials.MANAGERNAME.username);
     await createCourse.selectDomainOption(URLConstants.portal1)
     await createUser.clickSave();
     await createUser.clickProceed("Proceed");
