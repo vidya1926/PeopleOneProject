@@ -1,3 +1,4 @@
+import { credentials } from "../../constants/credentialData";
 import { test } from "../../customFixtures/expertusFixture";
 
 
@@ -11,7 +12,7 @@ for (const data of courseType) {
         );
         await learnerHome.learnerLogin("MANAGERNAME", "DefaultPortal");
         await learnerHome.selectCollaborationHub();
-        await managerHome.clickViewLearning("Learner user");
+        await managerHome.clickViewLearning(credentials.LEARNERUSERNAME.username);
         await managerHome.verifyallCourses(data);
     })
 }

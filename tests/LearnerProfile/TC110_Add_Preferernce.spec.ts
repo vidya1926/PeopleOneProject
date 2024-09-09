@@ -3,9 +3,6 @@ import { FakerData } from '../../utils/fakerUtils';
 import { readDataFromCSV } from '../../utils/csvUtil';
 import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
 
-
-
-//test.use({ storageState: "logins/expertusAdminLog.json"})
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let CEUVALUE: string;
