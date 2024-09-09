@@ -132,7 +132,7 @@ export abstract class PlaywrightWrapper {
     }
 
     async waitSelector(locator: string) {
-        await this.page.waitForSelector(locator)
+        await this.page.waitForSelector(locator, { timeout: 30000, state: "attached" });
     }
     async fetchattribute(locator: string, attName: string) {
         const eleValue = await this.page.$(locator)
