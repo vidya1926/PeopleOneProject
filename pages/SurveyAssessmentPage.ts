@@ -232,10 +232,15 @@ export class SurveyAssessmentPage extends AdminHomePage {
   }
 
   async importQuestion() {
-    await this.page.waitForLoadState('load');
-    await this.mouseHover(this.selectors.importQuestionIcon, "Import");
     await this.wait('minWait');
+    await this.page.locator(this.selectors.importQuestionIcon).scrollIntoViewIfNeeded({ timeout: 5000 });
     await this.click(this.selectors.importQuestionIcon, "Import", "Idiomatic Text");
+    await this.wait('minWait');
+    let questionType = this.page.locator(this.selectors.questionType)
+    if (!await questionType.isVisible()) {
+      await this.click(this.selectors.importQuestionIcon, "Import", "Idiomatic Text");
+    }
+
     await this.mouseHover(this.selectors.questionType, "Question Type");
     let checkBox = this.selectors.questionLibCheckbox;
     let count = await this.page.locator(checkBox).count();

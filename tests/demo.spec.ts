@@ -5,11 +5,11 @@
 // }
 // import { FakerData } from "./utils/fakerUtils";
 
-import { customAdminOuthData, userCreationData } from "./data/apiData/outhData";
-import { postRequest } from "./utils/requestUtils";
-import { assertResponse } from "./utils/verificationUtils";
-import url from "./data/apiData/url.json"
-import { generateOauthToken } from "./api/accessToken";
+import { customAdminOuthData, userCreationData } from "../data/apiData/outhData";
+import { postRequest } from "../utils/requestUtils";
+import { assertResponse } from "../utils/verificationUtils";
+import url from "../data/apiData/url.json"
+import { generateOauthToken } from "../api/accessToken";
 
 
 import { read } from "fs";
@@ -297,3 +297,28 @@ function login(username:any,lastname:any,address1?:any,adrress2?:any){
 
 login("","")
  */
+
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://automation.expertusoneqa.in/learner/e1internal');
+  await page.locator('#signin').click();
+  await page.getByLabel('Username').click();
+  await page.getByLabel('Username').fill('managerUser');
+  await page.getByLabel('Password').click();
+  await page.getByLabel('Password').fill('Welcome1@');
+  await page.locator('#login-form i').click();
+  await page.locator('#login-form i').click();
+  await page.getByRole('button', { name: 'Sign In' }).click();
+  await page.locator('#adminmenu').click();
+  await page.getByRole('link', { name: 'Collaboration Hub' }).click();
+  await page.locator('li').filter({ hasText: 'Video testingVideo testing' }).locator('i').nth(1).click();
+  await page.locator('label').filter({ hasText: 'Select Team members' }).locator('i').first().click();
+  await page.getByPlaceholder('Select').click();
+  await page.getByRole('region', { name: 'Gallery' }).getByPlaceholder('Search').click();
+  await page.getByRole('button', { name: 'Anastacio Kunde' }).click();
+  await page.getByPlaceholder('Selected').click();
+  await page.locator('div').filter({ hasText: /^Recommend Learning$/ }).click();
+  await page.getByRole('button', { name: 'Ok' }).click();
+  await page.locator('.modal-header > .fa-duotone').click();
+});

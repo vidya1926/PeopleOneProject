@@ -1,9 +1,14 @@
 import { test } from "../../../customFixtures/expertusFixture"
 import { readDataFromCSV } from "../../../utils/csvUtil";
+import { ExcelReader } from "../../../utils/excelUtils";
 import { FakerData } from '../../../utils/fakerUtils';
 import { updateFieldsInJSON } from "../../../utils/jsonDataHandler";
 
-const customAdmin: any = FakerData.getUserId()
+const customAdmin: any = FakerData.getUserId();
+const reader = new ExcelReader('./data/expertousOneData.xlsx');
+const testCaseID = "TC004";
+const rowData = reader.getRowByTestcase('adminGroups_CustomerAdmin', testCaseID);
+
 
 test.describe(`TC004_Create user for admin login`, async () => {
     test(`Create user for admin login  `, async ({ adminHome, createUser }) => {
@@ -11,8 +16,9 @@ test.describe(`TC004_Create user for admin login`, async () => {
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `Add user to the Course Admin` },
             { type: `Test Description`, description: `Adding User as Course Admin` }
-
         );
+
+
         const newData = {
             customAdmin: customAdmin
         }
@@ -23,7 +29,7 @@ test.describe(`TC004_Create user for admin login`, async () => {
         for (const row of data) {
             const { country, state, timezone, currency, city, zipcode } = row;
 
-            await adminHome.loadAndLogin("SUPERADMIN")
+            await adminHome.loadAndLogin(rowData?.login)
             await adminHome.clickMenu("User");
             // await createUser.clickCreateUser();
             await createUser.verifyCreateUserLabel();
@@ -43,7 +49,7 @@ test.describe(`TC004_Create user for admin login`, async () => {
             await createUser.enter("user-city", city);
             await createUser.enter("user-zipcode", zipcode);
             await createUser.enter("user-mobile", FakerData.getMobileNumber());
-            await createUser.clickRolesButton("Manager")
+            await createUser.clickRolesButton(rowData?.roles)
             await createUser.clickSave();
             await createUser.clickProceed("Proceed");
             await createUser.verifyUserCreationSuccessMessage();
@@ -58,12 +64,12 @@ test.describe(`TC004_Create user for admin login`, async () => {
 
         );
 
-        await adminHome.loadAndLogin("SUPERADMIN")
+        await adminHome.loadAndLogin(rowData?.login);
         await adminHome.menuButton();
         await adminHome.people();
         await adminHome.adminGroup();
         await adminGroup.searchAdmin("Customer");
-        await adminGroup.clickGroup("Super admin - Customer");
+        await adminGroup.clickGroup(rowData?.admingroup);
         await adminGroup.searchUser(customAdmin)
         await adminGroup.clickuserCheckbox(customAdmin)
         await adminGroup.clickSelelctUsers();

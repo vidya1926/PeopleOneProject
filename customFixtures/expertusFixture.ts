@@ -24,12 +24,13 @@ import { AnnouncementPage } from '../pages/AnnouncementPage'
 import { ContentHomePage } from '../pages/ContentPage'
 import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 import { SurveyAssessmentPage } from '../pages/SurveyAssessmentPage'
-import {ProfilePage} from '../pages/ProfilePage'
+import { ProfilePage } from '../pages/ProfilePage'
 import { EnrollmentPage } from '../pages/EnrollmentPage'
 import { InstructorPage } from '../pages/InstructorPage'
 import { ManagerPage } from '../pages/ManagerPage'
 import { ReadContentPage } from '../pages/ReadContentPage'
 import { AdminRolePage } from '../pages/AdminRole'
+import { ExcelReader } from '../utils/excelUtils'
 
 
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
@@ -58,20 +59,21 @@ type expertusFixture = {
     costCenter: CostcenterPage
     announcementHome: AnnouncementPage
     contentHome: ContentHomePage
-    profile:ProfilePage
-    enrollHome:EnrollmentPage
-    instructorHome:InstructorPage
-    managerHome:ManagerPage
-    readContentHome:ReadContentPage
-    adminRoleHome:AdminRolePage
+    profile: ProfilePage
+    enrollHome: EnrollmentPage
+    instructorHome: InstructorPage
+    managerHome: ManagerPage
+    readContentHome: ReadContentPage
+    adminRoleHome: AdminRolePage
+    excelReader: ExcelReader
 }
 export const test = baseTest.extend<expertusFixture>({
-   /*  adminLogin: async ({ page, context }, use) => {
-        const adLogin = new AdminLogin(page, context);
-        await adLogin.adminLogin()
-        await use(adLogin);
-        //console.log("Login is verified"        
-    }, */
+    /*  adminLogin: async ({ page, context }, use) => {
+         const adLogin = new AdminLogin(page, context);
+         await adLogin.adminLogin()
+         await use(adLogin);
+         //console.log("Login is verified"        
+     }, */
 
     adminHome: async ({ page, context }, use,) => {
         const adminHome = new AdminHomePage(page, context);
@@ -193,17 +195,18 @@ export const test = baseTest.extend<expertusFixture>({
         await use(managerHome);
     },
     readContentHome: async ({ page, context }, use) => {
-        const  readContentHome  = new ReadContentPage(page, context);
+        const readContentHome = new ReadContentPage(page, context);
         await use(readContentHome);
     },
 
     adminRoleHome: async ({ page, context }, use) => {
-        const  adminRoleHome  = new AdminRolePage(page, context);
+        const adminRoleHome = new AdminRolePage(page, context);
         await use(adminRoleHome);
     },
 
-    
-    
+
+
+
 
 
 })
