@@ -6,6 +6,7 @@ import { TestInfo } from "@playwright/test";
  * @param testInfo Information about the current test, including its status and details.
  * @returns A promise that resolves to the key of the created Jira issue, or undefined if the test didn't fail.
  */
+
 export async function logADefectInJira(testInfo: TestInfo): Promise<string | undefined> {
     // Check if the test has failed
     if (testInfo.status === "failed" || testInfo.status==="timedOut") {

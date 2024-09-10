@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import { updateJiraIssue } from './jira/jira-integration';
-import { logADefectInJira } from './jira/log-a-defect';
+
 
 let jiraIssueKeys: string[] = [];
 /* const timestamp = format(new Date(), 'MM/dd/yyyy');
@@ -17,6 +16,7 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   repeatEach: 0,
+
   //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
   reporter: [['html', { open: 'always' }]],
   use: {
@@ -28,27 +28,27 @@ export default defineConfig({
     // testMatch: '**/TC001.spec.ts'
     //slowMo:2000,
   },
-  //testMatch: [
-    // '*/tests/admin/adminGroups_CustomerAdminGroupUserCreation/**/*.spec.ts',
-    // '*/tests/admin/adminGroups2/**/*.spec.ts',
-    // '*/tests/admin/customrolecreation/**/*.spec.ts',
-    // '*/tests/admin/metadataLibrary/**/*.spec.ts',
-    // '*/tests/admin/location/**/*.spec.ts',
-    // '*/tests/content/content/**/*.spec.ts',
-    // '*/tests/admin/completionCertificate/**/*.spec.ts',
-    // '*/tests/admin/assessment/**/*.spec.ts',
-    // '*/tests/admin/survey/**/*.spec.ts',
-    // '*/tests/content/content/**/*.spec.ts',
-    // '*/tests/admin/peoplemodule_user/**/*.spec.ts',
-    // '*/tests/admin/quickaccess/**/*.spec.ts',
-    // '*/tests/admin/communication/**/*.spec.ts',
-    // '*/tests/admin/learnerGroup/**/*.spec.ts',
-    // '*/tests/admin/announcement/**/*.spec.ts',
-    // '*/tests/admin/course/**/*.spec.ts',
-    // '*/tests/admin/certification/**/*.spec.ts',
-    // '*/tests/admin/managerApproval/**/*.spec.ts',
+//   testMatch: [
+//     '*/tests/admin/adminGroups_CustomerAdminGroupUserCreation/**/*.spec.ts',
+//     '*/tests/admin/adminGroups2/**/*.spec.ts',
+//     '*/tests/admin/customrolecreation/**/*.spec.ts',
+//     '*/tests/admin/metadataLibrary/**/*.spec.ts',
+//     '*/tests/admin/location/**/*.spec.ts',
+//     '*/tests/content/content/**/*.spec.ts',
+//     '*/tests/admin/completionCertificate/**/*.spec.ts',
+//     '*/tests/admin/assessment/**/*.spec.ts',
+//     '*/tests/admin/survey/**/*.spec.ts',
+//     '*/tests/content/content/**/*.spec.ts',
+//     '*/tests/admin/peoplemodule_user/**/*.spec.ts',
+//     '*/tests/admin/quickaccess/**/*.spec.ts',
+//     '*/tests/admin/communication/**/*.spec.ts',
+//     '*/tests/admin/learnerGroup/**/*.spec.ts',
+//     '*/tests/admin/announcement/**/*.spec.ts',
+//     '*/tests/admin/course/**/*.spec.ts',
+//     '*/tests/admin/certification/**/*.spec.ts',
+//     '*/tests/admin/managerApproval/**/*.spec.ts',
    
- // ],
+//  ],
 
   projects: [
     {

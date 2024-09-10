@@ -33,7 +33,7 @@ export class ProfilePage extends LearnerHomePage {
         timezoneOptions: (option: string) => `(//span[contains(text(),'${option}')])[1]`,
         PreferenceLanguagesWrapper: "//label[text()='Language']/following::div[@id='wrapper-lnr_languages']",
         PreferenceLanguageInput: `//label[text()='Language']/following::input[1]`,
-        PreferenceLanguage: (language: string) => `//label[text()='Language']//following::span[text()='${language}']`,
+        PreferenceLanguage: (language: string) => `(//label[text()='Language']//following::span[text()='${language}'])[1]`,
         PreferenceCurrency: "//label[text()='Currency']/following::div[@id='wrapper-lnr_currency']",
         PreferenceCurrencyInput: "//label[text()='Currency']/following::input[1]",
         PreferenceCurrencyOption: (Option: string) => `//span[text()='${Option}']`,
