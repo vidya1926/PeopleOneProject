@@ -1,19 +1,20 @@
 import mysql from 'mysql2/promise';
 import { test } from '../customFixtures/expertusFixture';
 import { format, addMinutes } from 'date-fns';
+import data from "../data/dbData/dbCredentials.json"
 
 export default class DB {
     private DBConfig: mysql.ConnectionOptions = {
-        host: "mysql-qa-testing-master-ncus.mysql.database.azure.com",
-        user: "qaadmin",
-        database: "iris",
-        password: "1wR?cHeQe_",
-        port: 3306,
+        host: data.database_config.host,
+        user: data.database_config.credentials.user,
+        database: data.database_config.database_name,
+        password: data.database_config.credentials.password,
+        port: data.database_config.port,
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0
     };
-//"universal_profile"
+    //"universal_profile"
     async executeQuery(query: string): Promise<any[]> {
         const connection = await mysql.createConnection(this.DBConfig);
         try {

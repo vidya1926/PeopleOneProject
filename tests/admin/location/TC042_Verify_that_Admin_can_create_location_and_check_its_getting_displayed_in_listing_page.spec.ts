@@ -4,7 +4,7 @@ import { readDataFromCSV } from "../../../utils/csvUtil";
 import { FakerData } from '../../../utils/fakerUtils';
 
 
-test.skip(`Verify that Admin can create location and check its getting displayed in listing page`, async ({ adminHome, location }) => {
+test(`Verify that Admin can create location and check its getting displayed in listing page`, async ({ adminHome, location }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
         { type: `TestCase`, description: `Verify that Admin can create location and check its getting displayed in listing page` },

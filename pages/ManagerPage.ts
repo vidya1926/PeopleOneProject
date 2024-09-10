@@ -1,12 +1,12 @@
 import { expect } from "@playwright/test";
 import { FakerData } from "../utils/fakerUtils";
 import { LearnerHomePage } from "./LearnerHomePage";
+import { PlaywrightWrapper } from "../utils/playwright";
 
 
-export class ManagerPage extends LearnerHomePage {
-
+export class ManagerPage extends PlaywrightWrapper {
+   
     public selectors = {
-        ...this.selectors,
         searchCourse: `//input[@id='exp-searchcatalog-search-field']`,
         recommendIcon: (courseName: string) => `(//div[text()='${courseName}']/following::i)[1]`,
         directandIndirect: (option: string) => `(//span[text()='${option}']/preceding-sibling::i)[1]`,
@@ -68,12 +68,12 @@ export class ManagerPage extends LearnerHomePage {
 
     async selectTeam() {
         await this.click(this.selectors.selectTeamMember, "Team Memeber", "Checkbox")
-        await this.wait('maxWait');
+       // await this.wait('maxWait');
 
     }
 
     async selectTeamUser(data: string) {
-        await this.wait('mediumWait');
+       // await this.wait('mediumWait');
         await this.waitSelector(this.selectors.selectDropdown);
         await this.click(this.selectors.selectDropdown, "Team User", "dropdown");
         await this.wait('mediumWait');
@@ -84,7 +84,7 @@ export class ManagerPage extends LearnerHomePage {
              console.log(`Response body: ${await response.text()}`);
          })
         await this.keyboardType(this.selectors.searchUser, data);
-        await this.wait('maxWait')
+       // await this.wait('maxWait')
         const fallbackSelector = "li #list_undefined";
         await this.waitSelector(fallbackSelector)
         const isFallbackPresent = await this.page.locator(fallbackSelector).isVisible()
