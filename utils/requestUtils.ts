@@ -1,5 +1,4 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from "axios";
-import { assertResponse } from "./verificationUtils";
 
 export async function postRequest(
     userData: Record<string, any>,

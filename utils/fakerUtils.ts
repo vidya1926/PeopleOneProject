@@ -30,12 +30,12 @@ export class FakerData {
         return faker.location.streetAddress();
     }
 
-    static getPinCode(){
+    static getPinCode() {
         return faker.location.zipCode('######');
     }
 
     static addressName(): string {
-        return `${faker.location.countryCode()} +" "+ ${faker.location.county()}`;
+        return `${faker.location.countryCode()} ${faker.location.county()}`;
     }
 
     static getAwardName() {
@@ -102,7 +102,7 @@ export class FakerData {
         return session
     }
 
-    static getDuration(){
+    static getDuration() {
         return faker.date.future().getHours().toString();
     }
 

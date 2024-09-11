@@ -31,7 +31,6 @@ test.describe(`TC004_Create user for admin login`, async () => {
 
             await adminHome.loadAndLogin(rowData?.login)
             await adminHome.clickMenu("User");
-            // await createUser.clickCreateUser();
             await createUser.verifyCreateUserLabel();
             await createUser.enter("first_name", FakerData.getFirstName());
             await createUser.enter("last_name", FakerData.getLastName());
