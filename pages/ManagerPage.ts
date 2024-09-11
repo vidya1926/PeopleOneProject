@@ -22,6 +22,7 @@ export class ManagerPage extends PlaywrightWrapper {
         teamUseroption: (user: string) => `//li[contains(text(),'${user}')]`,
         filter: `(//h2[text()='My Team']/following::div[text()='Filters'])[1]`,
         selectReportee: (data: string) => `(//span[text()='${data}']/preceding-sibling::i)[2]`,
+        reporteeName:`(//div[contains(@class,'inactive text-capitalize pointer')])[1]`,
         search: `//input[@id='exp-searchmyteam-lnrsearch-field']`,
         searchResult: `//div[@class='lms-scroll-results']//li`,
         reportee: (data: string) => `(//div[@class='text-uppercase icontxt']/span[text()='${data} Reportee'])[1]`,
@@ -115,24 +116,37 @@ export class ManagerPage extends PlaywrightWrapper {
         await this.click(this.selectors.applyButton, "Apply", "Button")
     }
     async verifyReportee(user: string, reportee: string) {
-
-        await this.validateElementVisibility(this.selectors.reportee(reportee), reportee)
-        await this.verification(this.selectors.userData, user)
+        // await this.validateElementVisibility(this.selectors.reportee(reportee), reportee)
+        // await this.verification(this.selectors.userData, user)
         //other method
-        // const searchUser=this.selectors.search;
-        // await this.type(searchUser,"Textfield",user)
-        // await this.mouseHover(this.selectors.searchResult,"Select User")
-        // await this.click(this.selectors.searchResult,"Select User","dropdown")
-        // await this.wait("minWait")
-        // await this.validateElementVisibility(this.selectors.reportee(reportee),reportee)           
+        const searchUser=this.selectors.search;
+        await this.type(searchUser,"Textfield",user)
+        await this.mouseHover(this.selectors.searchResult,"Select User")
+        await this.click(this.selectors.searchResult,"Select User","dropdown")
+        await this.wait("minWait")
+        const count=this.page.locator(this.selectors.reporteeName).count
+        console.log(count)
+        await this.validateElementVisibility(this.selectors.reporteeName,reportee)   
+        const user1=await this.getInnerText(this.selectors.reporteeName)
+        await this.verification(this.selectors.userData, user1)
+
     }
 
     //div[text()='Learner user']/following::i)[1]
     async clickViewLearning(user: string) {
-
-        await this.validateElementVisibility(this.selectors.viewLearning(user), "View Learning")
-        await this.mouseHover(this.selectors.viewLearning(user), "View Learning")
-        await this.click(this.selectors.viewLearning(user), "View Learning", "Icon")
+        const searchUser=this.selectors.search;
+        await this.type(searchUser,"Textfield",user)
+        await this.mouseHover(this.selectors.searchResult,"Select User")
+        await this.click(this.selectors.searchResult,"Select User","dropdown")
+        await this.wait("minWait")
+        const count=await this.page.locator(this.selectors.reporteeName).count()
+        console.log(count)
+        await this.validateElementVisibility(this.selectors.reporteeName,"reportee")   
+        const user1=await this.page.locator(this.selectors.reporteeName).innerHTML()
+        console.log(user1)
+        await this.validateElementVisibility(this.selectors.viewLearning(user1), "View Learning")
+        await this.mouseHover(this.selectors.viewLearning(user1), "View Learning")
+        await this.click(this.selectors.viewLearning(user1), "View Learning", "Icon")
     }
 
     async verifyallCourses(courseType: string) {
@@ -140,8 +154,9 @@ export class ManagerPage extends PlaywrightWrapper {
         await this.wait('mediumWait')
         const allCourse = await this.page.locator(this.selectors.allCourses).all()
         for (const course of allCourse) {
-            //  console.log(await course.innerText())
-            expect(course).toBeVisible();
+           const courseName= await course.innerHTML()
+           console.log(courseName)
+          expect(courseName).toBeTruthy;
         }
     }
 

@@ -89,12 +89,13 @@ export class ContentHomePage extends AdminHomePage {
             await this.validateElementVisibility(this.selectors.storageContent,"Storage used")
           return await this.getInnerText(this.selectors.storageContent);  
         }
-
         public async gotoListing(){
+            await this.wait('mediumWait')
             await this.validateElementVisibility(this.selectors.contentListing,"Goto Listing")
             await this.click(this.selectors.contentListing,"Goto Listing","Button")
             await this.wait('maxWait')
         }
+        
 
         //     public async getContentTitle(title:string){
         //     await this.validateElementVisibility(this.selectors.verifyContentTitle(title),"Content")

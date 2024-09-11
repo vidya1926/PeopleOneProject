@@ -13,7 +13,7 @@ export class FakerData {
         return faker.person.lastName();
     }
     static getOrganizationName() {
-        return faker.company.buzzNoun()
+        return capitalizeFirstLetter(faker.company.buzzNoun())
     }
     static getcurrentYear() {
         return `${faker.date.anytime().getFullYear() - 2}`;

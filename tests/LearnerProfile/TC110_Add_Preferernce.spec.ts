@@ -1,15 +1,15 @@
 import { test } from '../../customFixtures/expertusFixture'
 import { FakerData } from '../../utils/fakerUtils';
 import { readDataFromCSV } from '../../utils/csvUtil';
-import { updateFieldsInJSON } from '../../utils/jsonDataHandler';
+import { updateJiraIssue } from '../../jira/jira-integration';
+import { logADefectInJira } from '../../jira/log-a-defect';
 
-
-
-//test.use({ storageState: "logins/expertusAdminLog.json"})
 const courseName = FakerData.getCourseName();
 const description = FakerData.getDescription();
 let CEUVALUE: string;
 let CEUPROVIDER: string;
+let jiraIssueKey: string | undefined; // Declare jiraIssueKey at the top level
+
 test(`TC060_TP_Prerequisite_Course1_Elearning`, async ({ adminHome, createCourse }) => {
     test.info().annotations.push(
         { type: `Author`, description: `Ajay Michael` },
@@ -73,7 +73,7 @@ test(`TC110_Adding Preference Details`, async ({ learnerHome, profile, createUse
     for (const row of data) {
         const { country, state, timezone, currency, city, zipcode } = row;
         {
-            await learnerHome.learnerLogin("COMMONUSER", "DefaultPortal");
+            await learnerHome.learnerLogin("LEARNERUSERNAME", "DefaultPortal");
             await profile.clickProfile();
             await profile.preferenceTab();
             await profile.preferenceTimeZone("GMT");
@@ -104,6 +104,14 @@ test(`TC110_Adding Preference Details`, async ({ learnerHome, profile, createUse
         }
     }
 
+    test.afterEach(async ({}, testInfo) => {
+        jiraIssueKey = await logADefectInJira(testInfo);
 
+    });        
+     test.afterAll(async ({},testInfo) => {
+            if (jiraIssueKey) {
+                await updateJiraIssue(jiraIssueKey, 'C:/New folder(2)/ExpertusOne/test-results/**/test-*.png'); // Replace with the actual folder path
+            }
+        });
 
 })

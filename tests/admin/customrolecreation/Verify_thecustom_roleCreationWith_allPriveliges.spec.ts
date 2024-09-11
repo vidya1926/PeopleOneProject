@@ -44,9 +44,8 @@ test.afterEach(async ({}, testInfo) => {
 });
 
 
- test.afterAll(async ({},testInfo) => {
-   // jiraIssueKey = await logADefectInJira(testInfo);
-        if (!jiraIssueKey) {
+ test.afterAll(async ({},testInfo) => {   
+        if (jiraIssueKey) {
             await updateJiraIssue(jiraIssueKey, 'C:/New folder(2)/ExpertusOne/test-results/*.png'); // Replace with the actual folder path
         }
     });

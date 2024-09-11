@@ -2,37 +2,44 @@ import { expect } from '@playwright/test';
 import { test } from '../../customFixtures/expertusFixture';
 import { FakerData } from '../../utils/fakerUtils';
 
-const OrgName=FakerData.getOrganizationName()+" "+FakerData.getLastName()
+const OrgName=FakerData.getOrganizationName()
 
-test(`TC025_Create Verigy the Organization is created`, async ({ adminHome,createCourse,contentHome,organization,CompletionCertification}) => {
+test(`TC025_Verify the Organization is created with Parent Organization`, async ({ adminHome,createCourse,contentHome,organization,CompletionCertification}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Create Team User1` },
-        { type: `Test Description`, description: `Verify that user is created as Team User1` }
-    );   
-
-        
+        { type: `TestCase`, description: `Add Parent to the Organization` },
+        { type: `Test Description`, description: `Verify the Organization is created with Parent Organization` }
+    );           
     await adminHome.loadAndLogin("PEOPLEADMIN");
     await adminHome.menuButton();
     await adminHome.people();
     await organization.organizationMenu()
-    await organization.createOrganization();   
-    await organization.enterName(OrgName);
-    await organization.typeDropdown();
-    await organization.typeDescription();
-    await organization.clickSave();
-    await CompletionCertification.clickProceed();
-    await contentHome.gotoListing()
-    const org:any=await organization.childOrgCount(OrgName);
+   
+    async function createOrg(){
+    let orgName=OrgName+" "+FakerData.getLastName();
+       await organization.createOrganization();   
+      await organization.enterName(orgName)
+      await organization.typeDropdown();
+      await organization.typeDescription();
+      await organization.clickSave();
+      await CompletionCertification.clickProceed();    
+      return orgName  
+    }
+
+    const parentOrg= await createOrg();
+    await contentHome.gotoListing();
+    const childOrg=  await createOrg();
+    await contentHome.gotoListing();
+    const org:any=await organization.childOrgCount(parentOrg);
     await organization.clickEditIcon(); 
-    await organization.enterParentOrg(OrgName);
+    await organization.enterParentOrg(parentOrg);
     await organization.enterContactName();
     await organization.clickUpdate();
     await createCourse.verifySuccessMessage();
     await contentHome.gotoListing()
-    const org2:any=await organization.childOrgCount(OrgName);
-    expect(org).toBeLessThan(org2)
-  
+    const org2:any=await organization.childOrgCount(parentOrg);
+    expect(org).toBeLessThan(org2)  
+
 }
     
 )
