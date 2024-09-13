@@ -12,5 +12,5 @@
   "exclude": [
     "node_modules"
   ],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "tests/Instructor/TC091_To_create_Completed_Course.spec.ts (Do not Run)", "tests/Instructor/TC090_To_create_Completed_Course.spec.ts(Do not Run)"]
 }

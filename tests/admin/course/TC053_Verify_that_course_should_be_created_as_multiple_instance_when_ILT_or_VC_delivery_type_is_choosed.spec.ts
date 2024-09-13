@@ -73,7 +73,6 @@ test.describe(`TC053_Verify_that_course_should_be_created_as_multiple_instance_w
     })
 
 
-    test.slow();
     test(`TC053_Learner Verification For Single Instance`, async ({ learnerHome, catalog, learnerCourse }) => {
         test.info().slow(true)
         test.info().annotations.push(

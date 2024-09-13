@@ -5,7 +5,6 @@ let courseName = FakerData.getCourseName();
 let description = FakerData.getDescription();
 let domain: any
 test.describe(`TC068_Certification_enroll_and_completion_with_single_instance.spec`, async () => {
-    //test.use({ storageState: "logins/expertuslearnerLog.json"})
     test(`CreateCourseFor Single Instance`, async ({ adminHome, createCourse, learningPath
     }) => {
 
@@ -16,7 +15,6 @@ test.describe(`TC068_Certification_enroll_and_completion_with_single_instance.sp
 
         );
         await adminHome.loadAndLogin("CUSTOMERADMIN")
-        //await adminLogin.adminLogin(credentialConstants.CUSTOMERADMIN, credentialConstants.PASSWORD);
         await adminHome.menuButton();
         await adminHome.clickLearningMenu();
         await adminHome.clickCourseLink();

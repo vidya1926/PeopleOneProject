@@ -2,12 +2,12 @@ import { defineConfig, devices } from '@playwright/test';
 
 
 let jiraIssueKeys: string[] = [];
-/* const timestamp = format(new Date(), 'MM/dd/yyyy');
-const reportDir = `./reporter/playwright-reports-${timestamp}`; */
+const timestamp = Date.now();
+const reportDir = `./reporter/playwright-reports-${timestamp}`;
 
 export default defineConfig({
   //globalTimeout: 450000,
- timeout: 300000,
+  timeout: 300000,
   expect: {
     timeout: 20000
   },
@@ -16,10 +16,10 @@ export default defineConfig({
   fullyParallel: false,
   retries: 0,
   workers: 1,
-  repeatEach: 0,
+  repeatEach: 5,
 
-  //reporter: [['html', { outputFolder:reportDir,open: 'always' }]],
-  reporter: [['html', { open: 'always' }]],
+  reporter: [['html', { outputFolder: reportDir, open: 'always' }]],
+  //reporter: [['html', { open: 'always' }]],
   use: {
     trace: 'on',
     headless: false,
@@ -29,7 +29,7 @@ export default defineConfig({
     // testMatch: '**/TC001.spec.ts'
     //slowMo:2000,
   },
-  
+
   // testMatch: [
   //   '*/tests/admin/adminGroups_CustomerAdminGroupUserCreation/**/*.spec.ts',
   //   '*/tests/admin/adminGroups2/**/*.spec.ts',
@@ -49,7 +49,7 @@ export default defineConfig({
   //   '*/tests/admin/course/**/*.spec.ts',
   //   '*/tests/admin/certification/**/*.spec.ts',
   //   '*/tests/admin/managerApproval/**/*.spec.ts',
-   
+
   // ],
 
   projects: [

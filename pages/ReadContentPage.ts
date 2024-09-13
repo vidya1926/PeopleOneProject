@@ -22,7 +22,6 @@ export class ReadContentPage extends CatalogPage {
     }
 
     async readContent() {
-        await this.page.pause()
         await this.verifyAndClickEleinFrame(this.selectors.playForwardButton, this.selectors.playForwardButton, "ForwardButton")
 
     }

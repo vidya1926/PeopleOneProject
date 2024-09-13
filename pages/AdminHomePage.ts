@@ -16,6 +16,7 @@ export class AdminHomePage extends AdminLogin {
         surveyMenu: "//span[text()='Survey']",
         surveyLink: "//a[text()='Survey']",
         courseLink: "//a[text()='Course']",
+        instructorLink: "//span[text()='Instructor']",
         createCourseBtn: "//button[text()='CREATE COURSE']",
         userMenu: "//a[text()='User']",
         metadataLibraryMenu: "//span[text()='metadata library']",
@@ -52,7 +53,7 @@ export class AdminHomePage extends AdminLogin {
         deleteIcon: `//div[contains(@class,'mandatory pointer')]//i`,
         yesBtn: `//button[text()='Yes']`,
         quickAccessModules: `//div[contains(@class,'mandatory')]/following-sibling::div`,
-        adminRolemenu:`//a[text()='Admin Role']`,
+        adminRolemenu: `//a[text()='Admin Role']`,
     };
 
     constructor(page: Page, context: BrowserContext) {
@@ -63,7 +64,7 @@ export class AdminHomePage extends AdminLogin {
 
     public async loadAndLogin(role: string) {
         console.log("Loading admin home page...")
-       await this.page.goto(AdminLogin.pageUrl);       
+        await this.page.goto(AdminLogin.pageUrl);
         await this.adminLogin(role);
         let pageTitle = await this.getTitle();
         console.log("Page Title:", pageTitle);
@@ -111,6 +112,11 @@ export class AdminHomePage extends AdminLogin {
     public async clickLearningPath() {
         await this.mouseHover(this.selectors.learningPathLink, "Learning Path");
         await this.click(this.selectors.learningPathLink, "Learning Path", "Button");
+    }
+
+    public async clickInstructorLink() {
+        await this.mouseHover(this.selectors.instructorLink, "Learning Path");
+        await this.click(this.selectors.instructorLink, "Learning Path", "Button");
     }
 
     public async menuButton() {
@@ -327,7 +333,7 @@ export class AdminHomePage extends AdminLogin {
         await this.click(this.selectors.enrollLink, "Enrollment", "Link")
     }
 
-    public async clickAdminRole(){
+    public async clickAdminRole() {
         await this.click(this.selectors.adminRolemenu, "AdminRole", "Link")
 
     }

@@ -5,11 +5,11 @@
 // }
 // import { FakerData } from "./utils/fakerUtils";
 
-import { customAdminOuthData, userCreationData } from "../data/apiData/outhData";
-import { postRequest } from "../utils/requestUtils";
-import { assertResponse } from "../utils/verificationUtils";
-import url from "../data/apiData/url.json"
-import { generateOauthToken } from "../api/accessToken";
+import { customAdminOuthData, userCreationData } from "./data/apiData/outhData";
+import { postRequest } from "./utils/requestUtils";
+import { assertResponse } from "./utils/verificationUtils";
+import url from "./data/apiData/url.json"
+import { generateOauthToken } from "./api/accessToken";
 
 
 import { read } from "fs";
@@ -297,7 +297,7 @@ function login(username:any,lastname:any,address1?:any,adrress2?:any){
 
 login("","")
  */
-
+/* 
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
@@ -321,4 +321,10 @@ test('test', async ({ page }) => {
   await page.locator('div').filter({ hasText: /^Recommend Learning$/ }).click();
   await page.getByRole('button', { name: 'Ok' }).click();
   await page.locator('.modal-header > .fa-duotone').click();
-});
+}); */
+
+let num = [1, 1, 0, -1, -1];
+let n = 5;
+for (let i = 0; i < num.length; i++) {
+    console.log(num[i] % n);
+}

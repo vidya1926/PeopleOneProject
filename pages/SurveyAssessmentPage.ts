@@ -299,7 +299,7 @@ export class SurveyAssessmentPage extends AdminHomePage {
   }
 
   async clickSave() {
-    await this.page.pause()
+    //await this.page.pause()
     await this.click(this.selectors.saveBtn, "Save", "Button");
     await this.spinnerDisappear();
   }

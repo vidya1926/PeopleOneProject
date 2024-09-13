@@ -55,20 +55,20 @@ test(`TC090_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();
     await createCourse.typeDescription("Check the instance class for the availed course")
-   // await createCourse.clickCatalog();
+    // await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
 })
 
 //testcase is not clear for the flow -script completed for instructor and enroll Admin
-test(`TC092_Enrollment for Completed class`,async({adminHome,enrollHome})=>{
+test(`TC092_Enrollment for Completed class`, async ({ adminHome, enrollHome }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Enrollment for schedule class` },
-        { type:`Test Description`, description: `Enrollment for schedule class` }
-    
-        
+        { type: `Test Description`, description: `Enrollment for schedule class` }
+
+
     );
     await adminHome.loadAndLogin("ENROLLADMIN");
     await adminHome.menuButton()
@@ -85,20 +85,22 @@ test(`TC092_Enrollment for Completed class`,async({adminHome,enrollHome})=>{
 
 
 
-test(`TC094_Instructor role for Completed class`,async({adminHome,enrollHome,instructorHome})=>{
+test(`TC094_Instructor role for Completed class`, async ({ adminHome, enrollHome, instructorHome }) => {
 
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
         { type: `TestCase`, description: `Enrollment for schedule class` },
-        { type:`Test Description`, description: `Enrollment for schedule class` }
-    
-        
+        { type: `Test Description`, description: `Enrollment for schedule class` }
+
+
     );
     await adminHome.loadAndLogin("INSTRUCTORNAME");
+    await adminHome.menuButton();
+    await adminHome.clickInstructorLink();
     await instructorHome.clickFilter();
     await instructorHome.selectDeliveryType()
-    await instructorHome.selectStatus("Completed")
-    await instructorHome.clickApply();
+    await instructorHome.selectStatus("Completed");
+    await instructorHome.clickApply("Completed");
     await instructorHome.entersearchField(courseName)
     await instructorHome.clickEnrollmentIcon(courseName);
     await enrollHome.selectEnrollOrCancel("Completed")

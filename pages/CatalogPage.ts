@@ -29,7 +29,7 @@ export class CatalogPage extends LearnerHomePage {
         filterField: `//h1[text()='Catalog']/following::div[text()='Filters']`,
         searchButton: `(//span[text()='Tags']/following::div[text()='Select'])[1]`,
         selectTagnames: `//div[contains(@class,'dropdown-menu show')]//input`,
-        reultantTagname: (tagname: string) => `//span[text()='${tagname}']`,
+        reultantTagname: (tagname: string) => `//a[contains(@class,'dropdown-item active')]//span[text()='${tagname}']`,
         applyButton: `//button[text()='Apply']`,
         viewCourseDetails: `//button[text()='View Course Details']`,
         launchButton: `(//div//i[@aria-label='Click to play'])[1]`,

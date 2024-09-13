@@ -105,7 +105,7 @@ export class CostcenterPage extends LearnerHomePage {
         }else{
             await this.click(this.selectors.supportOkButton,"ContactSupport"," OK Button")
         }
-        await this.page.pause();
+      //  await this.page.pause();
     }
 
 

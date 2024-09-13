@@ -22,12 +22,6 @@ export abstract class PlaywrightWrapper {
     constructor(page: Page, context: BrowserContext,) {
         this.page = page;
         this.context = context;
-        this.page.on("console", (message) => {
-            if (message.text() === "customClickEvent") {
-                this.page.screenshot({ path: `test-results/${Math.floor(new Date().getTime() / 1000)}.png` });
-            }
-        });
-
     }
     /*
     This function types on the given element textbox after clearing the existing text
@@ -131,7 +125,7 @@ export abstract class PlaywrightWrapper {
         return await this.page.title();
     }
 
-    async waitSelector(locator: string) {
+    async waitSelector(locator: string, p0: { name: string; }) {
         await this.page.waitForSelector(locator, { timeout: 30000, state: "attached" });
     }
     async fetchattribute(locator: string, attName: string) {
