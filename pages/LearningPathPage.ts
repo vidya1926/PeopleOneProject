@@ -30,9 +30,15 @@ export class LearningPathPage extends AdminHomePage {
         createCertification: "//button[text()='CREATE CERTIFICATION']",
         editCertification: "//a[text()='Edit Certification']",
         hasRecertification: "//span[text()='Has Recertification']/preceding::i[contains(@class,'fad fa-square icon')]",
-        expiresBtn: "//label[text()='Expires']/parent::div//button[contains(@class,'customselectpicker')]",
-        expiresInput: "//label[text()='Expires']/parent::div/input",
+        //expiresBtn: "//label[text()='Expires']/parent::div//button[contains(@class,'customselectpicker')]", ---->Label has been changed
+        expiresBtn:"(//label[text()='Expiry Based On']/parent::span//following-sibling::div//button)[1]",
+        //expiresInput: "//label[text()='Expires']/parent::div/input",
+        expiresInput:"input#expires_in_value",
         daysLocator: "//span[text()='Days']",
+        specificDateLocator:"//span[text()='Specific Date']",
+        completionDateDDValue:"//span[text()='Completion Date']",
+        complilanceOption:"div[id$='course-compliance-option'] button[class$='title']",
+
         monthsLocator: "//span[text()='Months']",
         yearsLocator: "//span[text()='Years']",
         price: "input#program-price",
@@ -86,9 +92,11 @@ export class LearningPathPage extends AdminHomePage {
     }
 
     async clickExpiresButton() {
-        await this.click(this.selectors.expiresBtn, "Expires", "Button")
-        await this.click(this.selectors.daysLocator, "Days", "Button")
-        await this.type(this.selectors.expiresInput, "Expires Input", "1")
+        await this.click(this.selectors.expiresBtn, "Expires", "Button");
+        await this.click(this.selectors.completionDateDDValue, "Completion Date", "Button");
+        await this.type(this.selectors.expiresInput, "Expires Input", "1");
+        await this.click(this.selectors.complilanceOption,"complilanceOption","DD Button");
+        await this.click(this.selectors.daysLocator,"Day","DD Value")
     }
 
     async description(data: string) {
