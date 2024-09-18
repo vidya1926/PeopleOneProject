@@ -726,6 +726,12 @@ export class CoursePage extends AdminHomePage {
         await this.validateElementVisibility(this.selectors.progress, "Loading");
         await this.validateElementVisibility(this.selectors.attachedContent(fileName), fileName)
     }
+    async vcSessionTimeZone(data:string){
+        await this.click(this.selectors.vcselectTimezone,"VC Select Timezone","dropdown"),
+        await this.click(this.selectors.vcSelectTimezoneClickSearch,"VC timezone search field","Search"),
+        await this.type(this.selectors.vcSelectTimezoneClickSearch,"VC timezone search field",data)
+        await this.click(this.selectors.vcSelectTimeZone,"VC Timezone Search Result","Search Result")
+    }
 
 
     async sessionType() {

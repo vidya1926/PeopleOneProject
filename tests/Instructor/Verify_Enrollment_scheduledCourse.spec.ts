@@ -1,5 +1,3 @@
-import { inflateSync } from "zlib";
-import { credentialConstants } from "../../constants/credentialConstants";
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData } from "../../utils/fakerUtils";
 import { credentials } from "../../constants/credentialData";
@@ -47,14 +45,16 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
         await createCourse.selectInstanceDeliveryType(deliveryType);
         await createCourse.clickCreateInstance();
     }
-    await addinstance("Classroom");
-    await createCourse.setMaxSeat();
+    await addinstance("Virtual Class");
+    await createCourse.sessionmeetingType("other Meetings");
     await createCourse.enterSessionName(courseName);
     await createCourse.enterfutureDateValue();
     await createCourse.startandEndTime();
     await createCourse.selectInstructor(credentials.INSTRUCTORNAME.username)
     await createCourse.typeAdditionalInfo()
-    await createCourse.selectLocation();
+    await createCourse.vcSessionTimeZone("kolkata");
+    await createCourse.attendeeUrl();
+    await createCourse.presenterUrl();
     await createCourse.setMaxSeat();
     await createCourse.typeDescription("Check the instance class for the availed course")
     await createCourse.clickCatalog();
