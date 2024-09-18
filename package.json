@@ -6,7 +6,6 @@
   "scripts": {
     "posttest": "npx ts-node -r dotenv/config ./jira/log-a-defect.ts"
   },
-  
   "keywords": [],
   "author": "Qeagle",
   "license": "ISC",
@@ -22,6 +21,7 @@
     "csv-parser": "^3.0.0",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
+    "glob": "^11.0.0",
     "jira-client": "^8.2.2",
     "jsdom": "^24.1.0",
     "mysql2": "^3.10.2",

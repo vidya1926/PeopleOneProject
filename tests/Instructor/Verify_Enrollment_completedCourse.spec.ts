@@ -1,4 +1,5 @@
 import { credentialConstants } from "../../constants/credentialConstants";
+import { credentials } from "../../constants/credentialData";
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData } from "../../utils/fakerUtils";
 
@@ -50,7 +51,7 @@ test(`TC090_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.enterSessionName(courseName);
     await createCourse.enterpastDateValue();
     await createCourse.startandEndTime();
-    await createCourse.selectInstructor("arivazhaganp")
+    await createCourse.selectInstructor(credentials.INSTRUCTORNAME.username)
     await createCourse.typeAdditionalInfo()
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();

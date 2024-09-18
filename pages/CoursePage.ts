@@ -176,7 +176,16 @@ export class CoursePage extends AdminHomePage {
         ceuTypeInnerValue: "div[id$='ceu-type'] button div[class='filter-option-inner-inner']",
         unitInput: "//label[text()='Unit']/following-sibling::input",
         addCEUBtn: "//button[text()='Add CEU']",
-        addedCEUData: "div[class='lms-ceu-wrapper'] div[class$='lms-scroll-pre']"
+        addedCEUData: "div[class='lms-ceu-wrapper'] div[class$='lms-scroll-pre']",
+
+        vcSessionTypeDropDown:"//label[text()='Session Type']/following-sibling::div",
+        vcMeetingType:(meetType: string) => `(//span[text()='${meetType}'])`,
+        vcselectTimezone:"//label[text()='Time Zone']/following-sibling::div",
+        vcSelectTimezoneClickSearch:"//input[@id='timezone_0']",
+        vcSelectTimeZone:"//li[contains(@class,'dropdown-item text-wrap')]"
+
+
+
 
     };
 
@@ -723,6 +732,13 @@ export class CoursePage extends AdminHomePage {
         await this.click(this.selectors.sessionType, "Session Type", "Button");
         await this.click(this.selectors.otherMeeting, "Other Meeting", "Drop Down");
     }
+
+    async sessionmeetingType(meetType:string) {
+        await this.validateElementVisibility(this.selectors.vcSessionTypeDropDown,"VC Session Type dropdown");
+        await this.click(this.selectors.vcSessionTypeDropDown,"VC Session Type Dropdwon","Dropdown");
+        await this.wait("minWait");
+        await this.click(this.selectors.vcMeetingType(meetType),"VC Session Type ","Dropdown List")
+      }
 
     async uploadPDF() {
         const fileName = "sample"

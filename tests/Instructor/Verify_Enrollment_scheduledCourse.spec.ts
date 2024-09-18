@@ -2,10 +2,10 @@ import { inflateSync } from "zlib";
 import { credentialConstants } from "../../constants/credentialConstants";
 import { test } from "../../customFixtures/expertusFixture";
 import { FakerData } from "../../utils/fakerUtils";
+import { credentials } from "../../constants/credentialData";
 
 
 
-const instructorName = credentialConstants.INSTRUCTORNAME
 const courseName = FakerData.getCourseName();
 
 
@@ -52,7 +52,7 @@ test(`TC089_Instructor based course`, async ({ adminHome, createCourse, editCour
     await createCourse.enterSessionName(courseName);
     await createCourse.enterfutureDateValue();
     await createCourse.startandEndTime();
-    await createCourse.selectInstructor("arivazhaganp")
+    await createCourse.selectInstructor(credentials.INSTRUCTORNAME.username)
     await createCourse.typeAdditionalInfo()
     await createCourse.selectLocation();
     await createCourse.setMaxSeat();

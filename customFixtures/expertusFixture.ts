@@ -33,6 +33,8 @@ import { AdminRolePage } from '../pages/AdminRole'
 import { ExcelReader } from '../utils/excelUtils'
 import { logADefectInJira } from '../jira/log-a-defect'
 import { updateJiraIssue } from '../jira/jira-integration'
+import path from 'path'
+import { glob } from 'glob'
 
 let jiraIssueKey:string|undefined;
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
@@ -211,8 +213,13 @@ export const test = baseTest.extend<expertusFixture>({
 test.afterEach(async ({}, testInfo) => {
     jiraIssueKey = await logADefectInJira(testInfo);
 });
-test.afterAll(async ({},testInfo) => {
-    if (jiraIssueKey) {
-        await updateJiraIssue(jiraIssueKey, 'C:/New folder(2)/ExpertusOne/test-results/*.png'); // Replace with the actual folder path
+
+test.afterAll(async ({}) => {
+   const filePath= process.cwd()
+   const resultFile=await glob(filePath+"/test-results",{absolute:true})
+   console.log(resultFile)
+    if (jiraIssueKey && resultFile.length> 0) {
+        await updateJiraIssue(jiraIssueKey,resultFile[0]); // Replace with the actual folder path
     }
 });
+
