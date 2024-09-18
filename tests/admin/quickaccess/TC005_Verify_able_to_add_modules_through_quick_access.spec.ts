@@ -27,7 +27,7 @@ test(`Create User and assigning Group to the User`, async ({ adminHome, createCo
     await adminGroup.clickGroup("DemoAdmin");
     await adminGroup.searchUser(customAdmin)
     await adminGroup.clickuserCheckbox(customAdmin)
-    await adminGroup.clickSelelctUsers();
+    await adminGroup.clickSelectUsers();
     await adminGroup.clickUpdate();
     await createCourse.verifySuccessMessage();
 }

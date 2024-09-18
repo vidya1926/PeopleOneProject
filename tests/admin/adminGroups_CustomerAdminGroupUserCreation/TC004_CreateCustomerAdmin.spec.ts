@@ -71,7 +71,7 @@ test.describe(`TC004_Create user for admin login`, async () => {
         await adminGroup.clickGroup(rowData?.admingroup);
         await adminGroup.searchUser(customAdmin)
         await adminGroup.clickuserCheckbox(customAdmin)
-        await adminGroup.clickSelelctUsers();
+        await adminGroup.clickSelectUsers();
         await adminGroup.clickUpdate();
         await createCourse.verifySuccessMessage();
 
