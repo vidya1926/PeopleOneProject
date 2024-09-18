@@ -131,6 +131,7 @@ export class CatalogPage extends LearnerHomePage {
     }
 
     async clickSelectcourse(course: string) {
+        await this.wait('mediumWait')
         const count = await this.page.locator(this.selectors.courseToEnroll(course)).count();
         const randomIndex = Math.floor(Math.random() * count) + 1
         await this.click(this.selectors.selectCourse(course, randomIndex), "Checkbox", "Button")
@@ -138,6 +139,7 @@ export class CatalogPage extends LearnerHomePage {
 
     async clickEnroll() {
         await this.click(this.selectors.enrollButton, "Enroll", "Button");
+        await this.spinnerDisappear();
         const cancelEnrollmentBtn = this.page.locator("//span[text()='Cancel Enrollment']");
         await this.wait('mediumWait');
         await this.validateElementVisibility(cancelEnrollmentBtn, "Cancel Enrollement");
