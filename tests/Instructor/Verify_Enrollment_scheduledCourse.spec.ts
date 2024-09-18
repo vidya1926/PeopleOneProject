@@ -93,7 +93,7 @@ test(`TC093_Instructor role for Scheduled class`, async ({ adminHome, enrollHome
     await instructorHome.clickFilter();
     await instructorHome.selectDeliveryType()
     await instructorHome.selectStatus("Scheduled")
-    await instructorHome.clickApply();
+    await instructorHome.clickApply("Scheduled");
     await instructorHome.entersearchField(courseName)
     await instructorHome.clickEnrollmentIcon(courseName);
     await enrollHome.selectEnrollOrCancel("Canceled")
