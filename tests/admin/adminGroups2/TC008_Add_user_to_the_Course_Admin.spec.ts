@@ -64,8 +64,6 @@ test.describe(`TC008_Add user to the Course Admin`, async () => {
         await adminGroup.searchAdmin("LEARNING ADMIN");
         await adminGroup.clickLearningAdmin();
         await adminGroup.searchUser(courseAdmin)
-        await adminGroup.clickCourseAdmin();
-        await adminGroup.searchUser(courseAdmin);
         await adminGroup.clickuserCheckbox(courseAdmin)
         await adminGroup.clickSelectUsers();
         await adminGroup.clickUpdate();

@@ -63,8 +63,6 @@ test.describe(`TC010_Add_user_to_the_ourse Admin`, async () => {
         await adminGroup.searchAdmin("Talent");
         await adminGroup.clickGroup("Talent admin");
         await adminGroup.searchUser(talentAdmin)
-        await adminGroup.clickCourseAdmin();
-        await adminGroup.searchUser(talentAdmin);
         await adminGroup.clickuserCheckbox(talentAdmin)
         await adminGroup.clickSelectUsers();
         await adminGroup.clickUpdate();
