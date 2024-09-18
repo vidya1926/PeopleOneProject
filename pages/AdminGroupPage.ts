@@ -89,7 +89,7 @@ export class AdminGroupPage extends PlaywrightWrapper {
         await this.isCheckboxClicked(this.selectors.selectUser, "CheckBox");
     }
 
-    public async clickSelelctUsers() {
+    public async clickSelectUsers() {
         await this.click(this.selectors.clickSelectUser, "Username", "Checkbox ");
     }
 

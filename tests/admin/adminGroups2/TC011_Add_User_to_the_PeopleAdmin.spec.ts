@@ -68,6 +68,8 @@ test.describe(`TC011_user to People Admin`, async () => {
         await adminGroup.searchAdmin("People");
         await adminGroup.clickPeopleAdmin();
         await adminGroup.searchUser(peopleAdmin);
+        await adminGroup.clickuserCheckbox(peopleAdmin)
+        await adminGroup.clickSelectUsers();
         await adminGroup.clickUpdate();
         await createCourse.verifySuccessMessage();
 

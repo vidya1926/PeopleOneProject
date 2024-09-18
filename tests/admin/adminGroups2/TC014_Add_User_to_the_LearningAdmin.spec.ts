@@ -65,7 +65,7 @@ test(`TC014 _Add user to Learning Admin `, async ({ adminHome, adminGroup,create
     await adminGroup.clickGroup("Learning admin")
     await adminGroup.searchUser(leanerAdmin)
     await adminGroup.clickuserCheckbox(leanerAdmin)
-    await adminGroup.clickSelelctUsers();
+    await adminGroup.clickSelectUsers();
     await adminGroup.clickUpdate();  
     await createCourse.verifySuccessMessage();  
 })

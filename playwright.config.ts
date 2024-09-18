@@ -6,7 +6,6 @@ const timestamp = Date.now();
 const reportDir = `./reporter/playwright-reports-${timestamp}`;
 
 export default defineConfig({
-  //globalTimeout: 450000,
   timeout: 300000,
   expect: {
     timeout: 20000
@@ -16,7 +15,7 @@ export default defineConfig({
   fullyParallel: false,
   retries: 0,
   workers: 1,
-  repeatEach: 5,
+  repeatEach: 0,
 
   reporter: [['html', { outputFolder: reportDir, open: 'always' }]],
   //reporter: [['html', { open: 'always' }]],

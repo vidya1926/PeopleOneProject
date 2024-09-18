@@ -66,6 +66,6 @@ test(`TC012 _Add user to Commerce Admin `, async ({ adminHome, adminGroup }) => 
     await adminGroup.clickGroup("Commerce admin")
     await adminGroup.searchUser(commerceAdmin)
     await adminGroup.clickuserCheckbox(commerceAdmin)
-    await adminGroup.clickSelelctUsers();
+    await adminGroup.clickSelectUsers();
     await adminGroup.clickUpdate();    
 })
