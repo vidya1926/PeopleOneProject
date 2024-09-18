@@ -136,6 +136,7 @@ export class LearningPathPage extends AdminHomePage {
      } */
 
     async clickAddCourse() {
+        await this.spinnerDisappear();
         await this.validateElementVisibility(this.selectors.addCourseBtn, "Add Course Button");
         await this.page.locator(this.selectors.addCourseBtn).last().hover();
         //await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
