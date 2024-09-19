@@ -8,10 +8,9 @@ const courseName = FakerData.getCourseName();
 const elCourseName = FakerData.getCourseName() + "E-learning";
 const sessionName = FakerData.getSession();
 const description = FakerData.getDescription();
-const maxSeat = getRandomSeat()
 const instructorName = credentialConstants.INSTRUCTORNAME
-let addInstancepre:any
-let addInstancepost:any
+let addInstancepre: any
+let addInstancepost: any
 let tag: any
 //test.use({ storageState: "logins/expertusAdminLog.json" })
 test(`TC103_Multiple Course Recurring registration for Future date`, async ({ createCourse, adminHome, editCourse }) => {
@@ -34,19 +33,20 @@ test(`TC103_Multiple Course Recurring registration for Future date`, async ({ cr
     await createCourse.providerDropdown()
     await createCourse.selectTotalDuration();
     await createCourse.typeAdditionalInfo();
-    addInstancepre=await createCourse.visiblityOfaddInstance()
+    addInstancepre = await createCourse.visiblityOfaddInstance()
     await createCourse.clickCatalog();
     await createCourse.clickSave();
     await createCourse.clickProceed();
     await createCourse.clickEditCourseTabs()
     await editCourse.clickTagMenu();
     tag = await editCourse.selectTags();
+    console.log(tag);
     await editCourse.clickClose();
     await createCourse.clickCatalog();
     await createCourse.clickUpdate();
     await createCourse.verifySuccessMessage();
     await createCourse.clickEditCourseTabs();
-    addInstancepost=await createCourse.visiblityOfaddInstance()
+    addInstancepost = await createCourse.visiblityOfaddInstance()
     expect(addInstancepost).not.toBe(addInstancepre)
     await createCourse.addInstances();
 
@@ -102,7 +102,7 @@ test(`Verification from learner site`, async ({ learnerHome, learnerCourse, cata
     await catalog.clickMyLearning();
     await catalog.clickCompletedButton()
     await catalog.verifyCompletedCourse(elCourseName)    // await catalog.searchMyLearning(elCourseName)
-  
+
 })
 
 

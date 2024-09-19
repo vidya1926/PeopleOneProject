@@ -78,12 +78,12 @@ export class ManagerPage extends PlaywrightWrapper {
         await this.waitSelector(this.selectors.selectDropdown);
         await this.click(this.selectors.selectDropdown, "Team User", "dropdown");
         await this.wait('mediumWait');
-         this.page.once('response', async response => {
+        /*  this.page.once('response', async response => {
              console.log(`Response received from: ${response.url()}`);
              console.log(`Response status: ${response.status()}`);
              console.log(`Response headers: ${JSON.stringify(response.headers())}`);
              console.log(`Response body: ${await response.text()}`);
-         })
+         }) */
         await this.keyboardType(this.selectors.searchUser, data);
        // await this.wait('maxWait')
         const fallbackSelector = "li #list_undefined";

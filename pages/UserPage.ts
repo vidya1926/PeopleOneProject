@@ -141,7 +141,7 @@ export class UserPage extends AdminHomePage {
         await this.click(this.selectors.commonOptionBtn(userType, data), data, "List");
     }
     async selectManager(data: string) {
-      //  let data = getRandomItemFromFile("../data/peopleDirectManager.json");
+        //  let data = getRandomItemFromFile("../data/peopleDirectManager.json");
         await this.typeAndEnter(this.selectors.manager, "User Type", data);
         await this.wait('minWait');
         let manager = ("div[id^='user-manager-filter'] li");

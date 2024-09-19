@@ -31,13 +31,13 @@ export class LearningPathPage extends AdminHomePage {
         editCertification: "//a[text()='Edit Certification']",
         hasRecertification: "//span[text()='Has Recertification']/preceding::i[contains(@class,'fad fa-square icon')]",
         //expiresBtn: "//label[text()='Expires']/parent::div//button[contains(@class,'customselectpicker')]", ---->Label has been changed
-        expiresBtn:"(//label[text()='Expiry Based On']/parent::span//following-sibling::div//button)[1]",
+        expiresBtn: "(//label[text()='Expiry Based On']/parent::span//following-sibling::div//button)[1]",
         //expiresInput: "//label[text()='Expires']/parent::div/input",
-        expiresInput:"input#expires_in_value",
+        expiresInput: "input#expires_in_value",
         daysLocator: "//span[text()='Days']",
-        specificDateLocator:"//span[text()='Specific Date']",
-        completionDateDDValue:"//span[text()='Completion Date']",
-        complilanceOption:"div[id$='course-compliance-option'] button[class$='title']",
+        specificDateLocator: "//span[text()='Specific Date']",
+        completionDateDDValue: "//span[text()='Completion Date']",
+        complilanceOption: "div[id$='course-compliance-option'] button[class$='title']",
 
         monthsLocator: "//span[text()='Months']",
         yearsLocator: "//span[text()='Years']",
@@ -62,7 +62,7 @@ export class LearningPathPage extends AdminHomePage {
         domainSelectedText: "//div[contains(text(),'selected')]",
         domainOption: (domain_name: string) => `//div[@class='dropdown-menu show']//span[text()='${domain_name}']`,
         codeInput: `//label[text()='CODE']/following-sibling::input`,
-        
+
 
     };
     async clickCreateLearningPath() {
@@ -95,8 +95,8 @@ export class LearningPathPage extends AdminHomePage {
         await this.click(this.selectors.expiresBtn, "Expires", "Button");
         await this.click(this.selectors.completionDateDDValue, "Completion Date", "Button");
         await this.type(this.selectors.expiresInput, "Expires Input", "1");
-        await this.click(this.selectors.complilanceOption,"complilanceOption","DD Button");
-        await this.click(this.selectors.daysLocator,"Day","DD Value")
+        await this.click(this.selectors.complilanceOption, "complilanceOption", "DD Button");
+        await this.click(this.selectors.daysLocator, "Day", "DD Value")
     }
 
     async description(data: string) {
@@ -137,8 +137,8 @@ export class LearningPathPage extends AdminHomePage {
 
     async clickAddCourse() {
         await this.spinnerDisappear();
-        await this.validateElementVisibility(this.selectors.addCourseBtn, "Add Course Button");
-        await this.page.locator(this.selectors.addCourseBtn).last().hover();
+        await this.page.locator(this.selectors.addCourseBtn).last().isVisible({ timeout: 10000 });
+        await this.page.locator(this.selectors.addCourseBtn).last().scrollIntoViewIfNeeded();
         //await this.click(this.selectors.addCourseBtn, "Add Course Button", "Button");
         await this.page.locator(this.selectors.addCourseBtn).last().click({ force: true })
     }

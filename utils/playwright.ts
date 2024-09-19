@@ -23,34 +23,30 @@ export abstract class PlaywrightWrapper {
         this.page = page;
         this.context = context;
     }
-    /*
-    This function types on the given element textbox after clearing the existing text
-    @page: The page object to be passed
-    @locator: The element locator
-    @name: Name of the element
-    @data: Data to be typed
-    */
-    async type(locator: string,
-        name: string,
-        data: string) {
+
+    /**
+   * Types into the specified textbox after clearing any existing text.
+   * 
+   * @param {string} locator - The locator for the textbox element.
+   * @param {string} name - The name of the textbox element.
+   * @param {string} data - The data to be typed into the textbox.
+   */
+    async type(locator: string, name: string, data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
             await this.page.locator(locator).fill(data);
-
         });
     }
-    /*
-    This function types on the given element textbox and press <ENTER> after clearing the existing text
-    @page: The page object to be passed
-    @locator: The element locator
-    @name: Name of the element
-    @data: Data to be typed
-    */
 
 
-    async fillAndEnter(locator: string,
-        name: string,
-        data: string) {
+
+    /**
+     * Types into the specified textbox, clears existing text, and presses <ENTER>.
+     * @param {string} locator - The locator for the textbox element.
+     * @param {string} name - The name of the textbox element.
+     * @param {string} data - The data to be typed into the textbox.
+     */
+    async fillAndEnter(locator: string, name: string, data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
             await this.page.fill(locator, data, { force: true })
@@ -60,36 +56,41 @@ export abstract class PlaywrightWrapper {
         });
     }
 
+    /**
+    * Types the specified data into a textbox using keyboard input, after clearing existing text.
+    * @param {string} locator - The locator for the textbox element.
+    * @param {string} data - The data to be typed into the textbox.
+  */
     async keyboardType(locator: string, data: string) {
         await test.step(`Textbox filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
             await this.page.focus(locator);
             await this.page.keyboard.type(data, { delay: 100 });
-
         });
     }
-    async typeAndEnter(locator: string,
-        name: string,
-        data: string) {
+
+    /**
+    * Types the specified data into a textbox and presses <Enter> after clearing the existing text.
+    * @param {string} locator - The locator for the textbox element.
+    * @param {string} name - The name of the textbox element.
+    * @param {string} data - The data to be typed into the textbox.
+    */
+    async typeAndEnter(locator: string, name: string, data: string) {
         await test.step(`Textbox ${name} filled with data: ${data}`, async () => {
             await this.page.locator(locator).clear();
             await this.page.keyboard.type(data, { delay: 400 });
             await this.page.keyboard.press("Enter");
-
         });
     }
-    /*
-    This function clicks on the given element textbox
-    @page: The page object to be passed
-    @locator: The element locator
-    @name: Name of the element
-    */
-    async click(locator: string,
-        name: string,
-        type: string
-    ) {
-        await test.step(`The ${type} ${name} clicked`, async () => {
 
+    /**
+     * Clicks on the specified textbox element.
+     * @param {string} locator - The locator for the element.
+     * @param {string} name - The name of the element.
+     * @param {string} type - The type of the element
+     */
+    async click(locator: string, name: string, type: string) {
+        await test.step(`The ${name} ${type} clicked`, async () => {
             await this.page.waitForSelector(locator, { state: 'visible' });
             await this.page.locator(locator).click({ force: true });
         });
@@ -98,7 +99,11 @@ export abstract class PlaywrightWrapper {
         await this.page.context().storageState({ path: path })
     }
 
-
+    /**
+    * Loads the specified URL in the browser.
+    * 
+    * @param {string} url - The URL to navigate to.
+    */
     public async loadApp(url: string) {
         try {
             await this.page.goto(url); // Increased timeout for 60 seconds
@@ -108,31 +113,76 @@ export abstract class PlaywrightWrapper {
             throw new Error(`Failed to load the page at ${url}`);
         }
     }
+
+    /**
+    * Retrieves the inner text of the specified element.
+    * 
+    * @param {string} locator - The locator for the element.
+    * @returns {Promise<string>} - The inner text of the element.
+    */
     async getInnerText(locator: string): Promise<string> {
         return await this.page.locator(locator).innerText();
     }
 
-    async getTextContent(locator: string): Promise<string | null> {
+    /**
+    * Retrieves the text content of the specified element.
+    * 
+    * @param {string} locator - The locator for the element.
+    * @returns {Promise<string | null | any>} - The text content of the element, or null if none is found.
+    */
+    async getTextContent(locator: string): Promise<string | null | any> {
         return await this.page.locator(locator).textContent();
     }
 
+    /**
+    * Retrieves the input value of the specified element (e.g., from an input field).
+    * 
+    * @param {string} locator - The locator for the input element.
+    * @returns {Promise<string>} - The current value of the input element.
+    */
     async getText(locator: string): Promise<string> {
         return await this.page.locator(locator).inputValue();
-
     }
+
+    /**
+    * Retrieves the title of the current page after it has fully loaded.
+    * 
+    * @returns {Promise<string>} - The title of the page.
+    */
     async getTitle(): Promise<string> {
         await this.page.waitForLoadState('load');
         return await this.page.title();
     }
 
-    async waitSelector(locator: string, p0: { name: string; }) {
-        await this.page.waitForSelector(locator, { timeout: 30000, state: "attached" });
+    /**
+    * Waits for a specific element to be attached to the DOM.
+    * 
+    * @param {string} locator - The locator for the element to wait for.
+    * @param {string} name - A descriptive name for the element (not used in this function but could be useful for logging).
+    */
+    async waitSelector(locator: string, name?: string | "Element") {
+        await test.step(`Waiting for ${name} Visible`, async () => {
+            await this.page.waitForSelector(locator, { timeout: 30000, state: "attached" });
+        })
     }
+
+    /**
+    * Fetches the value of a specified attribute from an element.
+    * 
+    * @param {string} locator - The locator for the element.
+    * @param {string} attName - The name of the attribute to retrieve.
+    * @returns {Promise<string | null>} - The value of the attribute, or null if the attribute does not exist.
+    */
     async fetchattribute(locator: string, attName: string) {
         const eleValue = await this.page.$(locator)
         return eleValue?.evaluate(node => node.getAttribute(attName))
     }
 
+    /**
+    * Retrieves the number of open browser windows (pages) in the current context.
+    *  
+    * @returns {Promise<number>} - The number of open browser windows.
+    */
     async multipleWindowsCount(): Promise<number> {
         const windowslength = this.page.context().pages().length;
         return windowslength;
@@ -145,16 +195,28 @@ export abstract class PlaywrightWrapper {
         await this.page.clickAndDelay(locator);
     }
 
-    async focusWindow(locator: string) {
+    /**
+    * Focuses on a new window that opens after clicking an element and retrieves its title.
+    * 
+     * @param {string} locator - The locator for the element to click that opens the new window.
+     * @returns {Promise<any>} - The title of the newly opened window.
+     */
+    async focusWindow(locator: string): Promise<any> {
         const newPage = this.context.waitForEvent('page');
-        this.page.locator(locator).click()
+        await this.page.locator(locator).click()
         const newWindow = await newPage;
         await newWindow.waitForLoadState('load')
         return await newWindow.title();
     }
 
-
-    async switchToWindow(windowTitle: any, locator: string) {
+    /**
+     * Switches to a new window that opens after clicking an element and brings it to the front.
+     * 
+     * @param {string} windowTitle - The title of the window to switch to.
+     * @param {string} locator - The locator for the element to click that opens the new window.
+     * @returns {Promise<Page | null>} - The new window with the specified title, or null if not found.
+     */
+    async switchToWindow(windowTitle: any, locator: string): Promise<Page | null> {
         const [newPage] = await Promise.all([
             this.context.waitForEvent('page'),
             this.page.locator(locator).click()
@@ -358,6 +420,11 @@ export abstract class PlaywrightWrapper {
         await this.wait('maxWait');
     }
 
+    /**
+    * Waits for a specified duration based on the wait type provided.
+    * 
+    * @param {'minWait' | 'mediumWait' | 'maxWait'} waitType - The type of wait duration ('minWait', 'mediumWait', or 'maxWait').
+    */
     async wait(waitType: 'minWait' | 'mediumWait' | 'maxWait') {
         try {
             switch (waitType) {
@@ -384,7 +451,7 @@ export abstract class PlaywrightWrapper {
         await this.wait('minWait');
         try {
             const spinner = this.page.locator("[class='p-3'] svg");
-            await expect.soft(spinner).toHaveCount(0);
+            await expect.soft(spinner).toHaveCount(0, { timeout: 30000 });
             console.log("Expected element is disabled");
         } catch (error) {
             console.log("Spinner is still present or assertion failed. Skipping further execution.");

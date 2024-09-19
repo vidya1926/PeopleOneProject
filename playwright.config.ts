@@ -7,6 +7,7 @@ const reportDir = `./reporter/playwright-reports-${timestamp}`;
 
 export default defineConfig({
   timeout: 300000,
+
   expect: {
     timeout: 20000
   },
@@ -20,13 +21,14 @@ export default defineConfig({
   reporter: [['html', { outputFolder: reportDir, open: 'always' }]],
   //reporter: [['html', { open: 'always' }]],
   use: {
+    actionTimeout: 20000,
     trace: 'on',
     headless: false,
     screenshot: "on",
     video: 'on',
     ignoreHTTPSErrors: true,
-    // testMatch: '**/TC001.spec.ts'
-    //slowMo:2000,
+    bypassCSP:true,
+
   },
 
   // testMatch: [

@@ -16,8 +16,8 @@ test.describe(`TC010_Add_user_to_the_ourse Admin`, async () => {
         );
         const newData = {
             talentAdmin: talentAdmin
-         }
-         updateFieldsInJSON(newData)
+        }
+        updateFieldsInJSON(newData)
         const csvFilePath = './data/User.csv';
         const data = await readDataFromCSV(csvFilePath);
 
@@ -49,7 +49,7 @@ test.describe(`TC010_Add_user_to_the_ourse Admin`, async () => {
         }
     });
 
-    test.skip(`Add user to the Course Admin`, async ({ adminHome, adminGroup, createCourse }) => {
+    test(`Add user to the Course Admin`, async ({ adminHome, adminGroup, createCourse }) => {
         test.info().annotations.push(
             { type: `Author`, description: `Ajay Michael` },
             { type: `TestCase`, description: `Add user to the Course Admin` },

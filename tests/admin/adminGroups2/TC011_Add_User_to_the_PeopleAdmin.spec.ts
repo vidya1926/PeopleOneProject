@@ -42,12 +42,13 @@ test.describe(`TC011_user to People Admin`, async () => {
             await createUser.select("Country", country);
             await createUser.select("State/Province", state);
             await createUser.select("Time Zone", timezone);
+            await createUser.selectLanguage("English")
             await createUser.select("Currency", currency);
             await createUser.enter("user-city", city);
             await createUser.enter("user-zipcode", zipcode);
             await createUser.enter("user-mobile", FakerData.getMobileNumber());
             await createUser.clickRolesButton("Manager")
-            await createUser.selectLanguage("English")
+
             await createUser.clickSave();
             await createUser.clickProceed("Proceed");
             await createUser.verifyUserCreationSuccessMessage();
@@ -66,7 +67,7 @@ test.describe(`TC011_user to People Admin`, async () => {
         await adminHome.people();
         await adminHome.adminGroup();
         await adminGroup.searchAdmin("People");
-        await adminGroup.clickPeopleAdmin();
+        await adminGroup.clickGroup("People admin");
         await adminGroup.searchUser(peopleAdmin);
         await adminGroup.clickuserCheckbox(peopleAdmin)
         await adminGroup.clickSelectUsers();
