@@ -43,16 +43,26 @@ async function createJiraIssue(summary: string, description: string): Promise<st
  * @returns The list of files.
  */
 function getAllFiles(dir: string, fileList: string[] = []): string[] {
-    const files = fs.readdirSync(dir);
-    files.forEach((file) => {
-        const filePath = path.join(dir, file);
-        const stats = fs.statSync(filePath);
-        if (stats.isFile()) {
-            fileList.push(filePath);
-        } else if (stats.isDirectory()) {
-            getAllFiles(filePath, fileList);
+    try {
+        const stats = fs.statSync(dir);
+        if (!stats.isDirectory()) {
+            console.error(`Path is not a directory: ${dir}`);
+            return fileList;
         }
-    });
+
+        const files = fs.readdirSync(dir);
+        files.forEach((file) => {
+            const filePath = path.join(dir, file);
+            const stats = fs.statSync(filePath);
+            if (stats.isFile()) {
+                fileList.push(filePath);
+            } else if (stats.isDirectory()) {
+                getAllFiles(filePath, fileList);
+            }
+        });
+    } catch (err) {
+        console.error(`Error reading directory ${dir}:`, err);
+    }
     return fileList;
 }
 
@@ -106,11 +116,12 @@ async function updateJiraIssue(issueKey: string, folderPath: string) {
     console.log(`Absolute path of folderPath: ${absoluteFolderPath}`);
     
     // Get all files in the specified folder and subdirectories
-    const files = getAllFiles(absoluteFolderPath);
+    const files =getAllFiles(absoluteFolderPath);
     console.log(`Files to be uploaded: ${files}`);
     // Upload files in batches
     for (let i = 0; i < files.length; i += BATCH_SIZE) {
         const batch = files.slice(i, i + BATCH_SIZE);
+        console.log(batch)
         await uploadBatch(issueKey, batch);
     }
 }

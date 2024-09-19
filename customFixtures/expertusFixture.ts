@@ -31,8 +31,12 @@ import { ManagerPage } from '../pages/ManagerPage'
 import { ReadContentPage } from '../pages/ReadContentPage'
 import { AdminRolePage } from '../pages/AdminRole'
 import { ExcelReader } from '../utils/excelUtils'
+import { logADefectInJira } from '../jira/log-a-defect'
+import { updateJiraIssue } from '../jira/jira-integration'
+import path from 'path'
+import { glob } from 'glob'
 
-
+let jiraIssueKey:string|undefined;
 // import { LearnerCoursePage } from '../pages/LearnerCoursePage'
 
 type expertusFixture = {
@@ -206,9 +210,18 @@ export const test = baseTest.extend<expertusFixture>({
         await use(adminRoleHome);
     },
 
-
-
-
-
-
 })
+
+test.afterEach(async ({}, testInfo) => {
+    jiraIssueKey = await logADefectInJira(testInfo);
+});
+
+test.afterAll(async ({}) => {
+   const filePath= process.cwd()
+   const resultFile=await glob(filePath+"/test-results",{absolute:true})
+   console.log(resultFile)
+    if (jiraIssueKey && resultFile.length> 0) {
+        await updateJiraIssue(jiraIssueKey,resultFile[0]); // Replace with the actual folder path
+    }
+});
+
