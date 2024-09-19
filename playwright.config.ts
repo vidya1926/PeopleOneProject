@@ -17,7 +17,7 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   repeatEach: 0,
- 
+
   //reporter: [['html', { outputFolder: reportDir, open: 'always' }]],
   reporter: [['html', { open: 'always' }]],
   use: {
@@ -56,7 +56,7 @@ export default defineConfig({
   projects: [
     {
       name: 'Chromium',
-    
+
       use: {
         ...devices['Desktop Chromium'],
         ignoreHTTPSErrors: true,
@@ -68,7 +68,7 @@ export default defineConfig({
           slowMo: 300,
           args: ["--start-maximized"]
         },
-        actionTimeout:3000
+      
 
       }
 
