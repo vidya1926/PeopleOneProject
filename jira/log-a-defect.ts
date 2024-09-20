@@ -7,7 +7,7 @@ import { TestInfo } from "@playwright/test";
  * @returns A promise that resolves to the key of the created Jira issue, or undefined if the test didn't fail.
  */
 export async function logADefectInJira(testInfo: TestInfo): Promise<string | undefined> {
-    const isNonBug=testInfo.annotations.some(annotation=>annotation.type=== 'nonBug')
+    const isNonBug=testInfo.annotations.some(annotation=>annotation.type=== 'Bug')
     if (testInfo.status === "failed" && !isNonBug || testInfo.status==="timedOut" && !isNonBug) {
         // Create a summary and description for the Jira issue
         const summary = `Test failed: ${testInfo.title}`;

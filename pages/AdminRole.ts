@@ -9,7 +9,7 @@ export class AdminRolePage extends AdminHomePage {
 
     public selectors = {
         ...this.selectors,
-        addAdminrole: `//button[text()='ADD ADMIN ROL']`,
+        addAdminrole: `//button[text()='ADD ADMIN ROLE']`,
         adminroleName: `#role_name`,
         moduleName: (index: number) => `(//span[@class='pointer text-truncate'])[${index}]`,
         additonalModuleName: (index: number) => `(//span[@class='text-truncate'])[${index}]`,

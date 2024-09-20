@@ -9,7 +9,7 @@ import { FakerData } from '../../../utils/fakerUtils';
 test(`TC016 _Verify the Custom role creation with all privileges `, async ({ adminHome, adminGroup,adminRoleHome}) => {
     test.info().annotations.push(
         { type: `Author`, description: `Vidya` },
-        { type: `TestCase`, description: `Verify the Custom role creation` },
+        { type: `Testcase`, description: `Verify the Custom role creation` },
         { type: `Test Description`, description: `Verify the Custom role creation` }
     );
     await adminHome.loadAndLogin("CUSTOMERADMIN")
