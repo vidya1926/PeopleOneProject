@@ -3,7 +3,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 let jiraIssueKeys: string[] = [];
 const timestamp = Date.now();
-const reportDir = `./reporter/playwright-reports-${timestamp}`;
+const reportDir = `./reporter/-playwright-reports}`;
 
 export default defineConfig({
   timeout: 300000,
@@ -19,7 +19,7 @@ export default defineConfig({
   repeatEach: 0,
 
   //reporter: [['html', { outputFolder: reportDir, open: 'always' }]],
-  reporter: [['html', { open: 'always' }]],
+   reporter: [['html', { open: 'always' }]],
   use: {
     actionTimeout: 20000,
     trace: 'on',

@@ -46,6 +46,7 @@ export async function reg_createUser() {
         });
         const responseData = response.data;
         console.log(responseData);
+        
        
     } catch (error) {
         console.error("Error creating user:", error);
