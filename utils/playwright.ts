@@ -52,7 +52,6 @@ export abstract class PlaywrightWrapper {
             await this.page.fill(locator, data, { force: true })
             await this.page.focus(locator)
             await this.page.keyboard.press("Enter");
-
         });
     }
 
